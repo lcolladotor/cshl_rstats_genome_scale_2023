@@ -1,0 +1,18 @@
+---
+title: "Statistical Analysis of Genome Scale Data 2023"
+author: "Leonardo Collado-Torres"
+site: bookdown::bookdown_site
+apple-touch-sin: "icon_192.png"
+apple-touch-icon-size: 192
+favicon: "icon_32.png"
+github-repo: "lcolladotor/cshl_rstats_genome_scale"
+documentclass: book
+output:
+  bookdown::gitbook:
+    includes:
+      after_body: map_and_ga.html
+    css: "style.css"
+    
+---
+
+# Overview {-}
