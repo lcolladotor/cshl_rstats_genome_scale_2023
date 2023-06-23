@@ -261,7 +261,7 @@ jobs:
 
       - name: Build bookdown site
         if: github.ref == 'refs/heads/devel' && env.run_bookdown == 'true' && runner.os == 'Linux'
-        run:
+        run: |
           bookdown::render_book("index.Rmd")
           system("touch _book/.nojekyll")
         shell: Rscript {0}
