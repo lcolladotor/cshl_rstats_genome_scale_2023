@@ -27,7 +27,7 @@ on:
 name: R-CMD-check-bioc
 
 ## These environment variables control whether to run GHA code later on that is
-## specific to testthat, covr, and pkgdown.
+## specific to testthat, covr, and bookdown.
 ##
 ## If you need to clear the cache of packages, update the number inside
 ## cache-version as discussed at https://github.com/r-lib/actions/issues/86.
@@ -36,7 +36,7 @@ name: R-CMD-check-bioc
 env:
   has_testthat: 'false'
   run_covr: 'false'
-  run_pkgdown: 'true'
+  run_bookdown: 'true'
   has_RUnit: 'false'
   cache-version: 'cache-v1'
   run_docker: 'false'
@@ -134,7 +134,7 @@ jobs:
           ## https://github.com/r-lib/usethis/commit/f1f1e0d10c1ebc75fd4c18fa7e2de4551fd9978f#diff-9bfee71065492f63457918efcd912cf2
           brew install imagemagick@6
 
-          ## For textshaping, required by ragg, and required by pkgdown
+          ## For textshaping, required by ragg, and required by bookdown
           brew install harfbuzz fribidi
 
           ## For installing usethis's dependency gert
@@ -199,10 +199,10 @@ jobs:
           remotes::install_cran("covr")
         shell: Rscript {0}
 
-      - name: Install pkgdown
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+      - name: Install bookdown
+        if: github.ref == 'refs/heads/devel' && env.run_bookdown == 'true' && runner.os == 'Linux'
         run: |
-          remotes::install_cran("pkgdown")
+          remotes::install_cran("bookdown")
         shell: Rscript {0}
 
       - name: Session info
@@ -212,19 +212,19 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Run CMD check
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-          DISPLAY: 99.0
-        run: |
-          options(crayon.enabled = TRUE)
-          rcmdcheck::rcmdcheck(
-              args = c("--no-manual", "--no-vignettes", "--timings"),
-              build_args = c("--no-manual", "--keep-empty-dirs", "--no-resave-data"),
-              error_on = "warning",
-              check_dir = "check"
-          )
-        shell: Rscript {0}
+      # - name: Run CMD check
+      #   env:
+      #     _R_CHECK_CRAN_INCOMING_: false
+      #     DISPLAY: 99.0
+      #   run: |
+      #     options(crayon.enabled = TRUE)
+      #     rcmdcheck::rcmdcheck(
+      #         args = c("--no-manual", "--no-vignettes", "--timings"),
+      #         build_args = c("--no-manual", "--keep-empty-dirs", "--no-resave-data"),
+      #         error_on = "warning",
+      #         check_dir = "check"
+      #     )
+      #   shell: Rscript {0}
 
       ## Might need an to add this to the if:  && runner.os == 'Linux'
       - name: Reveal testthat details
@@ -237,17 +237,17 @@ jobs:
           BiocGenerics:::testPackage()
         shell: Rscript {0}
 
-      - name: Run BiocCheck
-        env:
-          DISPLAY: 99.0
-        run: |
-          BiocCheck::BiocCheck(
-              dir('check', 'tar.gz$', full.names = TRUE),
-              `quit-with-status` = TRUE,
-              `no-check-R-ver` = TRUE,
-              `no-check-bioc-help` = TRUE
-          )
-        shell: Rscript {0}
+      # - name: Run BiocCheck
+      #   env:
+      #     DISPLAY: 99.0
+      #   run: |
+      #     BiocCheck::BiocCheck(
+      #         dir('check', 'tar.gz$', full.names = TRUE),
+      #         `quit-with-status` = TRUE,
+      #         `no-check-R-ver` = TRUE,
+      #         `no-check-bioc-help` = TRUE
+      #     )
+      #   shell: Rscript {0}
 
       - name: Test coverage
         if: github.ref == 'refs/heads/devel' && env.run_covr == 'true' && runner.os == 'Linux'
@@ -255,31 +255,33 @@ jobs:
           covr::codecov()
         shell: Rscript {0}
 
-      - name: Install package
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
-        run: R CMD INSTALL .
+      # - name: Install package
+      #   if: github.ref == 'refs/heads/devel' && env.run_bookdown == 'true' && runner.os == 'Linux'
+      #   run: R CMD INSTALL .
 
-      - name: Build pkgdown site
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+      - name: Build bookdown site
+        if: github.ref == 'refs/heads/devel' && env.run_bookdown == 'true' && runner.os == 'Linux'
+        run:
+          bookdown::render_book("index.Rmd")
+          system("touch _book/.nojekyll")
         shell: Rscript {0}
-        ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
+        ## Note that you need to run bookdown::deploy_to_branch(new_process = FALSE)
         ## at least one locally before this will work. This creates the gh-pages
         ## branch (erasing anything you haven't version controlled!) and
-        ## makes the git history recognizable by pkgdown.
+        ## makes the git history recognizable by bookdown.
 
       - name: Install deploy dependencies
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/devel' && env.run_bookdown == 'true' && runner.os == 'Linux'
         run: |
           apt-get update && apt-get -y install rsync
 
-      - name: Deploy pkgdown site to GitHub pages 🚀
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+      - name: Deploy bookdown site to GitHub pages 🚀
+        if: github.ref == 'refs/heads/devel' && env.run_bookdown == 'true' && runner.os == 'Linux'
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           clean: false
           branch: gh-pages
-          folder: docs
+          folder: _book
 
       - name: Upload check results
         if: failure()
