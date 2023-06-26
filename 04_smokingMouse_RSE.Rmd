@@ -1,0 +1,24 @@
+# smokingMouse RSE
+
+Instructor: Daianna
+
+We will download the `rse_gene` object which contains the data at the gene level. We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
+
+```{r download_data_biocfilecache}
+## Download and cache the file
+library("BiocFileCache")
+bfc <- BiocFileCache::BiocFileCache()
+cached_rse_gene <- BiocFileCache::bfcrpath(
+    x = bfc,
+    "https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata"
+)
+
+## Check the local path on our cache
+cached_rse_gene
+
+## Load the rse_gene object
+load(cached_rse_gene, verbose = TRUE)
+
+## General overview of the object
+rse_gene
+```
