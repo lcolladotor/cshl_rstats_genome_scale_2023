@@ -69,6 +69,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 BiocManager::install(
     c(
         "usethis", ## Utilities
+        "BiocFileCache",
         "here",
         "biocthis",
         "lobstr",
@@ -101,6 +102,7 @@ Details on the R version used for making this book. The source code is available
 library("sessioninfo")
 
 ##  Utilities
+library("BiocFileCache")
 library("BiocStyle")
 library("biocthis")
 library("here")

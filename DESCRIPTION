@@ -23,6 +23,22 @@ URL: https://github.com/lcolladotor/cshl_rstats_genome_scale_2023
 Imports:
     BiocFileCache,
     BiocStyle,
+    biocthis,
     bookdown,
+    ComplexHeatmap,
+    edgeR,
+    ExploreModelMatrix,
+    ggplot2,
+    here,
+    iSEE,
+    limma,
+    lobstr,
+    patchwork,
+    pheatmap,
+    postcards,
+    RColorBrewer,
     recount3,
-    sessioninfo
+    sessioninfo,
+    spatialLIBD,
+    SummarizedExperiment,
+    usethis
