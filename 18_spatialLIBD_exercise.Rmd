@@ -1,0 +1,3 @@
+# Re-use of bulk RNA-seq methods for spatial data exercise
+
+Instructor: Leo
