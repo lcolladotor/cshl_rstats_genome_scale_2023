@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Statistical Analysis of Genome Scale Data 2023</title>
-  <meta name="description" content="Page not found | Statistical Analysis of Genome Scale Data 2023" />
+  <title>6 RSE plotting basics with smokingMouse | Statistical Analysis of Genome Scale Data 2023</title>
+  <meta name="description" content="6 RSE plotting basics with smokingMouse | Statistical Analysis of Genome Scale Data 2023" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Statistical Analysis of Genome Scale Data 2023" />
+  <meta property="og:title" content="6 RSE plotting basics with smokingMouse | Statistical Analysis of Genome Scale Data 2023" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2023" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Statistical Analysis of Genome Scale Data 2023" />
+  <meta name="twitter:title" content="6 RSE plotting basics with smokingMouse | Statistical Analysis of Genome Scale Data 2023" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-
-
+<link rel="prev" href="isee-introduction.html"/>
+<link rel="next" href="biocthis-introduction.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -180,11 +180,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="rse-plotting-basics-with-smokingmouse" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> RSE plotting basics with smokingMouse<a href="rse-plotting-basics-with-smokingmouse.html#rse-plotting-basics-with-smokingmouse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Instructor: Daianna</p>
+<p>We will download the <code>rse_gene</code> object which contains the data at the gene level. We’ll use <em><a href="https://bioconductor.org/packages/3.17/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
+<span id="cb15-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
+<span id="cb15-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
+<span id="cb15-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-4" aria-hidden="true" tabindex="-1"></a>cached_rse_gene <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
+<span id="cb15-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
+<span id="cb15-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb15-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
+<span id="cb15-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span></code></pre></div>
+<pre><code>##                                                                                  BFC1 
+## &quot;/github/home/.cache/R/BiocFileCache/e2f51334e48_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
+<span id="cb17-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Loading objects:
+##   rse_gene</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
+<span id="cb19-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb19-2" aria-hidden="true" tabindex="-1"></a>rse_gene</span></code></pre></div>
+<pre><code>## class: RangedSummarizedExperiment 
+## dim: 55401 208 
+## metadata(1): Obtained_from
+## assays(2): counts logcounts
+## rownames(55401): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ... ENSMUSG00000064371.1 ENSMUSG00000064372.1
+## rowData names(13): Length gencodeID ... DE_in_pup_brain_nicotine DE_in_pup_brain_smoking
+## colnames: NULL
+## colData names(71): SAMPLE_ID FQCbasicStats ... retained_after_QC_sample_filtering
+##   retained_after_manual_sample_filtering</code></pre>
+
 </div>
 <div class="container">
     <footer class="site-footer">
@@ -234,8 +261,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-
-
+<a href="isee-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="biocthis-introduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
