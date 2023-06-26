@@ -17,6 +17,132 @@ output:
 
 # Overview {-}
 
-Hello!
+Here you can find the files for the July 2023 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23) portion taught by Leo and his team (July 3rd to July 6th).
+
+Instructor:
+
+* [**Leonardo Collado-Torres**](http://lcolladotor.github.io/), [Twitter](https://twitter.com/lcolladotor)
+
+Teach assistants:
+
+* [Daianna González Padilla](https://daianna21.github.io/), [Twitter](https://twitter.com/daianna_glez)
+* [Fernanda Renee García Flores](https://reneegf.github.io/), [Twitter](https://twitter.com/SubmarineGene)
+
+Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2023')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2023**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023).
+
+## Code of Conduct {-}
+
+We'll follow the CSHL code of conduct as well as version 1.2.0 of the Bioconductor code of conduct [bioconductor.github.io/bioc_coc_multilingual/](https://bioconductor.github.io/bioc_coc_multilingual/). 
+
+For reporting any violations of the code of conduct, report them to the Instructor and/or Course Coordinators.
+
+## Course Schedule {-}
+
+_Local times in US Eastern_
+
+* Monday July 3rd
+* Tuesday July 4th
+* Wednesday July 5th
+* Thursday July 6th
+  
+## External links {-}
+
+* [CSHL course](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23)
+* [GitHub source code](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023)
+* [Slack](https://cshldata-2023.slack.com).
+* [LieberInstitute/template_project](https://github.com/LieberInstitute/template_project)
+* Example real project (by Daianna): [LieberInstitute/smokingMouse_Indirects](https://github.com/LieberInstitute/smokingMouse_Indirects)
+* SPEAQeasyWorkshop2023 for BioC2023 (by Daianna and Renee): [LieberInstitute/SPEAQeasyWorkshop2023](https://github.com/LieberInstitute/SPEAQeasyWorkshop2023)
+  
+
+## Course Prerequisites {-}
+
+Install R 4.3.x from [CRAN](https://cran.r-project.org/) then install the following R packages:
+
+```{r install, eval = FALSE}
+## For installing Bioconductor packages
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+
+## Install required packages
+BiocManager::install(
+    c(
+        "usethis", ## Utilities
+        "here",
+        "biocthis",
+        "lobstr",
+        "postcards",
+        "sessioninfo",
+        "SummarizedExperiment", ## Main containers / vis
+        "iSEE",
+        "edgeR", ## RNA-seq
+        "ExploreModelMatrix",
+        "limma",
+        "recount3",
+        "pheatmap", ## Visualization
+        "ggplot2",
+        "patchwork",
+        "RColorBrewer",
+        "ComplexHeatmap",
+        "spatialLIBD" ## Advanced
+    )
+)
+```
+
+You will also need to install [RStudio](https://rstudio.com/products/rstudio/download/#download) version 2023.06.0+421 or newer.
+
+## R session information {-}
+
+Details on the R version used for making this book. The source code is available at [`lcolladotor/cshl_rstats_genome_scale_2023`](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023).
+
+```{r session_packages, eval = TRUE, message = FALSE}
+## Load the package at the top of your script
+library("sessioninfo")
+
+##  Utilities
+library("BiocStyle")
+library("biocthis")
+library("here")
+library("lobstr")
+library("postcards")
+library("usethis")
+library("sessioninfo")
+
+## Main containers / vis
+library("SummarizedExperiment")
+library("iSEE")
+
+## RNA-seq
+library("edgeR")
+library("ExploreModelMatrix")
+library("limma")
+library("recount3")
+
+## Visualization
+library("ComplexHeatmap")
+library("ggplot2")
+library("patchwork")
+library("pheatmap")
+library("RColorBrewer")
+
+## Advanced
+library("spatialLIBD")
+```
+
+```{r session_info}
+## Reproducibility information
+options(width = 120)
+session_info()
+proc.time()
+```
+
+This book was last updated at `r Sys.time()`.
+
+## License  {-}
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
 
 
