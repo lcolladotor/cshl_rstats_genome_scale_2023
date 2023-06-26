@@ -1,0 +1,3 @@
+# Interpreting model coefficients with ExploreModelMatrix
+
+Instructor: Leo

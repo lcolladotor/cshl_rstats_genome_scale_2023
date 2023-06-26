@@ -1,0 +1,3 @@
+# Differential gene expression exercise with recount3 data
+
+Instructor: Leo
