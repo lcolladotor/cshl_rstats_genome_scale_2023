@@ -4,7 +4,7 @@ Instructor: Daianna
 
 We will download the `rse_gene` object which contains the data at the gene level. We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
 
-```{r download_data_biocfilecache}
+```{r download_data_biocfilecache_repeat}
 ## Download and cache the file
 library("BiocFileCache")
 bfc <- BiocFileCache::BiocFileCache()
