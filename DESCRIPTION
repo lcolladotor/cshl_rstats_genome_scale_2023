@@ -26,6 +26,7 @@ Imports:
     biocthis,
     bookdown,
     ComplexHeatmap,
+    RefManageR,
     edgeR,
     ExploreModelMatrix,
     ggplot2,

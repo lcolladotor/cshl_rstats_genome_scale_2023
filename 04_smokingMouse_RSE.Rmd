@@ -89,6 +89,12 @@ The same RSE contains the sample information in `colData(RSE)`.
   <strong>Note:</strong> in our case, we'll use samples from the nicotine experiment only, so all samples come from brain and were treated in water.
 </div>
 
+```{r explore_colData}
+## Data for first 3 samples and 5 variables
+colData(rse_gene)[1:3, 1:5]
+```
+
+
 ### Gene Information 
 
 Among the information in `rowData(RSE)` the next variables are of interest for the analysis:
@@ -101,7 +107,26 @@ Among the information in `rowData(RSE)` the next variables are of interest for t
 * <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> DE_in_adult_brain_nicotine</span> </mark>: Boolean variable that equals TRUE if the feature is differentially expressed (DE) in adult brain samples exposed to nicotine and FALSE if not. 
 * <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> DE_in_pup_brain_nicotine</span> </mark>: Boolean variable that equals TRUE if the feature is differentially expressed (DE) in pup brain samples exposed to nicotine and FALSE if not.
 
+```{r explore_rowData}
+## Data for first 3 genes and 5 variables
+rowData(rse_gene)[1:3, 1:5]
+```
 
+<style>
+p.comment {
+background-color: #DBDBDB;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
+
+<p class="comment">
+❓ ***How would you access data of a specific column?***
+</p>
 
 
 For illustrative purposes, we'll use nicotine data at the gene level only so let's access that data. 
