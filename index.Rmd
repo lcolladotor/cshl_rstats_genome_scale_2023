@@ -76,6 +76,7 @@ BiocManager::install(
         "lobstr",
         "postcards",
         "sessioninfo",
+        "smokingMouse",
         "SummarizedExperiment", ## Main containers / vis
         "iSEE",
         "edgeR", ## RNA-seq
