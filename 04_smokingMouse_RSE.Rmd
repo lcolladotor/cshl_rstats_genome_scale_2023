@@ -2,8 +2,10 @@
 
 Instructor: Daianna
 
+Once you have reviewed how to use `RangedSummarizedExperiment` (RSE) objects in R, now we'll start exploring the `smokingMouse` data. 
 
 As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the `smokingMouse` package. Visit [here](http://research.libd.org/smokingMouse/) for more details. 
+
 
 ## Download data
 
@@ -39,38 +41,23 @@ The dataset `rse_gene` contains the following assays:
 
 ```{r explore_assays}
 ## Explore main assay (of raw counts)
-head(assay(rse_gene))
+assay(rse_gene)[1:3, 1:3] ## counts for first 3 genes and 3 samples
 ## Access the same raw data with assays()
-head(assays(rse_gene)$counts)
+assays(rse_gene)$counts[1:3, 1:3]
 ## Access lognorm counts
-head(assays(rse_gene)$logcounts)
+assays(rse_gene)$logcounts[1:3, 1:3]
 ```
 
 
 ### Sample data
 
-The same RSE contains the sample information in `colData(RSE)` and the gene information in `rowData(RSE)`.
+The same RSE contains the sample information in `colData(RSE)`.
 
-<mark style= "background-color: #FCF3CF"> Yellow </mark> variables correspond to SPEAQeasy outputs that are going to be used in downstream analyses. 
+* <mark style= "background-color: #FCF3CF"> Yellow </mark> variables correspond to SPEAQeasy outputs that are going to be used in downstream analyses. 
+* <mark style= "background-color: #FAECF8"> Pink </mark> variables are specific of the study, such as sample metadata and some others containing additional information of the genes. 
+* <mark style= "background-color: #DFF0FE"> Blue </mark> variables are Quality-Control metrics computed by `addPerCellQC()` of `r BiocStyle::Biocpkg("scuttle")`.
 
-<mark style= "background-color: #FAECF8"> Pink </mark> variables are specific of the study, such as sample metadata and some others containing additional information of the genes. 
-
-<mark style= "background-color: #DFF0FE"> Blue </mark> variables are Quality-Control metrics computed by `addPerCellQC()` of `r BiocStyle::Biocpkg("scuttle")`.
-
-
-### Gene Information 
-
-Among the information in `rowData(RSE)` the next variables are of interest for the analysis:
-
-* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> gencodeID</span> </mark>: GENCODE ID of each gene.
-* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ensemblID</span> </mark>: gene ID in Ensembl database.
-* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> EntrezID</span> </mark>: identifier of each gene in NCBI Entrez database.
-* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> Symbol</span> </mark>:  official gene symbol for each mouse gene.
-* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> retained_after_feature_filtering</span> </mark>: Boolean variable that equals TRUE if the gene passed the gene filtering (with `filterByExpr()` of `r BiocStyle::Biocpkg("edgeR")`) based on its expression levels and FALSE if not.
-
-### Sample Information 
-
-Sample information in `colData(RSE)` contains the following variables:
+`colData(RSE)` contains the following sample variables:
 
 * <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> SAMPLE_ID</span> </mark>: is the name of the sample.
 * <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ERCCsumLogErr</span> </mark>: a summary statistic quantifying overall difference of expected and actual ERCC concentrations for one sample. 
@@ -102,6 +89,17 @@ Sample information in `colData(RSE)` contains the following variables:
   <strong>Note:</strong> in our case, we'll use samples from the nicotine experiment only, so all samples come from brain and were treated in water.
 </div>
 
+### Gene Information 
+
+Among the information in `rowData(RSE)` the next variables are of interest for the analysis:
+
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> gencodeID</span> </mark>: GENCODE ID of each gene.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ensemblID</span> </mark>: gene ID in Ensembl database.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> EntrezID</span> </mark>: identifier of each gene in NCBI Entrez database.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> Symbol</span> </mark>:  official gene symbol for each mouse gene.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> retained_after_feature_filtering</span> </mark>: Boolean variable that equals TRUE if the gene passed the gene filtering (with `filterByExpr()` of `r BiocStyle::Biocpkg("edgeR")`) based on its expression levels and FALSE if not.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> DE_in_adult_brain_nicotine</span> </mark>: Boolean variable that equals TRUE if the feature is differentially expressed (DE) in adult brain samples exposed to nicotine and FALSE if not. 
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> DE_in_pup_brain_nicotine</span> </mark>: Boolean variable that equals TRUE if the feature is differentially expressed (DE) in pup brain samples exposed to nicotine and FALSE if not.
 
 
 
