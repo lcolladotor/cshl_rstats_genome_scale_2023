@@ -35,7 +35,7 @@ Nowadays, maternal smoking during pregnancy (MSDP) is one of the major health co
 ## Overview
 This study consisted of a series of RNA-sequencing experiments performed on brain samples from adult mice and pups and on blood samples from adults. Adult mice were either exposed to cigarette smoke (what we call smoking experiment and smoking mice) or controls of the smoking experiment, or they were administered nicotine (nicotine experiment and nicotine mice) or controls of the nicotine experiment, and they were either pregnant or not. Smoking, nicotine and control pups are pups that were born to smoking, nicotine and control pregnant mice, respectively. This experimental design allowed us to contrast the altered features in both conditions and to compare the effects in different mouse ages, sexes, tissues and pregnancy states. 
 
-The original datasets contain gene, transcript, exon and junction expression levels across 208 samples, but in this course we'll only use gene data in nicotine pup samples to simplify the analyses.
+The original datasets contain gene, transcript, exon and junction expression levels across 208 samples, but in this course we'll only use gene data in nicotine samples to simplify the analyses.
 
 ## Goals
 

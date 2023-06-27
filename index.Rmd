@@ -86,7 +86,8 @@ BiocManager::install(
         "patchwork",
         "RColorBrewer",
         "ComplexHeatmap",
-        "spatialLIBD" ## Advanced
+        "spatialLIBD", ## Advanced
+        "RefManageR"
     )
 )
 ```
