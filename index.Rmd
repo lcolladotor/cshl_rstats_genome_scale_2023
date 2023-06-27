@@ -104,6 +104,7 @@ library("sessioninfo")
 
 ##  Utilities
 library("BiocFileCache")
+library("RefManageR")
 library("BiocStyle")
 library("biocthis")
 library("here")

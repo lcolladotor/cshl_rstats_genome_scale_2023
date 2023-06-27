@@ -2,7 +2,12 @@
 
 Instructor: Daianna
 
-We will download the `rse_gene` object which contains the data at the gene level. We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
+
+As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the `smokingMouse` package. Visit [here](http://research.libd.org/smokingMouse/) for more details. 
+
+## Download data
+
+For illustrative purposes, we'll use nicotine data at the gene level which reside in a `RangedSummarizedExperiment` (RSE) object called `rse_gene`. We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
 
 ```{r download_data_biocfilecache}
 ## Download and cache the file
@@ -22,3 +27,90 @@ load(cached_rse_gene, verbose = TRUE)
 ## General overview of the object
 rse_gene
 ```
+
+## Data overview
+
+### Assays
+The dataset `rse_gene` contains the following assays:
+
+* `counts`: original read counts of the 55,401 mouse genes across 208 samples (inlcuding the 65 nicotine samples of interest).
+* `logcounts`: normalized and scaled counts ($log_2(CPM + 0.5)$) of the same genes across the same samples; normalization was carried out applying TMM method with `cpm(calcNormFactors())` of `r BiocStyle::Biocpkg("edgeR")`.
+
+
+```{r explore_assays}
+## Explore main assay (of raw counts)
+head(assay(rse_gene))
+## Access the same raw data with assays()
+head(assays(rse_gene)$counts)
+## Access lognorm counts
+head(assays(rse_gene)$logcounts)
+```
+
+
+### Sample data
+
+The same RSE contains the sample information in `colData(RSE)` and the gene information in `rowData(RSE)`.
+
+<mark style= "background-color: #FCF3CF"> Yellow </mark> variables correspond to SPEAQeasy outputs that are going to be used in downstream analyses. 
+
+<mark style= "background-color: #FAECF8"> Pink </mark> variables are specific of the study, such as sample metadata and some others containing additional information of the genes. 
+
+<mark style= "background-color: #DFF0FE"> Blue </mark> variables are Quality-Control metrics computed by `addPerCellQC()` of `r BiocStyle::Biocpkg("scuttle")`.
+
+
+### Gene Information 
+
+Among the information in `rowData(RSE)` the next variables are of interest for the analysis:
+
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> gencodeID</span> </mark>: GENCODE ID of each gene.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ensemblID</span> </mark>: gene ID in Ensembl database.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> EntrezID</span> </mark>: identifier of each gene in NCBI Entrez database.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> Symbol</span> </mark>:  official gene symbol for each mouse gene.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> retained_after_feature_filtering</span> </mark>: Boolean variable that equals TRUE if the gene passed the gene filtering (with `filterByExpr()` of `r BiocStyle::Biocpkg("edgeR")`) based on its expression levels and FALSE if not.
+
+### Sample Information 
+
+Sample information in `colData(RSE)` contains the following variables:
+
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> SAMPLE_ID</span> </mark>: is the name of the sample.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ERCCsumLogErr</span> </mark>: a summary statistic quantifying overall difference of expected and actual ERCC concentrations for one sample. 
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>: the decimal fraction of reads which successfully mapped to the reference genome (i.e. *numMapped* / *numReads*).
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark>: the number of reads which successfully mapped to the mitochondrial chromosome.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalMapped</span> </mark>: the number of reads which successfully mapped to the canonical sequences in the reference genome (excluding mitochondrial chromosomes).
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>: the decimal fraction of reads which mapped to the mitochondrial chromosome, of those which map at all (i.e. *mitoMapped* / (*totalMapped* + *mitoMapped*))
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>: the decimal fraction of reads assigned unambiguously to a gene (including mitochondrial genes), with `featureCounts` (Liao et al. 2014), of those in total.
+* <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark>: the decimal fraction of reads assigned to a gene whose type is ‘rRNA’, of those assigned to any gene.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Tissue</span> </mark>: tissue (mouse brain or blood) from which the sample comes.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Age</span> </mark>: if the sample comes from an adult or a pup mouse.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Sex</span> </mark>: if the sample comes from a female (F) or male (M)  mouse.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Expt</span> </mark>:  the experiment (nicotine or smoking exposure) to which the sample mouse was subjected; it could be an exposed or a control mouse of that experiment.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark>: if the sample belongs to a nicotine/smoking-exposed mouse (Expt) or a nicotine/smoking control mouse (Ctrl).
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark>: is the plate (1,2 or 3) in which the sample library was prepared.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Pregnancy</span> </mark>:  if the sample comes from a pregnant (Yes) or not pregnant (No) mouse.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> medium</span> </mark>: is the medium in which the sample was treated: water for brain samples and an elution buffer (EB) for the blood ones.
+* <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell</span> </mark>: is the sequencing batch of each sample.
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark>: library size (total sum of counts across all genes for each sample).
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>: number of non-zero expressed genes in each sample.
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark>: total sum of read counts of mt genes in each sample.
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_detected</span> </mark>: total number of mt genes in each sample.
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_percent</span> </mark>: % of mt genes' counts of the total counts of the sample. 
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Ribo_sum</span> </mark>: total sum of read counts of ribosomal genes in each sample.
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Ribo_detected</span> </mark>: total number of ribosomal genes in each sample.
+* <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Ribo_percent</span> </mark>: % of ribosomal genes' counts of the total counts of the sample.
+
+<div class="alert alert-info">
+  <strong>Note:</strong> in our case, we'll use samples from the nicotine experiment only, so all samples come from brain and were treated in water.
+</div>
+
+
+
+
+
+For illustrative purposes, we'll use nicotine data at the gene level only so let's access that data. 
+
+```{r extract_nicotine_data}
+rse_gene_nicotine <- 
+```
+
+
+
