@@ -171,8 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
 <ul>
-<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a></li>
-<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i>2. Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a>
+<ul>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-normalization"><i class="fa fa-check"></i>1.1 Data normalization</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#gene-filtering"><i class="fa fa-check"></i>1.2 Gene filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i>2. Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis"><i class="fa fa-check"></i>2.1 Quality Control Analysis</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
@@ -223,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-10"><a href="smokingmouse-rse.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb8-11"><a href="smokingmouse-rse.html#cb8-11" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb8-12"><a href="smokingmouse-rse.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f130dc5d3d_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f230e9bf89_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb8-14"><a href="smokingmouse-rse.html#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-15"><a href="smokingmouse-rse.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb8-16"><a href="smokingmouse-rse.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -340,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-8"><a href="smokingmouse-rse.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5      6094 ENSMUSG00000051951.5 ENSMUSG00000051951 protein_coding      497097</span></span></code></pre></div>
 <style>
 p.exercise  {
-background-color: #DBDBDB;
+background-color: #F3F9CB;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
@@ -350,7 +357,7 @@ font-family: sans-serif;
 
 </style>
 <p class="exercise">
-❓ <strong><em>How would you access data of a specific sample variable</em></strong>
+📑 <strong><em>How would you access data of a specific sample variable</em></strong>
 </p>
 <p>For illustrative purposes, we’ll use nicotine data at the gene level only so let’s access that data.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="smokingmouse-rse.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original dimensions of the data</span></span>

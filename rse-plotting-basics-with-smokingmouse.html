@@ -171,8 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
 <ul>
-<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a></li>
-<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i>2. Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a>
+<ul>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-normalization"><i class="fa fa-check"></i>1.1 Data normalization</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#gene-filtering"><i class="fa fa-check"></i>1.2 Gene filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i>2. Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis"><i class="fa fa-check"></i>2.1 Quality Control Analysis</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
@@ -217,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb14-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb14-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f130dc5d3d_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f230e9bf89_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb14-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb14-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -232,20 +239,21 @@ The main objective of this first part is to explore the quality of the samples, 
 <img src="Figures/all_analyses.png" width="700px" align=center />
 <figcaption style="color: gray; line-height: 0.87; text-align: justify">
 <font size="-1.8">
-<b>Figure 2</b>: <b> Summary of the analyses. </b> Steps in yellow will be properly performed.
+<b>Figure 1</b>: <b> Summary of the analyses. </b> Steps in yellow will be properly performed.
 <b> 1. Data Preparation </b>: in this initial part counts are normalized and scaled and low-expressed genes are filtered.
-<b> 2. Exploratory Data Analysis </b>: the quality of the samples is compared, poor-quality samples are removed and both gene-level and sample-level effects are explored.
-<b> 3. Differential Expression Analysis </b>: a linear model is fitted for each gene and log fold changes are obtained for the contrast of interest; other statistics are also computed and compared. Here the differentially expressed genes (DEGs) are determined and quantified.
-<b> 4. GO &amp; KEGG Analyses </b>: in this part Gene Ontology and KEGG enrichment analyses are performed to identify biological processes and functions in which DEGs are significantly involved.
-<b> 5. DEG visualization </b> </font> heatmaps are created to visually contrast gene expression levels of DEGs in control and experimental samples.
+<b> 2. Exploratory Data Analysis</b>: the quality of the samples is compared, poor-quality samples are removed and both gene-level and sample-level effects are explored.
+<b> 3. Differential Expression Analysis</b>: a linear model is fitted for each gene and log fold changes are obtained for the contrast of interest; other statistics are also computed and compared. Here the differentially expressed genes (DEGs) are determined and quantified.
+<b> 4. GO &amp; KEGG Analyses</b>: in this part Gene Ontology and KEGG enrichment analyses are performed to identify biological processes and functions in which DEGs are significantly involved.
+<b> 5. DEG visualization</b>: heatmaps are created to visually contrast gene expression levels of DEGs in control and experimental samples. </font>
 <font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component;
 DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia of Genes and Genomes.</font>
 </figcaption>
 </figure>
-<div id="data-preparation" class="section level3 unnumbered hasAnchor">
-<h3>1. Data preparation<a href="rse-plotting-basics-with-smokingmouse.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="data-preparation" class="section level2 unnumbered hasAnchor">
+<h2>1. Data preparation<a href="rse-plotting-basics-with-smokingmouse.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Even before exploring the samples, the first step is to normalize the counts and filter non-expressed genes; we won’t do the processes themselves since we already have normalized and filtered data but let’s check why these steps are important and where to extract the data we need for posterior analyses.</p>
-<p><strong>1.1 Data normalization</strong></p>
+<div id="data-normalization" class="section level3 unnumbered hasAnchor">
+<h3>1.1 Data normalization<a href="rse-plotting-basics-with-smokingmouse.html#data-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Data normalization is a primordial step when working with expression data because raw counts do not necessarily reflect real expression measures of the genes since there are technical differences in the way the libraries are prepared and sequenced, as well as intrinsic differences in the genes that are translated into more or less mapping reads. Particularly, there are <em>within-sample effects</em> that are the differences between genes in the same sample, such as their <strong>length</strong> (the longer the gene, the more reads it will have) and <strong>GC content</strong>, factors that contribute to variations in their counts. On the other hand, <em>between-sample effects</em> are differences between samples such as the <strong>sequencing depth</strong>, i.e., the total number of molecules sequenced, and the <strong>library size</strong>, i.e., the total number of reads of each sample [1].</p>
 <p>These variables lead to virtually different mRNA amounts but of course are not due to the biological or treatment conditions of interest (such as nicotine administration in this example) so in order to remove, or at least, to minimize this technical bias and obtain measures comparable and consistent across samples, raw counts must be normalized by these factors. The data that we’ll use in this case are already normalized in <code>assays(rse_gene)$logcounts</code>. Specifically, the assay contains counts per million (CPM), also known as reads per million (RPM), one basic gene expression unit that only normalizes by the sequencing depth and is computed by dividing the read counts of a gene in a sample by a scaling factor given by the total mapping reads of the sample per million [2]:</p>
 <p><span class="math display">\[CPM = \frac{read \ \ counts \ \ of \ \ gene \ \ \times \ \ 10^6 }{Total \ \ mapping \ \ reads \ \ of \ \ sample}\]</span></p>
@@ -275,7 +283,9 @@ DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia
 <span id="cb16-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-9" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&quot;cm&quot;</span>)) </span></code></pre></div>
 <p><img src="_main_files/figure-html/Data%20preparation-2.png" width="672" /></p>
 <p>As presented, after data transformation, we can now see a more widespread distribution of the counts, but note that most of them are zeros in the first plot (the one with the raw counts) and those zeros remain after normalization, corresponding to counts below 0 in the second plot. That is because we haven’t filtered the low and zero-expressed genes.</p>
-<p><strong>1.2 Gene filtering</strong></p>
+</div>
+<div id="gene-filtering" class="section level3 unnumbered hasAnchor">
+<h3>1.2 Gene filtering<a href="rse-plotting-basics-with-smokingmouse.html#gene-filtering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Low-expressed or non-expressed genes in many samples are not of biological interest in a study of differential expression because they don’t inform about the gene expression changes and they are, by definition, not differentially expressed, so we have to drop them using <code>filterByExpr()</code> from <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> that only keeps genes with at least <em>K</em> CPM in <em>n</em> samples and with a minimum total number of counts across all samples.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Retain genes that passed filtering step</span></span>
@@ -295,10 +305,12 @@ DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia
 <p>In this third plot we can observe a curve that is closer (though not completely) to a Norm distribution and with less low-expressed genes.</p>
 <p>With the object <code>rse_gene_filt</code> we can proceed with downstream analyses.</p>
 </div>
-<div id="exploratory-data-analysis" class="section level3 unnumbered hasAnchor">
-<h3>2. Exploratory Data Analysis<a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="exploratory-data-analysis" class="section level2 unnumbered hasAnchor">
+<h2>2. Exploratory Data Analysis<a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The first formal step that we will be performing is the sample exploration. This crucial initial part of the analysis consists of an examination of differences and relationships between Quality-Control (QC) metrics of the samples from different groups in order to identify poor-quality samples that must be removed before DEA. After that, the sample variables in the meta-data also need to be analyzed and filtered based on the percentage of gene expression variance that they explain for each gene.</p>
-<p><strong>2.1 Quality Control Analysis</strong></p>
+<div id="quality-control-analysis" class="section level3 unnumbered hasAnchor">
+<h3>2.1 Quality Control Analysis<a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See <a href="#id_##Sample%20Information"><strong>Sample Information</strong></a> for the description of the variables.</p>
 <style>
 p.comment {
@@ -320,7 +332,7 @@ font-family: sans-serif;
 <div class="alert alert-info">
 <p><strong>Note:</strong> the QC metrics were computed with the unprocessed datasets (neither filtered nor normalized) to preserve the original estimates of the samples.</p>
 </div>
-<p><em>2.1.1 Evaluate QC metrics for groups of samples</em></p>
+<p><strong>2.1.1 Evaluate QC metrics for groups of samples</strong></p>
 <p>Fortunately, we can identify to some extent possible factors that could have influenced on the quality of the samples, as well as isolated samples that are problematic. To do that, we will create boxplots that present the distribution of the samples’ metrics separating them by sample variables.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
 <span id="cb18-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
@@ -442,7 +454,7 @@ have low (though not much lower) <mark style= "background-color: #FCF3CF"> <span
 <p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>For the flowcell, again not worrying distinctiveness are detected, with the exception of a few individual samples far from the rest.</p>
 <p>In all the previous plots we can appreciate a group of samples placed below in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> that correspond to pup samples. The relationship is more fuzzy in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>.</p>
-<p><em>2.1.2 Examine relationships between QC metrics of samples</em></p>
+<p><strong>2.1.2 Examine relationships between QC metrics of samples</strong></p>
 <p>Secondly, we want to analyze if there are relationships between QC variables that explain the presence of samples with two or more particular QC metrics. For that, scatterplots are useful because they enable the evaluation of pairs of samples’ QC metrics.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Scatterplots for a pair of QC metrics</span></span>
@@ -514,8 +526,10 @@ have low (though not much lower) <mark style= "background-color: #FCF3CF"> <span
 <span id="cb25-68"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-68" aria-hidden="true" tabindex="-1"></a>        plots[[i]]<span class="ot">&lt;-</span> <span class="fu">QC_scatterplots</span>(sample_var, qc_metric1, qc_metric2)</span>
 <span id="cb25-69"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-69" aria-hidden="true" tabindex="-1"></a>        i<span class="ot">=</span>i<span class="sc">+</span><span class="dv">1</span></span>
 <span id="cb25-70"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-70" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb25-71"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">plot_grid</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], plots[[<span class="dv">4</span>]], plots[[<span class="dv">5</span>]], plots[[<span class="dv">6</span>]], <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="fl">1.1</span>,<span class="dv">1</span>,<span class="fl">1.2</span>) ))</span>
-<span id="cb25-72"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-72" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb25-71"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-71" aria-hidden="true" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="fu">plot_grid</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], plots[[<span class="dv">4</span>]], plots[[<span class="dv">5</span>]], plots[[<span class="dv">6</span>]], <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="fl">1.1</span>,<span class="dv">1</span>,<span class="fl">1.2</span>) )</span>
+<span id="cb25-72"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-72" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-73"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-73" aria-hidden="true" tabindex="-1"></a>    p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.1</span>,<span class="fl">0.5</span>,<span class="fl">0.1</span>), <span class="st">&quot;cm&quot;</span>))</span>
+<span id="cb25-74"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-74" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;rRNA_rate&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>For <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> vs <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> plots there’s a poor positive correlation which was anticipated since no obvious relationship exists between them, though if cytoplasmic mRNAs wouldn’t have been well captured (lowering the total number of mapping reads) we could expect an increase in both mitochondrial and ribosomal rates.</p>
@@ -533,7 +547,7 @@ Noticeably, a positive correlation is present for <mark style= "background-color
 <p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Lastly, there’s a slight positive correlation between <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>, which makes sense because reads assigned to genes rise the number of non-zero expressed genes but as mentioned, those genes are not necessarily highly expressed and thus, library sizes are not perforce so much bigger. Also note that the correlation wouldn’t be conserved within pup samples.</p>
 <p>Remarkably, samples were not differentiated by any other variable (including Group!) but the differences between adult and pup metrics suggest that they must be splitted into two different groups for the following analyses.</p>
-<p><em>2.1.3 QC sample filtering</em></p>
+<p><strong>2.1.3 QC sample filtering</strong></p>
 <p>After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based, precisely, on these metrics. For that, we will use <code>isOutlier()</code> from <em><a href="https://bioconductor.org/packages/3.17/scater">scater</a></em> to identify outlier samples only at the lower end or the higher end, depending on the QC metric.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
@@ -939,6 +953,7 @@ For adults, only 3 controls are dropped, 3 of them by their <mark style= "backgr
 #&gt; 
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 
+</div>
 </div>
 </div>
 <div class="container">
