@@ -125,9 +125,13 @@ font-family: sans-serif;
 </style>
 
 <p class="exercise">
-📑 **Exercise**: How would you access data of a specific sample variable?
+📑 **Exercise 1**: How would you access data of a specific sample variable?
 </p>
 
+```{r exersice1, eval=FALSE}
+## Solution
+head(rse_gene_nic$flowcell)
+```
 
 For illustrative purposes, we'll use nicotine data at the gene level only so let's access that data. 
 
@@ -137,6 +141,26 @@ rse_gene_nic <- rse_gene[,which(rse_gene$Expt=='Nicotine')]
 ## New dimensions
 dim(rse_gene_nic)
 ```
+
+<p class="exercise">
+📑 **Exercise 2**: How could you check that all samples are from the nicotine experiment?
+</p>
+
+```{r exersice2, eval=FALSE}
+## Solution
+table(rse_gene_nic$Expt)
+```
+
+<p class="exercise">
+📑 **Exercise 3**: How many nicotine samples correspond to adults and how many to pups? How many pups were males and how many were females?
+</p>
+```{r exercise3, eval=FALSE}
+## Solution
+table(rse_gene$Age)
+pup_samples <- rse_gene[, which(rse_gene$Age=='Pup')]
+table(pup_samples$Sex)
+```
+
 
 
 ```{r echo=FALSE}

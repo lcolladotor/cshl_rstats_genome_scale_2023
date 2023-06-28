@@ -30,14 +30,16 @@ The main objective of this first part is to explore the quality of the samples, 
     <img src="Figures/all_analyses.png" width="700px" align=center />
         <figcaption style="color: gray; line-height: 0.9; text-align: justify">
             <font size="-1.8">
-                <b>Figure 1</b>: <b> Summary of the analyses. </b> Steps in yellow will be properly performed. 
+                <b>Figure 1</b>: <b> Summary of the analyses for differential expression. </b> Steps in yellow will be properly performed. 
                 <b> 1. Data Preparation</b>: in this initial part counts are normalized and scaled and low-expressed genes are filtered.
                 <b> 2. Exploratory Data Analysis</b>: the quality of the samples is compared, poor-quality samples are removed and both gene-level and sample-level effects are explored.
                 <b> 3. Differential Expression Analysis</b>: a linear model is fitted for each gene and log fold changes are obtained for the contrast of interest; other statistics are also computed and compared. Here the differentially expressed genes (DEGs) are determined and quantified. 
                 <b> 4. GO & KEGG Analyses</b>: in this part Gene Ontology and KEGG enrichment analyses are performed to identify biological processes and functions in which DEGs are significantly involved. 
                 <b> 5. DEG visualization</b>: heatmaps are created to visually contrast gene expression levels of DEGs in control and experimental samples. </font>
-            <font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component; 
-            DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia of Genes and Genomes.</font>
+            <font size="0.8"> 
+            Abbreviations: CPM: counts per million; QC: quality control; PC: principal component; 
+            DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia of Genes and Genomes.
+            </font>
         </figcaption>
 </figure>
 
@@ -58,7 +60,7 @@ As outlined in [**Data overview and download**](##Data overview and download), t
 
 After data normalization and scaling, we’d expect the read counts to follow a Norm distribution, something we can confirm comparing the counts' distribution before and after the normalization. Consider both datasets contain the exact same genes. 
 
-```{r "Data preparation", message=FALSE, warning=FALSE}
+```{r Data preparation, message=FALSE, warning=FALSE}
 
 library(ggplot2)
 
@@ -120,7 +122,7 @@ The first formal step that we will be performing is the sample exploration. This
 
 ### 2.1 Quality Control Analysis {-}
 
-First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See [**Sample Information**](###Sample Information) for the description of the variables.  
+First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See **Sample Information** section in chapter 04 for the description of the variables.  
 
 <style>
 p.comment {
@@ -153,7 +155,7 @@ font-family: sans-serif;
 
 Fortunately, we can identify to some extent possible factors that could have influenced on the quality of the samples, as well as isolated samples that are problematic. To do that, we will create boxplots that present the distribution of the samples' metrics separating them by sample variables. 
 
-```{r "QC_boxplots",  message=FALSE, warning=FALSE}
+```{r QC_boxplots,  message=FALSE, warning=FALSE}
 library(Hmisc)
 library(stringr)
 library(cowplot)
@@ -419,6 +421,20 @@ multiple_QC_scatterplots('detected', 'totalAssignedGene')
 
 Lastly, there's a slight positive correlation between <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>, which makes sense because reads assigned to genes rise the number of non-zero expressed genes but as mentioned, those genes are not necessarily highly expressed and thus, library sizes are not perforce so much bigger. Also note that the correlation wouldn't be conserved within pup samples. 
 
+```{r message=FALSE, warning=FALSE}
+multiple_QC_scatterplots('detected', 'totalAssignedGene')
+```
+
+
+<p class="exercise">
+📑 **Exercise 1**: What's the correlation between <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark>? What factor could explain that correlation? Why are <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark> numbers bigger than <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark> values?
+</p>
+
+```{r exercise1, message=FALSE, warning=FALSE,  eval=FALSE}
+## Solution
+multiple_QC_scatterplots('subsets_Mito_sum', 'mitoMapped')
+## Because in mitoMapped you take reads that mapped to the whole mt chr, in subsets_Mito_sum only reads that were aligned to mt genes. But there's almost a perfect correlation between these two metrics. 
+```
 
 Remarkably, samples were not differentiated by any other variable (including Group!) but the differences between adult and pup metrics suggest that they must be splitted into two different groups for the following analyses.
 
@@ -611,12 +627,30 @@ font-family: sans-serif;
 </style>
 
 <p class="exercise">
-📑 **Exercise**: Were the filtered samples from males or females? From which plates and flowcells? In what other QC metrics some samples were considered poor quality? 
+📑 **Exercise 2**: Were the filtered adult samples from pregnant or not pregnant mice? From which plates and flowcells? What were their library sizes?
 </p>
+
+```{r exercise2, message=FALSE, warning=FALSE, eval=FALSE}
+## Solution
+p <- boxplots_after_QC_filtering(rse_gene_adults, 'mitoRate', 'Pregnancy')
+p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
+
+p <- boxplots_after_QC_filtering(rse_gene_adults, 'mitoRate', 'plate')
+p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
+
+p <- boxplots_after_QC_filtering(rse_gene_adults, 'mitoRate', 'flowcell')
+p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
+
+p <- boxplots_after_QC_filtering(rse_gene_adults, 'sum', 'Group')
+p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
+```
 
 <div class="alert alert-info">
    Try the function yourself with different QC metrics and sample variables! 
 </div>
+
+
+
 
 
 ```{r echo=FALSE}
