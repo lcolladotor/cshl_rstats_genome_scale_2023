@@ -207,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">4</span> smokingMouse RSE<a href="smokingmouse-rse.html#smokingmouse-rse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Daianna</p>
 <p>Once you have reviewed how to use <code>RangedSummarizedExperiment</code> (RSE) objects in R, now we’ll start exploring the <code>smokingMouse</code> data.</p>
-<p>As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the (Gonzalez-Padilla and Collado-Torres, 2023) package. Visit <a href="http://research.libd.org/smokingMouse/">here</a> for more details.</p>
+<p>As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the <code>smokingMouse</code> (Gonzalez-Padilla and Collado-Torres, 2023) package. Visit <a href="http://research.libd.org/smokingMouse/">here</a> for more details.</p>
 <div id="download-data" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Download data<a href="smokingmouse-rse.html#download-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For illustrative purposes, we’ll use nicotine data at the gene level which reside in a <code>RangedSummarizedExperiment</code> (RSE) object called <code>rse_gene</code>. We’ll use <em><a href="https://bioconductor.org/packages/3.17/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-10"><a href="smokingmouse-rse.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb8-11"><a href="smokingmouse-rse.html#cb8-11" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb8-12"><a href="smokingmouse-rse.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/60432ea70c7_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f130dc5d3d_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb8-14"><a href="smokingmouse-rse.html#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-15"><a href="smokingmouse-rse.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb8-16"><a href="smokingmouse-rse.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>

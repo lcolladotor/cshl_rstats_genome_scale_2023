@@ -217,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb14-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb14-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/60432ea70c7_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f130dc5d3d_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb14-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb14-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -226,16 +226,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Nicotine data</span></span>
 <span id="cb14-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-20" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[ ,<span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt<span class="sc">==</span><span class="st">&#39;Nicotine&#39;</span>)]</span></code></pre></div>
-<p>In this part of the course you’ll have a plotting session in which you’ll learn what type of plots you can do to explore your data, but please note that this is not a differential expression analysis itself. The steps that will be performed are shown in <strong>Figure 1</strong>.
+<p>In this part of the course you’ll have a plotting session in which you’ll learn what type of plots you can create to explore your data, but please note that this is not a differential expression analysis itself. The steps that will be performed are shown in <strong>Figure 1</strong>.
 The main objective of this first part is to explore the quality of the samples, their differences in gene expression variations and the impact of sample variables on gene expression variance. You’ll also learn how to visualize gene expression counts.</p>
 <figure>
-<img src="Figures/DEA.png" width="700px" align=center />
+<img src="Figures/all_analyses.png" width="700px" align=center />
 <figcaption style="color: gray; line-height: 0.87; text-align: justify">
 <font size="-1.8">
-<b>Figure 2</b>: <b> Summary of the analyses for plotting session. </b>
-<b> 1. Data Preparation </b>
-<b> 2. Exploratory Data Analysis </b>
-<font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component.</font>
+<b>Figure 2</b>: <b> Summary of the analyses. </b> Steps in yellow will be properly performed.
+<b> 1. Data Preparation </b>: in this initial part counts are normalized and scaled and low-expressed genes are filtered.
+<b> 2. Exploratory Data Analysis </b>: the quality of the samples is compared, poor-quality samples are removed and both gene-level and sample-level effects are explored.
+<b> 3. Differential Expression Analysis </b>: a linear model is fitted for each gene and log fold changes are obtained for the contrast of interest; other statistics are also computed and compared. Here the differentially expressed genes (DEGs) are determined and quantified.
+<b> 4. GO &amp; KEGG Analyses </b>: in this part Gene Ontology and KEGG enrichment analyses are performed to identify biological processes and functions in which DEGs are significantly involved.
+<b> 5. DEG visualization </b> </font> heatmaps are created to visually contrast gene expression levels of DEGs in control and experimental samples.
+<font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component;
+DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia of Genes and Genomes.</font>
 </figcaption>
 </figure>
 <div id="data-preparation" class="section level3 unnumbered hasAnchor">
@@ -257,9 +261,8 @@ The main objective of this first part is to explore the quality of the samples, 
 <span id="cb15-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-8" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(counts_data, <span class="fu">aes</span>(<span class="at">x=</span>counts)) <span class="sc">+</span></span>
 <span id="cb15-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">fill=</span><span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
 <span id="cb15-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;read counts&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) <span class="sc">+</span></span>
-<span id="cb15-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb15-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>), <span class="st">&quot;cm&quot;</span>)) </span>
-<span id="cb15-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-13" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<span id="cb15-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() </span>
+<span id="cb15-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-12" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&quot;cm&quot;</span>)) </span></code></pre></div>
 <p><img src="_main_files/figure-html/Data%20preparation-1.png" width="672" /></p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Normalized counts</span></span>
@@ -268,9 +271,8 @@ The main objective of this first part is to explore the quality of the samples, 
 <span id="cb16-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">&quot;darkgray&quot;</span>, <span class="at">fill=</span><span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
 <span id="cb16-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb16-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">&quot;#69b3a2&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;log(CPM+0.5)&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>), <span class="st">&quot;cm&quot;</span>)) </span>
-<span id="cb16-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-10" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<span id="cb16-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;log(CPM+0.5)&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) </span>
+<span id="cb16-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-9" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&quot;cm&quot;</span>)) </span></code></pre></div>
 <p><img src="_main_files/figure-html/Data%20preparation-2.png" width="672" /></p>
 <p>As presented, after data transformation, we can now see a more widespread distribution of the counts, but note that most of them are zeros in the first plot (the one with the raw counts) and those zeros remain after normalization, corresponding to counts below 0 in the second plot. That is because we haven’t filtered the low and zero-expressed genes.</p>
 <p><strong>1.2 Gene filtering</strong></p>
@@ -287,9 +289,8 @@ The main objective of this first part is to explore the quality of the samples, 
 <span id="cb17-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">&quot;darkgray&quot;</span>, <span class="at">fill=</span><span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
 <span id="cb17-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb17-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">&quot;#69b3a2&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb17-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;log(CPM+0.5)&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>), <span class="st">&quot;cm&quot;</span>)) </span>
-<span id="cb17-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-15" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<span id="cb17-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;log(CPM+0.5)&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>)</span>
+<span id="cb17-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-14" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&quot;cm&quot;</span>)) </span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>In this third plot we can observe a curve that is closer (though not completely) to a Norm distribution and with less low-expressed genes.</p>
 <p>With the object <code>rse_gene_filt</code> we can proceed with downstream analyses.</p>
