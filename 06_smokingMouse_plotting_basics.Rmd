@@ -368,7 +368,7 @@ QC_scatterplots <- function(sample_var, qc_metric1, qc_metric2){
 ## QC scatterplots coloring by all sample variables
 multiple_QC_scatterplots <- function(qc_metric1, qc_metric2){
     
-    sample_variables <- c('Age', 'Group', 'Sex', 'plate', 'Pregnancy', 'flowcell')
+    sample_variables <- c('Age', 'Sex', 'plate', 'Pregnancy', 'Group', 'flowcell')
     
     i=1
     plots = list()
@@ -597,7 +597,7 @@ p + theme(plot.margin=unit (c (2,4,2,4), 'cm'))
 
 <style>
 p.exercise  {
-background-color: #E2EED7;
+background-color: #F5F4D8;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
