@@ -186,7 +186,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a></li>
 <li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a></li>
 <li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
-<li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a></li>
+<li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
+<ul>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i>Explore gene-level effects</a>
+<ul>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a></li>
 <li class="chapter" data-level="14" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>14</b> Exercise with variancePartition and ComplexHeatmap</a></li>
 <li class="chapter" data-level="15" data-path="tbd.html"><a href="tbd.html"><i class="fa fa-check"></i><b>15</b> TBD</a></li>
@@ -213,7 +219,746 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="de-model-building-with-variancepartition" class="section level1 hasAnchor" number="12">
 <h1><span class="header-section-number">12</span> DE model building with variancePartition<a href="de-model-building-with-variancepartition.html#de-model-building-with-variancepartition" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Daianna</p>
+<div id="explore-gene-level-effects" class="section level2 unnumbered hasAnchor">
+<h2>Explore gene-level effects<a href="de-model-building-with-variancepartition.html#explore-gene-level-effects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Once the quality and the variability of the samples have been evaluated, the next step is to explore the differences in the expression of the genes themselves in the sample groups, or in other words, to quantify the contribution of the multiple sample variables of the study in the gene expression variation, which constitutes one of the fundamental challenges when analyzing complex RNA-seq datasets [3].</p>
+<p>To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study nicotine effects, we can implement an analysis of variance partition. <code>variancePartition</code> is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables of the experimental design of high-throughput genomics studies [3].</p>
+<div id="variance-partition-analysis" class="section level3 unnumbered hasAnchor">
+<h3>1. Variance Partition Analysis<a href="de-model-building-with-variancepartition.html#variance-partition-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>1.1 Canonical Correlation Analysis</strong></p>
+<p>Before the analysis itself, we need to measure the correlation between the sample variables. This is an important step because highly correlated variables can produce unstable estimates of the variance fractions and hinder the identification of the variables that really contribute to the expression variation. There are at least two problems with that:</p>
+<ul>
+<li>If two variables are correlated, we could incorrectly determine that one of them contributes to gene expression changes when in reality it was just correlated with a real contributory variable.</li>
+<li>The part of variance explained by a biologically relevant variable can be reduced by the apparent contributions of correlated variables, if for example, they contain very similar information.</li>
+</ul>
+<p>Additionally, the analysis is better performed with simpler models, specially when we have a limited number of samples in the study.</p>
+<p>Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with <code>canCorPairs()</code> that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [4].</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="de-model-building-with-variancepartition.html#cb37-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-2"><a href="de-model-building-with-variancepartition.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(variancePartition)</span>
+<span id="cb37-3"><a href="de-model-building-with-variancepartition.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb37-4"><a href="de-model-building-with-variancepartition.html#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="de-model-building-with-variancepartition.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="do">#######################   Variance Partition Analysis   #######################</span></span>
+<span id="cb37-6"><a href="de-model-building-with-variancepartition.html#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="de-model-building-with-variancepartition.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Fraction of variation attributable to each variable after correcting for all other variables</span></span>
+<span id="cb37-8"><a href="de-model-building-with-variancepartition.html#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="de-model-building-with-variancepartition.html#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="de-model-building-with-variancepartition.html#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1. Canonical Correlation Analysis (CCA)</span></span>
+<span id="cb37-11"><a href="de-model-building-with-variancepartition.html#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="de-model-building-with-variancepartition.html#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Asses the correlation between each pair of sample variables</span></span>
+<span id="cb37-13"><a href="de-model-building-with-variancepartition.html#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="de-model-building-with-variancepartition.html#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot heatmap of correlations</span></span>
+<span id="cb37-15"><a href="de-model-building-with-variancepartition.html#cb37-15" aria-hidden="true" tabindex="-1"></a>plot_CCA<span class="ot">&lt;-</span> <span class="cf">function</span>(age){</span>
+<span id="cb37-16"><a href="de-model-building-with-variancepartition.html#cb37-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb37-17"><a href="de-model-building-with-variancepartition.html#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Data</span></span>
+<span id="cb37-18"><a href="de-model-building-with-variancepartition.html#cb37-18" aria-hidden="true" tabindex="-1"></a>    rse_gene <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste0</span>(<span class="st">&#39;rse_gene_&#39;</span>, age, <span class="st">&#39;_qc&#39;</span>)))</span>
+<span id="cb37-19"><a href="de-model-building-with-variancepartition.html#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="de-model-building-with-variancepartition.html#cb37-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb37-21"><a href="de-model-building-with-variancepartition.html#cb37-21" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Define variables to examine: remove those with single values</span></span>
+<span id="cb37-22"><a href="de-model-building-with-variancepartition.html#cb37-22" aria-hidden="true" tabindex="-1"></a>    <span class="do">## For adults: all are females (so we drop &#39;Sex&#39; variable)</span></span>
+<span id="cb37-23"><a href="de-model-building-with-variancepartition.html#cb37-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb37-24"><a href="de-model-building-with-variancepartition.html#cb37-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (age <span class="sc">==</span> <span class="st">&#39;adults&#39;</span>){</span>
+<span id="cb37-25"><a href="de-model-building-with-variancepartition.html#cb37-25" aria-hidden="true" tabindex="-1"></a>        formula <span class="ot">=</span> <span class="er">~</span> Group <span class="sc">+</span> Pregnancy <span class="sc">+</span> plate <span class="sc">+</span> flowcell <span class="sc">+</span> mitoRate <span class="sc">+</span> overallMapRate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> rRNA_rate <span class="sc">+</span> sum <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb37-26"><a href="de-model-building-with-variancepartition.html#cb37-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-27"><a href="de-model-building-with-variancepartition.html#cb37-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-28"><a href="de-model-building-with-variancepartition.html#cb37-28" aria-hidden="true" tabindex="-1"></a>    <span class="do">## For pups: none is pregnant (so &#39;Pregnancy&#39; variable is not considered)</span></span>
+<span id="cb37-29"><a href="de-model-building-with-variancepartition.html#cb37-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb37-30"><a href="de-model-building-with-variancepartition.html#cb37-30" aria-hidden="true" tabindex="-1"></a>      formula <span class="ot">=</span> <span class="er">~</span> Group <span class="sc">+</span> Sex <span class="sc">+</span> plate <span class="sc">+</span> flowcell <span class="sc">+</span> mitoRate <span class="sc">+</span> overallMapRate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> rRNA_rate <span class="sc">+</span> sum <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb37-31"><a href="de-model-building-with-variancepartition.html#cb37-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-32"><a href="de-model-building-with-variancepartition.html#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-33"><a href="de-model-building-with-variancepartition.html#cb37-33" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Measure correlations</span></span>
+<span id="cb37-34"><a href="de-model-building-with-variancepartition.html#cb37-34" aria-hidden="true" tabindex="-1"></a>    C<span class="ot">=</span><span class="fu">canCorPairs</span>(formula, <span class="fu">colData</span>(rse_gene))</span>
+<span id="cb37-35"><a href="de-model-building-with-variancepartition.html#cb37-35" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Heatmap</span></span>
+<span id="cb37-36"><a href="de-model-building-with-variancepartition.html#cb37-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pheatmap</span>(</span>
+<span id="cb37-37"><a href="de-model-building-with-variancepartition.html#cb37-37" aria-hidden="true" tabindex="-1"></a>        C, <span class="do">## data</span></span>
+<span id="cb37-38"><a href="de-model-building-with-variancepartition.html#cb37-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="fu">hcl.colors</span>(<span class="dv">50</span>, <span class="st">&quot;YlOrRd&quot;</span>, <span class="at">rev =</span> <span class="cn">TRUE</span>), <span class="do">## color scale</span></span>
+<span id="cb37-39"><a href="de-model-building-with-variancepartition.html#cb37-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">fontsize=</span><span class="dv">8</span>,  <span class="do">## text size</span></span>
+<span id="cb37-40"><a href="de-model-building-with-variancepartition.html#cb37-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">border_color =</span> <span class="st">&quot;black&quot;</span>,  <span class="do">## border color for heatmap cells</span></span>
+<span id="cb37-41"><a href="de-model-building-with-variancepartition.html#cb37-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">cellwidth =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">&#39;cm&#39;</span>),  <span class="do">## height of cells</span></span>
+<span id="cb37-42"><a href="de-model-building-with-variancepartition.html#cb37-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">cellheight =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">&#39;cm&#39;</span>) <span class="do">## width of cells</span></span>
+<span id="cb37-43"><a href="de-model-building-with-variancepartition.html#cb37-43" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb37-44"><a href="de-model-building-with-variancepartition.html#cb37-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-45"><a href="de-model-building-with-variancepartition.html#cb37-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(C)</span>
+<span id="cb37-46"><a href="de-model-building-with-variancepartition.html#cb37-46" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>As you can see and in agreement to what we observed in the previous correlation plots, for adults there’s a strong correlation between <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>; we already know it’s a negative correlation. There’s also a strong correlation between <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell </span> </mark> and between <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="de-model-building-with-variancepartition.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for adult samples</span></span>
+<span id="cb38-2"><a href="de-model-building-with-variancepartition.html#cb38-2" aria-hidden="true" tabindex="-1"></a>CCA_adults <span class="ot">&lt;-</span> <span class="fu">plot_CCA</span>(<span class="st">&#39;adults&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>In pups <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark> has a relationship with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark>, <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell</span> </mark>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="de-model-building-with-variancepartition.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb39-2"><a href="de-model-building-with-variancepartition.html#cb39-2" aria-hidden="true" tabindex="-1"></a>CCA_pups <span class="ot">&lt;-</span> <span class="fu">plot_CCA</span>(<span class="st">&#39;pups&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Importantly, in both groups of age <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark> is not highly correlated with any other variable. This is desirable because if this variable, the one that separates experimental and control samples, were correlated with another, then its individual contribution to gene expression changes would be diminished, affecting the results of the differential expression analysis: we would obtain gene differences driven by other variables rather than <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark>. Also, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> are correlated.</p>
+<p>Let’s explore why these variables are correlated in the next plots.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="de-model-building-with-variancepartition.html#cb40-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-2"><a href="de-model-building-with-variancepartition.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.1  Barplots/Boxplots/Scatterplots for each pair of correlated variables</span></span>
+<span id="cb40-3"><a href="de-model-building-with-variancepartition.html#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="de-model-building-with-variancepartition.html#cb40-4" aria-hidden="true" tabindex="-1"></a>corr_plots <span class="ot">&lt;-</span> <span class="cf">function</span>(age, sample_var1, sample_var2, sample_color){</span>
+<span id="cb40-5"><a href="de-model-building-with-variancepartition.html#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="de-model-building-with-variancepartition.html#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Data</span></span>
+<span id="cb40-7"><a href="de-model-building-with-variancepartition.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    rse_gene <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste</span>(<span class="st">&quot;rse_gene&quot;</span>, age, <span class="st">&#39;qc&#39;</span>, <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)))</span>
+<span id="cb40-8"><a href="de-model-building-with-variancepartition.html#cb40-8" aria-hidden="true" tabindex="-1"></a>    CCA <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste0</span>(<span class="st">&#39;CCA_&#39;</span>, age)))</span>
+<span id="cb40-9"><a href="de-model-building-with-variancepartition.html#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="de-model-building-with-variancepartition.html#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Sample color by one variable</span></span>
+<span id="cb40-11"><a href="de-model-building-with-variancepartition.html#cb40-11" aria-hidden="true" tabindex="-1"></a>    colors <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb40-12"><a href="de-model-building-with-variancepartition.html#cb40-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Group&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Control&#39;</span><span class="ot">=</span><span class="st">&#39;brown2&#39;</span>, <span class="st">&#39;Experimental&#39;</span><span class="ot">=</span><span class="st">&#39;deepskyblue3&#39;</span>),</span>
+<span id="cb40-13"><a href="de-model-building-with-variancepartition.html#cb40-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Age&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Adult&#39;</span><span class="ot">=</span><span class="st">&#39;slateblue3&#39;</span>, <span class="st">&#39;Pup&#39;</span><span class="ot">=</span><span class="st">&#39;yellow3&#39;</span>),</span>
+<span id="cb40-14"><a href="de-model-building-with-variancepartition.html#cb40-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Sex&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;F&#39;</span><span class="ot">=</span><span class="st">&#39;hotpink1&#39;</span>, <span class="st">&#39;M&#39;</span><span class="ot">=</span><span class="st">&#39;dodgerblue&#39;</span>),</span>
+<span id="cb40-15"><a href="de-model-building-with-variancepartition.html#cb40-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Pregnancy&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span><span class="ot">=</span><span class="st">&#39;darkorchid3&#39;</span>, <span class="st">&#39;No&#39;</span><span class="ot">=</span><span class="st">&#39;darkolivegreen4&#39;</span>),</span>
+<span id="cb40-16"><a href="de-model-building-with-variancepartition.html#cb40-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;plate&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Plate1&#39;</span><span class="ot">=</span><span class="st">&#39;darkorange&#39;</span>, <span class="st">&#39;Plate2&#39;</span><span class="ot">=</span><span class="st">&#39;lightskyblue&#39;</span>, <span class="st">&#39;Plate3&#39;</span><span class="ot">=</span><span class="st">&#39;deeppink1&#39;</span>),</span>
+<span id="cb40-17"><a href="de-model-building-with-variancepartition.html#cb40-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;flowcell&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;HKCG7DSXX&#39;</span><span class="ot">=</span><span class="st">&#39;chartreuse2&#39;</span>,<span class="st">&#39;HKCMHDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;magenta&#39;</span>, <span class="st">&#39;HKCNKDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;turquoise3&#39;</span>, </span>
+<span id="cb40-18"><a href="de-model-building-with-variancepartition.html#cb40-18" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;HKCTMDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;tomato&#39;</span>)</span>
+<span id="cb40-19"><a href="de-model-building-with-variancepartition.html#cb40-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb40-20"><a href="de-model-building-with-variancepartition.html#cb40-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-21"><a href="de-model-building-with-variancepartition.html#cb40-21" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">colData</span>(rse_gene)</span>
+<span id="cb40-22"><a href="de-model-building-with-variancepartition.html#cb40-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-23"><a href="de-model-building-with-variancepartition.html#cb40-23" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Barplots for categorical variable vs categorical variable</span></span>
+<span id="cb40-24"><a href="de-model-building-with-variancepartition.html#cb40-24" aria-hidden="true" tabindex="-1"></a>     <span class="cf">if</span> ( <span class="fu">class</span>(data[,sample_var1]) <span class="sc">==</span>  <span class="st">&quot;character&quot;</span> <span class="sc">&amp;</span>  <span class="fu">class</span>(data[,sample_var2]) <span class="sc">==</span>  <span class="st">&quot;character&quot;</span>) {</span>
+<span id="cb40-25"><a href="de-model-building-with-variancepartition.html#cb40-25" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb40-26"><a href="de-model-building-with-variancepartition.html#cb40-26" aria-hidden="true" tabindex="-1"></a>         <span class="do">## y-axis label </span></span>
+<span id="cb40-27"><a href="de-model-building-with-variancepartition.html#cb40-27" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> (sample_var2<span class="sc">==</span><span class="st">&#39;Pregnancy&#39;</span>){</span>
+<span id="cb40-28"><a href="de-model-building-with-variancepartition.html#cb40-28" aria-hidden="true" tabindex="-1"></a>             y_label <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&#39;Number of samples from each &#39;</span>, sample_var2, <span class="st">&#39; group&#39;</span>, <span class="at">sep=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb40-29"><a href="de-model-building-with-variancepartition.html#cb40-29" aria-hidden="true" tabindex="-1"></a>         }</span>
+<span id="cb40-30"><a href="de-model-building-with-variancepartition.html#cb40-30" aria-hidden="true" tabindex="-1"></a>         <span class="cf">else</span>{</span>
+<span id="cb40-31"><a href="de-model-building-with-variancepartition.html#cb40-31" aria-hidden="true" tabindex="-1"></a>             y_label <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&#39;Number of samples from each &#39;</span>, sample_var2, <span class="at">sep=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb40-32"><a href="de-model-building-with-variancepartition.html#cb40-32" aria-hidden="true" tabindex="-1"></a>         }</span>
+<span id="cb40-33"><a href="de-model-building-with-variancepartition.html#cb40-33" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb40-34"><a href="de-model-building-with-variancepartition.html#cb40-34" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb40-35"><a href="de-model-building-with-variancepartition.html#cb40-35" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Stacked barplot with counts for 2nd variable</span></span>
+<span id="cb40-36"><a href="de-model-building-with-variancepartition.html#cb40-36" aria-hidden="true" tabindex="-1"></a>         plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">as.data.frame</span>(data), <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var1),</span>
+<span id="cb40-37"><a href="de-model-building-with-variancepartition.html#cb40-37" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">fill =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var2))) <span class="sc">+</span> </span>
+<span id="cb40-38"><a href="de-model-building-with-variancepartition.html#cb40-38" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb40-39"><a href="de-model-building-with-variancepartition.html#cb40-39" aria-hidden="true" tabindex="-1"></a>                        <span class="do">## Colors by 2nd variable</span></span>
+<span id="cb40-40"><a href="de-model-building-with-variancepartition.html#cb40-40" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors[[sample_var2]]) <span class="sc">+</span> </span>
+<span id="cb40-41"><a href="de-model-building-with-variancepartition.html#cb40-41" aria-hidden="true" tabindex="-1"></a>                        <span class="do">## Show sample counts on stacked bars</span></span>
+<span id="cb40-42"><a href="de-model-building-with-variancepartition.html#cb40-42" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(count)), <span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, </span>
+<span id="cb40-43"><a href="de-model-building-with-variancepartition.html#cb40-43" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">position=</span><span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),  <span class="at">colour=</span><span class="st">&#39;gray20&#39;</span>, <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb40-44"><a href="de-model-building-with-variancepartition.html#cb40-44" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-45"><a href="de-model-building-with-variancepartition.html#cb40-45" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(</span>
+<span id="cb40-46"><a href="de-model-building-with-variancepartition.html#cb40-46" aria-hidden="true" tabindex="-1"></a>                            <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Corr: &quot;</span>, <span class="fu">signif</span>(CCA[sample_var1, sample_var2], <span class="at">digits=</span><span class="dv">3</span>)), </span>
+<span id="cb40-47"><a href="de-model-building-with-variancepartition.html#cb40-47" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> y_label) <span class="sc">+</span></span>
+<span id="cb40-48"><a href="de-model-building-with-variancepartition.html#cb40-48" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb40-49"><a href="de-model-building-with-variancepartition.html#cb40-49" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">6</span>)),</span>
+<span id="cb40-50"><a href="de-model-building-with-variancepartition.html#cb40-50" aria-hidden="true" tabindex="-1"></a>                              <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">color=</span><span class="st">&#39;gray40&#39;</span>),</span>
+<span id="cb40-51"><a href="de-model-building-with-variancepartition.html#cb40-51" aria-hidden="true" tabindex="-1"></a>                              <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb40-52"><a href="de-model-building-with-variancepartition.html#cb40-52" aria-hidden="true" tabindex="-1"></a>                              <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>))</span>
+<span id="cb40-53"><a href="de-model-building-with-variancepartition.html#cb40-53" aria-hidden="true" tabindex="-1"></a>     }</span>
+<span id="cb40-54"><a href="de-model-building-with-variancepartition.html#cb40-54" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-55"><a href="de-model-building-with-variancepartition.html#cb40-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-56"><a href="de-model-building-with-variancepartition.html#cb40-56" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Boxplots for categorical variable vs continuous variable </span></span>
+<span id="cb40-57"><a href="de-model-building-with-variancepartition.html#cb40-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> ( <span class="fu">class</span>(data[,sample_var1]) <span class="sc">==</span>  <span class="st">&quot;character&quot;</span> <span class="sc">&amp;</span>  <span class="fu">class</span>(data[,sample_var2]) <span class="sc">==</span>  <span class="st">&quot;numeric&quot;</span>) {</span>
+<span id="cb40-58"><a href="de-model-building-with-variancepartition.html#cb40-58" aria-hidden="true" tabindex="-1"></a>        plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">as.data.frame</span>(data), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var1),</span>
+<span id="cb40-59"><a href="de-model-building-with-variancepartition.html#cb40-59" aria-hidden="true" tabindex="-1"></a>                                                                 <span class="at">y =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var2),</span>
+<span id="cb40-60"><a href="de-model-building-with-variancepartition.html#cb40-60" aria-hidden="true" tabindex="-1"></a>                                                                 <span class="at">color =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var1))) <span class="sc">+</span></span>
+<span id="cb40-61"><a href="de-model-building-with-variancepartition.html#cb40-61" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_boxplot</span>(<span class="at">size =</span> <span class="fl">0.25</span>, <span class="at">width=</span><span class="fl">0.32</span>, <span class="at">color=</span><span class="st">&#39;black&#39;</span>, <span class="at">outlier.color =</span> <span class="st">&quot;#FFFFFFFF&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-62"><a href="de-model-building-with-variancepartition.html#cb40-62" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_jitter</span>( <span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb40-63"><a href="de-model-building-with-variancepartition.html#cb40-63" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_smooth</span> (<span class="at">geom=</span><span class="st">&quot;line&quot;</span>, <span class="at">alpha=</span><span class="fl">0.6</span>, <span class="at">size=</span><span class="fl">0.4</span>, <span class="at">span=</span><span class="fl">0.3</span>, <span class="at">method =</span> lm, <span class="fu">aes</span>(<span class="at">group=</span><span class="dv">1</span>), <span class="at">color=</span><span class="st">&#39;orangered3&#39;</span>) <span class="sc">+</span></span>
+<span id="cb40-64"><a href="de-model-building-with-variancepartition.html#cb40-64" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colors[[sample_var1]]) <span class="sc">+</span></span>
+<span id="cb40-65"><a href="de-model-building-with-variancepartition.html#cb40-65" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-66"><a href="de-model-building-with-variancepartition.html#cb40-66" aria-hidden="true" tabindex="-1"></a>            <span class="fu">guides</span>(<span class="at">color=</span><span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-67"><a href="de-model-building-with-variancepartition.html#cb40-67" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Corr: &quot;</span>, <span class="fu">signif</span>(CCA[sample_var1, sample_var2], <span class="at">digits=</span><span class="dv">3</span>)), <span class="at">y =</span> <span class="fu">gsub</span>(<span class="st">&#39;_&#39;</span>, <span class="st">&#39; &#39;</span>, sample_var2), </span>
+<span id="cb40-68"><a href="de-model-building-with-variancepartition.html#cb40-68" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> sample_var1) <span class="sc">+</span></span>
+<span id="cb40-69"><a href="de-model-building-with-variancepartition.html#cb40-69" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb40-70"><a href="de-model-building-with-variancepartition.html#cb40-70" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">6</span>)),</span>
+<span id="cb40-71"><a href="de-model-building-with-variancepartition.html#cb40-71" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">color=</span><span class="st">&#39;gray40&#39;</span>),</span>
+<span id="cb40-72"><a href="de-model-building-with-variancepartition.html#cb40-72" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb40-73"><a href="de-model-building-with-variancepartition.html#cb40-73" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>))</span>
+<span id="cb40-74"><a href="de-model-building-with-variancepartition.html#cb40-74" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb40-75"><a href="de-model-building-with-variancepartition.html#cb40-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-76"><a href="de-model-building-with-variancepartition.html#cb40-76" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-77"><a href="de-model-building-with-variancepartition.html#cb40-77" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Scatterplots for continuous variable vs continuous variable</span></span>
+<span id="cb40-78"><a href="de-model-building-with-variancepartition.html#cb40-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> ( <span class="fu">class</span>(data[,sample_var1]) <span class="sc">==</span>  <span class="st">&quot;numeric&quot;</span> <span class="sc">&amp;</span>  <span class="fu">class</span>(data[,sample_var2]) <span class="sc">==</span>  <span class="st">&quot;numeric&quot;</span>) {</span>
+<span id="cb40-79"><a href="de-model-building-with-variancepartition.html#cb40-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-80"><a href="de-model-building-with-variancepartition.html#cb40-80" aria-hidden="true" tabindex="-1"></a>        plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(data), <span class="fu">aes</span>(<span class="at">x=</span><span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var1),</span>
+<span id="cb40-81"><a href="de-model-building-with-variancepartition.html#cb40-81" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">y=</span><span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var2),</span>
+<span id="cb40-82"><a href="de-model-building-with-variancepartition.html#cb40-82" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">color=</span><span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_color))) <span class="sc">+</span></span>
+<span id="cb40-83"><a href="de-model-building-with-variancepartition.html#cb40-83" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb40-84"><a href="de-model-building-with-variancepartition.html#cb40-84" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_smooth</span> (<span class="at">geom=</span><span class="st">&quot;line&quot;</span>, <span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">size=</span><span class="fl">0.4</span>, <span class="at">span=</span><span class="fl">0.25</span>, <span class="at">method =</span> lm, <span class="at">color=</span><span class="st">&#39;orangered3&#39;</span>) <span class="sc">+</span></span>
+<span id="cb40-85"><a href="de-model-building-with-variancepartition.html#cb40-85" aria-hidden="true" tabindex="-1"></a>            <span class="do">## Color by sample_color variale</span></span>
+<span id="cb40-86"><a href="de-model-building-with-variancepartition.html#cb40-86" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_manual</span>(<span class="at">name=</span>sample_color, <span class="at">values =</span> colors[[sample_color]]) <span class="sc">+</span></span>
+<span id="cb40-87"><a href="de-model-building-with-variancepartition.html#cb40-87" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-88"><a href="de-model-building-with-variancepartition.html#cb40-88" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Corr: &quot;</span>, <span class="fu">signif</span>(CCA[sample_var1, sample_var2], <span class="at">digits=</span><span class="dv">3</span>)), <span class="at">y=</span> <span class="fu">gsub</span>(<span class="st">&#39;_&#39;</span>, <span class="st">&#39; &#39;</span>, sample_var2), <span class="at">x =</span> <span class="fu">gsub</span>(<span class="st">&#39;_&#39;</span>, <span class="st">&#39; &#39;</span>, sample_var1)) <span class="sc">+</span></span>
+<span id="cb40-89"><a href="de-model-building-with-variancepartition.html#cb40-89" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb40-90"><a href="de-model-building-with-variancepartition.html#cb40-90" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">6</span>)),</span>
+<span id="cb40-91"><a href="de-model-building-with-variancepartition.html#cb40-91" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">color=</span><span class="st">&#39;gray40&#39;</span>),</span>
+<span id="cb40-92"><a href="de-model-building-with-variancepartition.html#cb40-92" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb40-93"><a href="de-model-building-with-variancepartition.html#cb40-93" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>))</span>
+<span id="cb40-94"><a href="de-model-building-with-variancepartition.html#cb40-94" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb40-95"><a href="de-model-building-with-variancepartition.html#cb40-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-96"><a href="de-model-building-with-variancepartition.html#cb40-96" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(plot)</span>
+<span id="cb40-97"><a href="de-model-building-with-variancepartition.html#cb40-97" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>As shown above and as previously demonstrated, the mitochondrial rate and the fraction of reads that mapped to genes are negatively correlated in adults but control and experimental samples are evenly distributed.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="de-model-building-with-variancepartition.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb41-2"><a href="de-model-building-with-variancepartition.html#cb41-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb41-3"><a href="de-model-building-with-variancepartition.html#cb41-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+Altought not expected, the flowcell and the plate of the adult samples were correlated, but that is due to the fact that all samples from the first flowcell (HKCG7DSXX) were in the 1st plate, and almost all samples from the second flowcell were in the 3rd plate.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="de-model-building-with-variancepartition.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb42-2"><a href="de-model-building-with-variancepartition.html#cb42-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;flowcell&#39;</span>, <span class="st">&#39;plate&#39;</span>,  <span class="cn">NULL</span>)</span>
+<span id="cb42-3"><a href="de-model-building-with-variancepartition.html#cb42-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="fl">1.5</span>,<span class="fl">4.5</span>,<span class="fl">1.5</span>,<span class="fl">4.5</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+Plate was also slightly correlated with the overall mapping rate, but if we look closely, the trend is given by the plate 1 samples that have lower rates; the rates of samples from the 2nd and 3rd plates are similar.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="de-model-building-with-variancepartition.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb43-2"><a href="de-model-building-with-variancepartition.html#cb43-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb43-3"><a href="de-model-building-with-variancepartition.html#cb43-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">5.3</span>,<span class="dv">2</span>,<span class="fl">5.3</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>We also appreciated and described already that the library size and the number of detected of genes are correlated in pups and adults. Note however that in pups control samples have bigger numbers of expressed genes.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="de-model-building-with-variancepartition.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb44-2"><a href="de-model-building-with-variancepartition.html#cb44-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;sum&#39;</span>, <span class="st">&#39;detected&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb44-3"><a href="de-model-building-with-variancepartition.html#cb44-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="de-model-building-with-variancepartition.html#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-2"><a href="de-model-building-with-variancepartition.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb45-3"><a href="de-model-building-with-variancepartition.html#cb45-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;sum&#39;</span>, <span class="st">&#39;detected&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb45-4"><a href="de-model-building-with-variancepartition.html#cb45-4" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<p>In pups, the overall mapping rate was slightly and negatively correlated with the ribosomal rate, but again controls and experimental samples are equally distributed and the <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> is pretty small for all of them.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="de-model-building-with-variancepartition.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb46-2"><a href="de-model-building-with-variancepartition.html#cb46-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;rRNA_rate&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb46-3"><a href="de-model-building-with-variancepartition.html#cb46-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>Overall mapping rate is also positively correlated with plate and flowcell, relationships mainly given by samples from the 1st plate with the lowest <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>, most of which were also in the 1st flowcell.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="de-model-building-with-variancepartition.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb47-2"><a href="de-model-building-with-variancepartition.html#cb47-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb47-3"><a href="de-model-building-with-variancepartition.html#cb47-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">5.3</span>,<span class="dv">2</span>,<span class="fl">5.3</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="de-model-building-with-variancepartition.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Heatmap for pup samples</span></span>
+<span id="cb48-2"><a href="de-model-building-with-variancepartition.html#cb48-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;flowcell&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb48-3"><a href="de-model-building-with-variancepartition.html#cb48-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">5.3</span>,<span class="dv">2</span>,<span class="fl">5.3</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div class="alert alert-info">
+<p>Now look at the following plots. <strong>Why is it important that experimental and control samples are distributed throughout all the plates and flowcells?</strong></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="de-model-building-with-variancepartition.html#cb49-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-2"><a href="de-model-building-with-variancepartition.html#cb49-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb49-3"><a href="de-model-building-with-variancepartition.html#cb49-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb49-4"><a href="de-model-building-with-variancepartition.html#cb49-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;flowcell&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb49-5"><a href="de-model-building-with-variancepartition.html#cb49-5" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">corr_plots</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;flowcell&#39;</span>, <span class="cn">NULL</span>)</span>
+<span id="cb49-6"><a href="de-model-building-with-variancepartition.html#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="de-model-building-with-variancepartition.html#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="de-model-building-with-variancepartition.html#cb49-8" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_grid</span>(p1, p2, p3, p4, <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb49-9"><a href="de-model-building-with-variancepartition.html#cb49-9" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>,<span class="dv">1</span>,<span class="fl">2.5</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<strong><em>Hint</em></strong>: What would happen if all experimental samples were in one plate or flowcell and controls in another?</p>
+</div>
+<p>After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How to discern which of the correlated variables to keep and which to drop? As recommended in the <code>variancePartition</code> user’s guide [4], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let’s review how <code>variancePartition</code> works.</p>
+<p><strong>1.2 Fit model and extract fraction of variance explained</strong></p>
+<p>Briefly, <code>variancePartition</code> fits a linear model for each gene separately and <code>calcVarPart()</code> computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [3].</p>
+<p>Basically what it does is to calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [3].</p>
+<p><code>variancePartition</code> fits two types of models:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Linear mixed model (LMM)</strong> where all categorical variables are modeled as <strong>random effects</strong> and all continuous variables are <strong>fixed effects</strong>. The function <code>lmer()</code> from <code>lme4</code> is used to fit this model.</li>
+</ol>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="de-model-building-with-variancepartition.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit LMM specifying the existence of random effects with &#39;(1| )&#39; </span></span>
+<span id="cb50-2"><a href="de-model-building-with-variancepartition.html#cb50-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmer</span>(expr <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>c), <span class="at">data=</span>data)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Fixed effects model, which is basically the <strong>standard linear model (LM)</strong>, where all variables are modeled as fixed effects. The function <code>lm()</code> is used to fit this model.</li>
+</ol>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="de-model-building-with-variancepartition.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit LM modeling all variables as fixed effects</span></span>
+<span id="cb51-2"><a href="de-model-building-with-variancepartition.html#cb51-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(expr <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">data=</span>data)</span></code></pre></div>
+<p>In our case, the function will be modeled a mixed model since we have both effects.</p>
+<p class="comment">
+❓<strong><em>What are random and fixed effects? How to determine if a variable is one or the other?</em></strong> <strong>Categorical variables</strong> are usually modeled as <strong>random effects</strong>, i.e., traits such as the batch, sex, flowcell, plate, individual, variables ‘randomly chosen or selected from a population’ and whose specific levels are not of particular interest, only the grouping of the samples by those variables. These are control variables/factors that vary randomly across individuals or groups and we use them because we must control for these effects. Think of them as having different effects on gene expression (the dependent variable) depending on their values.
+<strong>Continuous variables</strong> must be modeled as <strong>fixed effects</strong>, they cannot be modeled as random effects. These correspond to variables that can be measured somehow and whose levels are themselves of interest (the QC metrics, for instance); these effects would be the same for all genes.
+</p>
+<p class="comment">
+❓<strong><em>Why is this effect distinction important?</em></strong>
+Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making a wrong inference when using a <strong>general linear model (GLM)</strong>. If we have clustered data where the variables’ values have distinct effects on gene expression, we must work with an extension of GLM, with the <strong>linear mixed model (LMM)</strong> that contains a mix of both fixed and random effects [5].
+</p>
+<p><strong>Linear mixed model framework</strong></p>
+<aside>
+<p>1️⃣ For a single gene, after fitting the linear model we obtain the predicted expression of the genes given by the predicted coefficients of the variables:</p>
+<p><span class="math inline">\(\hat y =\sum_{1}^j\beta_{j}X_{j} + \sum_{1}^k\alpha_{k}Z_{k}\)</span> ← the expression of a gene across all samples is given by the samples’ values in the <span class="math inline">\(j\)</span> fixed effects and <span class="math inline">\(k\)</span> random effects. So basically the gene expression in the sample <span class="math inline">\(i\)</span> is given by <span class="math inline">\(\hat y_i =\sum_{1}^j\beta_{j}X_{ij} + \sum_{1}^k\alpha_{k}Z_{ik}\)</span>.</p>
+<p>Then <span class="math inline">\(y=\hat y+\epsilon\)</span>, which means that the real (observed) expression value is given by the predicted value plus an error term (<span class="math inline">\(\epsilon\)</span>), also called noise or residual:</p>
+<p><span class="math display">\[y =\sum_{1}^j\beta_{j}X_{j} + \sum_{1}^k\alpha_{k}Z_{k} + \epsilon\]</span></p>
+<ul>
+<li><span class="math inline">\(X_j\)</span> is the vector of the values of the samples in the <span class="math inline">\(j\)</span>th fixed effect.</li>
+<li><span class="math inline">\(\beta_j\)</span> is the predicted coefficient of the fixed effect <span class="math inline">\(j\)</span>.</li>
+</ul>
+<p><span class="math display">\[
+X_j\beta_j=  \ \ _{n \ \ samples}\stackrel{j^{th}\ \ fixed\ \ effect }{\begin{bmatrix} X_{1j} \\ ... \\ X_{(n-1)j} \\ X_{nj}  \end{bmatrix}}\beta_j = {\begin{bmatrix}  X_{1j}\beta_j \\ ... \\ X_{(n-1)j}\beta_j \\ X_{nj} \beta_j \end{bmatrix}}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(Z_k\)</span> is the vector of values the samples have for the <span class="math inline">\(k\)</span>th random effect.</li>
+<li><span class="math inline">\(\alpha_k\)</span> is the predicted coefficient of the random effect <span class="math inline">\(k\)</span>. These are drawn from a normal distribution <span class="math inline">\(∼N(0, \sigma_{\alpha_k}^2 )\)</span>.</li>
+</ul>
+<p><span class="math display">\[
+Z_k\alpha_k= \ \ _{n \ \ samples}\stackrel{{k^{th}\ \ random\ \ effect }}{\begin{bmatrix}  Z_{1k} \\ ... \\ Z_{(n-1)k}\\ Z_{nk} \end{bmatrix}}\alpha_k = {\begin{bmatrix} Z_{1k}\alpha_k \\ ... \\ Z_{(n-1)k}\alpha_k\\ Z_{nk}\alpha_k \end{bmatrix}}
+\]</span></p>
+<p><span class="math inline">\(\epsilon\)</span> is the noise term which is <span class="math inline">\(y-\hat y\)</span>, the difference between the observed and predicted expression and is also drawn from a <span class="math inline">\(∼N(0, \sigma_{\epsilon}^2 )\)</span>.</p>
+<p>Expanding,</p>
+<p><span class="math display">\[
+y= {\begin{bmatrix}  X_{11}\beta_1 \\ ... \\ X_{(n-1)1}\beta_1 \\ X_{n1} \beta_1 \end{bmatrix}} + {\begin{bmatrix}  X_{12}\beta_2 \\ ... \\ X_{(n-1)2}\beta_2 \\ X_{n2} \beta_2 \end{bmatrix}} + ... +{\begin{bmatrix}  X_{1j}\beta_j \\ ... \\ X_{(n-1)j}\beta_j \\ X_{nj} \beta_j \end{bmatrix}} + {\begin{bmatrix} Z_{11}\alpha_1 \\ ... \\ Z_{(n-1)1}\alpha_1\\ Z_{n1}\alpha_1 \end{bmatrix}} +{\begin{bmatrix} Z_{12}\alpha_2 \\ ... \\ Z_{(n-1)2}\alpha_2\\ Z_{n2}\alpha_2 \end{bmatrix}} + ... + {\begin{bmatrix} Z_{1k}\alpha_k \\ ... \\ Z_{(n-1)k}\alpha_k\\ Z_{nk}\alpha_k \end{bmatrix}} + {\begin{bmatrix} \epsilon_1 \\ ... \\ \epsilon_{(n-1)} \\ \epsilon_n \end{bmatrix}}
+\]</span></p>
+All parameters are estimated with maximum likelihood, the default method in the <code>variancePartition</code> software when random effects are specified because it performs best in simulations.
+</aside>
+<aside>
+<p>2️⃣ Then, <code>calcVarPart()</code> computes for each fixed effect</p>
+<p><span class="math inline">\(\sum_{i=1}^n(\beta_{j}X_{ij}-\bar{\beta_{j}X_{j}})^2=var(\beta_{j}X_{j})(n-1)\)</span>, the squared sum of the predicted expression values of a gene in the samples (<span class="math inline">\(i=1, ..., n\)</span>), only taking into account the variable <span class="math inline">\(j\)</span> in the regression model: <span class="math inline">\(\hat y = \beta_{j}X_{j}\)</span> .</p>
+<p>Each of these squared sums is scaled by the total sum of squares of the predicted values taking all fixed effects: <span class="math inline">\(var(\hat y)\times (n-1)\)</span> and by the sum of the squared sums for all variables: <span class="math inline">\(\sum_1^j var(\beta_jX_j)(n-1)\)</span>.</p>
+<ul>
+<li>To simplify let’s just take the variance of the <span class="math inline">\(j\)</span>th fixed effect because the squared sum is proportional to it: <mark style= "background-color: #FEF5E7"><span class="math inline">\(\sigma_{\beta_j}^2=var(X_j{\beta_j})\)</span></mark></li>
+</ul>
+<p>For random effects the variances are computed by variance component estimates with <code>VarCorr()</code> from <code>nmle</code>:</p>
+<ul>
+<li>The variance of the <span class="math inline">\(k\)</span>th random effect is <mark style= "background-color: #D6EAF8"><span class="math inline">\(\sigma_{\alpha_k}^2=var(Z_k{\alpha_k})\)</span></mark></li>
+</ul>
+<p>After that it calculates the total variance of the expression values <span class="math inline">\(\sum_{i=1}^n(y_i - \bar { y})^2=var(y)(n-1)\)</span>, where <span class="math inline">\(y_i = \sum_{1}^j\beta_{j}X_{ij} + \sum_{1}^k\alpha_{k}Z_{ik} + \epsilon_i\)</span>, considering all variables in the model and the error:</p>
+<ul>
+<li>The total variance is:</li>
+</ul>
+<p><span class="math inline">\(var(y)= \sigma_{Total}^2= var(X_{1}\beta_1)+var(X_{2}\beta_2)+...+var(X_{j}\beta_j)+var(Z_{1}\alpha_1)+var(Z_{2}\alpha_2)+...+var(Z_{k}\alpha_k)+var(\epsilon)=\)</span>
+<span class="math inline">\(\sum_1^jvar(X_j\beta_j)+\sum_1^kvar(Z_k\alpha_k)+var(\epsilon)=\)</span></p>
+<p><mark style= "background-color: #F9EBEA"><span class="math inline">\(\sigma_{Total}^2=\sum_1^j{ \sigma_{\beta_j}^2} + \sum_1^k{ \sigma_{\alpha_k}^2} + \sigma_{\epsilon}^2\)</span></mark></p>
+</aside>
+<aside>
+<p>3️⃣ Finally, it computes:</p>
+<ul>
+<li>The fraction of the total data variance explained by the <span class="math inline">\(j\)</span>th fixed effect is <mark style= "background-color: #FEF5E7"><span class="math inline">\(\sigma_{\beta_j}^2\)</span></mark> / <mark style= "background-color: #F9EBEA"><span class="math inline">\(\sigma_{Total}^2\)</span></mark></li>
+<li>The fraction of the total data variance explained by the <span class="math inline">\(k\)</span>th random effect is <mark style= "background-color: #D6EAF8"><span class="math inline">\(\sigma_{\alpha_k}^2\)</span></mark> / <mark style= "background-color: #F9EBEA"><span class="math inline">\(\sigma_{Total}^2\)</span></mark></li>
+</ul>
+<p>Note that <span class="math inline">\(y=\hat y+\epsilon\)</span> because the expression can’t be completely described by a straight line, so not all the variation of <span class="math inline">\(y\)</span> can be explained by the variation of the sample variables, instead <span class="math inline">\(var(y)=var(\hat y)+var(\epsilon)=var(\hat y) + \sigma_{\epsilon}^2\)</span>, where <span class="math inline">\(\sigma_{\epsilon}^2=\sum_{i=1}^n(\hat y_i -y_i)^2/n-1\)</span>.</p>
+<ul>
+<li>The residual variance is <mark style= "background-color: #E8DAEF"><span class="math inline">\(\sigma_{\epsilon}^2\)</span></mark> / <mark style= "background-color: #F9EBEA"><span class="math inline">\(\sigma_{Total}^2\)</span></mark> ; this is the variance that the model couldn’t explain (we don’t know where these residuals come from).</li>
+</ul>
+</aside>
+<p>👉🏼Source code of <code>calcVarPart()</code> <a href="https://rdrr.io/github/GabrielHoffman/variancePartition/src/R/calcVarPart.R#sym-getVarianceComponents">here</a>.</p>
+<p>Once we understood what it computes, we can use <code>variancePartition</code> to quantify the FVE of each variable.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="de-model-building-with-variancepartition.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 2. Fit model</span></span>
+<span id="cb52-2"><a href="de-model-building-with-variancepartition.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="de-model-building-with-variancepartition.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit a linear mixed model (LMM) that takes continuous variables as fixed effects and categorical variables as random effects</span></span>
+<span id="cb52-4"><a href="de-model-building-with-variancepartition.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="de-model-building-with-variancepartition.html#cb52-5" aria-hidden="true" tabindex="-1"></a>varPartAnalysis <span class="ot">&lt;-</span> <span class="cf">function</span>(age, formula){</span>
+<span id="cb52-6"><a href="de-model-building-with-variancepartition.html#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="de-model-building-with-variancepartition.html#cb52-7" aria-hidden="true" tabindex="-1"></a>    RSE<span class="ot">&lt;-</span><span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste</span>(<span class="st">&quot;rse_gene&quot;</span>, age, <span class="st">&#39;qc&#39;</span>, <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)))</span>
+<span id="cb52-8"><a href="de-model-building-with-variancepartition.html#cb52-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-9"><a href="de-model-building-with-variancepartition.html#cb52-9" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Ignore genes with variance 0</span></span>
+<span id="cb52-10"><a href="de-model-building-with-variancepartition.html#cb52-10" aria-hidden="true" tabindex="-1"></a>    genes_var_zero<span class="ot">&lt;-</span><span class="fu">which</span>(<span class="fu">apply</span>(<span class="fu">assays</span>(RSE)<span class="sc">$</span>logcounts, <span class="dv">1</span>, var)<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb52-11"><a href="de-model-building-with-variancepartition.html#cb52-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(genes_var_zero)<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb52-12"><a href="de-model-building-with-variancepartition.html#cb52-12" aria-hidden="true" tabindex="-1"></a>        RSE <span class="ot">&lt;-</span> RSE[<span class="sc">-</span>genes_var_zero, ]</span>
+<span id="cb52-13"><a href="de-model-building-with-variancepartition.html#cb52-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb52-14"><a href="de-model-building-with-variancepartition.html#cb52-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-15"><a href="de-model-building-with-variancepartition.html#cb52-15" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Loop over each gene to fit model and extract variance explained by each variable</span></span>
+<span id="cb52-16"><a href="de-model-building-with-variancepartition.html#cb52-16" aria-hidden="true" tabindex="-1"></a>    varPart <span class="ot">&lt;-</span> <span class="fu">fitExtractVarPartModel</span>(<span class="fu">assays</span>(RSE)<span class="sc">$</span>logcounts, formula, <span class="fu">colData</span>(RSE))</span>
+<span id="cb52-17"><a href="de-model-building-with-variancepartition.html#cb52-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-18"><a href="de-model-building-with-variancepartition.html#cb52-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort variables by median fraction of variance explained</span></span>
+<span id="cb52-19"><a href="de-model-building-with-variancepartition.html#cb52-19" aria-hidden="true" tabindex="-1"></a>    vp <span class="ot">&lt;-</span> <span class="fu">sortCols</span>(varPart)</span>
+<span id="cb52-20"><a href="de-model-building-with-variancepartition.html#cb52-20" aria-hidden="true" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="fu">plotVarPart</span>(vp)</span>
+<span id="cb52-21"><a href="de-model-building-with-variancepartition.html#cb52-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb52-22"><a href="de-model-building-with-variancepartition.html#cb52-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(p, vp))</span>
+<span id="cb52-23"><a href="de-model-building-with-variancepartition.html#cb52-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="de-model-building-with-variancepartition.html#cb53-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-2"><a href="de-model-building-with-variancepartition.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Violin plots</span></span>
+<span id="cb53-3"><a href="de-model-building-with-variancepartition.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="de-model-building-with-variancepartition.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="do">#####  Model with all variables  #####</span></span>
+<span id="cb53-5"><a href="de-model-building-with-variancepartition.html#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="de-model-building-with-variancepartition.html#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Adults </span></span>
+<span id="cb53-7"><a href="de-model-building-with-variancepartition.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Define variables; random effects indicated with (1| )</span></span>
+<span id="cb53-8"><a href="de-model-building-with-variancepartition.html#cb53-8" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span>  <span class="er">~</span> (<span class="dv">1</span><span class="sc">|</span>Group) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Pregnancy) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>plate) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>flowcell) <span class="sc">+</span> mitoRate <span class="sc">+</span> overallMapRate <span class="sc">+</span> </span>
+<span id="cb53-9"><a href="de-model-building-with-variancepartition.html#cb53-9" aria-hidden="true" tabindex="-1"></a>                totalAssignedGene <span class="sc">+</span> rRNA_rate <span class="sc">+</span> sum <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb53-10"><a href="de-model-building-with-variancepartition.html#cb53-10" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">varPartAnalysis</span>(<span class="st">&#39;adults&#39;</span>, formula)[[<span class="dv">1</span>]]</span>
+<span id="cb53-11"><a href="de-model-building-with-variancepartition.html#cb53-11" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="st">&#39;cm&#39;</span>), </span>
+<span id="cb53-12"><a href="de-model-building-with-variancepartition.html#cb53-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb53-13"><a href="de-model-building-with-variancepartition.html#cb53-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="fl">7.5</span>)))</span></code></pre></div>
+<p>As presented above, in adults we can notice that <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> has a larger mean FVE than <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> so we keep the former. Same reason to remove <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that is correlated with <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell</span> </mark> and with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>, and to drop <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> that goes after <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="de-model-building-with-variancepartition.html#cb54-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-2"><a href="de-model-building-with-variancepartition.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="do">#####  Model without correlated variables  #####</span></span>
+<span id="cb54-3"><a href="de-model-building-with-variancepartition.html#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="de-model-building-with-variancepartition.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Adult plots without mitoRate, plate and sum</span></span>
+<span id="cb54-5"><a href="de-model-building-with-variancepartition.html#cb54-5" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span>  <span class="er">~</span> (<span class="dv">1</span><span class="sc">|</span>Group) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Pregnancy) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>flowcell) <span class="sc">+</span> overallMapRate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> rRNA_rate <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb54-6"><a href="de-model-building-with-variancepartition.html#cb54-6" aria-hidden="true" tabindex="-1"></a>varPart <span class="ot">&lt;-</span> <span class="fu">varPartAnalysis</span>(<span class="st">&#39;adults&#39;</span>, formula)</span>
+<span id="cb54-7"><a href="de-model-building-with-variancepartition.html#cb54-7" aria-hidden="true" tabindex="-1"></a>varPart_data_adults <span class="ot">&lt;-</span> varPart[[<span class="dv">2</span>]]</span>
+<span id="cb54-8"><a href="de-model-building-with-variancepartition.html#cb54-8" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> varPart[[<span class="dv">1</span>]]</span>
+<span id="cb54-9"><a href="de-model-building-with-variancepartition.html#cb54-9" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="st">&#39;cm&#39;</span>), </span>
+<span id="cb54-10"><a href="de-model-building-with-variancepartition.html#cb54-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb54-11"><a href="de-model-building-with-variancepartition.html#cb54-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="fl">7.5</span>)))</span></code></pre></div>
+<p>Notwithstanding, in this new reduced model Group contribution doesn’t increment much in comparison with the complete model and also note that the % of variance explained by the residuals, i.e., the % of gene expression variance that the model couldn’t explain, increments in this model compared to the previous; by removing independent variables to a regression equation, we can explain less of the variance of the dependent variable [5]. That’s the price to pay when dropping variables but it is convenient in this case since we don’t have many samples for the model to determine their real unique contributions.</p>
+<p>In pups, based on the model with all variables, again <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> must be removed, as well as <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that are correlated with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="de-model-building-with-variancepartition.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####  Model with all variables  #####</span></span>
+<span id="cb55-2"><a href="de-model-building-with-variancepartition.html#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="de-model-building-with-variancepartition.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Pups</span></span>
+<span id="cb55-4"><a href="de-model-building-with-variancepartition.html#cb55-4" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span>  <span class="er">~</span> (<span class="dv">1</span><span class="sc">|</span>Group) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Sex) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>plate) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>flowcell) <span class="sc">+</span> mitoRate <span class="sc">+</span> overallMapRate <span class="sc">+</span> </span>
+<span id="cb55-5"><a href="de-model-building-with-variancepartition.html#cb55-5" aria-hidden="true" tabindex="-1"></a>                totalAssignedGene <span class="sc">+</span> rRNA_rate <span class="sc">+</span> sum <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb55-6"><a href="de-model-building-with-variancepartition.html#cb55-6" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">varPartAnalysis</span>(<span class="st">&#39;pups&#39;</span>, formula)[[<span class="dv">1</span>]]</span>
+<span id="cb55-7"><a href="de-model-building-with-variancepartition.html#cb55-7" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="st">&#39;cm&#39;</span>), </span>
+<span id="cb55-8"><a href="de-model-building-with-variancepartition.html#cb55-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb55-9"><a href="de-model-building-with-variancepartition.html#cb55-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="fl">7.5</span>)))</span></code></pre></div>
+<p>Without correlated variables, Group’s contribution increases but so does the residual source.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="de-model-building-with-variancepartition.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####  Model without correlated variables  #####</span></span>
+<span id="cb56-2"><a href="de-model-building-with-variancepartition.html#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="de-model-building-with-variancepartition.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Pup plots without sum, rRNA_rate and plate</span></span>
+<span id="cb56-4"><a href="de-model-building-with-variancepartition.html#cb56-4" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span>  <span class="er">~</span> (<span class="dv">1</span><span class="sc">|</span>Group) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Sex) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>flowcell) <span class="sc">+</span> mitoRate <span class="sc">+</span> overallMapRate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb56-5"><a href="de-model-building-with-variancepartition.html#cb56-5" aria-hidden="true" tabindex="-1"></a>varPart <span class="ot">&lt;-</span> <span class="fu">varPartAnalysis</span>(<span class="st">&#39;pups&#39;</span>, formula)</span>
+<span id="cb56-6"><a href="de-model-building-with-variancepartition.html#cb56-6" aria-hidden="true" tabindex="-1"></a>varPart_data_pups <span class="ot">&lt;-</span> varPart[[<span class="dv">2</span>]]</span>
+<span id="cb56-7"><a href="de-model-building-with-variancepartition.html#cb56-7" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> varPart[[<span class="dv">1</span>]]</span>
+<span id="cb56-8"><a href="de-model-building-with-variancepartition.html#cb56-8" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="st">&#39;cm&#39;</span>), </span>
+<span id="cb56-9"><a href="de-model-building-with-variancepartition.html#cb56-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb56-10"><a href="de-model-building-with-variancepartition.html#cb56-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="fl">7.5</span>)))</span></code></pre></div>
+<p>But what does it mean that a variable explains a high percentage of the expression variation of a gene? Look at the following plots and try the function with other variables to observe the relationships that exists between the gene expression values in the samples and samples’ variables.</p>
+<p><strong>1.3 Examine expression of most affected genes by each sample variable</strong></p>
+<p>In the following plots you can appreciate the expression values in the samples of the most affected genes by a certain variable (i.e., the genes for which the variable explains the highest percentages of variance) vs. the values of the samples for the same variable. In simple words, each dot is a sample, in the y-axis the expression of the gene in each sample and in the x-axis the samples’ values for the variable. The idea is to observe the strong relationships that exists for the sample variables and the gene expression of such affected genes, which ends up causing the variables to explain high percentages of gene expression variation and which obligate us to adjust for them the models of DEA so that we don´t get DEGs driven by sample quality differences.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="de-model-building-with-variancepartition.html#cb57-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-2"><a href="de-model-building-with-variancepartition.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot of gene expression lognorm counts vs. sample variable</span></span>
+<span id="cb57-3"><a href="de-model-building-with-variancepartition.html#cb57-3" aria-hidden="true" tabindex="-1"></a>plot_gene_expr <span class="ot">&lt;-</span> <span class="cf">function</span>(age, sample_var, gene_id){</span>
+<span id="cb57-4"><a href="de-model-building-with-variancepartition.html#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="de-model-building-with-variancepartition.html#cb57-5" aria-hidden="true" tabindex="-1"></a>   rse_gene <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste</span>(<span class="st">&quot;rse_gene&quot;</span>, age, <span class="st">&#39;qc&#39;</span>, <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)))</span>
+<span id="cb57-6"><a href="de-model-building-with-variancepartition.html#cb57-6" aria-hidden="true" tabindex="-1"></a>   varPart_data <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste0</span>(<span class="st">&#39;varPart_data_&#39;</span>, age)))</span>
+<span id="cb57-7"><a href="de-model-building-with-variancepartition.html#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="de-model-building-with-variancepartition.html#cb57-8" aria-hidden="true" tabindex="-1"></a>   colors <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb57-9"><a href="de-model-building-with-variancepartition.html#cb57-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Group&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Control&#39;</span><span class="ot">=</span><span class="st">&#39;brown2&#39;</span>, <span class="st">&#39;Experimental&#39;</span><span class="ot">=</span><span class="st">&#39;deepskyblue3&#39;</span>),</span>
+<span id="cb57-10"><a href="de-model-building-with-variancepartition.html#cb57-10" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Age&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Adult&#39;</span><span class="ot">=</span><span class="st">&#39;slateblue3&#39;</span>, <span class="st">&#39;Pup&#39;</span><span class="ot">=</span><span class="st">&#39;yellow3&#39;</span>),</span>
+<span id="cb57-11"><a href="de-model-building-with-variancepartition.html#cb57-11" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Sex&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;F&#39;</span><span class="ot">=</span><span class="st">&#39;hotpink1&#39;</span>, <span class="st">&#39;M&#39;</span><span class="ot">=</span><span class="st">&#39;dodgerblue&#39;</span>),</span>
+<span id="cb57-12"><a href="de-model-building-with-variancepartition.html#cb57-12" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Pregnancy&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span><span class="ot">=</span><span class="st">&#39;darkorchid3&#39;</span>, <span class="st">&#39;No&#39;</span><span class="ot">=</span><span class="st">&#39;darkolivegreen4&#39;</span>),</span>
+<span id="cb57-13"><a href="de-model-building-with-variancepartition.html#cb57-13" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;plate&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Plate1&#39;</span><span class="ot">=</span><span class="st">&#39;darkorange&#39;</span>, <span class="st">&#39;Plate2&#39;</span><span class="ot">=</span><span class="st">&#39;lightskyblue&#39;</span>, <span class="st">&#39;Plate3&#39;</span><span class="ot">=</span><span class="st">&#39;deeppink1&#39;</span>),</span>
+<span id="cb57-14"><a href="de-model-building-with-variancepartition.html#cb57-14" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;flowcell&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;HKCG7DSXX&#39;</span><span class="ot">=</span><span class="st">&#39;chartreuse2&#39;</span>,<span class="st">&#39;HKCMHDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;magenta&#39;</span>, <span class="st">&#39;HKCNKDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;turquoise3&#39;</span>, </span>
+<span id="cb57-15"><a href="de-model-building-with-variancepartition.html#cb57-15" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;HKCTMDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;tomato&#39;</span>)</span>
+<span id="cb57-16"><a href="de-model-building-with-variancepartition.html#cb57-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb57-17"><a href="de-model-building-with-variancepartition.html#cb57-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-18"><a href="de-model-building-with-variancepartition.html#cb57-18" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Lognorm counts of the gene across samples</span></span>
+<span id="cb57-19"><a href="de-model-building-with-variancepartition.html#cb57-19" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">colData</span>(rse_gene)</span>
+<span id="cb57-20"><a href="de-model-building-with-variancepartition.html#cb57-20" aria-hidden="true" tabindex="-1"></a>    data<span class="sc">$</span>gene_expr <span class="ot">&lt;-</span> <span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts[gene_id,]</span>
+<span id="cb57-21"><a href="de-model-building-with-variancepartition.html#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-22"><a href="de-model-building-with-variancepartition.html#cb57-22" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Percentage of variance explained by the variable</span></span>
+<span id="cb57-23"><a href="de-model-building-with-variancepartition.html#cb57-23" aria-hidden="true" tabindex="-1"></a>    percentage <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">signif</span>(varPart_data[gene_id, sample_var], <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb57-24"><a href="de-model-building-with-variancepartition.html#cb57-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-25"><a href="de-model-building-with-variancepartition.html#cb57-25" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Boxplots for discrete variables</span></span>
+<span id="cb57-26"><a href="de-model-building-with-variancepartition.html#cb57-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">class</span>(data[,sample_var])<span class="sc">==</span><span class="st">&#39;character&#39;</span>) {</span>
+<span id="cb57-27"><a href="de-model-building-with-variancepartition.html#cb57-27" aria-hidden="true" tabindex="-1"></a>        plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">as.data.frame</span>(data), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var),</span>
+<span id="cb57-28"><a href="de-model-building-with-variancepartition.html#cb57-28" aria-hidden="true" tabindex="-1"></a>                                                                 <span class="at">y =</span> gene_expr, <span class="at">color =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var))) <span class="sc">+</span></span>
+<span id="cb57-29"><a href="de-model-building-with-variancepartition.html#cb57-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_boxplot</span>(<span class="at">size =</span> <span class="fl">0.25</span>, <span class="at">width=</span><span class="fl">0.32</span>, <span class="at">color=</span><span class="st">&#39;black&#39;</span>, <span class="at">outlier.color =</span> <span class="st">&quot;#FFFFFFFF&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-30"><a href="de-model-building-with-variancepartition.html#cb57-30" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb57-31"><a href="de-model-building-with-variancepartition.html#cb57-31" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_smooth</span> (<span class="at">geom=</span><span class="st">&quot;line&quot;</span>, <span class="at">alpha=</span><span class="fl">0.6</span>, <span class="at">size=</span><span class="fl">0.4</span>, <span class="at">span=</span><span class="fl">0.3</span>, <span class="at">method =</span> lm, <span class="fu">aes</span>(<span class="at">group=</span><span class="dv">1</span>), <span class="at">color=</span><span class="st">&#39;orangered3&#39;</span>) <span class="sc">+</span></span>
+<span id="cb57-32"><a href="de-model-building-with-variancepartition.html#cb57-32" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colors[[sample_var]]) <span class="sc">+</span></span>
+<span id="cb57-33"><a href="de-model-building-with-variancepartition.html#cb57-33" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb57-34"><a href="de-model-building-with-variancepartition.html#cb57-34" aria-hidden="true" tabindex="-1"></a>            <span class="fu">guides</span>(<span class="at">color=</span><span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-35"><a href="de-model-building-with-variancepartition.html#cb57-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> gene_id,</span>
+<span id="cb57-36"><a href="de-model-building-with-variancepartition.html#cb57-36" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Variance explained: &quot;</span>, percentage, <span class="st">&#39;%&#39;</span>),</span>
+<span id="cb57-37"><a href="de-model-building-with-variancepartition.html#cb57-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span> <span class="st">&#39;lognorm counts&#39;</span>, <span class="at">x =</span> sample_var) <span class="sc">+</span></span>
+<span id="cb57-38"><a href="de-model-building-with-variancepartition.html#cb57-38" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb57-39"><a href="de-model-building-with-variancepartition.html#cb57-39" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">6</span>)),</span>
+<span id="cb57-40"><a href="de-model-building-with-variancepartition.html#cb57-40" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>, <span class="at">size=</span><span class="fl">7.5</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb57-41"><a href="de-model-building-with-variancepartition.html#cb57-41" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">color=</span><span class="st">&#39;gray40&#39;</span>),</span>
+<span id="cb57-42"><a href="de-model-building-with-variancepartition.html#cb57-42" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb57-43"><a href="de-model-building-with-variancepartition.html#cb57-43" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>))</span>
+<span id="cb57-44"><a href="de-model-building-with-variancepartition.html#cb57-44" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb57-45"><a href="de-model-building-with-variancepartition.html#cb57-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-46"><a href="de-model-building-with-variancepartition.html#cb57-46" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Scatterplots for continuous variables</span></span>
+<span id="cb57-47"><a href="de-model-building-with-variancepartition.html#cb57-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb57-48"><a href="de-model-building-with-variancepartition.html#cb57-48" aria-hidden="true" tabindex="-1"></a>        colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;mitoRate&#39;</span><span class="ot">=</span><span class="st">&#39;khaki3&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span><span class="ot">=</span><span class="st">&#39;turquoise&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span><span class="ot">=</span><span class="st">&#39;plum2&#39;</span>, <span class="st">&#39;rRNA_rate&#39;</span><span class="ot">=</span><span class="st">&#39;orange3&#39;</span>, </span>
+<span id="cb57-49"><a href="de-model-building-with-variancepartition.html#cb57-49" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;sum&#39;</span><span class="ot">=</span><span class="st">&#39;palegreen3&#39;</span>, <span class="st">&#39;detected&#39;</span><span class="ot">=</span><span class="st">&#39;skyblue2&#39;</span>, <span class="st">&#39;ERCCsumLogErr&#39;</span><span class="ot">=</span><span class="st">&#39;slateblue1&#39;</span>)</span>
+<span id="cb57-50"><a href="de-model-building-with-variancepartition.html#cb57-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-51"><a href="de-model-building-with-variancepartition.html#cb57-51" aria-hidden="true" tabindex="-1"></a>        plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(data), <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">eval</span>(<span class="fu">parse_expr</span>(sample_var)), <span class="at">y=</span>gene_expr)) <span class="sc">+</span></span>
+<span id="cb57-52"><a href="de-model-building-with-variancepartition.html#cb57-52" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>( <span class="at">color=</span>colors[[sample_var]], <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb57-53"><a href="de-model-building-with-variancepartition.html#cb57-53" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_smooth</span> (<span class="at">geom=</span><span class="st">&quot;line&quot;</span>, <span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">size=</span><span class="fl">0.4</span>, <span class="at">span=</span><span class="fl">0.25</span>, <span class="at">method =</span> lm, <span class="at">color=</span><span class="st">&#39;orangered3&#39;</span>) <span class="sc">+</span></span>
+<span id="cb57-54"><a href="de-model-building-with-variancepartition.html#cb57-54" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb57-55"><a href="de-model-building-with-variancepartition.html#cb57-55" aria-hidden="true" tabindex="-1"></a>            <span class="fu">guides</span>(<span class="at">color=</span><span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-56"><a href="de-model-building-with-variancepartition.html#cb57-56" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> gene_id,</span>
+<span id="cb57-57"><a href="de-model-building-with-variancepartition.html#cb57-57" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Variance explained: &quot;</span>, percentage, <span class="st">&#39;%&#39;</span>),</span>
+<span id="cb57-58"><a href="de-model-building-with-variancepartition.html#cb57-58" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span> <span class="st">&#39;lognorm counts&#39;</span>, <span class="at">x =</span> <span class="fu">gsub</span>(<span class="st">&#39;_&#39;</span>, <span class="st">&#39; &#39;</span>, sample_var)) <span class="sc">+</span></span>
+<span id="cb57-59"><a href="de-model-building-with-variancepartition.html#cb57-59" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="fl">0.4</span>,<span class="fl">0.1</span>,<span class="fl">0.4</span>,<span class="fl">0.1</span>), <span class="st">&#39;cm&#39;</span>),</span>
+<span id="cb57-60"><a href="de-model-building-with-variancepartition.html#cb57-60" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb57-61"><a href="de-model-building-with-variancepartition.html#cb57-61" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">6</span>)),</span>
+<span id="cb57-62"><a href="de-model-building-with-variancepartition.html#cb57-62" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>, <span class="at">size=</span><span class="fl">7.5</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb57-63"><a href="de-model-building-with-variancepartition.html#cb57-63" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">color=</span><span class="st">&#39;gray40&#39;</span>),</span>
+<span id="cb57-64"><a href="de-model-building-with-variancepartition.html#cb57-64" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb57-65"><a href="de-model-building-with-variancepartition.html#cb57-65" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>))</span>
+<span id="cb57-66"><a href="de-model-building-with-variancepartition.html#cb57-66" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb57-67"><a href="de-model-building-with-variancepartition.html#cb57-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-68"><a href="de-model-building-with-variancepartition.html#cb57-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(plot)</span>
+<span id="cb57-69"><a href="de-model-building-with-variancepartition.html#cb57-69" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="de-model-building-with-variancepartition.html#cb58-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-2"><a href="de-model-building-with-variancepartition.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Function to plot gene expression vs sample variable data for top 3 most affected genes</span></span>
+<span id="cb58-3"><a href="de-model-building-with-variancepartition.html#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="de-model-building-with-variancepartition.html#cb58-4" aria-hidden="true" tabindex="-1"></a>plot_gene_expr_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(age, sample_var){</span>
+<span id="cb58-5"><a href="de-model-building-with-variancepartition.html#cb58-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb58-6"><a href="de-model-building-with-variancepartition.html#cb58-6" aria-hidden="true" tabindex="-1"></a>   rse_gene <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste</span>(<span class="st">&quot;rse_gene&quot;</span>, age, <span class="st">&#39;qc&#39;</span>, <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)))</span>
+<span id="cb58-7"><a href="de-model-building-with-variancepartition.html#cb58-7" aria-hidden="true" tabindex="-1"></a>   varPart_data <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste0</span>(<span class="st">&#39;varPart_data_&#39;</span>, age)))</span>
+<span id="cb58-8"><a href="de-model-building-with-variancepartition.html#cb58-8" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb58-9"><a href="de-model-building-with-variancepartition.html#cb58-9" aria-hidden="true" tabindex="-1"></a>   <span class="do">## Top 3 genes most affected by sample variable</span></span>
+<span id="cb58-10"><a href="de-model-building-with-variancepartition.html#cb58-10" aria-hidden="true" tabindex="-1"></a>   affected_genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(varPart_data[<span class="fu">order</span>(varPart_data[,sample_var], <span class="at">decreasing =</span>  <span class="cn">TRUE</span>),][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,])</span>
+<span id="cb58-11"><a href="de-model-building-with-variancepartition.html#cb58-11" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb58-12"><a href="de-model-building-with-variancepartition.html#cb58-12" aria-hidden="true" tabindex="-1"></a>   <span class="do">## Plots</span></span>
+<span id="cb58-13"><a href="de-model-building-with-variancepartition.html#cb58-13" aria-hidden="true" tabindex="-1"></a>   plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb58-14"><a href="de-model-building-with-variancepartition.html#cb58-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(affected_genes)){</span>
+<span id="cb58-15"><a href="de-model-building-with-variancepartition.html#cb58-15" aria-hidden="true" tabindex="-1"></a>      plots[[i]] <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr</span>(age, sample_var, affected_genes[i])</span>
+<span id="cb58-16"><a href="de-model-building-with-variancepartition.html#cb58-16" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb58-17"><a href="de-model-building-with-variancepartition.html#cb58-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plot_grid</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], <span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb58-18"><a href="de-model-building-with-variancepartition.html#cb58-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="de-model-building-with-variancepartition.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Adults</span></span>
+<span id="cb59-2"><a href="de-model-building-with-variancepartition.html#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="de-model-building-with-variancepartition.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;totalAssignedGene&#39;</span></span>
+<span id="cb59-4"><a href="de-model-building-with-variancepartition.html#cb59-4" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>)</span>
+<span id="cb59-5"><a href="de-model-building-with-variancepartition.html#cb59-5" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span>
+<span id="cb59-6"><a href="de-model-building-with-variancepartition.html#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="de-model-building-with-variancepartition.html#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;overallMapRate&#39;</span></span>
+<span id="cb59-8"><a href="de-model-building-with-variancepartition.html#cb59-8" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>)</span>
+<span id="cb59-9"><a href="de-model-building-with-variancepartition.html#cb59-9" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span>
+<span id="cb59-10"><a href="de-model-building-with-variancepartition.html#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="de-model-building-with-variancepartition.html#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;Group&#39;</span></span>
+<span id="cb59-12"><a href="de-model-building-with-variancepartition.html#cb59-12" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;adults&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb59-13"><a href="de-model-building-with-variancepartition.html#cb59-13" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="de-model-building-with-variancepartition.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Pups</span></span>
+<span id="cb60-2"><a href="de-model-building-with-variancepartition.html#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="de-model-building-with-variancepartition.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;overallMapRate&#39;</span></span>
+<span id="cb60-4"><a href="de-model-building-with-variancepartition.html#cb60-4" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>)</span>
+<span id="cb60-5"><a href="de-model-building-with-variancepartition.html#cb60-5" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span>
+<span id="cb60-6"><a href="de-model-building-with-variancepartition.html#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="de-model-building-with-variancepartition.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;totalAssignedGene&#39;</span></span>
+<span id="cb60-8"><a href="de-model-building-with-variancepartition.html#cb60-8" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>)</span>
+<span id="cb60-9"><a href="de-model-building-with-variancepartition.html#cb60-9" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span>
+<span id="cb60-10"><a href="de-model-building-with-variancepartition.html#cb60-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-11"><a href="de-model-building-with-variancepartition.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;Group&#39;</span></span>
+<span id="cb60-12"><a href="de-model-building-with-variancepartition.html#cb60-12" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb60-13"><a href="de-model-building-with-variancepartition.html#cb60-13" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;  setting  value
+#&gt;  version  R version 4.3.0 (2023-04-21)
+#&gt;  os       Ubuntu 22.04.2 LTS
+#&gt;  system   x86_64, linux-gnu
+#&gt;  ui       X11
+#&gt;  language (EN)
+#&gt;  collate  en_US.UTF-8
+#&gt;  ctype    en_US.UTF-8
+#&gt;  tz       UTC
+#&gt;  date     2023-06-28
+#&gt;  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;  package                * version   date (UTC) lib source
+#&gt;  AnnotationDbi            1.62.1    2023-05-02 [1] Bioconductor
+#&gt;  AnnotationHub            3.8.0     2023-04-25 [1] Bioconductor
+#&gt;  aod                      1.3.2     2022-04-02 [1] RSPM (R 4.3.0)
+#&gt;  attempt                  0.3.1     2020-05-03 [1] RSPM (R 4.3.0)
+#&gt;  backports                1.4.1     2021-12-13 [1] RSPM (R 4.3.0)
+#&gt;  base64enc                0.1-3     2015-07-28 [2] RSPM (R 4.3.0)
+#&gt;  beachmat                 2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  beeswarm                 0.4.0     2021-06-01 [1] RSPM (R 4.3.0)
+#&gt;  benchmarkme              1.0.8     2022-06-12 [1] RSPM (R 4.3.0)
+#&gt;  benchmarkmeData          1.0.4     2020-04-23 [1] RSPM (R 4.3.0)
+#&gt;  bibtex                   0.5.1     2023-01-26 [1] RSPM (R 4.3.0)
+#&gt;  Biobase                * 2.60.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocFileCache          * 2.8.0     2023-04-25 [1] Bioconductor
+#&gt;  BiocGenerics           * 0.46.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocIO                   1.10.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocManager              1.30.21   2023-06-10 [1] RSPM (R 4.3.0)
+#&gt;  BiocNeighbors            1.18.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocParallel           * 1.34.2    2023-05-22 [1] Bioconductor
+#&gt;  BiocSingular             1.16.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocStyle              * 2.28.0    2023-04-25 [1] Bioconductor
+#&gt;  biocthis               * 1.10.3    2023-06-07 [1] Bioconductor
+#&gt;  BiocVersion              3.17.1    2022-11-04 [2] Bioconductor
+#&gt;  Biostrings               2.68.1    2023-05-16 [1] Bioconductor
+#&gt;  bit                      4.0.5     2022-11-15 [1] RSPM (R 4.3.0)
+#&gt;  bit64                    4.0.5     2020-08-30 [1] RSPM (R 4.3.0)
+#&gt;  bitops                   1.0-7     2021-04-24 [1] RSPM (R 4.3.0)
+#&gt;  blob                     1.2.4     2023-03-17 [1] RSPM (R 4.3.0)
+#&gt;  bookdown                 0.34      2023-05-09 [1] RSPM (R 4.3.0)
+#&gt;  boot                     1.3-28.1  2022-11-22 [3] CRAN (R 4.3.0)
+#&gt;  broom                    1.0.5     2023-06-09 [1] RSPM (R 4.3.0)
+#&gt;  bslib                    0.5.0     2023-06-09 [2] RSPM (R 4.3.0)
+#&gt;  cachem                   1.0.8     2023-05-01 [2] RSPM (R 4.3.0)
+#&gt;  caTools                  1.18.2    2021-03-28 [1] RSPM (R 4.3.0)
+#&gt;  checkmate                2.2.0     2023-04-27 [1] RSPM (R 4.3.0)
+#&gt;  circlize                 0.4.15    2022-05-10 [1] RSPM (R 4.3.0)
+#&gt;  cli                      3.6.1     2023-03-23 [2] RSPM (R 4.3.0)
+#&gt;  clue                     0.3-64    2023-01-31 [1] RSPM (R 4.3.0)
+#&gt;  cluster                  2.1.4     2022-08-22 [3] CRAN (R 4.3.0)
+#&gt;  codetools                0.2-19    2023-02-01 [3] CRAN (R 4.3.0)
+#&gt;  colorspace               2.1-0     2023-01-23 [1] RSPM (R 4.3.0)
+#&gt;  colourpicker             1.2.0     2022-10-28 [1] RSPM (R 4.3.0)
+#&gt;  ComplexHeatmap         * 2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  config                   0.3.1     2020-12-17 [1] RSPM (R 4.3.0)
+#&gt;  cowplot                * 1.1.1     2020-12-30 [1] RSPM (R 4.3.0)
+#&gt;  crayon                   1.5.2     2022-09-29 [2] RSPM (R 4.3.0)
+#&gt;  curl                     5.0.1     2023-06-07 [2] RSPM (R 4.3.0)
+#&gt;  data.table               1.14.8    2023-02-17 [1] RSPM (R 4.3.0)
+#&gt;  DBI                      1.1.3     2022-06-18 [1] RSPM (R 4.3.0)
+#&gt;  dbplyr                 * 2.3.2     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  DelayedArray             0.26.3    2023-05-22 [1] Bioconductor
+#&gt;  DelayedMatrixStats       1.22.1    2023-06-09 [1] Bioconductor
+#&gt;  digest                   0.6.32    2023-06-26 [2] RSPM (R 4.3.0)
+#&gt;  doParallel               1.0.17    2022-02-07 [1] RSPM (R 4.3.0)
+#&gt;  dotCall64                1.0-2     2022-10-03 [1] RSPM (R 4.3.0)
+#&gt;  dplyr                    1.1.2     2023-04-20 [1] RSPM (R 4.3.0)
+#&gt;  dqrng                    0.3.0     2021-05-01 [1] RSPM (R 4.3.0)
+#&gt;  DropletUtils             1.20.0    2023-04-25 [1] Bioconductor
+#&gt;  DT                       0.28      2023-05-18 [1] RSPM (R 4.3.0)
+#&gt;  edgeR                  * 3.42.4    2023-05-31 [1] Bioconductor
+#&gt;  ellipsis                 0.3.2     2021-04-29 [2] RSPM (R 4.3.0)
+#&gt;  EnvStats                 2.7.0     2022-03-07 [1] RSPM (R 4.3.0)
+#&gt;  evaluate                 0.21      2023-05-05 [2] RSPM (R 4.3.0)
+#&gt;  ExperimentHub            2.8.0     2023-04-25 [1] Bioconductor
+#&gt;  ExploreModelMatrix     * 1.12.0    2023-04-25 [1] Bioconductor
+#&gt;  fansi                    1.0.4     2023-01-22 [2] RSPM (R 4.3.0)
+#&gt;  farver                   2.1.1     2022-07-06 [1] RSPM (R 4.3.0)
+#&gt;  fastmap                  1.1.1     2023-02-24 [2] RSPM (R 4.3.0)
+#&gt;  fields                   14.1      2022-08-12 [1] RSPM (R 4.3.0)
+#&gt;  filelock                 1.0.2     2018-10-05 [1] RSPM (R 4.3.0)
+#&gt;  foreach                  1.5.2     2022-02-02 [1] RSPM (R 4.3.0)
+#&gt;  foreign                  0.8-84    2022-12-06 [3] CRAN (R 4.3.0)
+#&gt;  Formula                  1.2-5     2023-02-24 [1] RSPM (R 4.3.0)
+#&gt;  fs                       1.6.2     2023-04-25 [2] RSPM (R 4.3.0)
+#&gt;  generics                 0.1.3     2022-07-05 [1] RSPM (R 4.3.0)
+#&gt;  GenomeInfoDb           * 1.36.1    2023-06-21 [1] Bioconductor
+#&gt;  GenomeInfoDbData         1.2.10    2023-05-17 [1] Bioconductor
+#&gt;  GenomicAlignments        1.36.0    2023-04-25 [1] Bioconductor
+#&gt;  GenomicRanges          * 1.52.0    2023-04-25 [1] Bioconductor
+#&gt;  GetoptLong               1.0.5     2020-12-15 [1] RSPM (R 4.3.0)
+#&gt;  ggbeeswarm               0.7.2     2023-04-29 [1] RSPM (R 4.3.0)
+#&gt;  ggplot2                * 3.4.2     2023-04-03 [1] RSPM (R 4.3.0)
+#&gt;  ggrepel                * 0.9.3     2023-02-03 [1] RSPM (R 4.3.0)
+#&gt;  GlobalOptions            0.1.2     2020-06-10 [1] RSPM (R 4.3.0)
+#&gt;  glue                     1.6.2     2022-02-24 [2] RSPM (R 4.3.0)
+#&gt;  golem                    0.4.1     2023-06-05 [1] RSPM (R 4.3.0)
+#&gt;  gplots                   3.1.3     2022-04-25 [1] RSPM (R 4.3.0)
+#&gt;  gridExtra                2.3       2017-09-09 [1] RSPM (R 4.3.0)
+#&gt;  gtable                   0.3.3     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  gtools                   3.9.4     2022-11-27 [1] RSPM (R 4.3.0)
+#&gt;  HDF5Array                1.28.1    2023-05-01 [1] Bioconductor
+#&gt;  here                   * 1.0.1     2020-12-13 [1] RSPM (R 4.3.0)
+#&gt;  highr                    0.10      2022-12-22 [2] RSPM (R 4.3.0)
+#&gt;  Hmisc                  * 5.1-0     2023-05-08 [1] RSPM (R 4.3.0)
+#&gt;  hms                      1.1.3     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  htmlTable                2.4.1     2022-07-07 [1] RSPM (R 4.3.0)
+#&gt;  htmltools                0.5.5     2023-03-23 [2] RSPM (R 4.3.0)
+#&gt;  htmlwidgets              1.6.2     2023-03-17 [2] RSPM (R 4.3.0)
+#&gt;  httpuv                   1.6.11    2023-05-11 [2] RSPM (R 4.3.0)
+#&gt;  httr                     1.4.6     2023-05-08 [2] RSPM (R 4.3.0)
+#&gt;  igraph                   1.5.0     2023-06-16 [1] RSPM (R 4.3.0)
+#&gt;  interactiveDisplayBase   1.38.0    2023-04-25 [1] Bioconductor
+#&gt;  IRanges                * 2.34.1    2023-06-22 [1] Bioconductor
+#&gt;  irlba                    2.3.5.1   2022-10-03 [1] RSPM (R 4.3.0)
+#&gt;  iSEE                   * 2.12.0    2023-04-25 [1] Bioconductor
+#&gt;  iterators                1.0.14    2022-02-05 [1] RSPM (R 4.3.0)
+#&gt;  jquerylib                0.1.4     2021-04-26 [2] RSPM (R 4.3.0)
+#&gt;  jsonlite                 1.8.5     2023-06-05 [2] RSPM (R 4.3.0)
+#&gt;  KEGGREST                 1.40.0    2023-04-25 [1] Bioconductor
+#&gt;  KernSmooth               2.23-21   2023-05-03 [3] RSPM (R 4.3.0)
+#&gt;  knitr                    1.43      2023-05-25 [2] RSPM (R 4.3.0)
+#&gt;  labeling                 0.4.2     2020-10-20 [1] RSPM (R 4.3.0)
+#&gt;  later                    1.3.1     2023-05-02 [2] RSPM (R 4.3.0)
+#&gt;  lattice                  0.21-8    2023-04-05 [3] CRAN (R 4.3.0)
+#&gt;  lazyeval                 0.2.2     2019-03-15 [1] RSPM (R 4.3.0)
+#&gt;  lifecycle                1.0.3     2022-10-07 [2] RSPM (R 4.3.0)
+#&gt;  limma                  * 3.56.2    2023-06-04 [1] Bioconductor
+#&gt;  lme4                     1.1-33    2023-04-25 [1] RSPM (R 4.3.0)
+#&gt;  lobstr                 * 1.1.2     2022-06-22 [1] RSPM (R 4.3.0)
+#&gt;  locfit                   1.5-9.8   2023-06-11 [1] RSPM (R 4.3.0)
+#&gt;  lubridate                1.9.2     2023-02-10 [1] RSPM (R 4.3.0)
+#&gt;  magick                   2.7.4     2023-03-09 [1] RSPM (R 4.3.0)
+#&gt;  magrittr                 2.0.3     2022-03-30 [2] RSPM (R 4.3.0)
+#&gt;  maps                     3.4.1     2022-10-30 [1] RSPM (R 4.3.0)
+#&gt;  MASS                     7.3-60    2023-05-04 [3] RSPM (R 4.3.0)
+#&gt;  Matrix                   1.5-4.1   2023-05-18 [3] RSPM (R 4.3.0)
+#&gt;  MatrixGenerics         * 1.12.2    2023-06-09 [1] Bioconductor
+#&gt;  matrixStats            * 1.0.0     2023-06-02 [1] RSPM (R 4.3.0)
+#&gt;  memoise                  2.0.1     2021-11-26 [2] RSPM (R 4.3.0)
+#&gt;  mgcv                     1.8-42    2023-03-02 [3] CRAN (R 4.3.0)
+#&gt;  mime                     0.12      2021-09-28 [2] RSPM (R 4.3.0)
+#&gt;  miniUI                   0.1.1.1   2018-05-18 [2] RSPM (R 4.3.0)
+#&gt;  minqa                    1.2.5     2022-10-19 [1] RSPM (R 4.3.0)
+#&gt;  munsell                  0.5.0     2018-06-12 [1] RSPM (R 4.3.0)
+#&gt;  mvtnorm                  1.2-2     2023-06-08 [1] RSPM (R 4.3.0)
+#&gt;  nlme                     3.1-162   2023-01-31 [3] CRAN (R 4.3.0)
+#&gt;  nloptr                   2.0.3     2022-05-26 [1] RSPM (R 4.3.0)
+#&gt;  nnet                     7.3-19    2023-05-03 [3] RSPM (R 4.3.0)
+#&gt;  paletteer                1.5.0     2022-10-19 [1] RSPM (R 4.3.0)
+#&gt;  patchwork              * 1.1.2     2022-08-19 [1] RSPM (R 4.3.0)
+#&gt;  pbkrtest                 0.5.2     2023-01-19 [1] RSPM (R 4.3.0)
+#&gt;  pheatmap               * 1.0.12    2019-01-04 [1] RSPM (R 4.3.0)
+#&gt;  pillar                   1.9.0     2023-03-22 [2] RSPM (R 4.3.0)
+#&gt;  pkgconfig                2.0.3     2019-09-22 [2] RSPM (R 4.3.0)
+#&gt;  plotly                   4.10.2    2023-06-03 [1] RSPM (R 4.3.0)
+#&gt;  plyr                     1.8.8     2022-11-11 [1] RSPM (R 4.3.0)
+#&gt;  png                      0.1-8     2022-11-29 [1] RSPM (R 4.3.0)
+#&gt;  postcards              * 0.2.3     2022-01-07 [1] RSPM (R 4.3.0)
+#&gt;  prettyunits              1.1.1     2020-01-24 [2] RSPM (R 4.3.0)
+#&gt;  progress                 1.2.2     2019-05-16 [1] RSPM (R 4.3.0)
+#&gt;  promises                 1.2.0.1   2021-02-11 [2] RSPM (R 4.3.0)
+#&gt;  purrr                    1.0.1     2023-01-10 [2] RSPM (R 4.3.0)
+#&gt;  R.cache                  0.16.0    2022-07-21 [1] RSPM (R 4.3.0)
+#&gt;  R.methodsS3              1.8.2     2022-06-13 [1] RSPM (R 4.3.0)
+#&gt;  R.oo                     1.25.0    2022-06-12 [1] RSPM (R 4.3.0)
+#&gt;  R.utils                  2.12.2    2022-11-11 [1] RSPM (R 4.3.0)
+#&gt;  R6                       2.5.1     2021-08-19 [2] RSPM (R 4.3.0)
+#&gt;  rappdirs                 0.3.3     2021-01-31 [2] RSPM (R 4.3.0)
+#&gt;  rbibutils                2.2.13    2023-01-13 [1] RSPM (R 4.3.0)
+#&gt;  RColorBrewer           * 1.1-3     2022-04-03 [1] RSPM (R 4.3.0)
+#&gt;  Rcpp                     1.0.10    2023-01-22 [2] RSPM (R 4.3.0)
+#&gt;  RCurl                    1.98-1.12 2023-03-27 [1] RSPM (R 4.3.0)
+#&gt;  Rdpack                   2.4       2022-07-20 [1] RSPM (R 4.3.0)
+#&gt;  recount3               * 1.10.2    2023-05-07 [1] Bioconductor
+#&gt;  RefManageR             * 1.4.0     2022-09-30 [1] RSPM (R 4.3.0)
+#&gt;  remaCor                  0.0.16    2023-06-21 [1] RSPM (R 4.3.0)
+#&gt;  rematch2                 2.1.2     2020-05-01 [2] RSPM (R 4.3.0)
+#&gt;  reshape2                 1.4.4     2020-04-09 [1] RSPM (R 4.3.0)
+#&gt;  restfulr                 0.0.15    2022-06-16 [1] RSPM (R 4.3.0)
+#&gt;  rhdf5                    2.44.0    2023-04-25 [1] Bioconductor
+#&gt;  rhdf5filters             1.12.1    2023-04-30 [1] Bioconductor
+#&gt;  Rhdf5lib                 1.22.0    2023-04-25 [1] Bioconductor
+#&gt;  RhpcBLASctl              0.23-42   2023-02-11 [1] RSPM (R 4.3.0)
+#&gt;  rintrojs                 0.3.2     2022-08-09 [1] RSPM (R 4.3.0)
+#&gt;  rjson                    0.2.21    2022-01-09 [1] RSPM (R 4.3.0)
+#&gt;  rlang                  * 1.1.1     2023-04-28 [2] RSPM (R 4.3.0)
+#&gt;  rmarkdown                2.22      2023-06-01 [2] RSPM (R 4.3.0)
+#&gt;  rpart                    4.1.19    2022-10-21 [3] CRAN (R 4.3.0)
+#&gt;  rprojroot                2.0.3     2022-04-02 [2] RSPM (R 4.3.0)
+#&gt;  Rsamtools                2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  RSQLite                  2.3.1     2023-04-03 [1] RSPM (R 4.3.0)
+#&gt;  rstudioapi               0.14      2022-08-22 [2] RSPM (R 4.3.0)
+#&gt;  rsvd                     1.0.5     2021-04-16 [1] RSPM (R 4.3.0)
+#&gt;  rtracklayer              1.60.0    2023-04-25 [1] Bioconductor
+#&gt;  S4Arrays                 1.0.4     2023-05-14 [1] Bioconductor
+#&gt;  S4Vectors              * 0.38.1    2023-05-02 [1] Bioconductor
+#&gt;  sass                     0.4.6     2023-05-03 [2] RSPM (R 4.3.0)
+#&gt;  ScaledMatrix             1.8.1     2023-05-03 [1] Bioconductor
+#&gt;  scales                   1.2.1     2022-08-20 [1] RSPM (R 4.3.0)
+#&gt;  scater                 * 1.28.0    2023-04-25 [1] Bioconductor
+#&gt;  scuttle                * 1.10.1    2023-05-02 [1] Bioconductor
+#&gt;  sessioninfo            * 1.2.2     2021-12-06 [2] RSPM (R 4.3.0)
+#&gt;  shape                    1.4.6     2021-05-19 [1] RSPM (R 4.3.0)
+#&gt;  shiny                    1.7.4     2022-12-15 [2] RSPM (R 4.3.0)
+#&gt;  shinyAce                 0.4.2     2022-05-06 [1] RSPM (R 4.3.0)
+#&gt;  shinydashboard           0.7.2     2021-09-30 [1] RSPM (R 4.3.0)
+#&gt;  shinyjs                  2.1.0     2021-12-23 [1] RSPM (R 4.3.0)
+#&gt;  shinyWidgets             0.7.6     2023-01-08 [1] RSPM (R 4.3.0)
+#&gt;  SingleCellExperiment   * 1.22.0    2023-04-25 [1] Bioconductor
+#&gt;  smokingMouse           * 0.99.5    2023-06-28 [1] Github (LieberInstitute/smokingMouse@2e7640c)
+#&gt;  spam                     2.9-1     2022-08-07 [1] RSPM (R 4.3.0)
+#&gt;  sparseMatrixStats        1.12.1    2023-06-20 [1] Bioconductor
+#&gt;  SpatialExperiment      * 1.10.0    2023-04-25 [1] Bioconductor
+#&gt;  spatialLIBD            * 1.12.0    2023-04-27 [1] Bioconductor
+#&gt;  statmod                  1.5.0     2023-01-06 [1] RSPM (R 4.3.0)
+#&gt;  stringi                  1.7.12    2023-01-11 [2] RSPM (R 4.3.0)
+#&gt;  stringr                * 1.5.0     2022-12-02 [2] RSPM (R 4.3.0)
+#&gt;  styler                   1.10.1    2023-06-05 [1] RSPM (R 4.3.0)
+#&gt;  SummarizedExperiment   * 1.30.2    2023-06-06 [1] Bioconductor
+#&gt;  tibble                   3.2.1     2023-03-20 [2] RSPM (R 4.3.0)
+#&gt;  tidyr                    1.3.0     2023-01-24 [1] RSPM (R 4.3.0)
+#&gt;  tidyselect               1.2.0     2022-10-10 [1] RSPM (R 4.3.0)
+#&gt;  timechange               0.2.0     2023-01-11 [1] RSPM (R 4.3.0)
+#&gt;  usethis                * 2.2.1     2023-06-23 [2] RSPM (R 4.3.0)
+#&gt;  utf8                     1.2.3     2023-01-31 [2] RSPM (R 4.3.0)
+#&gt;  variancePartition      * 1.30.2    2023-06-07 [1] Bioconductor
+#&gt;  vctrs                    0.6.3     2023-06-14 [2] RSPM (R 4.3.0)
+#&gt;  vipor                    0.4.5     2017-03-22 [1] RSPM (R 4.3.0)
+#&gt;  viridis                  0.6.3     2023-05-03 [1] RSPM (R 4.3.0)
+#&gt;  viridisLite              0.4.2     2023-05-02 [1] RSPM (R 4.3.0)
+#&gt;  withr                    2.5.0     2022-03-03 [2] RSPM (R 4.3.0)
+#&gt;  xfun                     0.39      2023-04-20 [2] RSPM (R 4.3.0)
+#&gt;  XML                      3.99-0.14 2023-03-19 [1] RSPM (R 4.3.0)
+#&gt;  xml2                     1.3.4     2023-04-27 [2] RSPM (R 4.3.0)
+#&gt;  xtable                   1.8-4     2019-04-21 [2] RSPM (R 4.3.0)
+#&gt;  XVector                  0.40.0    2023-04-25 [1] Bioconductor
+#&gt;  yaml                     2.3.7     2023-01-23 [2] RSPM (R 4.3.0)
+#&gt;  zlibbioc                 1.46.0    2023-04-25 [1] Bioconductor
+#&gt; 
+#&gt;  [1] /__w/_temp/Library
+#&gt;  [2] /usr/local/lib/R/site-library
+#&gt;  [3] /usr/local/lib/R/library
+#&gt; 
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 
+</div>
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">

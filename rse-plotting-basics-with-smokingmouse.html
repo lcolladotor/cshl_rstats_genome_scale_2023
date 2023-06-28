@@ -186,7 +186,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a></li>
 <li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a></li>
 <li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
-<li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a></li>
+<li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
+<ul>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i>Explore gene-level effects</a>
+<ul>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a></li>
 <li class="chapter" data-level="14" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>14</b> Exercise with variancePartition and ComplexHeatmap</a></li>
 <li class="chapter" data-level="15" data-path="tbd.html"><a href="tbd.html"><i class="fa fa-check"></i><b>15</b> TBD</a></li>
@@ -224,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb14-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb14-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f26d608d56_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f04b9f0745_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb14-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb14-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -518,7 +524,7 @@ have low (though not much lower) <mark style= "background-color: #FCF3CF"> <span
 <span id="cb25-60"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-60" aria-hidden="true" tabindex="-1"></a><span class="do">## QC scatterplots coloring by all sample variables</span></span>
 <span id="cb25-61"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-61" aria-hidden="true" tabindex="-1"></a>multiple_QC_scatterplots <span class="ot">&lt;-</span> <span class="cf">function</span>(qc_metric1, qc_metric2){</span>
 <span id="cb25-62"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-62" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb25-63"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-63" aria-hidden="true" tabindex="-1"></a>    sample_variables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;Sex&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="st">&#39;Pregnancy&#39;</span>, <span class="st">&#39;flowcell&#39;</span>)</span>
+<span id="cb25-63"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-63" aria-hidden="true" tabindex="-1"></a>    sample_variables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Sex&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="st">&#39;Pregnancy&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;flowcell&#39;</span>)</span>
 <span id="cb25-64"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-64" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb25-65"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-65" aria-hidden="true" tabindex="-1"></a>    i<span class="ot">=</span><span class="dv">1</span></span>
 <span id="cb25-66"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-66" aria-hidden="true" tabindex="-1"></a>    plots <span class="ot">=</span> <span class="fu">list</span>()</span>
@@ -702,7 +708,7 @@ For adults, only 3 controls are dropped, 3 of them by their <mark style= "backgr
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <style>
 p.exercise  {
-background-color: #E2EED7;
+background-color: #F5F4D8;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
