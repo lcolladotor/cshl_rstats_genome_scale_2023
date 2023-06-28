@@ -630,7 +630,7 @@ plots + theme(plot.margin=unit (c(3,1,2,3), 'cm'))
 
 <style>
 p.exercise  {
-background-color: #D5EDD0;
+background-color: #E4EDE2;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;

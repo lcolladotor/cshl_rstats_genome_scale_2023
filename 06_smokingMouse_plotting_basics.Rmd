@@ -427,7 +427,7 @@ multiple_QC_scatterplots('detected', 'totalAssignedGene')
 
 <style>
 p.exercise  {
-background-color: #D5EDD0;
+background-color: #E4EDE2;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
