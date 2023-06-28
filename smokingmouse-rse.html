@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-10"><a href="smokingmouse-rse.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb8-11"><a href="smokingmouse-rse.html#cb8-11" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb8-12"><a href="smokingmouse-rse.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f474fbeda8_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3ef627000f1_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb8-14"><a href="smokingmouse-rse.html#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-15"><a href="smokingmouse-rse.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb8-16"><a href="smokingmouse-rse.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -282,14 +282,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-16"><a href="smokingmouse-rse.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1 -5.985331 -5.985331 -5.985331</span></span>
 <span id="cb9-17"><a href="smokingmouse-rse.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000064842.1 -5.985331 -5.985331 -5.985331</span></span>
 <span id="cb9-18"><a href="smokingmouse-rse.html#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  4.509114  4.865612  4.944597</span></span></code></pre></div>
+</div>
+<div id="sample-data" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Sample data<a href="smokingmouse-rse.html#sample-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><mark style= "background-color: #FCF3CF"> Yellow </mark> variables correspond to SPEAQeasy outputs that are going to be used in downstream analyses.</li>
 <li><mark style= "background-color: #FAECF8"> Pink </mark> variables are specific of the study, such as sample metadata and some others containing additional information of the genes.</li>
 <li><mark style= "background-color: #DFF0FE"> Blue </mark> variables are Quality-Control metrics computed by <code>addPerCellQC()</code> of <em><a href="https://bioconductor.org/packages/3.17/scuttle">scuttle</a></em>.</li>
 </ul>
-</div>
-<div id="sample-data" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Sample data<a href="smokingmouse-rse.html#sample-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The same RSE contains the sample information in <code>colData(RSE)</code>:</p>
 <ul>
 <li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> SAMPLE_ID</span> </mark>: is the name of the sample.</li>
@@ -352,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-8"><a href="smokingmouse-rse.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5      6094 ENSMUSG00000051951.5 ENSMUSG00000051951 protein_coding      497097</span></span></code></pre></div>
 <style>
 p.exercise  {
-background-color: #D5EDD0;
+background-color: #E4EDE2;
 padding: 9px;
 border: 1px solid black;
 margin-left: 25px;
