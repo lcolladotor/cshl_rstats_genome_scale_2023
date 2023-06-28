@@ -402,6 +402,7 @@ Forcefully, <mark style= "background-color: #FCF3CF"> <span style="font-family: 
 ```{r message=FALSE, warning=FALSE}
 multiple_QC_scatterplots('sum', 'detected')
 ```
+
 Noticeably, a positive correlation is present for <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> and that is also congruent because a higher number of expressed-genes implies bigger library sizes, but that is not necessarily true in the other way around: just a few highly expressed genes (small number of <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> genes) could increase the library size. Interestingly, in this case samples are diagonally separated by age. 
 
 
@@ -580,7 +581,9 @@ p <- boxplots_after_QC_filtering(rse_gene_filt, 'mitoRate', 'Age')
 p + theme(plot.margin=unit (c (2,4,2,4), 'cm'))
 
 ```
+
 For adults, only 3 controls are dropped, 3 of them by their <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>. 
+
 ```{r message=FALSE, warning=FALSE}
 ## Adult samples
 p <- boxplots_after_QC_filtering(rse_gene_adults, 'mitoRate', 'Group')

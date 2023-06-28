@@ -300,6 +300,18 @@ fit <- lm(expr ~ a + b + c, data=data)
 
 In our case, the function will be modeled a mixed model since we have both effects.
 
+<style>
+p.comment {
+background-color: #E6E6E6;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
+
 <p class="comment">
 ❓***What are random and fixed effects? How to determine if a variable is one or the other?*** **Categorical variables** are usually modeled as **random effects**, i.e., traits such as the batch, sex, flowcell, plate, individual, variables 'randomly chosen or selected from a population' and whose specific levels are not of particular interest, only the grouping of the samples by those variables. These are control variables/factors that vary randomly across individuals or groups and we use them because we must control for these effects. Think of them as having different effects on gene expression (the dependent variable) depending on their values. 
 **Continuous variables** must be modeled as **fixed effects**, they cannot be modeled as random effects. These correspond to variables that can be measured somehow and whose levels are themselves of interest (the QC metrics, for instance); these effects would be the same for all genes. 
@@ -456,6 +468,7 @@ plot + theme(plot.margin=unit (c(1,1,1,1), 'cm'),
               axis.text.x = element_text(size = (7)),
               axis.text.y = element_text(size = (7.5)))
 ```
+
 Notwithstanding, in this new reduced model Group contribution doesn't increment much in comparison with the complete model and also note that the % of variance explained by the residuals, i.e., the % of gene expression variance that the model couldn't explain, increments in this model compared to the previous; by removing independent variables to a regression equation, we can explain less of the variance of the dependent variable [5]. That's the price to pay when dropping variables but it is convenient in this case since we don't have many samples for the model to determine their real unique contributions.  
 
 In pups, based on the model with all variables, again <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> must be removed, as well as <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that are correlated with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>.
