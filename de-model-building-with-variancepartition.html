@@ -682,7 +682,7 @@ All parameters are estimated with maximum likelihood, the default method in the 
 <span id="cb59-7"><a href="de-model-building-with-variancepartition.html#cb59-7" aria-hidden="true" tabindex="-1"></a>   varPart_data <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste0</span>(<span class="st">&#39;varPart_data_&#39;</span>, age)))</span>
 <span id="cb59-8"><a href="de-model-building-with-variancepartition.html#cb59-8" aria-hidden="true" tabindex="-1"></a>   </span>
 <span id="cb59-9"><a href="de-model-building-with-variancepartition.html#cb59-9" aria-hidden="true" tabindex="-1"></a>   <span class="do">## Top 3 genes most affected by sample variable</span></span>
-<span id="cb59-10"><a href="de-model-building-with-variancepartition.html#cb59-10" aria-hidden="true" tabindex="-1"></a>   affected_genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(varPart_data[<span class="fu">order</span>(varPart_data[,sample_var], <span class="at">decreasing =</span>  <span class="cn">TRUE</span>),][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,])</span>
+<span id="cb59-10"><a href="de-model-building-with-variancepartition.html#cb59-10" aria-hidden="true" tabindex="-1"></a>   affected_genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(varPart_data[<span class="fu">order</span>(varPart_data[,<span class="st">&#39;Group&#39;</span>], <span class="at">decreasing =</span>  <span class="cn">TRUE</span>),][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,])</span>
 <span id="cb59-11"><a href="de-model-building-with-variancepartition.html#cb59-11" aria-hidden="true" tabindex="-1"></a>   </span>
 <span id="cb59-12"><a href="de-model-building-with-variancepartition.html#cb59-12" aria-hidden="true" tabindex="-1"></a>   <span class="do">## Plots</span></span>
 <span id="cb59-13"><a href="de-model-building-with-variancepartition.html#cb59-13" aria-hidden="true" tabindex="-1"></a>   plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
@@ -717,6 +717,20 @@ All parameters are estimated with maximum likelihood, the default method in the 
 <span id="cb61-11"><a href="de-model-building-with-variancepartition.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots for top affected genes by &#39;Group&#39;</span></span>
 <span id="cb61-12"><a href="de-model-building-with-variancepartition.html#cb61-12" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">plot_gene_expr_sample</span>(<span class="st">&#39;pups&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
 <span id="cb61-13"><a href="de-model-building-with-variancepartition.html#cb61-13" aria-hidden="true" tabindex="-1"></a>plots <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<style>
+p.exercise  {
+background-color: #CFDBC7;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
+<p class="exercise">
+📑 <strong>Exercise 1</strong>: What % of variance does <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark> explain for gene ENSMUSG00000042348.10 in pups? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is upregulated or downregulated?
+</p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value
 #&gt;  version  R version 4.3.0 (2023-04-21)

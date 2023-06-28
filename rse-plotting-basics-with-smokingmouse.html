@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb14-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb14-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3ef7651d04b_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3ee24e9457f_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb14-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb14-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -555,6 +555,17 @@ have low (though not much lower) <mark style= "background-color: #FCF3CF"> <span
 <p>Lastly, there’s a slight positive correlation between <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>, which makes sense because reads assigned to genes rise the number of non-zero expressed genes but as mentioned, those genes are not necessarily highly expressed and thus, library sizes are not perforce so much bigger. Also note that the correlation wouldn’t be conserved within pup samples.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;detected&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<style>
+p.exercise  {
+background-color: #CFDBC7;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
 <p class="exercise">
 📑 <strong>Exercise 1</strong>: What’s the correlation between <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark>? What factor could explain that correlation? Why are <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark> numbers bigger than <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark> values?
 </p>
@@ -713,17 +724,6 @@ It is always important to trace the QC metrics of the filtered samples to verify
 <span id="cb36-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb36-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">boxplots_after_QC_filtering</span>(rse_gene_pups, <span class="st">&#39;rRNA_rate&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
 <span id="cb36-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb36-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<style>
-p.exercise  {
-background-color: #F5F4D8;
-padding: 10px;
-border: 1px solid black;
-margin-left: 25px;
-border-radius: 5px;
-font-family: sans-serif;
-}
-
-</style>
 <p class="exercise">
 📑 <strong>Exercise 2</strong>: Were the filtered adult samples from pregnant or not pregnant mice? From which plates and flowcells? What were their library sizes?
 </p>
