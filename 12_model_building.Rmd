@@ -630,7 +630,7 @@ plots + theme(plot.margin=unit (c(3,1,2,3), 'cm'))
 
 <style>
 p.exercise  {
-background-color: #CFDBC7;
+background-color: #D2E1C9;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
@@ -679,10 +679,43 @@ plot
 ```
 
 
+<p class="exercise">
+📑 **Exercise 2**: Do the same for gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
+</p>
 
+```{r exercise2_varPart, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE}
+## Solution
 
+## Gene ID
+gene_id <- "ENSMUSG00000064372.1"
+## % of variance explained by Group
+percentage <- 100*signif(varPart_data_pups[gene_id, 'Group'], digits=3)
+## Sample colors
+colors <- c('Control'='brown2', 'Experimental'='deepskyblue3')
+## Gene expression logcounts
+rse_gene_pups_qc$gene_expr <- assays(rse_gene_pups_qc)$logcounts[gene_id,]
 
+## Plot
+plot <- ggplot(data = as.data.frame(colData(rse_gene_pups_qc)), 
+               mapping = aes(x = Group, y = gene_expr, color = Group)) +
+geom_boxplot(size = 0.25, width=0.32, color='black', outlier.color = "#FFFFFFFF") +
+geom_jitter(width = 0.15, alpha = 1, size = 1) +
+scale_color_manual(values = colors) +
+theme_bw() +
+guides(color="none") +
+labs(title = gene_id,
+     subtitle = paste0("Variance explained: ", percentage, '%'),
+     y= 'lognorm counts') +
+theme(plot.margin = unit(c(2, 6, 2, 6), 'cm'),
+      axis.title = element_text(size = (7)),
+      axis.text = element_text(size = (6)),
+      plot.title = element_text(hjust=0.5, size=7.5, face="bold"),
+      plot.subtitle = element_text(size = 7, color='gray40'),
+      legend.text = element_text(size=6),
+      legend.title = element_text(size=7))
 
+plot
+```
 
 ```{r echo=FALSE}
 ## Session info

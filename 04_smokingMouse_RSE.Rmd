@@ -111,7 +111,7 @@ rowData(rse_gene)[1:3, 1:5]
 
 <style>
 p.exercise  {
-background-color: #CFDBC7;
+background-color: #D2E1C9;
 padding: 9px;
 border: 1px solid black;
 margin-left: 25px;
