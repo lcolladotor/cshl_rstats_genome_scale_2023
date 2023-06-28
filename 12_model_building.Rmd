@@ -23,7 +23,6 @@ Additionally, the analysis is better performed with simpler models, specially wh
 Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with `canCorPairs()` that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [4].
 
 
-
 ```{r message=FALSE, warning=FALSE}
 
 library(variancePartition)
@@ -198,7 +197,7 @@ corr_plots <- function(age, sample_var1, sample_var2, sample_color){
 As shown above and as previously demonstrated, the mitochondrial rate and the fraction of reads that mapped to genes are negatively correlated in adults but control and experimental samples are evenly distributed. 
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
+## Correlation plot for adults
 p <- corr_plots('adults', 'mitoRate', 'totalAssignedGene', 'Group')
 p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 ```
@@ -206,7 +205,6 @@ p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 Altought not expected, the flowcell and the plate of the adult samples were correlated, but that is due to the fact that all samples from the first flowcell (HKCG7DSXX) were in the 1st plate, and almost all samples from the second flowcell were in the 3rd plate.  
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
 p <- corr_plots('adults', 'flowcell', 'plate',  NULL)
 p + theme(plot.margin=unit (c(1.5,4.5,1.5,4.5), 'cm'))
 ```
@@ -214,7 +212,6 @@ p + theme(plot.margin=unit (c(1.5,4.5,1.5,4.5), 'cm'))
 Plate was also slightly correlated with the overall mapping rate, but if we look closely, the trend is given by the plate 1 samples that have lower rates; the rates of samples from the 2nd and 3rd plates are similar. 
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
 p <- corr_plots('adults', 'plate', 'overallMapRate', NULL)
 p + theme(plot.margin=unit (c(2,5.3,2,5.3), 'cm'))
 ```
@@ -222,11 +219,10 @@ p + theme(plot.margin=unit (c(2,5.3,2,5.3), 'cm'))
 We also appreciated and described already that the library size and the number of detected of genes are correlated in pups and adults. Note however that in pups control samples have bigger numbers of expressed genes. 
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
+## Correlation plots
 p <- corr_plots('adults', 'sum', 'detected', 'Group')
 p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 
-## Heatmap for pup samples
 p <- corr_plots('pups', 'sum', 'detected', 'Group')
 p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 ```
@@ -234,7 +230,7 @@ p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 In pups, the overall mapping rate was slightly and negatively correlated with the ribosomal rate, but again controls and experimental samples are equally distributed and the <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> is pretty small for all of them. 
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
+## ## Correlation plot for pups
 p <- corr_plots('pups', 'rRNA_rate', 'overallMapRate', 'Group')
 p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 ```
@@ -242,13 +238,11 @@ p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 Overall mapping rate is also positively correlated with plate and flowcell, relationships mainly given by samples from the 1st plate with the lowest <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>, most of which were also in the 1st flowcell.
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
 p <- corr_plots('pups', 'plate', 'overallMapRate', NULL)
 p + theme(plot.margin=unit (c(2,5.3,2,5.3), 'cm'))
 ```
 
 ```{r message=FALSE, warning=FALSE}
-## Heatmap for pup samples
 p <- corr_plots('pups', 'flowcell', 'overallMapRate', NULL)
 p + theme(plot.margin=unit (c(2,5.3,2,5.3), 'cm'))
 ```

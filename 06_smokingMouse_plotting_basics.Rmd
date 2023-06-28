@@ -430,7 +430,7 @@ multiple_QC_scatterplots('detected', 'totalAssignedGene')
 📑 **Exercise 1**: What's the correlation between <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark>? What factor could explain that correlation? Why are <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark> numbers bigger than <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark> values?
 </p>
 
-```{r exercise1, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE}
+```{r exercise1_EDA, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE}
 ## Solution
 multiple_QC_scatterplots('subsets_Mito_sum', 'mitoMapped')
 ## Because in mitoMapped you take reads that mapped to the whole mt chr, in subsets_Mito_sum only reads that were aligned to mt genes. But there's almost a perfect correlation between these two metrics. 
@@ -630,7 +630,7 @@ font-family: sans-serif;
 📑 **Exercise 2**: Were the filtered adult samples from pregnant or not pregnant mice? From which plates and flowcells? What were their library sizes?
 </p>
 
-```{r exercise2, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+```{r exercise2_EDA, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
 ## Solution
 p <- boxplots_after_QC_filtering(rse_gene_adults, 'mitoRate', 'Pregnancy')
 p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
