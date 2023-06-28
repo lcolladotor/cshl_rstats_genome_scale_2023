@@ -455,6 +455,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="de-model-building-with-variancepartition.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit LM modeling all variables as fixed effects</span></span>
 <span id="cb51-2"><a href="de-model-building-with-variancepartition.html#cb51-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(expr <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">data=</span>data)</span></code></pre></div>
 <p>In our case, the function will be modeled a mixed model since we have both effects.</p>
+<style>
+p.comment {
+background-color: #E6E6E6;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
 <p class="comment">
 ❓<strong><em>What are random and fixed effects? How to determine if a variable is one or the other?</em></strong> <strong>Categorical variables</strong> are usually modeled as <strong>random effects</strong>, i.e., traits such as the batch, sex, flowcell, plate, individual, variables ‘randomly chosen or selected from a population’ and whose specific levels are not of particular interest, only the grouping of the samples by those variables. These are control variables/factors that vary randomly across individuals or groups and we use them because we must control for these effects. Think of them as having different effects on gene expression (the dependent variable) depending on their values.
 <strong>Continuous variables</strong> must be modeled as <strong>fixed effects</strong>, they cannot be modeled as random effects. These correspond to variables that can be measured somehow and whose levels are themselves of interest (the QC metrics, for instance); these effects would be the same for all genes.
