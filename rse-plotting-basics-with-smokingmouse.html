@@ -169,7 +169,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
-<li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a></li>
+<li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
+<ul>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i>2. Exploratory Data Analysis</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
 <li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a></li>
@@ -202,37 +206,739 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rse-plotting-basics-with-smokingmouse" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> RSE plotting basics with smokingMouse<a href="rse-plotting-basics-with-smokingmouse.html#rse-plotting-basics-with-smokingmouse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Daianna</p>
-<p>We will download the <code>rse_gene</code> object which contains the data at the gene level. We’ll use <em><a href="https://bioconductor.org/packages/3.17/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
-<span id="cb12-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
-<span id="cb12-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
-<span id="cb12-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-4" aria-hidden="true" tabindex="-1"></a>cached_rse_gene <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
-<span id="cb12-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
-<span id="cb12-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
-<span id="cb12-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
-<span id="cb12-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
-<span id="cb12-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb12-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/4c43245269d_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
-<span id="cb12-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
-<span id="cb12-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
-<span id="cb12-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rse_gene</span></span>
-<span id="cb12-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
-<span id="cb12-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-20" aria-hidden="true" tabindex="-1"></a>rse_gene</span>
-<span id="cb12-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
-<span id="cb12-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 55401 208 </span></span>
-<span id="cb12-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; metadata(1): Obtained_from</span></span>
-<span id="cb12-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
-<span id="cb12-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rownames(55401): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ... ENSMUSG00000064371.1 ENSMUSG00000064372.1</span></span>
-<span id="cb12-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rowData names(13): Length gencodeID ... DE_in_pup_brain_nicotine DE_in_pup_brain_smoking</span></span>
-<span id="cb12-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colnames: NULL</span></span>
-<span id="cb12-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colData names(71): SAMPLE_ID FQCbasicStats ... retained_after_QC_sample_filtering</span></span>
-<span id="cb12-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   retained_after_manual_sample_filtering</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Download data</span></span>
+<span id="cb14-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
+<span id="cb14-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
+<span id="cb14-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-4" aria-hidden="true" tabindex="-1"></a>cached_rse_gene <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
+<span id="cb14-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
+<span id="cb14-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
+<span id="cb14-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
+<span id="cb14-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
+<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/60432ea70c7_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
+<span id="cb14-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
+<span id="cb14-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rse_gene</span></span>
+<span id="cb14-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Nicotine data</span></span>
+<span id="cb14-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-20" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[ ,<span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt<span class="sc">==</span><span class="st">&#39;Nicotine&#39;</span>)]</span></code></pre></div>
+<p>In this part of the course you’ll have a plotting session in which you’ll learn what type of plots you can do to explore your data, but please note that this is not a differential expression analysis itself. The steps that will be performed are shown in <strong>Figure 1</strong>.
+The main objective of this first part is to explore the quality of the samples, their differences in gene expression variations and the impact of sample variables on gene expression variance. You’ll also learn how to visualize gene expression counts.</p>
+<figure>
+<img src="Figures/DEA.png" width="700px" align=center />
+<figcaption style="color: gray; line-height: 0.87; text-align: justify">
+<font size="-1.8">
+<b>Figure 2</b>: <b> Summary of the analyses for plotting session. </b>
+<b> 1. Data Preparation </b>
+<b> 2. Exploratory Data Analysis </b>
+<font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component.</font>
+</figcaption>
+</figure>
+<div id="data-preparation" class="section level3 unnumbered hasAnchor">
+<h3>1. Data preparation<a href="rse-plotting-basics-with-smokingmouse.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Even before exploring the samples, the first step is to normalize the counts and filter non-expressed genes; we won’t do the processes themselves since we already have normalized and filtered data but let’s check why these steps are important and where to extract the data we need for posterior analyses.</p>
+<p><strong>1.1 Data normalization</strong></p>
+<p>Data normalization is a primordial step when working with expression data because raw counts do not necessarily reflect real expression measures of the genes since there are technical differences in the way the libraries are prepared and sequenced, as well as intrinsic differences in the genes that are translated into more or less mapping reads. Particularly, there are <em>within-sample effects</em> that are the differences between genes in the same sample, such as their <strong>length</strong> (the longer the gene, the more reads it will have) and <strong>GC content</strong>, factors that contribute to variations in their counts. On the other hand, <em>between-sample effects</em> are differences between samples such as the <strong>sequencing depth</strong>, i.e., the total number of molecules sequenced, and the <strong>library size</strong>, i.e., the total number of reads of each sample [1].</p>
+<p>These variables lead to virtually different mRNA amounts but of course are not due to the biological or treatment conditions of interest (such as nicotine administration in this example) so in order to remove, or at least, to minimize this technical bias and obtain measures comparable and consistent across samples, raw counts must be normalized by these factors. The data that we’ll use in this case are already normalized in <code>assays(rse_gene)$logcounts</code>. Specifically, the assay contains counts per million (CPM), also known as reads per million (RPM), one basic gene expression unit that only normalizes by the sequencing depth and is computed by dividing the read counts of a gene in a sample by a scaling factor given by the total mapping reads of the sample per million [2]:</p>
+<p><span class="math display">\[CPM = \frac{read \ \ counts \ \ of \ \ gene \ \ \times \ \ 10^6 }{Total \ \ mapping \ \ reads \ \ of \ \ sample}\]</span></p>
+<p>As outlined in <a href="#id_#Data%20overview%20and%20download"><strong>Data overview and download</strong></a>, the scaling factors were obtained with <code>calcNormFactors()</code> applying the Trimmed Mean of M-Values (TMM) method, the <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> package’s default normalization method that assumes that most genes are not differentially expressed. The effective library sizes of the samples and the CPM of each observation were computed with the <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> function <code>cpm()</code> setting the <code>log</code> argument to <code>TRUE</code> and <code>prior.count</code> to 0.5 to receive values in <span class="math inline">\(log_2(CPM+0.5)\)</span>.</p>
+<p>After data normalization and scaling, we’d expect the read counts to follow a Norm distribution, something we can confirm comparing the counts’ distribution before and after the normalization. Consider both datasets contain the exact same genes.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Histogram and density plot of read counts before and after normalization </span></span>
+<span id="cb15-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Raw counts</span></span>
+<span id="cb15-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-7" aria-hidden="true" tabindex="-1"></a>counts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">counts=</span><span class="fu">as.vector</span>(<span class="fu">assays</span>(rse_gene_nic)<span class="sc">$</span>counts))</span>
+<span id="cb15-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-8" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(counts_data, <span class="fu">aes</span>(<span class="at">x=</span>counts)) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">fill=</span><span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;read counts&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb15-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>), <span class="st">&quot;cm&quot;</span>)) </span>
+<span id="cb15-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb15-13" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/Data%20preparation-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Normalized counts</span></span>
+<span id="cb16-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-3" aria-hidden="true" tabindex="-1"></a>logcounts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">logcounts=</span><span class="fu">as.vector</span>(<span class="fu">assays</span>(rse_gene_nic)<span class="sc">$</span>logcounts))</span>
+<span id="cb16-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-4" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(logcounts_data, <span class="fu">aes</span>(<span class="at">x=</span>logcounts)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">&quot;darkgray&quot;</span>, <span class="at">fill=</span><span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb16-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">&quot;#69b3a2&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;log(CPM+0.5)&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>), <span class="st">&quot;cm&quot;</span>)) </span>
+<span id="cb16-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb16-10" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/Data%20preparation-2.png" width="672" /></p>
+<p>As presented, after data transformation, we can now see a more widespread distribution of the counts, but note that most of them are zeros in the first plot (the one with the raw counts) and those zeros remain after normalization, corresponding to counts below 0 in the second plot. That is because we haven’t filtered the low and zero-expressed genes.</p>
+<p><strong>1.2 Gene filtering</strong></p>
+<p>Low-expressed or non-expressed genes in many samples are not of biological interest in a study of differential expression because they don’t inform about the gene expression changes and they are, by definition, not differentially expressed, so we have to drop them using <code>filterByExpr()</code> from <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> that only keeps genes with at least <em>K</em> CPM in <em>n</em> samples and with a minimum total number of counts across all samples.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Retain genes that passed filtering step</span></span>
+<span id="cb17-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-3" aria-hidden="true" tabindex="-1"></a>rse_gene_filt <span class="ot">&lt;-</span> rse_gene_nic[<span class="fu">rowData</span>(rse_gene_nic)<span class="sc">$</span>retained_after_feature_filtering<span class="sc">==</span><span class="cn">TRUE</span>,]</span>
+<span id="cb17-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Normalized counts and filtered genes</span></span>
+<span id="cb17-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-6" aria-hidden="true" tabindex="-1"></a>filt_logcounts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">logcounts=</span><span class="fu">as.vector</span>(<span class="fu">assays</span>(rse_gene_filt)<span class="sc">$</span>logcounts))</span>
+<span id="cb17-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb17-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-9" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(filt_logcounts_data, <span class="fu">aes</span>(<span class="at">x=</span>logcounts)) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">&quot;darkgray&quot;</span>, <span class="at">fill=</span><span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb17-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">&quot;#69b3a2&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;log(CPM+0.5)&#39;</span>, <span class="at">y=</span><span class="st">&#39;Frecuency&#39;</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>), <span class="st">&quot;cm&quot;</span>)) </span>
+<span id="cb17-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb17-15" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>In this third plot we can observe a curve that is closer (though not completely) to a Norm distribution and with less low-expressed genes.</p>
+<p>With the object <code>rse_gene_filt</code> we can proceed with downstream analyses.</p>
+</div>
+<div id="exploratory-data-analysis" class="section level3 unnumbered hasAnchor">
+<h3>2. Exploratory Data Analysis<a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first formal step that we will be performing is the sample exploration. This crucial initial part of the analysis consists of an examination of differences and relationships between Quality-Control (QC) metrics of the samples from different groups in order to identify poor-quality samples that must be removed before DEA. After that, the sample variables in the meta-data also need to be analyzed and filtered based on the percentage of gene expression variance that they explain for each gene.</p>
+<p><strong>2.1 Quality Control Analysis</strong></p>
+<p>First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See <a href="#id_##Sample%20Information"><strong>Sample Information</strong></a> for the description of the variables.</p>
+<style>
+p.comment {
+background-color: #DBDBDB;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
 
+</style>
+<p class="comment">
+❓ <strong><em>Why is that relevant?</em></strong> As you could imagine, technical and methodological differences in all the steps that were carried out during the experimental stages are potential sources of variation in the quality of the samples. Just imagine all that could have been gone wrong or unexpected while experimenting with mice, during the sampling, in the RNA extraction using different batches, when treating samples in different mediums, when preparing libraries in different plates and sequencing in different flowcells. Moreover, the inherent features of the mice from which the samples come from such as age, tissue, sex and pregnancy state could also affect the samples’ metrics if, for example, they were separately analyzed and processed.
+</p>
+<p class="comment">
+❓<strong><em>But why do we care about mitochodrial and ribosomal counts as QC metrics?</em></strong> In the process of mRNA extraction, either by mRNA enrichment (capturing polyadenilated mRNAs) or rRNA-depletion (removing rRNA), we’d expect to have a low number of ribosomal counts, i.e., counts that map to rDNA, and if we don’t, something must have gone wrong with the procedures. In the case of mitochondrial counts something similar occurs: higher mitochondrial rates will be obtained if the cytoplasmic mRNA capture was deficient or if the transcripts were lost by some technical issue, increasing the proportion of mitochondrial mRNAs. As a result, high <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> imply poor quality in the samples.
+</p>
+<div class="alert alert-info">
+<p><strong>Note:</strong> the QC metrics were computed with the unprocessed datasets (neither filtered nor normalized) to preserve the original estimates of the samples.</p>
+</div>
+<p><em>2.1.1 Evaluate QC metrics for groups of samples</em></p>
+<p>Fortunately, we can identify to some extent possible factors that could have influenced on the quality of the samples, as well as isolated samples that are problematic. To do that, we will create boxplots that present the distribution of the samples’ metrics separating them by sample variables.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb18-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb18-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb18-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Define QC metrics of interest</span></span>
+<span id="cb18-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-6" aria-hidden="true" tabindex="-1"></a>qc_metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;overallMapRate&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>, <span class="st">&#39;rRNA_rate&#39;</span>, <span class="st">&#39;sum&#39;</span>, <span class="st">&#39;detected&#39;</span>, <span class="st">&#39;ERCCsumLogErr&#39;</span>)</span>
+<span id="cb18-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Define sample variables of interest</span></span>
+<span id="cb18-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-9" aria-hidden="true" tabindex="-1"></a>sample_variables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Group&#39;</span>, <span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Sex&#39;</span>, <span class="st">&#39;Pregnancy&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="st">&#39;flowcell&#39;</span>)</span>
+<span id="cb18-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Function to create boxplots of QC metrics for groups of samples</span></span>
+<span id="cb18-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-14" aria-hidden="true" tabindex="-1"></a>QC_boxplots <span class="ot">&lt;-</span> <span class="cf">function</span>(qc_metric, sample_var){</span>
+<span id="cb18-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Define sample colors depending on the sample variable</span></span>
+<span id="cb18-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Group&quot;</span>){</span>
+<span id="cb18-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-18" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Control&#39;</span><span class="ot">=</span><span class="st">&#39;brown2&#39;</span>, <span class="st">&#39;Experimental&#39;</span><span class="ot">=</span><span class="st">&#39;deepskyblue3&#39;</span>)</span>
+<span id="cb18-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Age&quot;</span>){</span>
+<span id="cb18-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-21" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Adult&#39;</span><span class="ot">=</span><span class="st">&#39;slateblue3&#39;</span>, <span class="st">&#39;Pup&#39;</span><span class="ot">=</span><span class="st">&#39;yellow3&#39;</span>)</span>
+<span id="cb18-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Sex&quot;</span>){</span>
+<span id="cb18-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-24" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;F&#39;</span><span class="ot">=</span><span class="st">&#39;hotpink1&#39;</span>, <span class="st">&#39;M&#39;</span><span class="ot">=</span><span class="st">&#39;dodgerblue&#39;</span>)</span>
+<span id="cb18-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;Pregnancy&#39;</span>){</span>
+<span id="cb18-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-27" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span><span class="ot">=</span><span class="st">&#39;darkorchid3&#39;</span>, <span class="st">&#39;No&#39;</span><span class="ot">=</span><span class="st">&#39;darkolivegreen4&#39;</span>)</span>
+<span id="cb18-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;plate&#39;</span>){</span>
+<span id="cb18-30"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-30" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Plate1&#39;</span><span class="ot">=</span><span class="st">&#39;darkorange&#39;</span>, <span class="st">&#39;Plate2&#39;</span><span class="ot">=</span><span class="st">&#39;lightskyblue&#39;</span>, <span class="st">&#39;Plate3&#39;</span><span class="ot">=</span><span class="st">&#39;deeppink1&#39;</span>)</span>
+<span id="cb18-31"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-32"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;flowcell&#39;</span>){</span>
+<span id="cb18-33"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-33" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;HKCG7DSXX&#39;</span><span class="ot">=</span><span class="st">&#39;chartreuse2&#39;</span>,<span class="st">&#39;HKCMHDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;magenta&#39;</span>, <span class="st">&#39;HKCNKDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;turquoise3&#39;</span>, </span>
+<span id="cb18-34"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-34" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;HKCTMDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;tomato&#39;</span>)</span>
+<span id="cb18-35"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-36"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-37"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Axis labels</span></span>
+<span id="cb18-38"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-38" aria-hidden="true" tabindex="-1"></a>    x_label<span class="ot">=</span><span class="fu">capitalize</span>(sample_var)</span>
+<span id="cb18-39"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-39" aria-hidden="true" tabindex="-1"></a>    y_label<span class="ot">=</span><span class="fu">str_replace_all</span>(qc_metric, <span class="fu">c</span>(<span class="st">&quot;_&quot;</span><span class="ot">=</span><span class="st">&quot;&quot;</span>))</span>
+<span id="cb18-40"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-41"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-41" aria-hidden="true" tabindex="-1"></a>    <span class="do">## x-axis text angle and position</span></span>
+<span id="cb18-42"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;flowcell&#39;</span>){</span>
+<span id="cb18-43"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-43" aria-hidden="true" tabindex="-1"></a>        x_axis_angle <span class="ot">=</span> <span class="dv">18</span></span>
+<span id="cb18-44"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-44" aria-hidden="true" tabindex="-1"></a>        x_axis_hjust <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb18-45"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-45" aria-hidden="true" tabindex="-1"></a>        x_axis_vjust <span class="ot">=</span> <span class="fl">0.7</span></span>
+<span id="cb18-46"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-46" aria-hidden="true" tabindex="-1"></a>        x_axis_size <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb18-47"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-47" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-48"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb18-49"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-49" aria-hidden="true" tabindex="-1"></a>        x_axis_angle <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb18-50"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-50" aria-hidden="true" tabindex="-1"></a>        x_axis_hjust <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb18-51"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-51" aria-hidden="true" tabindex="-1"></a>        x_axis_vjust <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb18-52"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-52" aria-hidden="true" tabindex="-1"></a>        x_axis_size <span class="ot">=</span> <span class="dv">6</span></span>
+<span id="cb18-53"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-53" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-54"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-54" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-55"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-55" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Extract sample data in colData(rse_gene_filt)</span></span>
+<span id="cb18-56"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-56" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">colData</span>(rse_gene_filt))</span>
+<span id="cb18-57"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-57" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-58"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-58" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Sample variable separating samples in x-axis and QC metric in y-axis</span></span>
+<span id="cb18-59"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-59" aria-hidden="true" tabindex="-1"></a>    <span class="do">## (Coloring by sample variable)</span></span>
+<span id="cb18-60"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-60" aria-hidden="true" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var), <span class="at">y =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(qc_metric), <span class="at">color =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var))) <span class="sc">+</span></span>
+<span id="cb18-61"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-61" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Add violin plots</span></span>
+<span id="cb18-62"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-62" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">0.4</span>, <span class="at">color=</span><span class="st">&#39;black&#39;</span>, <span class="at">width=</span><span class="fl">0.7</span>)<span class="sc">+</span></span>
+<span id="cb18-63"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-63" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Spread dots</span></span>
+<span id="cb18-64"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-64" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.08</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb18-65"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-65" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Add boxplots</span></span>
+<span id="cb18-66"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-66" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">0.4</span>, <span class="at">width=</span><span class="fl">0.1</span>, <span class="at">color=</span><span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb18-67"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-67" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Set colors</span></span>
+<span id="cb18-68"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-68" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb18-69"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-69" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Define axis labels</span></span>
+<span id="cb18-70"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-70" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">y=</span> y_label, <span class="at">x =</span> x_label) <span class="sc">+</span></span>
+<span id="cb18-71"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-71" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Get rid of the background</span></span>
+<span id="cb18-72"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-72" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb18-73"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-73" aria-hidden="true" tabindex="-1"></a>                <span class="do">## Hide legend and define plot margins and size of axis title and text</span></span>
+<span id="cb18-74"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-74" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb18-75"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-75" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.4</span>), <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb18-76"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-76" aria-hidden="true" tabindex="-1"></a>                      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
+<span id="cb18-77"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-77" aria-hidden="true" tabindex="-1"></a>                      <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> x_axis_size),</span>
+<span id="cb18-78"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-78" aria-hidden="true" tabindex="-1"></a>                      <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> x_axis_angle, <span class="at">hjust =</span> x_axis_hjust, <span class="at">vjust =</span> x_axis_vjust)) </span>
+<span id="cb18-79"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-79" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-80"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-81"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(plot)</span>
+<span id="cb18-82"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-82" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-83"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-84"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-85"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-86"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-86" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots of all QC metrics for each sample variable</span></span>
+<span id="cb18-87"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-87" aria-hidden="true" tabindex="-1"></a>multiple_QC_boxplots <span class="ot">&lt;-</span> <span class="cf">function</span>(sample_var){</span>
+<span id="cb18-88"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-88" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-89"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-89" aria-hidden="true" tabindex="-1"></a>    i<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb18-90"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-90" aria-hidden="true" tabindex="-1"></a>    plots <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb18-91"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (qc_metric <span class="cf">in</span> qc_metrics) {</span>
+<span id="cb18-92"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-92" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Call function to create each individual plot</span></span>
+<span id="cb18-93"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-93" aria-hidden="true" tabindex="-1"></a>        plots[[i]]<span class="ot">&lt;-</span> <span class="fu">QC_boxplots</span>(qc_metric, sample_var)</span>
+<span id="cb18-94"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-94" aria-hidden="true" tabindex="-1"></a>        i<span class="ot">=</span>i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb18-95"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-95" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-96"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-96" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Arrange multiple plots into a grid</span></span>
+<span id="cb18-97"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">plot_grid</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], plots[[<span class="dv">4</span>]], plots[[<span class="dv">5</span>]], plots[[<span class="dv">6</span>]], plots[[<span class="dv">7</span>]], <span class="at">nrow =</span> <span class="dv">2</span>))</span>
+<span id="cb18-98"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-98" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_boxplots</span>(<span class="st">&#39;Age&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Initially, when we separate samples by Age, we can appreciate a clear segregation of adult and pup samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>, with higher mitochondrial rates for adult samples and thus, being lower quality samples than the pup ones. We can also see that pup samples have higher <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>, again being higher quality. The samples are very similar in the rest of the QC metrics.
+The former differences must be taken into account because they guide further sample separation by Age, which is necessary to avoid dropping most of the adult samples (that are lower quality) in the <strong>QC-based sample filtering</strong> (see below) and to prevent misinterpreting sample variation given by quality and not by mice age itself.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_boxplots</span>(<span class="st">&#39;Sex&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>With Sex, female and male samples have similar QC metrics but there are some female samples that have high <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and low <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>, but males don´t. That is consistent with the fact that all males are pups and as we previously observed, pup samples present better QC metrics, but since not all pups are males, some female pups also have smaller <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and greater <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>. So in this case samples’ differences are actually dictated by Age and not by Sex.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_boxplots</span>(<span class="st">&#39;Group&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Notably, for Group no evident contrasts are seen in the quality of the samples, which means that both, control and exposed samples have similar metrics and therefore, the differences between them won’t be determined by technical factors but effectively by gene expression changes.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_boxplots</span>(<span class="st">&#39;Pregnancy&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Pregnancy variable is interesting because pregnant dams were obviously females and adults, which we already noted are lower quality. Accordingly to that, pregnant samples present overall higher <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and lower <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum </span> </mark> (library size) and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected </span> </mark> (number of expressed genes) than some samples coming from non-pregnant mice. However, these samples have smaller |<mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ERCCsumLogErr</span> </mark>|, which means that they had smaller differences between expected and observed concentrations of control transcripts.</p>
+<p>Notwithstanding, we must clarify one more time that as in Sex, the trends observed in Pregnancy are all given by Age: it is Age the variable that fully segregates samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and almost completely in </mark>, lower <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>. Because all pregnant dams were adults, their metrics will be positioned where the adult samples did, but there were also not pregnant adults that share similar QC values.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_boxplots</span>(<span class="st">&#39;plate&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>In plate, no alarming differences are presented but some samples from the 1st plate
+have low (though not much lower) <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>, <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_boxplots</span>(<span class="st">&#39;flowcell&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>For the flowcell, again not worrying distinctiveness are detected, with the exception of a few individual samples far from the rest.</p>
+<p>In all the previous plots we can appreciate a group of samples placed below in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> that correspond to pup samples. The relationship is more fuzzy in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>.</p>
+<p><em>2.1.2 Examine relationships between QC metrics of samples</em></p>
+<p>Secondly, we want to analyze if there are relationships between QC variables that explain the presence of samples with two or more particular QC metrics. For that, scatterplots are useful because they enable the evaluation of pairs of samples’ QC metrics.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Scatterplots for a pair of QC metrics</span></span>
+<span id="cb25-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-4" aria-hidden="true" tabindex="-1"></a>QC_scatterplots <span class="ot">&lt;-</span> <span class="cf">function</span>(sample_var, qc_metric1, qc_metric2){</span>
+<span id="cb25-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Define sample colors</span></span>
+<span id="cb25-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Group&quot;</span>){</span>
+<span id="cb25-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-8" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Control&#39;</span><span class="ot">=</span><span class="st">&#39;brown2&#39;</span>, <span class="st">&#39;Experimental&#39;</span><span class="ot">=</span><span class="st">&#39;deepskyblue3&#39;</span>)</span>
+<span id="cb25-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Age&quot;</span>){</span>
+<span id="cb25-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-11" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Adult&#39;</span><span class="ot">=</span><span class="st">&#39;slateblue3&#39;</span>, <span class="st">&#39;Pup&#39;</span><span class="ot">=</span><span class="st">&#39;yellow3&#39;</span>)</span>
+<span id="cb25-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Sex&quot;</span>){</span>
+<span id="cb25-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-14" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;F&#39;</span><span class="ot">=</span><span class="st">&#39;hotpink1&#39;</span>, <span class="st">&#39;M&#39;</span><span class="ot">=</span><span class="st">&#39;dodgerblue&#39;</span>)</span>
+<span id="cb25-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;Pregnancy&#39;</span>){</span>
+<span id="cb25-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-17" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span><span class="ot">=</span><span class="st">&#39;darkorchid3&#39;</span>, <span class="st">&#39;No&#39;</span><span class="ot">=</span><span class="st">&#39;darkolivegreen4&#39;</span>)</span>
+<span id="cb25-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;plate&#39;</span>){</span>
+<span id="cb25-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-20" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Plate1&#39;</span><span class="ot">=</span><span class="st">&#39;darkorange&#39;</span>, <span class="st">&#39;Plate2&#39;</span><span class="ot">=</span><span class="st">&#39;lightskyblue&#39;</span>, <span class="st">&#39;Plate3&#39;</span><span class="ot">=</span><span class="st">&#39;deeppink1&#39;</span>)</span>
+<span id="cb25-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;flowcell&#39;</span>){</span>
+<span id="cb25-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-23" aria-hidden="true" tabindex="-1"></a>        colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;HKCG7DSXX&#39;</span><span class="ot">=</span><span class="st">&#39;chartreuse2&#39;</span>,<span class="st">&#39;HKCMHDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;magenta&#39;</span>, <span class="st">&#39;HKCNKDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;turquoise3&#39;</span>, </span>
+<span id="cb25-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-24" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;HKCTMDSXX&#39;</span><span class="ot">=</span><span class="st">&#39;tomato&#39;</span>)</span>
+<span id="cb25-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-27" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">colData</span>(rse_gene_filt)</span>
+<span id="cb25-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-29" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Scatterplots for continuous variable vs continuous variable</span></span>
+<span id="cb25-30"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-30" aria-hidden="true" tabindex="-1"></a>    <span class="do">## First QC metric in x-axis and second QC metric in y-axis</span></span>
+<span id="cb25-31"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-31" aria-hidden="true" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(data), <span class="fu">aes</span>(<span class="at">x=</span><span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(qc_metric1),</span>
+<span id="cb25-32"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-32" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">y=</span><span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(qc_metric2),</span>
+<span id="cb25-33"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-33" aria-hidden="true" tabindex="-1"></a>                                            <span class="do">## Color samples by a variable</span></span>
+<span id="cb25-34"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-34" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">color=</span><span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(sample_var))) <span class="sc">+</span></span>
+<span id="cb25-35"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-35" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Add scatterplot</span></span>
+<span id="cb25-36"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-36" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-37"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-37" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Add regression line</span></span>
+<span id="cb25-38"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-38" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stat_smooth</span> (<span class="at">geom=</span><span class="st">&quot;line&quot;</span>, <span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">size=</span><span class="fl">0.4</span>, <span class="at">span=</span><span class="fl">0.25</span>, <span class="at">method =</span> lm, <span class="at">color=</span><span class="st">&#39;orangered3&#39;</span>) <span class="sc">+</span></span>
+<span id="cb25-39"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-39" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Colors</span></span>
+<span id="cb25-40"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_color_manual</span>(<span class="at">name =</span> sample_var, <span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb25-41"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb25-42"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-42" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Add Pearson correlation coefficient between the metrics as subtitle</span></span>
+<span id="cb25-43"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-43" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Corr: &quot;</span>, <span class="fu">signif</span>(<span class="fu">cor</span>(data[,qc_metric1], data[,qc_metric2], <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>), <span class="at">digits=</span><span class="dv">3</span>)), </span>
+<span id="cb25-44"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-44" aria-hidden="true" tabindex="-1"></a>             <span class="do">## Add axis labels</span></span>
+<span id="cb25-45"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span> <span class="fu">gsub</span>(<span class="st">&#39;_&#39;</span>, <span class="st">&#39; &#39;</span>, qc_metric2), </span>
+<span id="cb25-46"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-46" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fu">gsub</span>(<span class="st">&#39;_&#39;</span>, <span class="st">&#39; &#39;</span>, qc_metric1)) <span class="sc">+</span></span>
+<span id="cb25-47"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-47" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Plot margins and text size</span></span>
+<span id="cb25-48"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-48" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="fl">0.4</span>,<span class="fl">0.1</span>,<span class="fl">0.4</span>,<span class="fl">0.1</span>), <span class="st">&#39;cm&#39;</span>),</span>
+<span id="cb25-49"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-49" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
+<span id="cb25-50"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-50" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">6</span>)),</span>
+<span id="cb25-51"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-51" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">color=</span><span class="st">&#39;gray40&#39;</span>),</span>
+<span id="cb25-52"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-52" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb25-53"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-53" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>))</span>
+<span id="cb25-54"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(plot)</span>
+<span id="cb25-55"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-56"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-56" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-57"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-58"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-59"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-60"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-60" aria-hidden="true" tabindex="-1"></a><span class="do">## QC scatterplots coloring by all sample variables</span></span>
+<span id="cb25-61"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-61" aria-hidden="true" tabindex="-1"></a>multiple_QC_scatterplots <span class="ot">&lt;-</span> <span class="cf">function</span>(qc_metric1, qc_metric2){</span>
+<span id="cb25-62"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-62" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-63"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-63" aria-hidden="true" tabindex="-1"></a>    sample_variables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Sex&#39;</span>, <span class="st">&#39;Group&#39;</span>, <span class="st">&#39;plate&#39;</span>, <span class="st">&#39;Pregnancy&#39;</span>, <span class="st">&#39;flowcell&#39;</span>)</span>
+<span id="cb25-64"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-64" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-65"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-65" aria-hidden="true" tabindex="-1"></a>    i<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb25-66"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-66" aria-hidden="true" tabindex="-1"></a>    plots <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb25-67"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (sample_var <span class="cf">in</span> sample_variables) {</span>
+<span id="cb25-68"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-68" aria-hidden="true" tabindex="-1"></a>        plots[[i]]<span class="ot">&lt;-</span> <span class="fu">QC_scatterplots</span>(sample_var, qc_metric1, qc_metric2)</span>
+<span id="cb25-69"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-69" aria-hidden="true" tabindex="-1"></a>        i<span class="ot">=</span>i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb25-70"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-70" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-71"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">plot_grid</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], plots[[<span class="dv">4</span>]], plots[[<span class="dv">5</span>]], plots[[<span class="dv">6</span>]], <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="fl">1.1</span>,<span class="dv">1</span>,<span class="fl">1.2</span>) ))</span>
+<span id="cb25-72"><a href="rse-plotting-basics-with-smokingmouse.html#cb25-72" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;rRNA_rate&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>For <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> vs <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> plots there’s a poor positive correlation which was anticipated since no obvious relationship exists between them, though if cytoplasmic mRNAs wouldn’t have been well captured (lowering the total number of mapping reads) we could expect an increase in both mitochondrial and ribosomal rates.</p>
+<p>Note the complete separation of samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> (but not in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark>) by Age, which in turn causes the grouping of male samples (all pups).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Forcefully, <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> have a strong negative correlation, which reveals the existence of very bad quality samples (with small <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and high <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>).</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;sum&#39;</span>, <span class="st">&#39;detected&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+Noticeably, a positive correlation is present for <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> and that is also congruent because a higher number of expressed-genes implies bigger library sizes, but that is not necessarily true in the other way around: just a few highly expressed genes (small number of <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> genes) could increase the library size. Interestingly, in this case samples are diagonally separated by age.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;sum&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Contrary to expectations, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> is not correlated to <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and it is unexpected because higher proportions of genes’ reads could initially increase library size. However, since <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> is a fraction of the total reads, it could be that a high fraction of reads mapping to genes reflects a small number of total reads and do not necessarily implies more expressed genes (and therefore bigger libraries). In other words, even when <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> equals 1, if the total number of reads is small, the genes won’t be widely covered by them and the libraries won’t be sizeable. Observe the separarion of samples by Age.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiple_QC_scatterplots</span>(<span class="st">&#39;detected&#39;</span>, <span class="st">&#39;totalAssignedGene&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Lastly, there’s a slight positive correlation between <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>, which makes sense because reads assigned to genes rise the number of non-zero expressed genes but as mentioned, those genes are not necessarily highly expressed and thus, library sizes are not perforce so much bigger. Also note that the correlation wouldn’t be conserved within pup samples.</p>
+<p>Remarkably, samples were not differentiated by any other variable (including Group!) but the differences between adult and pup metrics suggest that they must be splitted into two different groups for the following analyses.</p>
+<p><em>2.1.3 QC sample filtering</em></p>
+<p>After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based, precisely, on these metrics. For that, we will use <code>isOutlier()</code> from <em><a href="https://bioconductor.org/packages/3.17/scater">scater</a></em> to identify outlier samples only at the lower end or the higher end, depending on the QC metric.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb31-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
+<span id="cb31-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb31-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Separate data by Age</span></span>
+<span id="cb31-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-7" aria-hidden="true" tabindex="-1"></a>rse_gene_pups<span class="ot">&lt;-</span> rse_gene_filt[,<span class="fu">which</span>(rse_gene_filt<span class="sc">$</span>Age<span class="sc">==</span><span class="st">&quot;Pup&quot;</span>)]</span>
+<span id="cb31-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-8" aria-hidden="true" tabindex="-1"></a>rse_gene_adults <span class="ot">&lt;-</span> rse_gene_filt[,<span class="fu">which</span>(rse_gene_filt<span class="sc">$</span>Age<span class="sc">==</span><span class="st">&quot;Adult&quot;</span>)]</span>
+<span id="cb31-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Find outlier samples based on their QC metrics (samples that are 3 median-absolute-deviations away from the median)</span></span>
+<span id="cb31-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Filter all samples together</span></span>
+<span id="cb31-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Drop samples with lower library sizes (sum), detected number of genes and totalAssignedGene </span></span>
+<span id="cb31-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-17" aria-hidden="true" tabindex="-1"></a>outliers_library_size <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_filt<span class="sc">$</span>sum, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-18" aria-hidden="true" tabindex="-1"></a>outliers_detected_num <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_filt<span class="sc">$</span>detected, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-19" aria-hidden="true" tabindex="-1"></a>outliers_totalAssignedGene <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_filt<span class="sc">$</span>totalAssignedGene, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Drop samples with higher mitoRates and rRNA rates </span></span>
+<span id="cb31-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-21" aria-hidden="true" tabindex="-1"></a>outliers_mito<span class="ot">&lt;-</span><span class="fu">isOutlier</span>(rse_gene_filt<span class="sc">$</span>mitoRate, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb31-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-22" aria-hidden="true" tabindex="-1"></a>outliers_rRNArate <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_filt<span class="sc">$</span>rRNA_rate, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb31-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Keep not outlier samples</span></span>
+<span id="cb31-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-25" aria-hidden="true" tabindex="-1"></a>not_outliers<span class="ot">&lt;-</span><span class="fu">which</span>(<span class="sc">!</span> (outliers_library_size <span class="sc">|</span> outliers_detected_num <span class="sc">|</span> outliers_totalAssignedGene <span class="sc">|</span> outliers_mito <span class="sc">|</span> outliers_rRNArate))</span>
+<span id="cb31-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-26" aria-hidden="true" tabindex="-1"></a>rse_gene_qc<span class="ot">&lt;-</span>rse_gene_filt[,not_outliers]</span>
+<span id="cb31-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of samples retained</span></span>
+<span id="cb31-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-29" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_qc)[<span class="dv">2</span>]</span>
+<span id="cb31-30"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 39</span></span>
+<span id="cb31-31"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Add new variables to rse_gene_filt with info of samples retained/dropped</span></span>
+<span id="cb31-33"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-33" aria-hidden="true" tabindex="-1"></a>rse_gene_filt<span class="sc">$</span>Retention_after_QC_filtering <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">sapply</span>(rse_gene_filt<span class="sc">$</span>SAMPLE_ID, <span class="cf">function</span>(x){<span class="cf">if</span> (x <span class="sc">%in%</span> rse_gene_qc<span class="sc">$</span>SAMPLE_ID){<span class="st">&#39;Retained&#39;</span>} <span class="cf">else</span>{<span class="st">&#39;Dropped&#39;</span>}}))</span>
+<span id="cb31-34"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-35"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-36"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-37"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Filter adult samples</span></span>
+<span id="cb31-38"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-39"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-39" aria-hidden="true" tabindex="-1"></a>outliers_library_size <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_adults<span class="sc">$</span>sum, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-40"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-40" aria-hidden="true" tabindex="-1"></a>outliers_detected_num <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_adults<span class="sc">$</span>detected, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-41"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-41" aria-hidden="true" tabindex="-1"></a>outliers_totalAssignedGene <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_adults<span class="sc">$</span>totalAssignedGene, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-42"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-42" aria-hidden="true" tabindex="-1"></a>outliers_mito<span class="ot">&lt;-</span><span class="fu">isOutlier</span>(rse_gene_adults<span class="sc">$</span>mitoRate, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb31-43"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-43" aria-hidden="true" tabindex="-1"></a>outliers_rRNArate <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_adults<span class="sc">$</span>rRNA_rate, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb31-44"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-45"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-45" aria-hidden="true" tabindex="-1"></a>not_outliers<span class="ot">&lt;-</span><span class="fu">which</span>(<span class="sc">!</span> (outliers_library_size <span class="sc">|</span> outliers_detected_num <span class="sc">|</span> outliers_totalAssignedGene <span class="sc">|</span> outliers_mito <span class="sc">|</span> outliers_rRNArate))</span>
+<span id="cb31-46"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-46" aria-hidden="true" tabindex="-1"></a>rse_gene_adults_qc<span class="ot">&lt;-</span>rse_gene_adults[,not_outliers]</span>
+<span id="cb31-47"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-48"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-48" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of samples retained</span></span>
+<span id="cb31-49"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-49" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_adults_qc)[<span class="dv">2</span>]</span>
+<span id="cb31-50"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 20</span></span>
+<span id="cb31-51"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-52"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-52" aria-hidden="true" tabindex="-1"></a>rse_gene_adults<span class="sc">$</span>Retention_after_QC_filtering <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">sapply</span>(rse_gene_adults<span class="sc">$</span>SAMPLE_ID, <span class="cf">function</span>(x){<span class="cf">if</span> (x <span class="sc">%in%</span> rse_gene_adults_qc<span class="sc">$</span>SAMPLE_ID){<span class="st">&#39;Retained&#39;</span>} <span class="cf">else</span>{<span class="st">&#39;Dropped&#39;</span>}}))</span>
+<span id="cb31-53"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-54"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-55"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-56"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-56" aria-hidden="true" tabindex="-1"></a><span class="do">## Filter pup samples</span></span>
+<span id="cb31-57"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-58"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-58" aria-hidden="true" tabindex="-1"></a>outliers_library_size <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_pups<span class="sc">$</span>sum, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-59"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-59" aria-hidden="true" tabindex="-1"></a>outliers_detected_num <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_pups<span class="sc">$</span>detected, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-60"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-60" aria-hidden="true" tabindex="-1"></a>outliers_totalAssignedGene <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_pups<span class="sc">$</span>totalAssignedGene, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb31-61"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-61" aria-hidden="true" tabindex="-1"></a>outliers_mito<span class="ot">&lt;-</span><span class="fu">isOutlier</span>(rse_gene_pups<span class="sc">$</span>mitoRate, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb31-62"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-62" aria-hidden="true" tabindex="-1"></a>outliers_rRNArate <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(rse_gene_pups<span class="sc">$</span>rRNA_rate, <span class="at">nmads =</span> <span class="dv">3</span>, <span class="at">type=</span><span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb31-63"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-64"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-64" aria-hidden="true" tabindex="-1"></a>not_outliers<span class="ot">&lt;-</span><span class="fu">which</span>(<span class="sc">!</span> (outliers_library_size <span class="sc">|</span> outliers_detected_num <span class="sc">|</span> outliers_totalAssignedGene <span class="sc">|</span> outliers_mito <span class="sc">|</span> outliers_rRNArate))</span>
+<span id="cb31-65"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-65" aria-hidden="true" tabindex="-1"></a>rse_gene_pups_qc<span class="ot">&lt;-</span>rse_gene_pups[,not_outliers]</span>
+<span id="cb31-66"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-67"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-67" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of samples retained</span></span>
+<span id="cb31-68"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-68" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_pups_qc)[<span class="dv">2</span>]</span>
+<span id="cb31-69"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41</span></span>
+<span id="cb31-70"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-71"><a href="rse-plotting-basics-with-smokingmouse.html#cb31-71" aria-hidden="true" tabindex="-1"></a>rse_gene_pups<span class="sc">$</span>Retention_after_QC_filtering <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">sapply</span>(rse_gene_pups<span class="sc">$</span>SAMPLE_ID, <span class="cf">function</span>(x){<span class="cf">if</span> (x <span class="sc">%in%</span> rse_gene_pups_qc<span class="sc">$</span>SAMPLE_ID){<span class="st">&#39;Retained&#39;</span>} <span class="cf">else</span>{<span class="st">&#39;Dropped&#39;</span>}}))</span></code></pre></div>
+<p>We already filtered outlier samples … but what have we removed?
+It is always important to trace the QC metrics of the filtered samples to verify that they really are poor-quality. We don’t want to get rid of useful samples! So lets go back to the QC boxplots but now coloring samples according to whether they passed or not the filtering and also distinguishing samples’ groups by shape.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Boxplots of QC metrics after sample filtering</span></span>
+<span id="cb32-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Boxplots</span></span>
+<span id="cb32-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-5" aria-hidden="true" tabindex="-1"></a>boxplots_after_QC_filtering <span class="ot">&lt;-</span> <span class="cf">function</span>(rse_gene, qc_metric, sample_var){</span>
+<span id="cb32-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Color samples </span></span>
+<span id="cb32-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-8" aria-hidden="true" tabindex="-1"></a>    colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Retained&#39;</span><span class="ot">=</span><span class="st">&#39;deepskyblue&#39;</span>, <span class="st">&#39;Dropped&#39;</span><span class="ot">=</span><span class="st">&#39;brown2&#39;</span>)</span>
+<span id="cb32-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Sample shape by sample variables </span></span>
+<span id="cb32-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Group&quot;</span>){</span>
+<span id="cb32-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-12" aria-hidden="true" tabindex="-1"></a>        shapes<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Control&#39;</span><span class="ot">=</span><span class="dv">0</span>, <span class="st">&#39;Experimental&#39;</span><span class="ot">=</span><span class="dv">15</span>)</span>
+<span id="cb32-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Age&quot;</span>){</span>
+<span id="cb32-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-15" aria-hidden="true" tabindex="-1"></a>        shapes<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Adult&#39;</span><span class="ot">=</span><span class="dv">16</span>, <span class="st">&#39;Pup&#39;</span><span class="ot">=</span><span class="dv">1</span>)</span>
+<span id="cb32-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&quot;Sex&quot;</span>){</span>
+<span id="cb32-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-18" aria-hidden="true" tabindex="-1"></a>        shapes<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;F&#39;</span><span class="ot">=</span><span class="dv">11</span>, <span class="st">&#39;M&#39;</span><span class="ot">=</span><span class="dv">19</span>)</span>
+<span id="cb32-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;Pregnancy&#39;</span>){</span>
+<span id="cb32-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-21" aria-hidden="true" tabindex="-1"></a>        shapes<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Yes&#39;</span><span class="ot">=</span><span class="dv">10</span>, <span class="st">&#39;No&#39;</span><span class="ot">=</span><span class="dv">1</span>)</span>
+<span id="cb32-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;plate&#39;</span>){</span>
+<span id="cb32-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-24" aria-hidden="true" tabindex="-1"></a>        shapes<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Plate1&#39;</span><span class="ot">=</span><span class="dv">12</span>, <span class="st">&#39;Plate2&#39;</span><span class="ot">=</span><span class="dv">5</span>, <span class="st">&#39;Plate3&#39;</span><span class="ot">=</span><span class="dv">4</span>)</span>
+<span id="cb32-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (sample_var<span class="sc">==</span><span class="st">&#39;flowcell&#39;</span>){</span>
+<span id="cb32-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-27" aria-hidden="true" tabindex="-1"></a>        shapes<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;HKCG7DSXX&#39;</span><span class="ot">=</span><span class="dv">3</span>,<span class="st">&#39;HKCMHDSXX&#39;</span><span class="ot">=</span><span class="dv">8</span>, <span class="st">&#39;HKCNKDSXX&#39;</span><span class="ot">=</span><span class="dv">14</span>, </span>
+<span id="cb32-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-28" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;HKCTMDSXX&#39;</span><span class="ot">=</span><span class="dv">17</span>)</span>
+<span id="cb32-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-30"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-31"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-31" aria-hidden="true" tabindex="-1"></a>    y_label<span class="ot">=</span><span class="fu">str_replace_all</span>(qc_metric, <span class="fu">c</span>(<span class="st">&quot;_&quot;</span><span class="ot">=</span><span class="st">&quot; &quot;</span>))</span>
+<span id="cb32-32"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-33"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-33" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">colData</span>(rse_gene))</span>
+<span id="cb32-34"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-35"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-35" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Median of the QC var values</span></span>
+<span id="cb32-36"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-36" aria-hidden="true" tabindex="-1"></a>    median<span class="ot">&lt;-</span><span class="fu">median</span>(<span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste</span>(<span class="st">&quot;rse_gene$&quot;</span>, qc_metric, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))))</span>
+<span id="cb32-37"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-37" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Median-absolute-deviation of the QC var values</span></span>
+<span id="cb32-38"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-38" aria-hidden="true" tabindex="-1"></a>    mad<span class="ot">&lt;-</span><span class="fu">mad</span>(<span class="fu">eval</span>(<span class="fu">parse_expr</span>(<span class="fu">paste</span>(<span class="st">&quot;rse_gene$&quot;</span>, qc_metric, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))))</span>
+<span id="cb32-39"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-40"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-40" aria-hidden="true" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&#39;&#39;</span>, <span class="at">y =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(qc_metric), </span>
+<span id="cb32-41"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-41" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">color =</span> <span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(<span class="st">&#39;Retention_after_QC_filtering&#39;</span>))) <span class="sc">+</span></span>
+<span id="cb32-42"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="fu">aes</span>(<span class="at">shape=</span><span class="fu">eval</span>(<span class="fu">parse_expr</span>((sample_var))))) <span class="sc">+</span></span>
+<span id="cb32-43"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-43" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">0.15</span>, <span class="at">color=</span><span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb32-44"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-44" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb32-45"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-45" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> shapes) <span class="sc">+</span></span>
+<span id="cb32-46"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-46" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y =</span> y_label, <span class="at">color=</span><span class="st">&#39;Retention after QC filtering&#39;</span>, <span class="at">shape=</span>sample_var) <span class="sc">+</span></span>
+<span id="cb32-47"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-47" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb32-48"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-48" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Median line</span></span>
+<span id="cb32-49"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-49" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> median, <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb32-50"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-50" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Line of median + 3 MADs</span></span>
+<span id="cb32-51"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-51" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> median<span class="sc">+</span>(<span class="dv">3</span><span class="sc">*</span>mad), <span class="at">size=</span><span class="fl">0.5</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-52"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-52" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Line of median - 3 MADs</span></span>
+<span id="cb32-53"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-53" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> median<span class="sc">-</span>(<span class="dv">3</span><span class="sc">*</span>mad), <span class="at">size=</span><span class="fl">0.5</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-54"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-54" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">9</span>)),</span>
+<span id="cb32-55"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-55" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">8</span>)),</span>
+<span id="cb32-56"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-56" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>,</span>
+<span id="cb32-57"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-57" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>),</span>
+<span id="cb32-58"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-58" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">9</span>))</span>
+<span id="cb32-59"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-60"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(plot)</span>
+<span id="cb32-61"><a href="rse-plotting-basics-with-smokingmouse.html#cb32-61" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In the following plot we can confirm that taking all samples together (both adults and pups) all adult samples are dropped by their high <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>, but that is not desirable because we want to analyze these samples too, so we need to analyze pup and adult samples separately.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb33-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Plots</span></span>
+<span id="cb33-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="do">## All samples together</span></span>
+<span id="cb33-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb33-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">boxplots_after_QC_filtering</span>(rse_gene_filt, <span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;Age&#39;</span>)</span>
+<span id="cb33-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb33-6" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+For adults, only 3 controls are dropped, 3 of them by their <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Adult samples</span></span>
+<span id="cb34-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb34-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">boxplots_after_QC_filtering</span>(rse_gene_adults, <span class="st">&#39;mitoRate&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb34-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb34-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>For pups, 1 experimental sample was dropped by its <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Pup samples</span></span>
+<span id="cb35-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">boxplots_after_QC_filtering</span>(rse_gene_pups, <span class="st">&#39;rRNA_rate&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
+<span id="cb35-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<div class="alert alert-info">
+<p>Try the function yourself with different QC metrics and sample variables!</p>
+</div>
+<pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;  setting  value
+#&gt;  version  R version 4.3.0 (2023-04-21)
+#&gt;  os       Ubuntu 22.04.2 LTS
+#&gt;  system   x86_64, linux-gnu
+#&gt;  ui       X11
+#&gt;  language (EN)
+#&gt;  collate  en_US.UTF-8
+#&gt;  ctype    en_US.UTF-8
+#&gt;  tz       UTC
+#&gt;  date     2023-06-28
+#&gt;  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;  package                * version   date (UTC) lib source
+#&gt;  AnnotationDbi            1.62.1    2023-05-02 [1] Bioconductor
+#&gt;  AnnotationHub            3.8.0     2023-04-25 [1] Bioconductor
+#&gt;  aod                      1.3.2     2022-04-02 [1] RSPM (R 4.3.0)
+#&gt;  attempt                  0.3.1     2020-05-03 [1] RSPM (R 4.3.0)
+#&gt;  backports                1.4.1     2021-12-13 [1] RSPM (R 4.3.0)
+#&gt;  base64enc                0.1-3     2015-07-28 [2] RSPM (R 4.3.0)
+#&gt;  beachmat                 2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  beeswarm                 0.4.0     2021-06-01 [1] RSPM (R 4.3.0)
+#&gt;  benchmarkme              1.0.8     2022-06-12 [1] RSPM (R 4.3.0)
+#&gt;  benchmarkmeData          1.0.4     2020-04-23 [1] RSPM (R 4.3.0)
+#&gt;  bibtex                   0.5.1     2023-01-26 [1] RSPM (R 4.3.0)
+#&gt;  Biobase                * 2.60.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocFileCache          * 2.8.0     2023-04-25 [1] Bioconductor
+#&gt;  BiocGenerics           * 0.46.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocIO                   1.10.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocManager              1.30.21   2023-06-10 [1] RSPM (R 4.3.0)
+#&gt;  BiocNeighbors            1.18.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocParallel           * 1.34.2    2023-05-22 [1] Bioconductor
+#&gt;  BiocSingular             1.16.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocStyle              * 2.28.0    2023-04-25 [1] Bioconductor
+#&gt;  biocthis               * 1.10.3    2023-06-07 [1] Bioconductor
+#&gt;  BiocVersion              3.17.1    2022-11-04 [2] Bioconductor
+#&gt;  Biostrings               2.68.1    2023-05-16 [1] Bioconductor
+#&gt;  bit                      4.0.5     2022-11-15 [1] RSPM (R 4.3.0)
+#&gt;  bit64                    4.0.5     2020-08-30 [1] RSPM (R 4.3.0)
+#&gt;  bitops                   1.0-7     2021-04-24 [1] RSPM (R 4.3.0)
+#&gt;  blob                     1.2.4     2023-03-17 [1] RSPM (R 4.3.0)
+#&gt;  bookdown                 0.34      2023-05-09 [1] RSPM (R 4.3.0)
+#&gt;  boot                     1.3-28.1  2022-11-22 [3] CRAN (R 4.3.0)
+#&gt;  broom                    1.0.5     2023-06-09 [1] RSPM (R 4.3.0)
+#&gt;  bslib                    0.5.0     2023-06-09 [2] RSPM (R 4.3.0)
+#&gt;  cachem                   1.0.8     2023-05-01 [2] RSPM (R 4.3.0)
+#&gt;  caTools                  1.18.2    2021-03-28 [1] RSPM (R 4.3.0)
+#&gt;  checkmate                2.2.0     2023-04-27 [1] RSPM (R 4.3.0)
+#&gt;  circlize                 0.4.15    2022-05-10 [1] RSPM (R 4.3.0)
+#&gt;  cli                      3.6.1     2023-03-23 [2] RSPM (R 4.3.0)
+#&gt;  clue                     0.3-64    2023-01-31 [1] RSPM (R 4.3.0)
+#&gt;  cluster                  2.1.4     2022-08-22 [3] CRAN (R 4.3.0)
+#&gt;  codetools                0.2-19    2023-02-01 [3] CRAN (R 4.3.0)
+#&gt;  colorspace               2.1-0     2023-01-23 [1] RSPM (R 4.3.0)
+#&gt;  colourpicker             1.2.0     2022-10-28 [1] RSPM (R 4.3.0)
+#&gt;  ComplexHeatmap         * 2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  config                   0.3.1     2020-12-17 [1] RSPM (R 4.3.0)
+#&gt;  cowplot                * 1.1.1     2020-12-30 [1] RSPM (R 4.3.0)
+#&gt;  crayon                   1.5.2     2022-09-29 [2] RSPM (R 4.3.0)
+#&gt;  curl                     5.0.1     2023-06-07 [2] RSPM (R 4.3.0)
+#&gt;  data.table               1.14.8    2023-02-17 [1] RSPM (R 4.3.0)
+#&gt;  DBI                      1.1.3     2022-06-18 [1] RSPM (R 4.3.0)
+#&gt;  dbplyr                 * 2.3.2     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  DelayedArray             0.26.3    2023-05-22 [1] Bioconductor
+#&gt;  DelayedMatrixStats       1.22.1    2023-06-09 [1] Bioconductor
+#&gt;  digest                   0.6.32    2023-06-26 [2] RSPM (R 4.3.0)
+#&gt;  doParallel               1.0.17    2022-02-07 [1] RSPM (R 4.3.0)
+#&gt;  dotCall64                1.0-2     2022-10-03 [1] RSPM (R 4.3.0)
+#&gt;  dplyr                    1.1.2     2023-04-20 [1] RSPM (R 4.3.0)
+#&gt;  dqrng                    0.3.0     2021-05-01 [1] RSPM (R 4.3.0)
+#&gt;  DropletUtils             1.20.0    2023-04-25 [1] Bioconductor
+#&gt;  DT                       0.28      2023-05-18 [1] RSPM (R 4.3.0)
+#&gt;  edgeR                  * 3.42.4    2023-05-31 [1] Bioconductor
+#&gt;  ellipsis                 0.3.2     2021-04-29 [2] RSPM (R 4.3.0)
+#&gt;  EnvStats                 2.7.0     2022-03-07 [1] RSPM (R 4.3.0)
+#&gt;  evaluate                 0.21      2023-05-05 [2] RSPM (R 4.3.0)
+#&gt;  ExperimentHub            2.8.0     2023-04-25 [1] Bioconductor
+#&gt;  ExploreModelMatrix     * 1.12.0    2023-04-25 [1] Bioconductor
+#&gt;  fansi                    1.0.4     2023-01-22 [2] RSPM (R 4.3.0)
+#&gt;  farver                   2.1.1     2022-07-06 [1] RSPM (R 4.3.0)
+#&gt;  fastmap                  1.1.1     2023-02-24 [2] RSPM (R 4.3.0)
+#&gt;  fields                   14.1      2022-08-12 [1] RSPM (R 4.3.0)
+#&gt;  filelock                 1.0.2     2018-10-05 [1] RSPM (R 4.3.0)
+#&gt;  foreach                  1.5.2     2022-02-02 [1] RSPM (R 4.3.0)
+#&gt;  foreign                  0.8-84    2022-12-06 [3] CRAN (R 4.3.0)
+#&gt;  Formula                  1.2-5     2023-02-24 [1] RSPM (R 4.3.0)
+#&gt;  fs                       1.6.2     2023-04-25 [2] RSPM (R 4.3.0)
+#&gt;  generics                 0.1.3     2022-07-05 [1] RSPM (R 4.3.0)
+#&gt;  GenomeInfoDb           * 1.36.1    2023-06-21 [1] Bioconductor
+#&gt;  GenomeInfoDbData         1.2.10    2023-05-17 [1] Bioconductor
+#&gt;  GenomicAlignments        1.36.0    2023-04-25 [1] Bioconductor
+#&gt;  GenomicRanges          * 1.52.0    2023-04-25 [1] Bioconductor
+#&gt;  GetoptLong               1.0.5     2020-12-15 [1] RSPM (R 4.3.0)
+#&gt;  ggbeeswarm               0.7.2     2023-04-29 [1] RSPM (R 4.3.0)
+#&gt;  ggplot2                * 3.4.2     2023-04-03 [1] RSPM (R 4.3.0)
+#&gt;  ggrepel                * 0.9.3     2023-02-03 [1] RSPM (R 4.3.0)
+#&gt;  GlobalOptions            0.1.2     2020-06-10 [1] RSPM (R 4.3.0)
+#&gt;  glue                     1.6.2     2022-02-24 [2] RSPM (R 4.3.0)
+#&gt;  golem                    0.4.1     2023-06-05 [1] RSPM (R 4.3.0)
+#&gt;  gplots                   3.1.3     2022-04-25 [1] RSPM (R 4.3.0)
+#&gt;  gridExtra                2.3       2017-09-09 [1] RSPM (R 4.3.0)
+#&gt;  gtable                   0.3.3     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  gtools                   3.9.4     2022-11-27 [1] RSPM (R 4.3.0)
+#&gt;  HDF5Array                1.28.1    2023-05-01 [1] Bioconductor
+#&gt;  here                   * 1.0.1     2020-12-13 [1] RSPM (R 4.3.0)
+#&gt;  highr                    0.10      2022-12-22 [2] RSPM (R 4.3.0)
+#&gt;  Hmisc                  * 5.1-0     2023-05-08 [1] RSPM (R 4.3.0)
+#&gt;  hms                      1.1.3     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  htmlTable                2.4.1     2022-07-07 [1] RSPM (R 4.3.0)
+#&gt;  htmltools                0.5.5     2023-03-23 [2] RSPM (R 4.3.0)
+#&gt;  htmlwidgets              1.6.2     2023-03-17 [2] RSPM (R 4.3.0)
+#&gt;  httpuv                   1.6.11    2023-05-11 [2] RSPM (R 4.3.0)
+#&gt;  httr                     1.4.6     2023-05-08 [2] RSPM (R 4.3.0)
+#&gt;  igraph                   1.5.0     2023-06-16 [1] RSPM (R 4.3.0)
+#&gt;  interactiveDisplayBase   1.38.0    2023-04-25 [1] Bioconductor
+#&gt;  IRanges                * 2.34.1    2023-06-22 [1] Bioconductor
+#&gt;  irlba                    2.3.5.1   2022-10-03 [1] RSPM (R 4.3.0)
+#&gt;  iSEE                   * 2.12.0    2023-04-25 [1] Bioconductor
+#&gt;  iterators                1.0.14    2022-02-05 [1] RSPM (R 4.3.0)
+#&gt;  jquerylib                0.1.4     2021-04-26 [2] RSPM (R 4.3.0)
+#&gt;  jsonlite                 1.8.5     2023-06-05 [2] RSPM (R 4.3.0)
+#&gt;  KEGGREST                 1.40.0    2023-04-25 [1] Bioconductor
+#&gt;  KernSmooth               2.23-21   2023-05-03 [3] RSPM (R 4.3.0)
+#&gt;  knitr                    1.43      2023-05-25 [2] RSPM (R 4.3.0)
+#&gt;  labeling                 0.4.2     2020-10-20 [1] RSPM (R 4.3.0)
+#&gt;  later                    1.3.1     2023-05-02 [2] RSPM (R 4.3.0)
+#&gt;  lattice                  0.21-8    2023-04-05 [3] CRAN (R 4.3.0)
+#&gt;  lazyeval                 0.2.2     2019-03-15 [1] RSPM (R 4.3.0)
+#&gt;  lifecycle                1.0.3     2022-10-07 [2] RSPM (R 4.3.0)
+#&gt;  limma                  * 3.56.2    2023-06-04 [1] Bioconductor
+#&gt;  lme4                     1.1-33    2023-04-25 [1] RSPM (R 4.3.0)
+#&gt;  lobstr                 * 1.1.2     2022-06-22 [1] RSPM (R 4.3.0)
+#&gt;  locfit                   1.5-9.8   2023-06-11 [1] RSPM (R 4.3.0)
+#&gt;  lubridate                1.9.2     2023-02-10 [1] RSPM (R 4.3.0)
+#&gt;  magick                   2.7.4     2023-03-09 [1] RSPM (R 4.3.0)
+#&gt;  magrittr                 2.0.3     2022-03-30 [2] RSPM (R 4.3.0)
+#&gt;  maps                     3.4.1     2022-10-30 [1] RSPM (R 4.3.0)
+#&gt;  MASS                     7.3-60    2023-05-04 [3] RSPM (R 4.3.0)
+#&gt;  Matrix                   1.5-4.1   2023-05-18 [3] RSPM (R 4.3.0)
+#&gt;  MatrixGenerics         * 1.12.2    2023-06-09 [1] Bioconductor
+#&gt;  matrixStats            * 1.0.0     2023-06-02 [1] RSPM (R 4.3.0)
+#&gt;  memoise                  2.0.1     2021-11-26 [2] RSPM (R 4.3.0)
+#&gt;  mgcv                     1.8-42    2023-03-02 [3] CRAN (R 4.3.0)
+#&gt;  mime                     0.12      2021-09-28 [2] RSPM (R 4.3.0)
+#&gt;  miniUI                   0.1.1.1   2018-05-18 [2] RSPM (R 4.3.0)
+#&gt;  minqa                    1.2.5     2022-10-19 [1] RSPM (R 4.3.0)
+#&gt;  munsell                  0.5.0     2018-06-12 [1] RSPM (R 4.3.0)
+#&gt;  mvtnorm                  1.2-2     2023-06-08 [1] RSPM (R 4.3.0)
+#&gt;  nlme                     3.1-162   2023-01-31 [3] CRAN (R 4.3.0)
+#&gt;  nloptr                   2.0.3     2022-05-26 [1] RSPM (R 4.3.0)
+#&gt;  nnet                     7.3-19    2023-05-03 [3] RSPM (R 4.3.0)
+#&gt;  paletteer                1.5.0     2022-10-19 [1] RSPM (R 4.3.0)
+#&gt;  patchwork              * 1.1.2     2022-08-19 [1] RSPM (R 4.3.0)
+#&gt;  pbkrtest                 0.5.2     2023-01-19 [1] RSPM (R 4.3.0)
+#&gt;  pheatmap               * 1.0.12    2019-01-04 [1] RSPM (R 4.3.0)
+#&gt;  pillar                   1.9.0     2023-03-22 [2] RSPM (R 4.3.0)
+#&gt;  pkgconfig                2.0.3     2019-09-22 [2] RSPM (R 4.3.0)
+#&gt;  plotly                   4.10.2    2023-06-03 [1] RSPM (R 4.3.0)
+#&gt;  plyr                     1.8.8     2022-11-11 [1] RSPM (R 4.3.0)
+#&gt;  png                      0.1-8     2022-11-29 [1] RSPM (R 4.3.0)
+#&gt;  postcards              * 0.2.3     2022-01-07 [1] RSPM (R 4.3.0)
+#&gt;  prettyunits              1.1.1     2020-01-24 [2] RSPM (R 4.3.0)
+#&gt;  progress                 1.2.2     2019-05-16 [1] RSPM (R 4.3.0)
+#&gt;  promises                 1.2.0.1   2021-02-11 [2] RSPM (R 4.3.0)
+#&gt;  purrr                    1.0.1     2023-01-10 [2] RSPM (R 4.3.0)
+#&gt;  R.cache                  0.16.0    2022-07-21 [1] RSPM (R 4.3.0)
+#&gt;  R.methodsS3              1.8.2     2022-06-13 [1] RSPM (R 4.3.0)
+#&gt;  R.oo                     1.25.0    2022-06-12 [1] RSPM (R 4.3.0)
+#&gt;  R.utils                  2.12.2    2022-11-11 [1] RSPM (R 4.3.0)
+#&gt;  R6                       2.5.1     2021-08-19 [2] RSPM (R 4.3.0)
+#&gt;  rappdirs                 0.3.3     2021-01-31 [2] RSPM (R 4.3.0)
+#&gt;  rbibutils                2.2.13    2023-01-13 [1] RSPM (R 4.3.0)
+#&gt;  RColorBrewer           * 1.1-3     2022-04-03 [1] RSPM (R 4.3.0)
+#&gt;  Rcpp                     1.0.10    2023-01-22 [2] RSPM (R 4.3.0)
+#&gt;  RCurl                    1.98-1.12 2023-03-27 [1] RSPM (R 4.3.0)
+#&gt;  Rdpack                   2.4       2022-07-20 [1] RSPM (R 4.3.0)
+#&gt;  recount3               * 1.10.2    2023-05-07 [1] Bioconductor
+#&gt;  RefManageR             * 1.4.0     2022-09-30 [1] RSPM (R 4.3.0)
+#&gt;  remaCor                  0.0.16    2023-06-21 [1] RSPM (R 4.3.0)
+#&gt;  rematch2                 2.1.2     2020-05-01 [2] RSPM (R 4.3.0)
+#&gt;  reshape2                 1.4.4     2020-04-09 [1] RSPM (R 4.3.0)
+#&gt;  restfulr                 0.0.15    2022-06-16 [1] RSPM (R 4.3.0)
+#&gt;  rhdf5                    2.44.0    2023-04-25 [1] Bioconductor
+#&gt;  rhdf5filters             1.12.1    2023-04-30 [1] Bioconductor
+#&gt;  Rhdf5lib                 1.22.0    2023-04-25 [1] Bioconductor
+#&gt;  RhpcBLASctl              0.23-42   2023-02-11 [1] RSPM (R 4.3.0)
+#&gt;  rintrojs                 0.3.2     2022-08-09 [1] RSPM (R 4.3.0)
+#&gt;  rjson                    0.2.21    2022-01-09 [1] RSPM (R 4.3.0)
+#&gt;  rlang                  * 1.1.1     2023-04-28 [2] RSPM (R 4.3.0)
+#&gt;  rmarkdown                2.22      2023-06-01 [2] RSPM (R 4.3.0)
+#&gt;  rpart                    4.1.19    2022-10-21 [3] CRAN (R 4.3.0)
+#&gt;  rprojroot                2.0.3     2022-04-02 [2] RSPM (R 4.3.0)
+#&gt;  Rsamtools                2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  RSQLite                  2.3.1     2023-04-03 [1] RSPM (R 4.3.0)
+#&gt;  rstudioapi               0.14      2022-08-22 [2] RSPM (R 4.3.0)
+#&gt;  rsvd                     1.0.5     2021-04-16 [1] RSPM (R 4.3.0)
+#&gt;  rtracklayer              1.60.0    2023-04-25 [1] Bioconductor
+#&gt;  S4Arrays                 1.0.4     2023-05-14 [1] Bioconductor
+#&gt;  S4Vectors              * 0.38.1    2023-05-02 [1] Bioconductor
+#&gt;  sass                     0.4.6     2023-05-03 [2] RSPM (R 4.3.0)
+#&gt;  ScaledMatrix             1.8.1     2023-05-03 [1] Bioconductor
+#&gt;  scales                   1.2.1     2022-08-20 [1] RSPM (R 4.3.0)
+#&gt;  scater                 * 1.28.0    2023-04-25 [1] Bioconductor
+#&gt;  scuttle                * 1.10.1    2023-05-02 [1] Bioconductor
+#&gt;  sessioninfo            * 1.2.2     2021-12-06 [2] RSPM (R 4.3.0)
+#&gt;  shape                    1.4.6     2021-05-19 [1] RSPM (R 4.3.0)
+#&gt;  shiny                    1.7.4     2022-12-15 [2] RSPM (R 4.3.0)
+#&gt;  shinyAce                 0.4.2     2022-05-06 [1] RSPM (R 4.3.0)
+#&gt;  shinydashboard           0.7.2     2021-09-30 [1] RSPM (R 4.3.0)
+#&gt;  shinyjs                  2.1.0     2021-12-23 [1] RSPM (R 4.3.0)
+#&gt;  shinyWidgets             0.7.6     2023-01-08 [1] RSPM (R 4.3.0)
+#&gt;  SingleCellExperiment   * 1.22.0    2023-04-25 [1] Bioconductor
+#&gt;  smokingMouse           * 0.99.5    2023-06-28 [1] Github (LieberInstitute/smokingMouse@2e7640c)
+#&gt;  spam                     2.9-1     2022-08-07 [1] RSPM (R 4.3.0)
+#&gt;  sparseMatrixStats        1.12.1    2023-06-20 [1] Bioconductor
+#&gt;  SpatialExperiment      * 1.10.0    2023-04-25 [1] Bioconductor
+#&gt;  spatialLIBD            * 1.12.0    2023-04-27 [1] Bioconductor
+#&gt;  statmod                  1.5.0     2023-01-06 [1] RSPM (R 4.3.0)
+#&gt;  stringi                  1.7.12    2023-01-11 [2] RSPM (R 4.3.0)
+#&gt;  stringr                * 1.5.0     2022-12-02 [2] RSPM (R 4.3.0)
+#&gt;  styler                   1.10.1    2023-06-05 [1] RSPM (R 4.3.0)
+#&gt;  SummarizedExperiment   * 1.30.2    2023-06-06 [1] Bioconductor
+#&gt;  tibble                   3.2.1     2023-03-20 [2] RSPM (R 4.3.0)
+#&gt;  tidyr                    1.3.0     2023-01-24 [1] RSPM (R 4.3.0)
+#&gt;  tidyselect               1.2.0     2022-10-10 [1] RSPM (R 4.3.0)
+#&gt;  timechange               0.2.0     2023-01-11 [1] RSPM (R 4.3.0)
+#&gt;  usethis                * 2.2.1     2023-06-23 [2] RSPM (R 4.3.0)
+#&gt;  utf8                     1.2.3     2023-01-31 [2] RSPM (R 4.3.0)
+#&gt;  variancePartition      * 1.30.2    2023-06-07 [1] Bioconductor
+#&gt;  vctrs                    0.6.3     2023-06-14 [2] RSPM (R 4.3.0)
+#&gt;  vipor                    0.4.5     2017-03-22 [1] RSPM (R 4.3.0)
+#&gt;  viridis                  0.6.3     2023-05-03 [1] RSPM (R 4.3.0)
+#&gt;  viridisLite              0.4.2     2023-05-02 [1] RSPM (R 4.3.0)
+#&gt;  withr                    2.5.0     2022-03-03 [2] RSPM (R 4.3.0)
+#&gt;  xfun                     0.39      2023-04-20 [2] RSPM (R 4.3.0)
+#&gt;  XML                      3.99-0.14 2023-03-19 [1] RSPM (R 4.3.0)
+#&gt;  xml2                     1.3.4     2023-04-27 [2] RSPM (R 4.3.0)
+#&gt;  xtable                   1.8-4     2019-04-21 [2] RSPM (R 4.3.0)
+#&gt;  XVector                  0.40.0    2023-04-25 [1] Bioconductor
+#&gt;  yaml                     2.3.7     2023-01-23 [2] RSPM (R 4.3.0)
+#&gt;  zlibbioc                 1.46.0    2023-04-25 [1] Bioconductor
+#&gt; 
+#&gt;  [1] /__w/_temp/Library
+#&gt;  [2] /usr/local/lib/R/site-library
+#&gt;  [3] /usr/local/lib/R/library
+#&gt; 
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">

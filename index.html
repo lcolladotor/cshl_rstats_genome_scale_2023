@@ -169,7 +169,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
-<li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a></li>
+<li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
+<ul>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i>2. Exploratory Data Analysis</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
 <li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a></li>
@@ -256,28 +260,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;BiocFileCache&quot;</span>,</span>
 <span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RefManageR&quot;</span>,</span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;here&quot;</span>,</span>
-<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;biocthis&quot;</span>,</span>
-<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lobstr&quot;</span>,</span>
-<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;postcards&quot;</span>,</span>
-<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sessioninfo&quot;</span>,</span>
-<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;smokingMouse&quot;</span>,</span>
-<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;SummarizedExperiment&quot;</span>, <span class="do">## Main containers / vis</span></span>
-<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iSEE&quot;</span>,</span>
-<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;edgeR&quot;</span>, <span class="do">## RNA-seq</span></span>
-<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ExploreModelMatrix&quot;</span>,</span>
-<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;limma&quot;</span>,</span>
-<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;recount3&quot;</span>,</span>
-<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pheatmap&quot;</span>, <span class="do">## Visualization</span></span>
-<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ggplot2&quot;</span>,</span>
-<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;patchwork&quot;</span>,</span>
-<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
-<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
-<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span> <span class="do">## Advanced</span></span>
-<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse</span></span>
-<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span></code></pre></div>
+<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Hmisc&quot;</span>,</span>
+<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;biocthis&quot;</span>,</span>
+<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lobstr&quot;</span>,</span>
+<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;postcards&quot;</span>,</span>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;scater&quot;</span>,</span>
+<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sessioninfo&quot;</span>,</span>
+<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;smokingMouse&quot;</span>,</span>
+<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;stringr&quot;</span>,</span>
+<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;SummarizedExperiment&quot;</span>, <span class="do">## Main containers / vis</span></span>
+<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iSEE&quot;</span>,</span>
+<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;edgeR&quot;</span>, <span class="do">## RNA-seq</span></span>
+<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ExploreModelMatrix&quot;</span>,</span>
+<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;limma&quot;</span>,</span>
+<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;recount3&quot;</span>,</span>
+<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;rlang&quot;</span>,</span>
+<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pheatmap&quot;</span>, <span class="do">## Visualization</span></span>
+<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ggrepel&quot;</span>,</span>
+<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;patchwork&quot;</span>,</span>
+<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
+<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
+<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cowplot&quot;</span>,</span>
+<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span>, <span class="do">## Advanced</span></span>
+<span id="cb1-35"><a href="index.html#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;variancePartition&quot;</span></span>
+<span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse</span></span>
+<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span></code></pre></div>
 <p>You will also need to install <a href="https://rstudio.com/products/rstudio/download/#download">RStudio</a> version 2023.06.0+421 or newer.</p>
 </div>
 <div id="r-session-information" class="section level2 unnumbered hasAnchor">
@@ -309,15 +320,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-24"><a href="index.html#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;limma&quot;</span>)</span>
 <span id="cb2-25"><a href="index.html#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span>
 <span id="cb2-26"><a href="index.html#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="index.html#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualization</span></span>
-<span id="cb2-28"><a href="index.html#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
-<span id="cb2-29"><a href="index.html#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb2-30"><a href="index.html#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
-<span id="cb2-31"><a href="index.html#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
-<span id="cb2-32"><a href="index.html#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
-<span id="cb2-33"><a href="index.html#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="index.html#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Advanced</span></span>
-<span id="cb2-35"><a href="index.html#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
+<span id="cb2-27"><a href="index.html#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="do">## QCA</span></span>
+<span id="cb2-28"><a href="index.html#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
+<span id="cb2-29"><a href="index.html#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="index.html#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Variance Partition</span></span>
+<span id="cb2-31"><a href="index.html#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;variancePartition&quot;</span>)</span>
+<span id="cb2-32"><a href="index.html#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="index.html#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualization: plots &amp; text</span></span>
+<span id="cb2-34"><a href="index.html#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
+<span id="cb2-35"><a href="index.html#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb2-36"><a href="index.html#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
+<span id="cb2-37"><a href="index.html#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
+<span id="cb2-38"><a href="index.html#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb2-39"><a href="index.html#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
+<span id="cb2-40"><a href="index.html#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stringr&quot;</span>)</span>
+<span id="cb2-41"><a href="index.html#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;cowplot&quot;</span>)</span>
+<span id="cb2-42"><a href="index.html#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rlang&quot;</span>)</span>
+<span id="cb2-43"><a href="index.html#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)</span>
+<span id="cb2-44"><a href="index.html#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="index.html#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="do">## Advanced</span></span>
+<span id="cb2-46"><a href="index.html#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reproducibility information</span></span>
 <span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb3-3"><a href="index.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">session_info</span>()</span></code></pre></div>
@@ -338,7 +360,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  package                * version   date (UTC) lib source
 ##  AnnotationDbi            1.62.1    2023-05-02 [1] Bioconductor
 ##  AnnotationHub            3.8.0     2023-04-25 [1] Bioconductor
+##  aod                      1.3.2     2022-04-02 [1] RSPM (R 4.3.0)
 ##  attempt                  0.3.1     2020-05-03 [1] RSPM (R 4.3.0)
+##  backports                1.4.1     2021-12-13 [1] RSPM (R 4.3.0)
+##  base64enc                0.1-3     2015-07-28 [2] RSPM (R 4.3.0)
 ##  beachmat                 2.16.0    2023-04-25 [1] Bioconductor
 ##  beeswarm                 0.4.0     2021-06-01 [1] RSPM (R 4.3.0)
 ##  benchmarkme              1.0.8     2022-06-12 [1] RSPM (R 4.3.0)
@@ -349,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  BiocIO                   1.10.0    2023-04-25 [1] Bioconductor
 ##  BiocManager              1.30.21   2023-06-10 [1] RSPM (R 4.3.0)
 ##  BiocNeighbors            1.18.0    2023-04-25 [1] Bioconductor
-##  BiocParallel             1.34.2    2023-05-22 [1] Bioconductor
+##  BiocParallel           * 1.34.2    2023-05-22 [1] Bioconductor
 ##  BiocSingular             1.16.0    2023-04-25 [1] Bioconductor
 ##  BiocStyle              * 2.28.0    2023-04-25 [1] Bioconductor
 ##  biocthis               * 1.10.3    2023-06-07 [1] Bioconductor
@@ -360,8 +385,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  bitops                   1.0-7     2021-04-24 [1] RSPM (R 4.3.0)
 ##  blob                     1.2.4     2023-03-17 [1] RSPM (R 4.3.0)
 ##  bookdown                 0.34      2023-05-09 [1] RSPM (R 4.3.0)
+##  boot                     1.3-28.1  2022-11-22 [3] CRAN (R 4.3.0)
+##  broom                    1.0.5     2023-06-09 [1] RSPM (R 4.3.0)
 ##  bslib                    0.5.0     2023-06-09 [2] RSPM (R 4.3.0)
 ##  cachem                   1.0.8     2023-05-01 [2] RSPM (R 4.3.0)
+##  caTools                  1.18.2    2021-03-28 [1] RSPM (R 4.3.0)
+##  checkmate                2.2.0     2023-04-27 [1] RSPM (R 4.3.0)
 ##  circlize                 0.4.15    2022-05-10 [1] RSPM (R 4.3.0)
 ##  cli                      3.6.1     2023-03-23 [2] RSPM (R 4.3.0)
 ##  clue                     0.3-64    2023-01-31 [1] RSPM (R 4.3.0)
@@ -371,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  colourpicker             1.2.0     2022-10-28 [1] RSPM (R 4.3.0)
 ##  ComplexHeatmap         * 2.16.0    2023-04-25 [1] Bioconductor
 ##  config                   0.3.1     2020-12-17 [1] RSPM (R 4.3.0)
-##  cowplot                  1.1.1     2020-12-30 [1] RSPM (R 4.3.0)
+##  cowplot                * 1.1.1     2020-12-30 [1] RSPM (R 4.3.0)
 ##  crayon                   1.5.2     2022-09-29 [2] RSPM (R 4.3.0)
 ##  curl                     5.0.1     2023-06-07 [2] RSPM (R 4.3.0)
 ##  data.table               1.14.8    2023-02-17 [1] RSPM (R 4.3.0)
@@ -388,6 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  DT                       0.28      2023-05-18 [1] RSPM (R 4.3.0)
 ##  edgeR                  * 3.42.4    2023-05-31 [1] Bioconductor
 ##  ellipsis                 0.3.2     2021-04-29 [2] RSPM (R 4.3.0)
+##  EnvStats                 2.7.0     2022-03-07 [1] RSPM (R 4.3.0)
 ##  evaluate                 0.21      2023-05-05 [2] RSPM (R 4.3.0)
 ##  ExperimentHub            2.8.0     2023-04-25 [1] Bioconductor
 ##  ExploreModelMatrix     * 1.12.0    2023-04-25 [1] Bioconductor
@@ -396,6 +426,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  fields                   14.1      2022-08-12 [1] RSPM (R 4.3.0)
 ##  filelock                 1.0.2     2018-10-05 [1] RSPM (R 4.3.0)
 ##  foreach                  1.5.2     2022-02-02 [1] RSPM (R 4.3.0)
+##  foreign                  0.8-84    2022-12-06 [3] CRAN (R 4.3.0)
+##  Formula                  1.2-5     2023-02-24 [1] RSPM (R 4.3.0)
 ##  fs                       1.6.2     2023-04-25 [2] RSPM (R 4.3.0)
 ##  generics                 0.1.3     2022-07-05 [1] RSPM (R 4.3.0)
 ##  GenomeInfoDb           * 1.36.1    2023-06-21 [1] Bioconductor
@@ -405,14 +437,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  GetoptLong               1.0.5     2020-12-15 [1] RSPM (R 4.3.0)
 ##  ggbeeswarm               0.7.2     2023-04-29 [1] RSPM (R 4.3.0)
 ##  ggplot2                * 3.4.2     2023-04-03 [1] RSPM (R 4.3.0)
-##  ggrepel                  0.9.3     2023-02-03 [1] RSPM (R 4.3.0)
+##  ggrepel                * 0.9.3     2023-02-03 [1] RSPM (R 4.3.0)
 ##  GlobalOptions            0.1.2     2020-06-10 [1] RSPM (R 4.3.0)
 ##  glue                     1.6.2     2022-02-24 [2] RSPM (R 4.3.0)
 ##  golem                    0.4.1     2023-06-05 [1] RSPM (R 4.3.0)
+##  gplots                   3.1.3     2022-04-25 [1] RSPM (R 4.3.0)
 ##  gridExtra                2.3       2017-09-09 [1] RSPM (R 4.3.0)
 ##  gtable                   0.3.3     2023-03-21 [1] RSPM (R 4.3.0)
+##  gtools                   3.9.4     2022-11-27 [1] RSPM (R 4.3.0)
 ##  HDF5Array                1.28.1    2023-05-01 [1] Bioconductor
 ##  here                   * 1.0.1     2020-12-13 [1] RSPM (R 4.3.0)
+##  Hmisc                  * 5.1-0     2023-05-08 [1] RSPM (R 4.3.0)
+##  hms                      1.1.3     2023-03-21 [1] RSPM (R 4.3.0)
+##  htmlTable                2.4.1     2022-07-07 [1] RSPM (R 4.3.0)
 ##  htmltools                0.5.5     2023-03-23 [2] RSPM (R 4.3.0)
 ##  htmlwidgets              1.6.2     2023-03-17 [2] RSPM (R 4.3.0)
 ##  httpuv                   1.6.11    2023-05-11 [2] RSPM (R 4.3.0)
@@ -426,12 +463,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  jquerylib                0.1.4     2021-04-26 [2] RSPM (R 4.3.0)
 ##  jsonlite                 1.8.5     2023-06-05 [2] RSPM (R 4.3.0)
 ##  KEGGREST                 1.40.0    2023-04-25 [1] Bioconductor
+##  KernSmooth               2.23-21   2023-05-03 [3] RSPM (R 4.3.0)
 ##  knitr                    1.43      2023-05-25 [2] RSPM (R 4.3.0)
 ##  later                    1.3.1     2023-05-02 [2] RSPM (R 4.3.0)
 ##  lattice                  0.21-8    2023-04-05 [3] CRAN (R 4.3.0)
 ##  lazyeval                 0.2.2     2019-03-15 [1] RSPM (R 4.3.0)
 ##  lifecycle                1.0.3     2022-10-07 [2] RSPM (R 4.3.0)
 ##  limma                  * 3.56.2    2023-06-04 [1] Bioconductor
+##  lme4                     1.1-33    2023-04-25 [1] RSPM (R 4.3.0)
 ##  lobstr                 * 1.1.2     2022-06-22 [1] RSPM (R 4.3.0)
 ##  locfit                   1.5-9.8   2023-06-11 [1] RSPM (R 4.3.0)
 ##  magick                   2.7.4     2023-03-09 [1] RSPM (R 4.3.0)
@@ -445,16 +484,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  mgcv                     1.8-42    2023-03-02 [3] CRAN (R 4.3.0)
 ##  mime                     0.12      2021-09-28 [2] RSPM (R 4.3.0)
 ##  miniUI                   0.1.1.1   2018-05-18 [2] RSPM (R 4.3.0)
+##  minqa                    1.2.5     2022-10-19 [1] RSPM (R 4.3.0)
 ##  munsell                  0.5.0     2018-06-12 [1] RSPM (R 4.3.0)
+##  mvtnorm                  1.2-2     2023-06-08 [1] RSPM (R 4.3.0)
 ##  nlme                     3.1-162   2023-01-31 [3] CRAN (R 4.3.0)
+##  nloptr                   2.0.3     2022-05-26 [1] RSPM (R 4.3.0)
+##  nnet                     7.3-19    2023-05-03 [3] RSPM (R 4.3.0)
 ##  paletteer                1.5.0     2022-10-19 [1] RSPM (R 4.3.0)
 ##  patchwork              * 1.1.2     2022-08-19 [1] RSPM (R 4.3.0)
+##  pbkrtest                 0.5.2     2023-01-19 [1] RSPM (R 4.3.0)
 ##  pheatmap               * 1.0.12    2019-01-04 [1] RSPM (R 4.3.0)
 ##  pillar                   1.9.0     2023-03-22 [2] RSPM (R 4.3.0)
 ##  pkgconfig                2.0.3     2019-09-22 [2] RSPM (R 4.3.0)
 ##  plotly                   4.10.2    2023-06-03 [1] RSPM (R 4.3.0)
+##  plyr                     1.8.8     2022-11-11 [1] RSPM (R 4.3.0)
 ##  png                      0.1-8     2022-11-29 [1] RSPM (R 4.3.0)
 ##  postcards              * 0.2.3     2022-01-07 [1] RSPM (R 4.3.0)
+##  prettyunits              1.1.1     2020-01-24 [2] RSPM (R 4.3.0)
+##  progress                 1.2.2     2019-05-16 [1] RSPM (R 4.3.0)
 ##  promises                 1.2.0.1   2021-02-11 [2] RSPM (R 4.3.0)
 ##  purrr                    1.0.1     2023-01-10 [2] RSPM (R 4.3.0)
 ##  R.cache                  0.16.0    2022-07-21 [1] RSPM (R 4.3.0)
@@ -463,19 +510,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  R.utils                  2.12.2    2022-11-11 [1] RSPM (R 4.3.0)
 ##  R6                       2.5.1     2021-08-19 [2] RSPM (R 4.3.0)
 ##  rappdirs                 0.3.3     2021-01-31 [2] RSPM (R 4.3.0)
+##  rbibutils                2.2.13    2023-01-13 [1] RSPM (R 4.3.0)
 ##  RColorBrewer           * 1.1-3     2022-04-03 [1] RSPM (R 4.3.0)
 ##  Rcpp                     1.0.10    2023-01-22 [2] RSPM (R 4.3.0)
 ##  RCurl                    1.98-1.12 2023-03-27 [1] RSPM (R 4.3.0)
+##  Rdpack                   2.4       2022-07-20 [1] RSPM (R 4.3.0)
 ##  recount3               * 1.10.2    2023-05-07 [1] Bioconductor
+##  remaCor                  0.0.16    2023-06-21 [1] RSPM (R 4.3.0)
 ##  rematch2                 2.1.2     2020-05-01 [2] RSPM (R 4.3.0)
+##  reshape2                 1.4.4     2020-04-09 [1] RSPM (R 4.3.0)
 ##  restfulr                 0.0.15    2022-06-16 [1] RSPM (R 4.3.0)
 ##  rhdf5                    2.44.0    2023-04-25 [1] Bioconductor
 ##  rhdf5filters             1.12.1    2023-04-30 [1] Bioconductor
 ##  Rhdf5lib                 1.22.0    2023-04-25 [1] Bioconductor
+##  RhpcBLASctl              0.23-42   2023-02-11 [1] RSPM (R 4.3.0)
 ##  rintrojs                 0.3.2     2022-08-09 [1] RSPM (R 4.3.0)
 ##  rjson                    0.2.21    2022-01-09 [1] RSPM (R 4.3.0)
-##  rlang                    1.1.1     2023-04-28 [2] RSPM (R 4.3.0)
+##  rlang                  * 1.1.1     2023-04-28 [2] RSPM (R 4.3.0)
 ##  rmarkdown                2.22      2023-06-01 [2] RSPM (R 4.3.0)
+##  rpart                    4.1.19    2022-10-21 [3] CRAN (R 4.3.0)
 ##  rprojroot                2.0.3     2022-04-02 [2] RSPM (R 4.3.0)
 ##  Rsamtools                2.16.0    2023-04-25 [1] Bioconductor
 ##  RSQLite                  2.3.1     2023-04-03 [1] RSPM (R 4.3.0)
@@ -487,8 +540,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  sass                     0.4.6     2023-05-03 [2] RSPM (R 4.3.0)
 ##  ScaledMatrix             1.8.1     2023-05-03 [1] Bioconductor
 ##  scales                   1.2.1     2022-08-20 [1] RSPM (R 4.3.0)
-##  scater                   1.28.0    2023-04-25 [1] Bioconductor
-##  scuttle                  1.10.1    2023-05-02 [1] Bioconductor
+##  scater                 * 1.28.0    2023-04-25 [1] Bioconductor
+##  scuttle                * 1.10.1    2023-05-02 [1] Bioconductor
 ##  sessioninfo            * 1.2.2     2021-12-06 [2] RSPM (R 4.3.0)
 ##  shape                    1.4.6     2021-05-19 [1] RSPM (R 4.3.0)
 ##  shiny                    1.7.4     2022-12-15 [2] RSPM (R 4.3.0)
@@ -503,6 +556,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  SpatialExperiment      * 1.10.0    2023-04-25 [1] Bioconductor
 ##  spatialLIBD            * 1.12.0    2023-04-27 [1] Bioconductor
 ##  statmod                  1.5.0     2023-01-06 [1] RSPM (R 4.3.0)
+##  stringi                  1.7.12    2023-01-11 [2] RSPM (R 4.3.0)
+##  stringr                * 1.5.0     2022-12-02 [2] RSPM (R 4.3.0)
 ##  styler                   1.10.1    2023-06-05 [1] RSPM (R 4.3.0)
 ##  SummarizedExperiment   * 1.30.2    2023-06-06 [1] Bioconductor
 ##  tibble                   3.2.1     2023-03-20 [2] RSPM (R 4.3.0)
@@ -510,6 +565,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  tidyselect               1.2.0     2022-10-10 [1] RSPM (R 4.3.0)
 ##  usethis                * 2.2.1     2023-06-23 [2] RSPM (R 4.3.0)
 ##  utf8                     1.2.3     2023-01-31 [2] RSPM (R 4.3.0)
+##  variancePartition      * 1.30.2    2023-06-07 [1] Bioconductor
 ##  vctrs                    0.6.3     2023-06-14 [2] RSPM (R 4.3.0)
 ##  vipor                    0.4.5     2017-03-22 [1] RSPM (R 4.3.0)
 ##  viridis                  0.6.3     2023-05-03 [1] RSPM (R 4.3.0)
@@ -529,8 +585,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="index.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  13.399   0.660  13.998</code></pre>
-<p>This book was last updated at 2023-06-28 02:05:06.017962.</p>
+##  16.827   0.838  17.615</code></pre>
+<p>This book was last updated at 2023-06-28 02:50:00.964856.</p>
 </div>
 <div id="license" class="section level2 unnumbered hasAnchor">
 <h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>
