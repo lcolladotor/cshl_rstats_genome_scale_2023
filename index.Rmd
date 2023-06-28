@@ -90,6 +90,9 @@ BiocManager::install(
         "spatialLIBD" ## Advanced
     )
 )
+
+## Install smokingMouse
+BiocManager::install("LieberInstitute/smokingMouse")
 ```
 
 You will also need to install [RStudio](https://rstudio.com/products/rstudio/download/#download) version 2023.06.0+421 or newer.
