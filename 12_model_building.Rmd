@@ -202,6 +202,7 @@ As shown above and as previously demonstrated, the mitochondrial rate and the fr
 p <- corr_plots('adults', 'mitoRate', 'totalAssignedGene', 'Group')
 p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 ```
+
 Altought not expected, the flowcell and the plate of the adult samples were correlated, but that is due to the fact that all samples from the first flowcell (HKCG7DSXX) were in the 1st plate, and almost all samples from the second flowcell were in the 3rd plate.  
 
 ```{r message=FALSE, warning=FALSE}
@@ -209,6 +210,7 @@ Altought not expected, the flowcell and the plate of the adult samples were corr
 p <- corr_plots('adults', 'flowcell', 'plate',  NULL)
 p + theme(plot.margin=unit (c(1.5,4.5,1.5,4.5), 'cm'))
 ```
+
 Plate was also slightly correlated with the overall mapping rate, but if we look closely, the trend is given by the plate 1 samples that have lower rates; the rates of samples from the 2nd and 3rd plates are similar. 
 
 ```{r message=FALSE, warning=FALSE}
@@ -218,6 +220,7 @@ p + theme(plot.margin=unit (c(2,5.3,2,5.3), 'cm'))
 ```
 
 We also appreciated and described already that the library size and the number of detected of genes are correlated in pups and adults. Note however that in pups control samples have bigger numbers of expressed genes. 
+
 ```{r message=FALSE, warning=FALSE}
 ## Heatmap for pup samples
 p <- corr_plots('adults', 'sum', 'detected', 'Group')
@@ -265,6 +268,7 @@ p4 <- corr_plots('pups', 'Group', 'flowcell', NULL)
 plots <- plot_grid(p1, p2, p3, p4, ncol=2)
 plots + theme(plot.margin=unit (c(1,2.5,1,2.5), 'cm'))
 ```
+
 ***Hint***: What would happen if all experimental samples were in one plate or flowcell and controls in another?
 </div>
 
