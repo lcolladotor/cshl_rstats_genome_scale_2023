@@ -4,7 +4,7 @@ Instructor: Daianna
 
 Once you have reviewed how to use `RangedSummarizedExperiment` (RSE) objects in R, now we'll start exploring the `smokingMouse` data. 
 
-As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the `r Citep(bib[['smokingMouse']])` package. Visit [here](http://research.libd.org/smokingMouse/) for more details. 
+As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the `smokingMouse` `r Citep(bib[['smokingMouse']])` package. Visit [here](http://research.libd.org/smokingMouse/) for more details. 
 
 
 ## Download data

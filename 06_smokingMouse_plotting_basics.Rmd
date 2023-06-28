@@ -22,17 +22,22 @@ load(cached_rse_gene, verbose = TRUE)
 rse_gene_nic <- rse_gene[ ,which(rse_gene$Expt=='Nicotine')]
 ```
 
-In this part of the course you'll have a plotting session in which you'll learn what type of plots you can do to explore your data, but please note that this is not a differential expression analysis itself. The steps that will be performed are shown in **Figure 1**. 
+In this part of the course you'll have a plotting session in which you'll learn what type of plots you can create to explore your data, but please note that this is not a differential expression analysis itself. The steps that will be performed are shown in **Figure 1**. 
 The main objective of this first part is to explore the quality of the samples, their differences in gene expression variations and the impact of sample variables on gene expression variance. You'll also learn how to visualize gene expression counts.
- 
+
+
 <figure>
-    <img src="Figures/DEA.png" width="700px" align=center />
+    <img src="Figures/all_analyses.png" width="700px" align=center />
         <figcaption style="color: gray; line-height: 0.87; text-align: justify">
             <font size="-1.8">
-                <b>Figure 2</b>: <b> Summary of the analyses for plotting session. </b> 
-                <b> 1. Data Preparation </b> 
-                <b> 2. Exploratory Data Analysis </b> 
-            <font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component.</font>
+                <b>Figure 2</b>: <b> Summary of the analyses. </b> Steps in yellow will be properly performed. 
+                <b> 1. Data Preparation </b>: in this initial part counts are normalized and scaled and low-expressed genes are filtered.
+                <b> 2. Exploratory Data Analysis </b>: the quality of the samples is compared, poor-quality samples are removed and both gene-level and sample-level effects are explored.
+                <b> 3. Differential Expression Analysis </b>: a linear model is fitted for each gene and log fold changes are obtained for the contrast of interest; other statistics are also computed and compared. Here the differentially expressed genes (DEGs) are determined and quantified. 
+                <b> 4. GO & KEGG Analyses  </b>: in this part Gene Ontology and KEGG enrichment analyses are performed to identify biological processes and functions in which DEGs are significantly involved. 
+                <b> 5. DEG visualization  </b> </font> heatmaps are created to visually contrast gene expression levels of DEGs in control and experimental samples.
+            <font size="0.8"> Abbreviations: CPM: counts per million; QC: quality control; PC: principal component; 
+            DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia of Genes and Genomes.</font>
         </figcaption>
 </figure>
 
@@ -64,9 +69,8 @@ counts_data <- data.frame(counts=as.vector(assays(rse_gene_nic)$counts))
 plot <- ggplot(counts_data, aes(x=counts)) +
     geom_histogram(colour="black", fill="lightgray") +
     labs(x='read counts', y='Frecuency') +
-    theme_classic() +
-    theme(plot.margin = unit(c(0.5,1,0.2,1), "cm")) 
-plot
+    theme_classic() 
+plot + theme(plot.margin = unit(c(2,4,2,4), "cm")) 
 
 ## Normalized counts
 logcounts_data <- data.frame(logcounts=as.vector(assays(rse_gene_nic)$logcounts))
@@ -74,9 +78,8 @@ plot <- ggplot(logcounts_data, aes(x=logcounts)) +
     geom_histogram(aes(y=..density..), colour="darkgray", fill="lightgray") +
     theme_classic() +
     geom_density(fill="#69b3a2", alpha=0.3) +
-    labs(x='log(CPM+0.5)', y='Frecuency') +
-    theme(plot.margin = unit(c(0.5,1,0.2,1), "cm")) 
-plot
+    labs(x='log(CPM+0.5)', y='Frecuency') 
+plot + theme(plot.margin = unit(c(2,4,2,4), "cm")) 
 
 ```
 
@@ -100,9 +103,8 @@ plot <- ggplot(filt_logcounts_data, aes(x=logcounts)) +
     geom_histogram(aes(y=..density..), colour="darkgray", fill="lightgray") +
     theme_classic() +
     geom_density(fill="#69b3a2", alpha=0.3) +
-    labs(x='log(CPM+0.5)', y='Frecuency') +
-    theme(plot.margin = unit(c(0.5,1,0.2,1), "cm")) 
-plot
+    labs(x='log(CPM+0.5)', y='Frecuency')
+plot + theme(plot.margin = unit(c(2,4,2,4), "cm")) 
 
 
 ```
