@@ -125,7 +125,7 @@ font-family: sans-serif;
 </style>
 
 <p class="exercise">
-❓ ***How would you access data of a specific column?***
+❓ ***How would you access data of a specific sample variable***
 </p>
 
 
