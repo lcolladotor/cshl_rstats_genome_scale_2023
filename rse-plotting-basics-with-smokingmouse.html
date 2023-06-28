@@ -224,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb14-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb14-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f21b9f87a7_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb14-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f26d608d56_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb14-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb14-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -237,10 +237,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 The main objective of this first part is to explore the quality of the samples, their differences in gene expression variations and the impact of sample variables on gene expression variance. You’ll also learn how to visualize gene expression counts.</p>
 <figure>
 <img src="Figures/all_analyses.png" width="700px" align=center />
-<figcaption style="color: gray; line-height: 0.87; text-align: justify">
+<figcaption style="color: gray; line-height: 0.9; text-align: justify">
 <font size="-1.8">
 <b>Figure 1</b>: <b> Summary of the analyses. </b> Steps in yellow will be properly performed.
-<b> 1. Data Preparation </b>: in this initial part counts are normalized and scaled and low-expressed genes are filtered.
+<b> 1. Data Preparation</b>: in this initial part counts are normalized and scaled and low-expressed genes are filtered.
 <b> 2. Exploratory Data Analysis</b>: the quality of the samples is compared, poor-quality samples are removed and both gene-level and sample-level effects are explored.
 <b> 3. Differential Expression Analysis</b>: a linear model is fitted for each gene and log fold changes are obtained for the contrast of interest; other statistics are also computed and compared. Here the differentially expressed genes (DEGs) are determined and quantified.
 <b> 4. GO &amp; KEGG Analyses</b>: in this part Gene Ontology and KEGG enrichment analyses are performed to identify biological processes and functions in which DEGs are significantly involved.
@@ -314,7 +314,7 @@ DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia
 <p>First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See <a href="#id_##Sample%20Information"><strong>Sample Information</strong></a> for the description of the variables.</p>
 <style>
 p.comment {
-background-color: #DBDBDB;
+background-color: #E6E6E6;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
@@ -699,7 +699,21 @@ For adults, only 3 controls are dropped, 3 of them by their <mark style= "backgr
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Pup samples</span></span>
 <span id="cb35-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">boxplots_after_QC_filtering</span>(rse_gene_pups, <span class="st">&#39;rRNA_rate&#39;</span>, <span class="st">&#39;Group&#39;</span>)</span>
 <span id="cb35-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span> (<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
-<img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<style>
+p.exercise  {
+background-color: #E2EED7;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
+<p class="exercise">
+📑 <strong>Exercise</strong>: Were the filtered samples from males or females? From which plates and flowcells? In what other QC metrics some samples were considered poor quality?
+</p>
 <div class="alert alert-info">
 <p>Try the function yourself with different QC metrics and sample variables!</p>
 </div>
