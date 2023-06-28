@@ -71,23 +71,30 @@ BiocManager::install(
         "BiocFileCache",
         "RefManageR",
         "here",
+        "Hmisc",
         "biocthis",
         "lobstr",
         "postcards",
+        "scater",
         "sessioninfo",
         "smokingMouse",
+        "stringr",
         "SummarizedExperiment", ## Main containers / vis
         "iSEE",
         "edgeR", ## RNA-seq
         "ExploreModelMatrix",
         "limma",
         "recount3",
+        "rlang",
         "pheatmap", ## Visualization
         "ggplot2",
+        "ggrepel",
         "patchwork",
         "RColorBrewer",
         "ComplexHeatmap",
-        "spatialLIBD" ## Advanced
+        "cowplot",
+        "spatialLIBD", ## Advanced
+        "variancePartition"
     )
 )
 
@@ -128,12 +135,23 @@ library("ExploreModelMatrix")
 library("limma")
 library("recount3")
 
-## Visualization
+## QCA
+library("scater")
+
+## Variance Partition
+library("variancePartition")
+
+## Visualization: plots & text
 library("ComplexHeatmap")
 library("ggplot2")
 library("patchwork")
 library("pheatmap")
 library("RColorBrewer")
+library("Hmisc")
+library("stringr")
+library("cowplot")
+library("rlang")
+library("ggrepel")
 
 ## Advanced
 library("spatialLIBD")
