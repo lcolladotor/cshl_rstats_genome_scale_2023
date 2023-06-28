@@ -341,7 +341,10 @@ $\epsilon$ is the noise term which is  $y-\hat y$, the difference between the ob
 Expanding, 
 
 $$
-y= {\begin{bmatrix}  X_{11}\beta_1 \\ ... \\ X_{(n-1)1}\beta_1 \\ X_{n1} \beta_1 \end{bmatrix}} + {\begin{bmatrix}  X_{12}\beta_2 \\ ... \\ X_{(n-1)2}\beta_2 \\ X_{n2} \beta_2 \end{bmatrix}} + ... +{\begin{bmatrix}  X_{1j}\beta_j \\ ... \\ X_{(n-1)j}\beta_j \\ X_{nj} \beta_j \end{bmatrix}} + {\begin{bmatrix} Z_{11}\alpha_1 \\ ... \\ Z_{(n-1)1}\alpha_1\\ Z_{n1}\alpha_1 \end{bmatrix}} +{\begin{bmatrix} Z_{12}\alpha_2 \\ ... \\ Z_{(n-1)2}\alpha_2\\ Z_{n2}\alpha_2 \end{bmatrix}} + ... + {\begin{bmatrix} Z_{1k}\alpha_k \\ ... \\ Z_{(n-1)k}\alpha_k\\ Z_{nk}\alpha_k \end{bmatrix}} + {\begin{bmatrix} \epsilon_1 \\ ... \\ \epsilon_{(n-1)} \\ \epsilon_n \end{bmatrix}}
+y= {\begin{bmatrix}  X_{11}\beta_1 \\ ... \\ X_{(n-1)1}\beta_1 \\ X_{n1} \beta_1 \end{bmatrix}} + {\begin{bmatrix}  X_{12}\beta_2 \\ ... \\ X_{(n-1)2}\beta_2 \\ X_{n2} \beta_2 \end{bmatrix}} + ... +{\begin{bmatrix}  X_{1j}\beta_j \\ ... \\ X_{(n-1)j}\beta_j \\ X_{nj} \beta_j \end{bmatrix}} + {\begin{bmatrix} Z_{11}\alpha_1 \\ ... \\ Z_{(n-1)1}\alpha_1\\ Z_{n1}\alpha_1 \end{bmatrix}} +{\begin{bmatrix} Z_{12}\alpha_2 \\ ... \\ Z_{(n-1)2}\alpha_2\\ Z_{n2}\alpha_2 \end{bmatrix}}
+$$
+$$
+ + ... + {\begin{bmatrix} Z_{1k}\alpha_k \\ ... \\ Z_{(n-1)k}\alpha_k\\ Z_{nk}\alpha_k \end{bmatrix}} + {\begin{bmatrix} \epsilon_1 \\ ... \\ \epsilon_{(n-1)} \\ \epsilon_n \end{bmatrix}}
 $$
 
 All parameters are estimated with maximum likelihood, the default method in the `variancePartition` software when random effects are specified because it performs best in simulations.
