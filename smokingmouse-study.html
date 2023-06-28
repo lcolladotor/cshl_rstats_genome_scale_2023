@@ -146,9 +146,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a></li>
-<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a></li>
+<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#overview-1"><i class="fa fa-check"></i><b>2.2</b> Overview</a></li>
+<li class="chapter" data-level="2.3" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#goals"><i class="fa fa-check"></i><b>2.3</b> Goals</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#main-objective"><i class="fa fa-check"></i><b>2.3.1</b> Main objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#secondary-objectives"><i class="fa fa-check"></i><b>2.3.2</b> Secondary objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#study-design"><i class="fa fa-check"></i><b>2.4</b> Study design</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html"><i class="fa fa-check"></i><b>3</b> SummarizedExperiment review</a></li>
-<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a></li>
+<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#download-data"><i class="fa fa-check"></i><b>4.1</b> Download data</a></li>
+<li class="chapter" data-level="4.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#data-overview"><i class="fa fa-check"></i><b>4.2</b> Data overview</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#assays"><i class="fa fa-check"></i><b>4.2.1</b> Assays</a></li>
+<li class="chapter" data-level="4.2.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#sample-data"><i class="fa fa-check"></i><b>4.2.2</b> Sample data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
@@ -183,7 +202,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="smokingmouse-study" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">2</span> smokingMouse study<a href="smokingmouse-study.html#smokingmouse-study" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Daianna</p>
+<p>As part of your training, we’ll guide you through an analysis with real bulk RNA-seq data.
+The dataset that we’ll be using is a <code>RangedSummarizedExperiment</code> coming from the <code>smokingMouse</code> (Gonzalez-Padilla and Collado-Torres, 2023) package, but in this chapter we’ll explain you the study design and the experimental stages that preceded the data generation.</p>
+<p>The smoking mouse study is a project currently being developed at the <a href="https://www.libd.org">Lieber Institute for Brain Development</a> by Daianna Gonzalez-Padilla and Leonardo Collado-Torres.</p>
+<div id="introduction" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction<a href="smokingmouse-study.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nowadays, maternal smoking during pregnancy (MSDP) is one of the major health concerns worldwide not only because of the effects on the smoker but because the health of the offspring could be dramatically affected by smoking exposure, particularly their cognitive and behavioral traits. But are those effects caused by cigarette smoke only? Or are those alterations given by a specific component of cigarettes such as nicotine? The latter is a very relevant question because most of the studies have focused on analyzing smoking effects, ignoring the role of nicotine, an active component of the cigarettes. Understanding which effects are specifically dictated by nicotine prenatal exposure will enable more directed studies of this drug on the developing brain, once affected genes have been identified and experimentally proven.</p>
+</div>
+<div id="overview-1" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Overview<a href="smokingmouse-study.html#overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This study consisted of a series of bulk RNA-sequencing experiments performed on brain samples from adult mice and pups and on blood samples from adults. Adult mice were either exposed to cigarette smoke (what we call smoking experiment and smoking mice) or controls of the smoking experiment, or they were administered nicotine (nicotine experiment and nicotine mice) or controls of the nicotine experiment, and they were either pregnant or not. Smoking, nicotine and control pups are pups that were born to smoking, nicotine and control pregnant mice, respectively. This experimental design allowed us to contrast the altered features in both conditions and to compare the effects in different mouse ages, sexes, tissues and pregnancy states.</p>
+<p>The original datasets contain gene, transcript, exon and junction expression levels across 208 samples, but in this course we’ll only use gene data in nicotine samples to simplify the analyses.</p>
+</div>
+<div id="goals" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Goals<a href="smokingmouse-study.html#goals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This project actually aimed to answer 4 questions, all related to smoking and nicotine effects in mouse.</p>
+<div id="main-objective" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Main objective<a href="smokingmouse-study.html#main-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The main goal was to identify and differentiate the effects of prenatal nicotine and smoking exposures on gene, transcript, exon and junction expression of developing brain of pups. Basically, to perform a differential expression analysis on mouse data to find significant feature expression changes.</p>
+</div>
+<div id="secondary-objectives" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Secondary objectives<a href="smokingmouse-study.html#secondary-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>To evaluate the affected genes by each substance on adult brain in order to compare pup and adult results.</li>
+<li>To examine the effects of smoking on adult blood and brain to search for overlapping biomarkers in both tissues (Can blood analyses capture environmental effects on brain?)</li>
+<li>To compare mouse differentially expressed genes (DEGs) with results from previous studies in human (Semick, S.A. et al. (2018) and Toikumo, S. et al. (2023)).</li>
+</ul>
+<p>Check <a href="https://github.com/LieberInstitute/smokingMouse_Indirects/tree/main/code">here</a> for the code of the original and complete analyses done.</p>
+</div>
+</div>
+<div id="study-design" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Study design<a href="smokingmouse-study.html#study-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As presented in <strong>Figure 1: A)</strong>, 36 pregnant dams and 35 non-pregnant female adult mice were either administered nicotine by intraperitoneal injection (IP; n=12), exposed to cigarette smoke in smoking chambers (n=24), or controls (n=35; 11 nicotine controls and 24 smoking controls). A total of 137 pups were born to pregnant dams: 19 were born to mice that were administered nicotine, 46 to mice exposed to cigarette smoke and the remaining 72 to control mice (23 to nicotine controls and 49 to smoking controls). Samples from frontal cortices of P0 pups and adults were obtained, as well as blood samples from smoking-exposed and smoking control adults. Then, as shown in <strong>B)</strong> RNA was extracted from all those samples and RNA-seq libraries were prepared and sequenced to obtain expression counts for genes, exons, transcripts and exon-exon junctions.</p>
+<figure>
+<img src="http://research.libd.org/smokingMouse/reference/figures/Study_design.png" align="center" width="800px" />
+<figcaption style="color: gray; line-height: 0.88; text-align: justify">
+<p><font size="-1.5"><b>Figure 1</b>: <b>Experimental design of the study</b>.</p>
+</figcaption>
+</figure>
 
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">
@@ -288,6 +346,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

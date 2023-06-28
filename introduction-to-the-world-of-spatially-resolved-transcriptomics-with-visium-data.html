@@ -146,9 +146,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a></li>
-<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a></li>
+<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#overview-1"><i class="fa fa-check"></i><b>2.2</b> Overview</a></li>
+<li class="chapter" data-level="2.3" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#goals"><i class="fa fa-check"></i><b>2.3</b> Goals</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#main-objective"><i class="fa fa-check"></i><b>2.3.1</b> Main objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#secondary-objectives"><i class="fa fa-check"></i><b>2.3.2</b> Secondary objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#study-design"><i class="fa fa-check"></i><b>2.4</b> Study design</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html"><i class="fa fa-check"></i><b>3</b> SummarizedExperiment review</a></li>
-<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a></li>
+<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#download-data"><i class="fa fa-check"></i><b>4.1</b> Download data</a></li>
+<li class="chapter" data-level="4.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#data-overview"><i class="fa fa-check"></i><b>4.2</b> Data overview</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#assays"><i class="fa fa-check"></i><b>4.2.1</b> Assays</a></li>
+<li class="chapter" data-level="4.2.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#sample-data"><i class="fa fa-check"></i><b>4.2.2</b> Sample data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
@@ -289,6 +308,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

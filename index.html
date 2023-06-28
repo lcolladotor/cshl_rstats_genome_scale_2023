@@ -146,9 +146,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a></li>
-<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a></li>
+<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#overview-1"><i class="fa fa-check"></i><b>2.2</b> Overview</a></li>
+<li class="chapter" data-level="2.3" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#goals"><i class="fa fa-check"></i><b>2.3</b> Goals</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#main-objective"><i class="fa fa-check"></i><b>2.3.1</b> Main objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#secondary-objectives"><i class="fa fa-check"></i><b>2.3.2</b> Secondary objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#study-design"><i class="fa fa-check"></i><b>2.4</b> Study design</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html"><i class="fa fa-check"></i><b>3</b> SummarizedExperiment review</a></li>
-<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a></li>
+<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#download-data"><i class="fa fa-check"></i><b>4.1</b> Download data</a></li>
+<li class="chapter" data-level="4.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#data-overview"><i class="fa fa-check"></i><b>4.2</b> Data overview</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#assays"><i class="fa fa-check"></i><b>4.2.1</b> Assays</a></li>
+<li class="chapter" data-level="4.2.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#sample-data"><i class="fa fa-check"></i><b>4.2.2</b> Sample data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
@@ -233,28 +252,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Install required packages</span></span>
 <span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(</span>
-<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
-<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;usethis&quot;</span>, <span class="do">## Utilities</span></span>
-<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;BiocFileCache&quot;</span>,</span>
+<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(  <span class="st">&quot;usethis&quot;</span>, <span class="do">## Utilities</span></span>
+<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;BiocFileCache&quot;</span>,</span>
+<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RefManageR&quot;</span>,</span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;here&quot;</span>,</span>
 <span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;biocthis&quot;</span>,</span>
 <span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lobstr&quot;</span>,</span>
 <span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;postcards&quot;</span>,</span>
 <span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sessioninfo&quot;</span>,</span>
-<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;SummarizedExperiment&quot;</span>, <span class="do">## Main containers / vis</span></span>
-<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iSEE&quot;</span>,</span>
-<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;edgeR&quot;</span>, <span class="do">## RNA-seq</span></span>
-<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ExploreModelMatrix&quot;</span>,</span>
-<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;limma&quot;</span>,</span>
-<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;recount3&quot;</span>,</span>
-<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pheatmap&quot;</span>, <span class="do">## Visualization</span></span>
-<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ggplot2&quot;</span>,</span>
-<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;patchwork&quot;</span>,</span>
-<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
-<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
-<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span> <span class="do">## Advanced</span></span>
-<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;smokingMouse&quot;</span>,</span>
+<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;SummarizedExperiment&quot;</span>, <span class="do">## Main containers / vis</span></span>
+<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iSEE&quot;</span>,</span>
+<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;edgeR&quot;</span>, <span class="do">## RNA-seq</span></span>
+<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ExploreModelMatrix&quot;</span>,</span>
+<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;limma&quot;</span>,</span>
+<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;recount3&quot;</span>,</span>
+<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pheatmap&quot;</span>, <span class="do">## Visualization</span></span>
+<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;patchwork&quot;</span>,</span>
+<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
+<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
+<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span> <span class="do">## Advanced</span></span>
+<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse</span></span>
+<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span></code></pre></div>
 <p>You will also need to install <a href="https://rstudio.com/products/rstudio/download/#download">RStudio</a> version 2023.06.0+421 or newer.</p>
 </div>
 <div id="r-session-information" class="section level2 unnumbered hasAnchor">
@@ -273,25 +296,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-11"><a href="index.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;usethis&quot;</span>)</span>
 <span id="cb2-12"><a href="index.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;sessioninfo&quot;</span>)</span>
 <span id="cb2-13"><a href="index.html#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="index.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Main containers / vis</span></span>
-<span id="cb2-15"><a href="index.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
-<span id="cb2-16"><a href="index.html#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
-<span id="cb2-17"><a href="index.html#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="index.html#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="do">## RNA-seq</span></span>
-<span id="cb2-19"><a href="index.html#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;edgeR&quot;</span>)</span>
-<span id="cb2-20"><a href="index.html#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExploreModelMatrix&quot;</span>)</span>
-<span id="cb2-21"><a href="index.html#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;limma&quot;</span>)</span>
-<span id="cb2-22"><a href="index.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span>
-<span id="cb2-23"><a href="index.html#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="index.html#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualization</span></span>
-<span id="cb2-25"><a href="index.html#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
-<span id="cb2-26"><a href="index.html#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb2-27"><a href="index.html#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
-<span id="cb2-28"><a href="index.html#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
-<span id="cb2-29"><a href="index.html#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
-<span id="cb2-30"><a href="index.html#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="index.html#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="do">## Advanced</span></span>
-<span id="cb2-32"><a href="index.html#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
+<span id="cb2-14"><a href="index.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Data</span></span>
+<span id="cb2-15"><a href="index.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;smokingMouse&quot;</span>)</span>
+<span id="cb2-16"><a href="index.html#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="index.html#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Main containers / vis</span></span>
+<span id="cb2-18"><a href="index.html#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
+<span id="cb2-19"><a href="index.html#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb2-20"><a href="index.html#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="index.html#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="do">## RNA-seq</span></span>
+<span id="cb2-22"><a href="index.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;edgeR&quot;</span>)</span>
+<span id="cb2-23"><a href="index.html#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExploreModelMatrix&quot;</span>)</span>
+<span id="cb2-24"><a href="index.html#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;limma&quot;</span>)</span>
+<span id="cb2-25"><a href="index.html#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span>
+<span id="cb2-26"><a href="index.html#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="index.html#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualization</span></span>
+<span id="cb2-28"><a href="index.html#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
+<span id="cb2-29"><a href="index.html#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb2-30"><a href="index.html#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
+<span id="cb2-31"><a href="index.html#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
+<span id="cb2-32"><a href="index.html#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb2-33"><a href="index.html#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="index.html#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Advanced</span></span>
+<span id="cb2-35"><a href="index.html#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reproducibility information</span></span>
 <span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb3-3"><a href="index.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">session_info</span>()</span></code></pre></div>
@@ -305,7 +331,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       UTC
-##  date     2023-06-26
+##  date     2023-06-28
 ##  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -353,7 +379,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  dbplyr                 * 2.3.2     2023-03-21 [1] RSPM (R 4.3.0)
 ##  DelayedArray             0.26.3    2023-05-22 [1] Bioconductor
 ##  DelayedMatrixStats       1.22.1    2023-06-09 [1] Bioconductor
-##  digest                   0.6.31    2022-12-11 [2] RSPM (R 4.3.0)
+##  digest                   0.6.32    2023-06-26 [2] RSPM (R 4.3.0)
 ##  doParallel               1.0.17    2022-02-07 [1] RSPM (R 4.3.0)
 ##  dotCall64                1.0-2     2022-10-03 [1] RSPM (R 4.3.0)
 ##  dplyr                    1.1.2     2023-04-20 [1] RSPM (R 4.3.0)
@@ -471,6 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  shinyjs                  2.1.0     2021-12-23 [1] RSPM (R 4.3.0)
 ##  shinyWidgets             0.7.6     2023-01-08 [1] RSPM (R 4.3.0)
 ##  SingleCellExperiment   * 1.22.0    2023-04-25 [1] Bioconductor
+##  smokingMouse           * 0.99.5    2023-06-28 [1] Github (LieberInstitute/smokingMouse@2e7640c)
 ##  spam                     2.9-1     2022-08-07 [1] RSPM (R 4.3.0)
 ##  sparseMatrixStats        1.12.1    2023-06-20 [1] Bioconductor
 ##  SpatialExperiment      * 1.10.0    2023-04-25 [1] Bioconductor
@@ -481,7 +508,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  tibble                   3.2.1     2023-03-20 [2] RSPM (R 4.3.0)
 ##  tidyr                    1.3.0     2023-01-24 [1] RSPM (R 4.3.0)
 ##  tidyselect               1.2.0     2022-10-10 [1] RSPM (R 4.3.0)
-##  usethis                * 2.2.0     2023-06-06 [2] RSPM (R 4.3.0)
+##  usethis                * 2.2.1     2023-06-23 [2] RSPM (R 4.3.0)
 ##  utf8                     1.2.3     2023-01-31 [2] RSPM (R 4.3.0)
 ##  vctrs                    0.6.3     2023-06-14 [2] RSPM (R 4.3.0)
 ##  vipor                    0.4.5     2017-03-22 [1] RSPM (R 4.3.0)
@@ -502,8 +529,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="index.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  17.102   0.792  17.781</code></pre>
-<p>This book was last updated at 2023-06-26 20:37:07.543734.</p>
+##  13.399   0.660  13.998</code></pre>
+<p>This book was last updated at 2023-06-28 02:05:06.017962.</p>
 </div>
 <div id="license" class="section level2 unnumbered hasAnchor">
 <h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -614,6 +641,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

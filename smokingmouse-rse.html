@@ -146,9 +146,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a></li>
-<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a></li>
+<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#overview-1"><i class="fa fa-check"></i><b>2.2</b> Overview</a></li>
+<li class="chapter" data-level="2.3" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#goals"><i class="fa fa-check"></i><b>2.3</b> Goals</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#main-objective"><i class="fa fa-check"></i><b>2.3.1</b> Main objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#secondary-objectives"><i class="fa fa-check"></i><b>2.3.2</b> Secondary objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#study-design"><i class="fa fa-check"></i><b>2.4</b> Study design</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html"><i class="fa fa-check"></i><b>3</b> SummarizedExperiment review</a></li>
-<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a></li>
+<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#download-data"><i class="fa fa-check"></i><b>4.1</b> Download data</a></li>
+<li class="chapter" data-level="4.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#data-overview"><i class="fa fa-check"></i><b>4.2</b> Data overview</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#assays"><i class="fa fa-check"></i><b>4.2.1</b> Assays</a></li>
+<li class="chapter" data-level="4.2.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#sample-data"><i class="fa fa-check"></i><b>4.2.2</b> Sample data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
@@ -183,35 +202,161 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="smokingmouse-rse" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> smokingMouse RSE<a href="smokingmouse-rse.html#smokingmouse-rse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Daianna</p>
-<p>We will download the <code>rse_gene</code> object which contains the data at the gene level. We’ll use <em><a href="https://bioconductor.org/packages/3.17/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
+<p>Once you have reviewed how to use <code>RangedSummarizedExperiment</code> (RSE) objects in R, now we’ll start exploring the <code>smokingMouse</code> data.</p>
+<p>As previously described, the smoking mouse project is a complex study with more than 200 samples from brain and blood, adult mice and pups, pregnant and not pregnant mice, etc. The whole datasets of this project can be downloaded from the (Gonzalez-Padilla and Collado-Torres, 2023) package. Visit <a href="http://research.libd.org/smokingMouse/">here</a> for more details.</p>
+<div id="download-data" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Download data<a href="smokingmouse-rse.html#download-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For illustrative purposes, we’ll use nicotine data at the gene level which reside in a <code>RangedSummarizedExperiment</code> (RSE) object called <code>rse_gene</code>. We’ll use <em><a href="https://bioconductor.org/packages/3.17/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="smokingmouse-rse.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
 <span id="cb7-2"><a href="smokingmouse-rse.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
 <span id="cb7-3"><a href="smokingmouse-rse.html#cb7-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
 <span id="cb7-4"><a href="smokingmouse-rse.html#cb7-4" aria-hidden="true" tabindex="-1"></a>cached_rse_gene <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
 <span id="cb7-5"><a href="smokingmouse-rse.html#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
 <span id="cb7-6"><a href="smokingmouse-rse.html#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
-<span id="cb7-7"><a href="smokingmouse-rse.html#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## adding rname &#39;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&#39;</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="smokingmouse-rse.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
-<span id="cb9-2"><a href="smokingmouse-rse.html#cb9-2" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span></code></pre></div>
-<pre><code>##                                                                                  BFC1 
-## &quot;/github/home/.cache/R/BiocFileCache/e2f51334e48_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="smokingmouse-rse.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
-<span id="cb11-2"><a href="smokingmouse-rse.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## Loading objects:
-##   rse_gene</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="smokingmouse-rse.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
-<span id="cb13-2"><a href="smokingmouse-rse.html#cb13-2" aria-hidden="true" tabindex="-1"></a>rse_gene</span></code></pre></div>
-<pre><code>## class: RangedSummarizedExperiment 
-## dim: 55401 208 
-## metadata(1): Obtained_from
-## assays(2): counts logcounts
-## rownames(55401): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ... ENSMUSG00000064371.1 ENSMUSG00000064372.1
-## rowData names(13): Length gencodeID ... DE_in_pup_brain_nicotine DE_in_pup_brain_smoking
-## colnames: NULL
-## colData names(71): SAMPLE_ID FQCbasicStats ... retained_after_QC_sample_filtering
-##   retained_after_manual_sample_filtering</code></pre>
+<span id="cb7-7"><a href="smokingmouse-rse.html#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="smokingmouse-rse.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&#39;</span></span>
+<span id="cb7-9"><a href="smokingmouse-rse.html#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="smokingmouse-rse.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
+<span id="cb7-11"><a href="smokingmouse-rse.html#cb7-11" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
+<span id="cb7-12"><a href="smokingmouse-rse.html#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
+<span id="cb7-13"><a href="smokingmouse-rse.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/4c43245269d_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb7-14"><a href="smokingmouse-rse.html#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="smokingmouse-rse.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
+<span id="cb7-16"><a href="smokingmouse-rse.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-17"><a href="smokingmouse-rse.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
+<span id="cb7-18"><a href="smokingmouse-rse.html#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rse_gene</span></span>
+<span id="cb7-19"><a href="smokingmouse-rse.html#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="smokingmouse-rse.html#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
+<span id="cb7-21"><a href="smokingmouse-rse.html#cb7-21" aria-hidden="true" tabindex="-1"></a>rse_gene</span>
+<span id="cb7-22"><a href="smokingmouse-rse.html#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
+<span id="cb7-23"><a href="smokingmouse-rse.html#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 55401 208 </span></span>
+<span id="cb7-24"><a href="smokingmouse-rse.html#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; metadata(1): Obtained_from</span></span>
+<span id="cb7-25"><a href="smokingmouse-rse.html#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
+<span id="cb7-26"><a href="smokingmouse-rse.html#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rownames(55401): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ... ENSMUSG00000064371.1 ENSMUSG00000064372.1</span></span>
+<span id="cb7-27"><a href="smokingmouse-rse.html#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rowData names(13): Length gencodeID ... DE_in_pup_brain_nicotine DE_in_pup_brain_smoking</span></span>
+<span id="cb7-28"><a href="smokingmouse-rse.html#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colnames: NULL</span></span>
+<span id="cb7-29"><a href="smokingmouse-rse.html#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colData names(71): SAMPLE_ID FQCbasicStats ... retained_after_QC_sample_filtering</span></span>
+<span id="cb7-30"><a href="smokingmouse-rse.html#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   retained_after_manual_sample_filtering</span></span></code></pre></div>
+</div>
+<div id="data-overview" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Data overview<a href="smokingmouse-rse.html#data-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="assays" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Assays<a href="smokingmouse-rse.html#assays" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The dataset <code>rse_gene</code> contains the following assays:</p>
+<ul>
+<li><code>counts</code>: original read counts of the 55,401 mouse genes across 208 samples (inlcuding the 65 nicotine samples of interest).</li>
+<li><code>logcounts</code>: normalized and scaled counts (<span class="math inline">\(log_2(CPM + 0.5)\)</span>) of the same genes across the same samples; normalization was carried out applying TMM method with <code>cpm(calcNormFactors())</code> of <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em>.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="smokingmouse-rse.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explore main assay (of raw counts)</span></span>
+<span id="cb8-2"><a href="smokingmouse-rse.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(rse_gene)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="do">## counts for first 3 genes and 3 samples</span></span>
+<span id="cb8-3"><a href="smokingmouse-rse.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      [,1] [,2] [,3]</span></span>
+<span id="cb8-4"><a href="smokingmouse-rse.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1    0    0    0</span></span>
+<span id="cb8-5"><a href="smokingmouse-rse.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000064842.1    0    0    0</span></span>
+<span id="cb8-6"><a href="smokingmouse-rse.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  811  710  812</span></span>
+<span id="cb8-7"><a href="smokingmouse-rse.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Access the same raw data with assays()</span></span>
+<span id="cb8-8"><a href="smokingmouse-rse.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb8-9"><a href="smokingmouse-rse.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      [,1] [,2] [,3]</span></span>
+<span id="cb8-10"><a href="smokingmouse-rse.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1    0    0    0</span></span>
+<span id="cb8-11"><a href="smokingmouse-rse.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000064842.1    0    0    0</span></span>
+<span id="cb8-12"><a href="smokingmouse-rse.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  811  710  812</span></span>
+<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Access lognorm counts</span></span>
+<span id="cb8-14"><a href="smokingmouse-rse.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb8-15"><a href="smokingmouse-rse.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           [,1]      [,2]      [,3]</span></span>
+<span id="cb8-16"><a href="smokingmouse-rse.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1 -5.985331 -5.985331 -5.985331</span></span>
+<span id="cb8-17"><a href="smokingmouse-rse.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000064842.1 -5.985331 -5.985331 -5.985331</span></span>
+<span id="cb8-18"><a href="smokingmouse-rse.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  4.509114  4.865612  4.944597</span></span></code></pre></div>
+</div>
+<div id="sample-data" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Sample data<a href="smokingmouse-rse.html#sample-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The same RSE contains the sample information in <code>colData(RSE)</code>.</p>
+<ul>
+<li><mark style= "background-color: #FCF3CF"> Yellow </mark> variables correspond to SPEAQeasy outputs that are going to be used in downstream analyses.</li>
+<li><mark style= "background-color: #FAECF8"> Pink </mark> variables are specific of the study, such as sample metadata and some others containing additional information of the genes.</li>
+<li><mark style= "background-color: #DFF0FE"> Blue </mark> variables are Quality-Control metrics computed by <code>addPerCellQC()</code> of <em><a href="https://bioconductor.org/packages/3.17/scuttle">scuttle</a></em>.</li>
+</ul>
+<p><code>colData(RSE)</code> contains the following sample variables:</p>
+<ul>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> SAMPLE_ID</span> </mark>: is the name of the sample.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ERCCsumLogErr</span> </mark>: a summary statistic quantifying overall difference of expected and actual ERCC concentrations for one sample.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>: the decimal fraction of reads which successfully mapped to the reference genome (i.e. <em>numMapped</em> / <em>numReads</em>).</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoMapped</span> </mark>: the number of reads which successfully mapped to the mitochondrial chromosome.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalMapped</span> </mark>: the number of reads which successfully mapped to the canonical sequences in the reference genome (excluding mitochondrial chromosomes).</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>: the decimal fraction of reads which mapped to the mitochondrial chromosome, of those which map at all (i.e. <em>mitoMapped</em> / (<em>totalMapped</em> + <em>mitoMapped</em>))</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>: the decimal fraction of reads assigned unambiguously to a gene (including mitochondrial genes), with <code>featureCounts</code> (Liao et al. 2014), of those in total.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark>: the decimal fraction of reads assigned to a gene whose type is ‘rRNA’, of those assigned to any gene.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Tissue</span> </mark>: tissue (mouse brain or blood) from which the sample comes.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Age</span> </mark>: if the sample comes from an adult or a pup mouse.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Sex</span> </mark>: if the sample comes from a female (F) or male (M) mouse.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Expt</span> </mark>: the experiment (nicotine or smoking exposure) to which the sample mouse was subjected; it could be an exposed or a control mouse of that experiment.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark>: if the sample belongs to a nicotine/smoking-exposed mouse (Expt) or a nicotine/smoking control mouse (Ctrl).</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark>: is the plate (1,2 or 3) in which the sample library was prepared.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Pregnancy</span> </mark>: if the sample comes from a pregnant (Yes) or not pregnant (No) mouse.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> medium</span> </mark>: is the medium in which the sample was treated: water for brain samples and an elution buffer (EB) for the blood ones.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell</span> </mark>: is the sequencing batch of each sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark>: library size (total sum of counts across all genes for each sample).</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>: number of non-zero expressed genes in each sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_sum</span> </mark>: total sum of read counts of mt genes in each sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_detected</span> </mark>: total number of mt genes in each sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Mito_percent</span> </mark>: % of mt genes’ counts of the total counts of the sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Ribo_sum</span> </mark>: total sum of read counts of ribosomal genes in each sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Ribo_detected</span> </mark>: total number of ribosomal genes in each sample.</li>
+<li><mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> subsets_Ribo_percent</span> </mark>: % of ribosomal genes’ counts of the total counts of the sample.</li>
+</ul>
+<div class="alert alert-info">
+<p><strong>Note:</strong> in our case, we’ll use samples from the nicotine experiment only, so all samples come from brain and were treated in water.</p>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="smokingmouse-rse.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Data for first 3 samples and 5 variables</span></span>
+<span id="cb9-2"><a href="smokingmouse-rse.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(rse_gene)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb9-3"><a href="smokingmouse-rse.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DataFrame with 3 rows and 5 columns</span></span>
+<span id="cb9-4"><a href="smokingmouse-rse.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     SAMPLE_ID FQCbasicStats perBaseQual perTileQual  perSeqQual</span></span>
+<span id="cb9-5"><a href="smokingmouse-rse.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;character&gt;   &lt;character&gt; &lt;character&gt; &lt;character&gt; &lt;character&gt;</span></span>
+<span id="cb9-6"><a href="smokingmouse-rse.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Sample_2914          PASS        PASS        PASS        PASS</span></span>
+<span id="cb9-7"><a href="smokingmouse-rse.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Sample_4042          PASS        PASS        PASS        PASS</span></span>
+<span id="cb9-8"><a href="smokingmouse-rse.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Sample_4043          PASS        PASS        PASS        PASS</span></span></code></pre></div>
+</div>
+<div id="gene-information" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Gene Information<a href="smokingmouse-rse.html#gene-information" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Among the information in <code>rowData(RSE)</code> the next variables are of interest for the analysis:</p>
+<ul>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> gencodeID</span> </mark>: GENCODE ID of each gene.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ensemblID</span> </mark>: gene ID in Ensembl database.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> EntrezID</span> </mark>: identifier of each gene in NCBI Entrez database.</li>
+<li><mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> Symbol</span> </mark>: official gene symbol for each mouse gene.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> retained_after_feature_filtering</span> </mark>: Boolean variable that equals TRUE if the gene passed the gene filtering (with <code>filterByExpr()</code> of <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em>) based on its expression levels and FALSE if not.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> DE_in_adult_brain_nicotine</span> </mark>: Boolean variable that equals TRUE if the feature is differentially expressed (DE) in adult brain samples exposed to nicotine and FALSE if not.</li>
+<li><mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> DE_in_pup_brain_nicotine</span> </mark>: Boolean variable that equals TRUE if the feature is differentially expressed (DE) in pup brain samples exposed to nicotine and FALSE if not.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="smokingmouse-rse.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Data for first 3 genes and 5 variables</span></span>
+<span id="cb10-2"><a href="smokingmouse-rse.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(rse_gene)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb10-3"><a href="smokingmouse-rse.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DataFrame with 3 rows and 5 columns</span></span>
+<span id="cb10-4"><a href="smokingmouse-rse.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                         Length            gencodeID          ensemblID      gene_type    EntrezID</span></span>
+<span id="cb10-5"><a href="smokingmouse-rse.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      &lt;integer&gt;          &lt;character&gt;        &lt;character&gt;    &lt;character&gt; &lt;character&gt;</span></span>
+<span id="cb10-6"><a href="smokingmouse-rse.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1      1070 ENSMUSG00000102693.1 ENSMUSG00000102693            TEC       71042</span></span>
+<span id="cb10-7"><a href="smokingmouse-rse.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000064842.1       110 ENSMUSG00000064842.1 ENSMUSG00000064842          snRNA          NA</span></span>
+<span id="cb10-8"><a href="smokingmouse-rse.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5      6094 ENSMUSG00000051951.5 ENSMUSG00000051951 protein_coding      497097</span></span></code></pre></div>
+<style>
+p.exercise  {
+background-color: #DBDBDB;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
 
+</style>
+<p class="exercise">
+❓ <strong><em>How would you access data of a specific column?</em></strong>
+</p>
+<p>For illustrative purposes, we’ll use nicotine data at the gene level only so let’s access that data.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="smokingmouse-rse.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original dimensions of the data</span></span>
+<span id="cb11-2"><a href="smokingmouse-rse.html#cb11-2" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[,<span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt<span class="sc">==</span><span class="st">&#39;Nicotine&#39;</span>)]</span>
+<span id="cb11-3"><a href="smokingmouse-rse.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## New dimensions</span></span>
+<span id="cb11-4"><a href="smokingmouse-rse.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_nic)</span>
+<span id="cb11-5"><a href="smokingmouse-rse.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 55401    65</span></span></code></pre></div>
+
+</div>
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">
@@ -316,6 +461,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
