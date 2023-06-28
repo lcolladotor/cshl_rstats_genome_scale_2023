@@ -128,7 +128,7 @@ font-family: sans-serif;
 📑 **Exercise 1**: How would you access data of a specific sample variable?
 </p>
 
-```{r exersice1, eval=FALSE}
+```{r exercise1, eval=FALSE, echo=FALSE}
 ## Solution
 head(rse_gene_nic$flowcell)
 ```
@@ -146,7 +146,7 @@ dim(rse_gene_nic)
 📑 **Exercise 2**: How could you check that all samples are from the nicotine experiment?
 </p>
 
-```{r exersice2, eval=FALSE}
+```{r exercise2, eval=FALSE, echo=FALSE}
 ## Solution
 table(rse_gene_nic$Expt)
 ```
@@ -154,7 +154,7 @@ table(rse_gene_nic$Expt)
 <p class="exercise">
 📑 **Exercise 3**: How many nicotine samples correspond to adults and how many to pups? How many pups were males and how many were females?
 </p>
-```{r exercise3, eval=FALSE}
+```{r exercise3, eval=FALSE, echo=FALSE}
 ## Solution
 table(rse_gene$Age)
 pup_samples <- rse_gene[, which(rse_gene$Age=='Pup')]
