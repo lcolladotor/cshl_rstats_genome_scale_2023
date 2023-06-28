@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-10"><a href="smokingmouse-rse.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb8-11"><a href="smokingmouse-rse.html#cb8-11" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb8-12"><a href="smokingmouse-rse.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f447190b20_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb8-13"><a href="smokingmouse-rse.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/3f468443ec0_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb8-14"><a href="smokingmouse-rse.html#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-15"><a href="smokingmouse-rse.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb8-16"><a href="smokingmouse-rse.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -363,14 +363,28 @@ font-family: sans-serif;
 
 </style>
 <p class="exercise">
-📑 <strong>Exercise</strong>: How would you access data of a specific sample variable?
+📑 <strong>Exercise 1</strong>: How would you access data of a specific sample variable?
 </p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="smokingmouse-rse.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Solution</span></span>
+<span id="cb12-2"><a href="smokingmouse-rse.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rse_gene_nic<span class="sc">$</span>flowcell)</span></code></pre></div>
 <p>For illustrative purposes, we’ll use nicotine data at the gene level only so let’s access that data.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="smokingmouse-rse.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original dimensions of the data</span></span>
-<span id="cb12-2"><a href="smokingmouse-rse.html#cb12-2" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[,<span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt<span class="sc">==</span><span class="st">&#39;Nicotine&#39;</span>)]</span>
-<span id="cb12-3"><a href="smokingmouse-rse.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## New dimensions</span></span>
-<span id="cb12-4"><a href="smokingmouse-rse.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_nic)</span>
-<span id="cb12-5"><a href="smokingmouse-rse.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 55401    65</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="smokingmouse-rse.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original dimensions of the data</span></span>
+<span id="cb13-2"><a href="smokingmouse-rse.html#cb13-2" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[,<span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt<span class="sc">==</span><span class="st">&#39;Nicotine&#39;</span>)]</span>
+<span id="cb13-3"><a href="smokingmouse-rse.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## New dimensions</span></span>
+<span id="cb13-4"><a href="smokingmouse-rse.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_nic)</span>
+<span id="cb13-5"><a href="smokingmouse-rse.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 55401    65</span></span></code></pre></div>
+<p class="exercise">
+📑 <strong>Exercise 2</strong>: How could you check that all samples are from the nicotine experiment?
+</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="smokingmouse-rse.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Solution</span></span>
+<span id="cb14-2"><a href="smokingmouse-rse.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rse_gene_nic<span class="sc">$</span>Expt)</span></code></pre></div>
+<p class="exercise">
+📑 <strong>Exercise 3</strong>: How many nicotine samples correspond to adults and how many to pups? How many pups were males and how many were females?
+</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="smokingmouse-rse.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Solution</span></span>
+<span id="cb15-2"><a href="smokingmouse-rse.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rse_gene<span class="sc">$</span>Age)</span>
+<span id="cb15-3"><a href="smokingmouse-rse.html#cb15-3" aria-hidden="true" tabindex="-1"></a>pup_samples <span class="ot">&lt;-</span> rse_gene[, <span class="fu">which</span>(rse_gene<span class="sc">$</span>Age<span class="sc">==</span><span class="st">&#39;Pup&#39;</span>)]</span>
+<span id="cb15-4"><a href="smokingmouse-rse.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pup_samples<span class="sc">$</span>Sex)</span></code></pre></div>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value
 #&gt;  version  R version 4.3.0 (2023-04-21)
