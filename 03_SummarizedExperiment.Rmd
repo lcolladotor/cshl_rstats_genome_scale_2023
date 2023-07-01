@@ -1,3 +1,118 @@
 # SummarizedExperiment review
 
 Instructor: Renee
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+## For links
+library(BiocStyle)
+
+## Bib setup
+library(RefManageR)
+
+## Write bibliography information
+bib <- c(
+    smokingMouse = citation("smokingMouse")[1],
+    SummarizedExperiment = citation("SummarizedExperiment")[1]
+    )
+```
+
+
+## Overview
+The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations of the samples, as well as additional metadata of the features and the samples. Usually, this type of object is the output of other software like `SPEAQeasy` or . 
+
+One of the main characteristics of `SumarizedExperiment` is that it allows you to handle you data in multiple ways. For example, if you want to delete one sample of your data set, with `SummarizedExperiment` you don't have to worry about you metadata not corresponding to the assays. 
+
+
+## Quiz
+
+1. How many classes does the `SummarizedExperiment` class has? 
+
+2. What does **features** stand for? 
+
+3. Which is the structure of the `SummarizedExperiment` class? 
+
+```{r include = FALSE}
+# download current version of SE diagram
+#download.file("https://docs.google.com/feeds/download/drawings/Export?id=18OcDb80FpvSGRYnFl-8vUqwNNLaNHrG1I9SWKHCselo&exportFormat=svg", "SE.svg")
+download.file("https://docs.google.com/feeds/download/drawings/Export?id=1kiC8Qlo1mhSnLDqkGiRNPSo6GWn3C2duBszCFbJCB-g&exportFormat=svg", "SE.svg")
+```
+
+![](SE.svg)
+
+
+3. What type of data can we store on an assay? Can we add assays to our object? 
+
+4. What is store in the `colData`? 
+
+
+## Exercises
+
+We are gonna use the same sample data set as yesterday from the `airway` library
+
+```{r, echo=FALSE}
+suppressPackageStartupMessages(library(SummarizedExperiment))
+suppressPackageStartupMessages(data(airway, package="airway"))
+```
+
+```{r}
+library(SummarizedExperiment)
+library(airway)
+
+data(airway, package="airway")
+se <- airway
+```
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-family: sans-serif;
+}
+
+</style>
+
+<p class="exercise">
+📑 **Exercise 1**:
+**a)** How many genes do we have in this object? And samples?
+**b)** How many samples are from treated and untreated donors (dex)? 
+</p>
+
+<p class="exercise">
+📑 **Exercise 2**:
+Add another assay that has the log10 of your original counts
+</p>
+
+<p class="exercise">
+📑 **Exercise 3**:
+Explore the metadata and add a new column that has the library size of each sample. 
+</p>
+
+
+
+
+
+
+
+
+
+```{r echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```
+
+
+
+
