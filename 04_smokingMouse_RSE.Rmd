@@ -135,6 +135,7 @@ For illustrative purposes, we'll use nicotine data at the gene level only so let
 
 ```{r extract_nicotine_data}
 ## Original dimensions of the data
+dim(rse_gene)
 rse_gene_nic <- rse_gene[,which(rse_gene$Expt=='Nicotine')]
 ## New dimensions
 dim(rse_gene_nic)
