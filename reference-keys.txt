@@ -7,6 +7,9 @@ main-objective
 secondary-objectives
 study-design
 summarizedexperiment-review
+overview-2
+quiz
+exercises
 smokingmouse-rse
 download-data
 data-overview
