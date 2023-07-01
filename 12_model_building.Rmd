@@ -5,9 +5,9 @@ Instructor: Daianna
 
 ## Explore gene-level effects {-}
 
-Once the quality and the variability of the samples have been evaluated, the next step is to explore the differences in the expression of the genes themselves in the sample groups, or in other words, to quantify the contribution of the multiple sample variables of the study in the gene expression variation, which constitutes one of the fundamental challenges when analyzing complex RNA-seq datasets [3].
+Once the quality and the variability of the samples have been evaluated, the next step is to explore the differences in the expression of the genes themselves in the sample groups, or in other words, to quantify the contribution of the multiple sample variables of the study in the gene expression variation, which constitutes one of the fundamental challenges when analyzing complex RNA-seq datasets [1].
 
-To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study nicotine effects, we can implement an analysis of variance partition. `variancePartition` is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables of the experimental design of high-throughput genomics studies [3].
+To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study nicotine effects, we can implement an analysis of variance partition. `variancePartition` is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables of the experimental design of high-throughput genomics studies [1].
 
 ### 1. Variance Partition Analysis  {-}
 
@@ -20,7 +20,7 @@ Before the analysis itself, we need to measure the correlation between the sampl
 
 Additionally, the analysis is better performed with simpler models, specially when we have a limited number of samples in the study. 
  
-Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with `canCorPairs()` that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [4].
+Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with `canCorPairs()` that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [2].
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -266,15 +266,15 @@ plots + theme(plot.margin=unit (c(1,2.5,1,2.5), 'cm'))
 ***Hint***: What would happen if all experimental samples were in one plate or flowcell and controls in another?
 </div>
 
-After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How to discern which of the correlated variables to keep and which to drop? As recommended in the `variancePartition` user’s guide [4], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let's review how `variancePartition` works. 
+After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How to discern which of the correlated variables to keep and which to drop? As recommended in the `variancePartition` user’s guide [2], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let's review how `variancePartition` works. 
 
 
 
 **1.2 Fit model and extract fraction of variance explained**
 
-Briefly, `variancePartition` fits a linear model for each gene separately and `calcVarPart()` computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [3].
+Briefly, `variancePartition` fits a linear model for each gene separately and `calcVarPart()` computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [1].
 
-Basically what it does is to calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [3].
+Basically what it does is to calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [1].
 
 `variancePartition` fits two types of models:
 
@@ -300,7 +300,7 @@ background-color: #E6E6E6;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
-border-radius: 5px;
+border-radius: 10px;
 font-family: sans-serif;
 }
 
@@ -313,7 +313,7 @@ font-family: sans-serif;
 
 <p class="comment">
 ❓***Why is this effect distinction important?***
-Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making a wrong inference when using a **general linear model (GLM)**. If we have clustered data where the variables' values have distinct effects on gene expression, we must work with an extension of GLM, with the **linear mixed model (LMM)** that contains a mix of both fixed and random effects [5].
+Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making a wrong inference when using a **general linear model (GLM)**. If we have clustered data where the variables' values have distinct effects on gene expression, we must work with an extension of GLM, with the **linear mixed model (LMM)** that contains a mix of both fixed and random effects [3].
 </p>
 
 
@@ -463,7 +463,7 @@ plot + theme(plot.margin=unit (c(1,1,1,1), 'cm'),
               axis.text.y = element_text(size = (7.5)))
 ```
 
-Notwithstanding, in this new reduced model Group contribution doesn't increment much in comparison with the complete model and also note that the % of variance explained by the residuals, i.e., the % of gene expression variance that the model couldn't explain, increments in this model compared to the previous; by removing independent variables to a regression equation, we can explain less of the variance of the dependent variable [5]. That's the price to pay when dropping variables but it is convenient in this case since we don't have many samples for the model to determine their real unique contributions.  
+Notwithstanding, in this new reduced model Group contribution doesn't increment much in comparison with the complete model and also note that the % of variance explained by the residuals, i.e., the % of gene expression variance that the model couldn't explain, increments in this model compared to the previous; by removing independent variables to a regression equation, we can explain less of the variance of the dependent variable [3]. That's the price to pay when dropping variables but it is convenient in this case since we don't have many samples for the model to determine their real unique contributions.  
 
 In pups, based on the model with all variables, again <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> must be removed, as well as <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that are correlated with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>.
 
@@ -716,6 +716,15 @@ theme(plot.margin = unit(c(2, 6, 2, 6), 'cm'),
 
 plot
 ```
+
+## References {-}
+
+1. Hoffman, G. E., & Schadt, E. E. (2016). variancePartition: interpreting drivers of variation in complex gene expression studies.*BMC bioinformatics*, 17(1), 1-13.
+
+2. Hoffman, G. (2022). variancePartition: Quantifying and interpreting drivers of variation in multilevel gene expression experiments.
+
+3. van den Berg, S. M. (2022). Analysing data using linear models. Web site: https://bookdown.org/pingapang9/linear_models_bookdown/
+
 
 ```{r echo=FALSE}
 ## Session info

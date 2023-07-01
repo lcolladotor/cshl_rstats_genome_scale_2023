@@ -56,7 +56,7 @@ These variables lead to virtually different mRNA amounts but of course are not d
 $$CPM = \frac{read \ \ counts \ \ of \ \ gene \ \ \times \ \ 10^6 }{Total \ \ mapping \ \ reads \ \ of \ \ sample}$$ 
 
 
-As outlined in [**Data overview and download**](##Data overview and download), the scaling factors were obtained with `calcNormFactors()` applying the Trimmed Mean of M-Values (TMM) method, the `r BiocStyle::Biocpkg("edgeR")` package's default normalization method that assumes that most genes are not differentially expressed. The effective library sizes of the samples and the CPM of each observation were computed with the `r BiocStyle::Biocpkg("edgeR")` function `cpm()` setting the `log` argument to `TRUE` and `prior.count` to 0.5 to receive values in $log_2(CPM+0.5)$.
+As outlined in **Data overview and download**, the scaling factors were obtained with `calcNormFactors()` applying the Trimmed Mean of M-Values (TMM) method, the `r BiocStyle::Biocpkg("edgeR")` package's default normalization method that assumes that most genes are not differentially expressed. The effective library sizes of the samples and the CPM of each observation were computed with the `r BiocStyle::Biocpkg("edgeR")` function `cpm()` setting the `log` argument to `TRUE` and `prior.count` to 0.5 to receive values in $log_2(CPM+0.5)$.
 
 After data normalization and scaling, we’d expect the read counts to follow a Norm distribution, something we can confirm comparing the counts' distribution before and after the normalization. Consider both datasets contain the exact same genes. 
 
@@ -428,7 +428,7 @@ background-color: #E4EDE2;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
-border-radius: 5px;
+border-radius: 10px;
 font-family: sans-serif;
 }
 
@@ -646,7 +646,11 @@ p + theme(plot.margin=unit (c(2,4,2,4), 'cm'))
 </div>
 
 
+## References {-}
 
+1. Evans, C., Hardin, J., & Stoebel, D. M. (2018). Selecting between-sample RNA-Seq normalization methods from the perspective of their assumptions. *Briefings in bioinformatics*, 19(5), 776-792.
+
+2. Bedre, R. (2023). Gene expression units explained: RPM, RPKM, FPKM, TPM, *DESeq*, TMM, SCnorm, GeTMM, and ComBat-Seq. Web site: https://www.reneshbedre.com/blog/expression_units.html
 
 
 ```{r echo=FALSE}
