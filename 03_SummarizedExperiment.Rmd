@@ -70,38 +70,42 @@ data(airway, package="airway")
 se <- airway
 ```
 
+<br />
+
 <style>
 p.exercise  {
 background-color: #E4EDE2;
 padding: 9px;
 border: 1px solid black;
-margin-left: 25px;
-border-radius: 5px;
+border-radius: 10px;
 font-family: sans-serif;
 }
 
 </style>
 
 <p class="exercise">
-📑 **Exercise 1**:
+**Exercise 1**:
 **a)** How many genes do we have in this object? And samples?
 **b)** How many samples are from treated and untreated donors (dex)? 
 </p>
 
 <p class="exercise">
-📑 **Exercise 2**:
+**Exercise 2**:
 Add another assay that has the log10 of your original counts
 </p>
 
+To access a particular assay you need to use `$`. You can also use `$` when creating a new column or dimension to name it (ie. `assays(se)$logcounts`) 
+
+
 <p class="exercise">
-📑 **Exercise 3**:
+**Exercise 3**:
 Explore the metadata and add a new column that has the library size of each sample. 
 </p>
+To calculate the library size use `apply(assay(se), 2, sum)`. 
 
 
-
-
-
+<br />
+<br />
 
 
 
