@@ -421,9 +421,6 @@ multiple_QC_scatterplots('detected', 'totalAssignedGene')
 
 Lastly, there's a slight positive correlation between <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>, which makes sense because reads assigned to genes rise the number of non-zero expressed genes but as mentioned, those genes are not necessarily highly expressed and thus, library sizes are not perforce so much bigger. Also note that the correlation wouldn't be conserved within pup samples. 
 
-```{r message=FALSE, warning=FALSE}
-multiple_QC_scatterplots('detected', 'totalAssignedGene')
-```
 
 <style>
 p.exercise  {
