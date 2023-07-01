@@ -185,6 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis"><i class="fa fa-check"></i>2.1 Quality Control Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
@@ -197,6 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a></li>
 <li class="chapter" data-level="14" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>14</b> Exercise with variancePartition and ComplexHeatmap</a></li>
@@ -226,8 +228,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Instructor: Daianna</p>
 <div id="explore-gene-level-effects" class="section level2 unnumbered hasAnchor">
 <h2>Explore gene-level effects<a href="de-model-building-with-variancepartition.html#explore-gene-level-effects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Once the quality and the variability of the samples have been evaluated, the next step is to explore the differences in the expression of the genes themselves in the sample groups, or in other words, to quantify the contribution of the multiple sample variables of the study in the gene expression variation, which constitutes one of the fundamental challenges when analyzing complex RNA-seq datasets [3].</p>
-<p>To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study nicotine effects, we can implement an analysis of variance partition. <code>variancePartition</code> is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables of the experimental design of high-throughput genomics studies [3].</p>
+<p>Once the quality and the variability of the samples have been evaluated, the next step is to explore the differences in the expression of the genes themselves in the sample groups, or in other words, to quantify the contribution of the multiple sample variables of the study in the gene expression variation, which constitutes one of the fundamental challenges when analyzing complex RNA-seq datasets [1].</p>
+<p>To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study nicotine effects, we can implement an analysis of variance partition. <code>variancePartition</code> is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables of the experimental design of high-throughput genomics studies [1].</p>
 <div id="variance-partition-analysis" class="section level3 unnumbered hasAnchor">
 <h3>1. Variance Partition Analysis<a href="de-model-building-with-variancepartition.html#variance-partition-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>1.1 Canonical Correlation Analysis</strong></p>
@@ -237,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The part of variance explained by a biologically relevant variable can be reduced by the apparent contributions of correlated variables, if for example, they contain very similar information.</li>
 </ul>
 <p>Additionally, the analysis is better performed with simpler models, specially when we have a limited number of samples in the study.</p>
-<p>Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with <code>canCorPairs()</code> that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [4].</p>
+<p>Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with <code>canCorPairs()</code> that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [2].</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="de-model-building-with-variancepartition.html#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-2"><a href="de-model-building-with-variancepartition.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(variancePartition)</span>
 <span id="cb41-3"><a href="de-model-building-with-variancepartition.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
@@ -439,10 +441,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <p><strong><em>Hint</em></strong>: What would happen if all experimental samples were in one plate or flowcell and controls in another?</p>
 </div>
-<p>After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How to discern which of the correlated variables to keep and which to drop? As recommended in the <code>variancePartition</code> user’s guide [4], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let’s review how <code>variancePartition</code> works.</p>
+<p>After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How to discern which of the correlated variables to keep and which to drop? As recommended in the <code>variancePartition</code> user’s guide [2], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let’s review how <code>variancePartition</code> works.</p>
 <p><strong>1.2 Fit model and extract fraction of variance explained</strong></p>
-<p>Briefly, <code>variancePartition</code> fits a linear model for each gene separately and <code>calcVarPart()</code> computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [3].</p>
-<p>Basically what it does is to calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [3].</p>
+<p>Briefly, <code>variancePartition</code> fits a linear model for each gene separately and <code>calcVarPart()</code> computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [1].</p>
+<p>Basically what it does is to calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [1].</p>
 <p><code>variancePartition</code> fits two types of models:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Linear mixed model (LMM)</strong> where all categorical variables are modeled as <strong>random effects</strong> and all continuous variables are <strong>fixed effects</strong>. The function <code>lmer()</code> from <code>lme4</code> is used to fit this model.</li>
@@ -461,7 +463,7 @@ background-color: #E6E6E6;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
-border-radius: 5px;
+border-radius: 10px;
 font-family: sans-serif;
 }
 
@@ -472,7 +474,7 @@ font-family: sans-serif;
 </p>
 <p class="comment">
 ❓<strong><em>Why is this effect distinction important?</em></strong>
-Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making a wrong inference when using a <strong>general linear model (GLM)</strong>. If we have clustered data where the variables’ values have distinct effects on gene expression, we must work with an extension of GLM, with the <strong>linear mixed model (LMM)</strong> that contains a mix of both fixed and random effects [5].
+Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making a wrong inference when using a <strong>general linear model (GLM)</strong>. If we have clustered data where the variables’ values have distinct effects on gene expression, we must work with an extension of GLM, with the <strong>linear mixed model (LMM)</strong> that contains a mix of both fixed and random effects [3].
 </p>
 <p><strong>Linear mixed model framework</strong></p>
 <aside>
@@ -584,7 +586,7 @@ All parameters are estimated with maximum likelihood, the default method in the 
 <span id="cb58-9"><a href="de-model-building-with-variancepartition.html#cb58-9" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="st">&#39;cm&#39;</span>), </span>
 <span id="cb58-10"><a href="de-model-building-with-variancepartition.html#cb58-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="dv">7</span>)),</span>
 <span id="cb58-11"><a href="de-model-building-with-variancepartition.html#cb58-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> (<span class="fl">7.5</span>)))</span></code></pre></div>
-<p>Notwithstanding, in this new reduced model Group contribution doesn’t increment much in comparison with the complete model and also note that the % of variance explained by the residuals, i.e., the % of gene expression variance that the model couldn’t explain, increments in this model compared to the previous; by removing independent variables to a regression equation, we can explain less of the variance of the dependent variable [5]. That’s the price to pay when dropping variables but it is convenient in this case since we don’t have many samples for the model to determine their real unique contributions.</p>
+<p>Notwithstanding, in this new reduced model Group contribution doesn’t increment much in comparison with the complete model and also note that the % of variance explained by the residuals, i.e., the % of gene expression variance that the model couldn’t explain, increments in this model compared to the previous; by removing independent variables to a regression equation, we can explain less of the variance of the dependent variable [3]. That’s the price to pay when dropping variables but it is convenient in this case since we don’t have many samples for the model to determine their real unique contributions.</p>
 <p>In pups, based on the model with all variables, again <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> must be removed, as well as <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that are correlated with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="de-model-building-with-variancepartition.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####  Model with all variables  #####</span></span>
 <span id="cb59-2"><a href="de-model-building-with-variancepartition.html#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -739,6 +741,15 @@ font-family: sans-serif;
 <p class="exercise">
 📑 <strong>Exercise 2</strong>: Do the same for gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
 </p>
+</div>
+</div>
+<div id="references-1" class="section level2 unnumbered hasAnchor">
+<h2>References<a href="de-model-building-with-variancepartition.html#references-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Hoffman, G. E., &amp; Schadt, E. E. (2016). variancePartition: interpreting drivers of variation in complex gene expression studies.<em>BMC bioinformatics</em>, 17(1), 1-13.</p></li>
+<li><p>Hoffman, G. (2022). variancePartition: Quantifying and interpreting drivers of variation in multilevel gene expression experiments.</p></li>
+<li><p>van den Berg, S. M. (2022). Analysing data using linear models. Web site: <a href="https://bookdown.org/pingapang9/linear_models_bookdown/" class="uri">https://bookdown.org/pingapang9/linear_models_bookdown/</a></p></li>
+</ol>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value
 #&gt;  version  R version 4.3.0 (2023-04-21)
@@ -804,7 +815,7 @@ font-family: sans-serif;
 #&gt;  data.table               1.14.8    2023-02-17 [1] RSPM (R 4.3.0)
 #&gt;  DBI                      1.1.3     2022-06-18 [1] RSPM (R 4.3.0)
 #&gt;  dbplyr                 * 2.3.2     2023-03-21 [1] RSPM (R 4.3.0)
-#&gt;  DelayedArray             0.26.4    2023-06-29 [1] Bioconductor
+#&gt;  DelayedArray             0.26.5    2023-06-30 [1] Bioconductor
 #&gt;  DelayedMatrixStats       1.22.1    2023-06-09 [1] Bioconductor
 #&gt;  digest                   0.6.32    2023-06-26 [2] RSPM (R 4.3.0)
 #&gt;  doParallel               1.0.17    2022-02-07 [1] RSPM (R 4.3.0)
@@ -989,7 +1000,6 @@ font-family: sans-serif;
 #&gt; 
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 
-</div>
 </div>
 </div>
 <div class="container">

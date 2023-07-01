@@ -185,6 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis"><i class="fa fa-check"></i>2.1 Quality Control Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
@@ -197,6 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a></li>
 <li class="chapter" data-level="14" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>14</b> Exercise with variancePartition and ComplexHeatmap</a></li>
@@ -235,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb18-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-10" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb18-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb18-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/41826c323b9_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb18-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55a509a08f6_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb18-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb18-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -270,7 +272,7 @@ DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia
 <p>Data normalization is a primordial step when working with expression data because raw counts do not necessarily reflect real expression measures of the genes since there are technical differences in the way the libraries are prepared and sequenced, as well as intrinsic differences in the genes that are translated into more or less mapping reads. Particularly, there are <em>within-sample effects</em> that are the differences between genes in the same sample, such as their <strong>length</strong> (the longer the gene, the more reads it will have) and <strong>GC content</strong>, factors that contribute to variations in their counts. On the other hand, <em>between-sample effects</em> are differences between samples such as the <strong>sequencing depth</strong>, i.e., the total number of molecules sequenced, and the <strong>library size</strong>, i.e., the total number of reads of each sample [1].</p>
 <p>These variables lead to virtually different mRNA amounts but of course are not due to the biological or treatment conditions of interest (such as nicotine administration in this example) so in order to remove, or at least, to minimize this technical bias and obtain measures comparable and consistent across samples, raw counts must be normalized by these factors. The data that we’ll use in this case are already normalized in <code>assays(rse_gene)$logcounts</code>. Specifically, the assay contains counts per million (CPM), also known as reads per million (RPM), one basic gene expression unit that only normalizes by the sequencing depth and is computed by dividing the read counts of a gene in a sample by a scaling factor given by the total mapping reads of the sample per million [2]:</p>
 <p><span class="math display">\[CPM = \frac{read \ \ counts \ \ of \ \ gene \ \ \times \ \ 10^6 }{Total \ \ mapping \ \ reads \ \ of \ \ sample}\]</span></p>
-<p>As outlined in <a href="#id_#Data%20overview%20and%20download"><strong>Data overview and download</strong></a>, the scaling factors were obtained with <code>calcNormFactors()</code> applying the Trimmed Mean of M-Values (TMM) method, the <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> package’s default normalization method that assumes that most genes are not differentially expressed. The effective library sizes of the samples and the CPM of each observation were computed with the <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> function <code>cpm()</code> setting the <code>log</code> argument to <code>TRUE</code> and <code>prior.count</code> to 0.5 to receive values in <span class="math inline">\(log_2(CPM+0.5)\)</span>.</p>
+<p>As outlined in <strong>Data overview and download</strong>, the scaling factors were obtained with <code>calcNormFactors()</code> applying the Trimmed Mean of M-Values (TMM) method, the <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> package’s default normalization method that assumes that most genes are not differentially expressed. The effective library sizes of the samples and the CPM of each observation were computed with the <em><a href="https://bioconductor.org/packages/3.17/edgeR">edgeR</a></em> function <code>cpm()</code> setting the <code>log</code> argument to <code>TRUE</code> and <code>prior.count</code> to 0.5 to receive values in <span class="math inline">\(log_2(CPM+0.5)\)</span>.</p>
 <p>After data normalization and scaling, we’d expect the read counts to follow a Norm distribution, something we can confirm comparing the counts’ distribution before and after the normalization. Consider both datasets contain the exact same genes.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -564,7 +566,7 @@ background-color: #E4EDE2;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
-border-radius: 5px;
+border-radius: 10px;
 font-family: sans-serif;
 }
 
@@ -733,6 +735,14 @@ It is always important to trace the QC metrics of the filtered samples to verify
 <div class="alert alert-info">
 <p>Try the function yourself with different QC metrics and sample variables!</p>
 </div>
+</div>
+</div>
+<div id="references" class="section level2 unnumbered hasAnchor">
+<h2>References<a href="rse-plotting-basics-with-smokingmouse.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Evans, C., Hardin, J., &amp; Stoebel, D. M. (2018). Selecting between-sample RNA-Seq normalization methods from the perspective of their assumptions. <em>Briefings in bioinformatics</em>, 19(5), 776-792.</p></li>
+<li><p>Bedre, R. (2023). Gene expression units explained: RPM, RPKM, FPKM, TPM, <em>DESeq</em>, TMM, SCnorm, GeTMM, and ComBat-Seq. Web site: <a href="https://www.reneshbedre.com/blog/expression_units.html" class="uri">https://www.reneshbedre.com/blog/expression_units.html</a></p></li>
+</ol>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value
 #&gt;  version  R version 4.3.0 (2023-04-21)
@@ -798,7 +808,7 @@ It is always important to trace the QC metrics of the filtered samples to verify
 #&gt;  data.table               1.14.8    2023-02-17 [1] RSPM (R 4.3.0)
 #&gt;  DBI                      1.1.3     2022-06-18 [1] RSPM (R 4.3.0)
 #&gt;  dbplyr                 * 2.3.2     2023-03-21 [1] RSPM (R 4.3.0)
-#&gt;  DelayedArray             0.26.4    2023-06-29 [1] Bioconductor
+#&gt;  DelayedArray             0.26.5    2023-06-30 [1] Bioconductor
 #&gt;  DelayedMatrixStats       1.22.1    2023-06-09 [1] Bioconductor
 #&gt;  digest                   0.6.32    2023-06-26 [2] RSPM (R 4.3.0)
 #&gt;  doParallel               1.0.17    2022-02-07 [1] RSPM (R 4.3.0)
@@ -983,7 +993,6 @@ It is always important to trace the QC metrics of the filtered samples to verify
 #&gt; 
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 
-</div>
 </div>
 </div>
 <div class="container">
