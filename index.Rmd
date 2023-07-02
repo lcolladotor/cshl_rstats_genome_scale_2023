@@ -40,10 +40,12 @@ For reporting any violations of the code of conduct, report them to the Instruct
 
 _Local times in US Eastern_
 
-* Monday July 3rd
-* Tuesday July 4th
-* Wednesday July 5th
-* Thursday July 6th
+See [CSHLData2023](https://docs.google.com/document/d/1pdvZFjJBwRUpA_VJOAFu4z-0Eys6Wv2iRAh84T6_yF4/edit?usp=sharing) for the detailed schedule. Below is a list of the key packages we will use each day:
+
+* Monday July 3rd: `SummarizedExperiment`, `iSEE`, `smokingMouse`, `biocthis`
+* Tuesday July 4th: `recount3`, `ExploreModelMatrix`, `limma`
+* Wednesday July 5th: `variancePartition`, `ComplexHeatmap`
+* Thursday July 6th: `spatialLIBD`
   
 ## External links {-}
 
@@ -52,7 +54,7 @@ _Local times in US Eastern_
 * [Slack](https://cshldata-2023.slack.com).
 * [LieberInstitute/template_project](https://github.com/LieberInstitute/template_project)
 * Example real project (by Daianna): [LieberInstitute/smokingMouse_Indirects](https://github.com/LieberInstitute/smokingMouse_Indirects)
-* SPEAQeasyWorkshop2023 for BioC2023 (by Daianna and Renee): [LieberInstitute/SPEAQeasyWorkshop2023](https://github.com/LieberInstitute/SPEAQeasyWorkshop2023)
+* `SPEAQeasyWorkshop2023` for BioC2023 (by Daianna and Renee): [LieberInstitute/SPEAQeasyWorkshop2023](https://github.com/LieberInstitute/SPEAQeasyWorkshop2023)
   
 
 ## Course Prerequisites {-}
@@ -98,7 +100,8 @@ BiocManager::install(
     )
 )
 
-## Install smokingMouse
+## Install smokingMouse, which is currently under review at Bioconductor
+## at https://github.com/Bioconductor/Contributions/issues/3024.
 BiocManager::install("LieberInstitute/smokingMouse")
 ```
 
@@ -153,7 +156,7 @@ library("cowplot")
 library("rlang")
 library("ggrepel")
 
-## Advanced
+## Spatial transcriptomics
 library("spatialLIBD")
 ```
 
