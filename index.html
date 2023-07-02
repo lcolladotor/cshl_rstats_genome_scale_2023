@@ -248,11 +248,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="course-schedule" class="section level2 unnumbered hasAnchor">
 <h2>Course Schedule<a href="index.html#course-schedule" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>Local times in US Eastern</em></p>
+<p>See <a href="https://docs.google.com/document/d/1pdvZFjJBwRUpA_VJOAFu4z-0Eys6Wv2iRAh84T6_yF4/edit?usp=sharing">CSHLData2023</a> for the detailed schedule. Below is a list of the key packages we will use each day:</p>
 <ul>
-<li>Monday July 3rd</li>
-<li>Tuesday July 4th</li>
-<li>Wednesday July 5th</li>
-<li>Thursday July 6th</li>
+<li>Monday July 3rd: <code>SummarizedExperiment</code>, <code>iSEE</code>, <code>smokingMouse</code>, <code>biocthis</code></li>
+<li>Tuesday July 4th: <code>recount3</code>, <code>ExploreModelMatrix</code>, <code>limma</code></li>
+<li>Wednesday July 5th: <code>variancePartition</code>, <code>ComplexHeatmap</code></li>
+<li>Thursday July 6th: <code>spatialLIBD</code></li>
 </ul>
 </div>
 <div id="external-links" class="section level2 unnumbered hasAnchor">
@@ -263,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://cshldata-2023.slack.com">Slack</a>.</li>
 <li><a href="https://github.com/LieberInstitute/template_project">LieberInstitute/template_project</a></li>
 <li>Example real project (by Daianna): <a href="https://github.com/LieberInstitute/smokingMouse_Indirects">LieberInstitute/smokingMouse_Indirects</a></li>
-<li>SPEAQeasyWorkshop2023 for BioC2023 (by Daianna and Renee): <a href="https://github.com/LieberInstitute/SPEAQeasyWorkshop2023">LieberInstitute/SPEAQeasyWorkshop2023</a></li>
+<li><code>SPEAQeasyWorkshop2023</code> for BioC2023 (by Daianna and Renee): <a href="https://github.com/LieberInstitute/SPEAQeasyWorkshop2023">LieberInstitute/SPEAQeasyWorkshop2023</a></li>
 </ul>
 </div>
 <div id="course-prerequisites" class="section level2 unnumbered hasAnchor">
@@ -307,8 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse</span></span>
-<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span></code></pre></div>
+<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse, which is currently under review at Bioconductor</span></span>
+<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://github.com/Bioconductor/Contributions/issues/3024.</span></span>
+<span id="cb1-41"><a href="index.html#cb1-41" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span></code></pre></div>
 <p>You will also need to install <a href="https://rstudio.com/products/rstudio/download/#download">RStudio</a> version 2023.06.0+421 or newer.</p>
 </div>
 <div id="r-session-information" class="section level2 unnumbered hasAnchor">
@@ -358,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-42"><a href="index.html#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rlang&quot;</span>)</span>
 <span id="cb2-43"><a href="index.html#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)</span>
 <span id="cb2-44"><a href="index.html#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="index.html#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="do">## Advanced</span></span>
+<span id="cb2-45"><a href="index.html#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="do">## Spatial transcriptomics</span></span>
 <span id="cb2-46"><a href="index.html#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reproducibility information</span></span>
 <span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
@@ -605,8 +607,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="index.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  14.318   0.628  14.901</code></pre>
-<p>This book was last updated at 2023-07-02 16:23:32.644728.</p>
+##  16.915   0.790  17.690</code></pre>
+<p>This book was last updated at 2023-07-02 16:29:31.18794.</p>
 </div>
 <div id="license" class="section level2 unnumbered hasAnchor">
 <h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>
