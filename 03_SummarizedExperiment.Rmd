@@ -28,9 +28,9 @@ options(max.print = 50)
 
 
 ## Overview
-The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations of the samples, as well as additional metadata of the features and the samples. Usually, this type of object is the output of other software like `SPEAQeasy` or . 
+The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations (features) of the samples, as well as additional metadata. Usually, this type of object is automatically generated as the output of other software (ie. `SPEAQeasy`), but you can also build them. 
 
-One of the main characteristics of `SumarizedExperiment` is that it allows you to handle you data in multiple ways. For example, if you want to delete one sample of your data set, with `SummarizedExperiment` you don't have to worry about you metadata not corresponding to the assays. 
+One of the main characteristics of `SumarizedExperiment` is that it allows you to handle you data in a "coordinated" way. For example, if you want to subset your data, with `SummarizedExperiment` you can do so without worring your assays and metadata unsync.
 
 
 ## Quiz
@@ -52,7 +52,7 @@ download.file("https://docs.google.com/feeds/download/drawings/Export?id=1kiC8Ql
 
 3. What type of data can we store on an assay? Can we add assays to our object? 
 
-4. What is store in the `colData`? 
+4. What information does `colData` has? 
 
 
 ## Exercises
@@ -86,8 +86,20 @@ font-family: sans-serif;
 <p class="exercise">
 **Exercise 1**:
 **a)** How many genes do we have in this object? And samples?
-**b)** How many samples are from treated and untreated donors (dex)? 
+**b)** How many samples come from donors treated (`trt`) with dexamethasone (`dex`)? 
 </p>
+
+
+```{r}
+## For a you could only print the summary of the object but since the idea is to understand 
+## how to explore the object try to find other function that gives you the answer
+se
+
+## Same thing for b, you could just print the colData and count the samples, but this is not 
+## efficient when our data consists in hundreds of samples. Find the answer using other tools
+
+colData(se)
+```
 
 <p class="exercise">
 **Exercise 2**:
