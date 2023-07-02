@@ -1,4 +1,9 @@
 speaqeasy-introduction
+overview-slides
+speaqeasy-main-links
+pipeline-outputs
+exercises
+solutions
 smokingmouse-study
 introduction
 overview-1
@@ -9,7 +14,7 @@ study-design
 summarizedexperiment-review
 overview-2
 quiz
-exercises
+exercises-1
 smokingmouse-rse
 download-data
 data-overview

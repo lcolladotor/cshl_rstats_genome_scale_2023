@@ -146,7 +146,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session-information"><i class="fa fa-check"></i>R session information</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a></li>
+<li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#overview-slides"><i class="fa fa-check"></i><b>1.1</b> 2022-04-20 overview slides</a></li>
+<li class="chapter" data-level="1.2" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#speaqeasy-main-links"><i class="fa fa-check"></i><b>1.2</b> SPEAQeasy main links</a></li>
+<li class="chapter" data-level="1.3" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#pipeline-outputs"><i class="fa fa-check"></i><b>1.3</b> Pipeline outputs</a></li>
+<li class="chapter" data-level="1.4" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+<li class="chapter" data-level="1.5" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#solutions"><i class="fa fa-check"></i><b>1.5</b> Solutions</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
@@ -162,7 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.1" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#overview-2"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
 <li class="chapter" data-level="3.2" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#quiz"><i class="fa fa-check"></i><b>3.2</b> Quiz</a></li>
-<li class="chapter" data-level="3.3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+<li class="chapter" data-level="3.3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#exercises-1"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
 <ul>
@@ -227,7 +234,121 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="speaqeasy-introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">1</span> SPEAQeasy introduction<a href="speaqeasy-introduction.html#speaqeasy-introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Leo</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for your <a href="https://twitter.com/biorxivpreprint?ref_src=twsrc%5Etfw"><span class="citation">@biorxivpreprint</span></a> first pre-print! 🙌🏽<br><br>SPEAQeasy is our <a href="https://twitter.com/nextflowio?ref_src=twsrc%5Etfw"><span class="citation">@nextflowio</span></a> implementation of the <a href="https://twitter.com/hashtag/RNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#RNAseq</a> processing pipeline that produces <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a>-friendly <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> objects that we use at <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw"><span class="citation">@LieberInstitute</span></a><br><br>📜 <a href="https://t.co/zKuBRtBCmY">https://t.co/zKuBRtBCmY</a> <a href="https://t.co/F83fXI90eP">pic.twitter.com/F83fXI90eP</a>
+</p>
+— 🇲🇽 Leonardo Collado-Torres (<span class="citation">@lcolladotor</span>) <a href="https://twitter.com/lcolladotor/status/1337637531945496577?ref_src=twsrc%5Etfw">December 12, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div id="overview-slides" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> 2022-04-20 overview slides<a href="speaqeasy-introduction.html#overview-slides" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/33scakbTNO0?start=318" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+<script defer class="speakerdeck-embed" data-slide="7" data-id="3c32410b600740abb4724486e83ebd30" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
+</div>
+<div id="speaqeasy-main-links" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> SPEAQeasy main links<a href="speaqeasy-introduction.html#speaqeasy-main-links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Paper: <a href="https://doi.org/10.1186/s12859-021-04142-3" class="uri">https://doi.org/10.1186/s12859-021-04142-3</a></li>
+<li>Documentation website: <a href="http://research.libd.org/SPEAQeasy/" class="uri">http://research.libd.org/SPEAQeasy/</a>
+<ul>
+<li>Source code: <a href="https://github.com/LieberInstitute/SPEAQeasy" class="uri">https://github.com/LieberInstitute/SPEAQeasy</a></li>
+</ul></li>
+<li>Example website: <a href="http://research.libd.org/SPEAQeasy-example/" class="uri">http://research.libd.org/SPEAQeasy-example/</a>
+<ul>
+<li>Source code: <a href="https://github.com/LieberInstitute/SPEAQeasy-example" class="uri">https://github.com/LieberInstitute/SPEAQeasy-example</a></li>
+</ul></li>
+<li>Differential expression analysis bootcamp: <a href="https://lcolladotor.github.io/bioc_team_ds/differential-expression-analysis.html" class="uri">https://lcolladotor.github.io/bioc_team_ds/differential-expression-analysis.html</a>
+<ul>
+<li>3 sessions, each 2 hours long</li>
+</ul></li>
+</ul>
+</div>
+<div id="pipeline-outputs" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Pipeline outputs<a href="speaqeasy-introduction.html#pipeline-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Documentation chapter: <a href="http://research.libd.org/SPEAQeasy/outputs.html" class="uri">http://research.libd.org/SPEAQeasy/outputs.html</a></li>
+</ul>
+<p>That’s enough links! Lets download some data to check it out. We’ll use <em><a href="https://bioconductor.org/packages/3.17/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="speaqeasy-introduction.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the container package for this type of data</span></span>
+<span id="cb8-2"><a href="speaqeasy-introduction.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
+<span id="cb8-3"><a href="speaqeasy-introduction.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="speaqeasy-introduction.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
+<span id="cb8-5"><a href="speaqeasy-introduction.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
+<span id="cb8-6"><a href="speaqeasy-introduction.html#cb8-6" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
+<span id="cb8-7"><a href="speaqeasy-introduction.html#cb8-7" aria-hidden="true" tabindex="-1"></a>cached_rse_gene_example <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
+<span id="cb8-8"><a href="speaqeasy-introduction.html#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
+<span id="cb8-9"><a href="speaqeasy-introduction.html#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData&quot;</span></span>
+<span id="cb8-10"><a href="speaqeasy-introduction.html#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## adding rname &#39;https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData&#39;</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="speaqeasy-introduction.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
+<span id="cb10-2"><a href="speaqeasy-introduction.html#cb10-2" aria-hidden="true" tabindex="-1"></a>cached_rse_gene_example</span></code></pre></div>
+<pre><code>##                                                                  BFC1 
+## &quot;/github/home/.cache/R/BiocFileCache/55b6c493dca_rse_speaqeasy.RData&quot;</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="speaqeasy-introduction.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
+<span id="cb12-2"><a href="speaqeasy-introduction.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene_example, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Loading objects:
+##   rse_gene</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="speaqeasy-introduction.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
+<span id="cb14-2"><a href="speaqeasy-introduction.html#cb14-2" aria-hidden="true" tabindex="-1"></a>rse_gene</span></code></pre></div>
+<pre><code>## class: RangedSummarizedExperiment 
+## dim: 60609 40 
+## metadata(0):
+## assays(1): counts
+## rownames(60609): ENSG00000223972.5 ENSG00000227232.5 ... ENSG00000210195.2 ENSG00000210196.2
+## rowData names(10): Length gencodeID ... NumTx gencodeTx
+## colnames(40): R13896_H7JKMBBXX R13903_HCTYLBBXX ... R15120_HFY2MBBXX R15134_HFFGHBBXX
+## colData names(67): SAMPLE_ID FQCbasicStats ... AgeDeath BrNum</code></pre>
+</div>
+<div id="exercises" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Exercises<a href="speaqeasy-introduction.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
 
+</style>
+<p class="exercise">
+<strong>Exercise 1</strong>:
+Either by exploring the object <code>rse_gene</code> or by checking the <code>SPEAQeasy</code> documentation, what are the possible values for the variable <code>trimmed</code>?
+</p>
+<p class="exercise">
+<strong>Exercise 2</strong>:
+Across genes (<code>rse_gene</code>), exons (<code>rse_exon</code>), exon-exon junctions (<code>rse_jx</code>), and transcripts (<code>rse_tx</code>), what part of the output is identical?
+</p>
+</div>
+<div id="solutions" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Solutions<a href="speaqeasy-introduction.html#solutions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<style>
+<p>p.solution {
+background-color: #9C42C9;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}</p>
+<p class="solution">
+<strong>Solution 1</strong>:
+From <a href="http://research.libd.org/SPEAQeasy/outputs.html#quality-metrics" class="uri">http://research.libd.org/SPEAQeasy/outputs.html#quality-metrics</a> the answer was:
+</p>
+<blockquote>
+<p>A boolean value (“TRUE” or “FALSE”), indicating whether the given sample underwent trimming</p>
+</blockquote>
+<p>With code, it’s this:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="speaqeasy-introduction.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rse_gene<span class="sc">$</span>trimmed)</span></code></pre></div>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="speaqeasy-introduction.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## logical vectors can take 2 values (plus the third `NA` if it&#39;s missing)</span></span></code></pre></div>
+<p class="solution">
+<strong>Solution 2</strong>:
+From <a href="http://research.libd.org/SPEAQeasy/outputs.html#coldata-of-rse-objects" class="uri">http://research.libd.org/SPEAQeasy/outputs.html#coldata-of-rse-objects</a> the answer is that all objects have identical <code>colData()</code>.
+</p>
+
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">
