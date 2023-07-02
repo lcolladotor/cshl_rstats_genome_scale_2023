@@ -28,7 +28,22 @@ Teach assistants:
 * [Daianna González Padilla](https://daianna21.github.io/), [Twitter](https://twitter.com/daianna_glez)
 * [Fernanda Renee García Flores](https://reneegf.github.io/), [Twitter](https://twitter.com/SubmarineGene)
 
-Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2023')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2023**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023).
+## Download course materials {-}
+
+Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2023')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2023**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023). This command downloads a static version of the course materials. 
+
+If you want to be able to easily download updates, we recommend using `Git`. [_Happy Git and GitHub for the useR_](https://happygitwithr.com/) is great for getting your computer ready to use `Git` and `GitHub`. If you already have a `GitHub` account, you can instead use this command to download the course:
+
+```bash
+## Downloado the first time
+git clone https://github.com/lcolladotor/cshl_rstats_genome_scale_2023.git
+
+## To update the contents, use:
+cd cshl_rstats_genome_scale_202
+git pull
+```
+
+Or you could use the [GitHub Desktop application](x-github-client://openRepo/https://github.com/lcolladotor/cshl_rstats_genome_scale_2023).
 
 ## Code of Conduct {-}
 
