@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="overview-2" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Overview<a href="summarizedexperiment-review.html#overview-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>SummarizedExperiment</code> class is used to store experimental results in the form of matrixes. Objects of this class include observations (features) of the samples, as well as additional metadata. Usually, this type of object is automatically generated as the output of other software (ie. <code>SPEAQeasy</code>), but you can also build them.</p>
-<p>One of the main characteristics of <code>SumarizedExperiment</code> is that it allows you to handle you data in a “coordinated” way. For example, if you want to subset your data, with <code>SummarizedExperiment</code> you can do so without worring your assays and metadata unsync.</p>
+<p>One of the main characteristics of <code>SummarizedExperiment</code> is that it allows you to handle you data in a “coordinated” way. For example, if you want to subset your data, with <code>SummarizedExperiment</code> you can do so without worrying your assays and metadata unsync.</p>
 </div>
 <div id="quiz" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Quiz<a href="summarizedexperiment-review.html#quiz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -242,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <img src="Figures/se_structure.png" width="700px" align=center />
 </figure>
 <ol start="3" style="list-style-type: decimal">
-<li><p>What type of data can we store on an assay? Can we add assays to our object?</p></li>
+<li><p>What type of data can we store on an assay?</p></li>
 <li><p>What information does <code>colData</code> has?</p></li>
 </ol>
 </div>
@@ -252,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="summarizedexperiment-review.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SummarizedExperiment)</span>
 <span id="cb8-2"><a href="summarizedexperiment-review.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(airway)</span>
 <span id="cb8-3"><a href="summarizedexperiment-review.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="summarizedexperiment-review.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(airway, <span class="at">package=</span><span class="st">&quot;airway&quot;</span>)</span>
+<span id="cb8-4"><a href="summarizedexperiment-review.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(airway, <span class="at">package =</span> <span class="st">&quot;airway&quot;</span>)</span>
 <span id="cb8-5"><a href="summarizedexperiment-review.html#cb8-5" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> airway</span></code></pre></div>
 <style>
 p.exercise  {
@@ -269,8 +269,8 @@ font-family: sans-serif;
 <strong>a)</strong> How many genes do we have in this object? And samples?
 <strong>b)</strong> How many samples come from donors treated (<code>trt</code>) with dexamethasone (<code>dex</code>)?
 </p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="summarizedexperiment-review.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## For a you could only print the summary of the object but since the idea is to understand </span></span>
-<span id="cb9-2"><a href="summarizedexperiment-review.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## how to explore the object try to find other function that gives you the answer</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="summarizedexperiment-review.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## For a) you could only print the summary of the object but since the idea is to understand</span></span>
+<span id="cb9-2"><a href="summarizedexperiment-review.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## how to explore the object find other function that gives you the answer.</span></span>
 <span id="cb9-3"><a href="summarizedexperiment-review.html#cb9-3" aria-hidden="true" tabindex="-1"></a>se</span>
 <span id="cb9-4"><a href="summarizedexperiment-review.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
 <span id="cb9-5"><a href="summarizedexperiment-review.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 63677 8 </span></span>
@@ -281,8 +281,8 @@ font-family: sans-serif;
 <span id="cb9-10"><a href="summarizedexperiment-review.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colnames(8): SRR1039508 SRR1039509 ... SRR1039520 SRR1039521</span></span>
 <span id="cb9-11"><a href="summarizedexperiment-review.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colData names(9): SampleName cell ... Sample BioSample</span></span>
 <span id="cb9-12"><a href="summarizedexperiment-review.html#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="summarizedexperiment-review.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Same thing for b, you could just print the colData and count the samples, but this is not </span></span>
-<span id="cb9-14"><a href="summarizedexperiment-review.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## efficient when our data consists in hundreds of samples. Find the answer using other tools</span></span>
+<span id="cb9-13"><a href="summarizedexperiment-review.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Same thing for b, you could just print the colData and count the samples, but this is not</span></span>
+<span id="cb9-14"><a href="summarizedexperiment-review.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## efficient when our data consists in hundreds of samples. Find the answer using other tools.</span></span>
 <span id="cb9-15"><a href="summarizedexperiment-review.html#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-16"><a href="summarizedexperiment-review.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)</span>
 <span id="cb9-17"><a href="summarizedexperiment-review.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DataFrame with 8 rows and 9 columns</span></span>
@@ -297,7 +297,7 @@ font-family: sans-serif;
 <strong>Exercise 2</strong>:
 Add another assay that has the log10 of your original counts
 </p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="summarizedexperiment-review.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## In our object, if you look at the part that says assays, we can see that at the moment </span></span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="summarizedexperiment-review.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## In our object, if you look at the part that says assays, we can see that at the moment</span></span>
 <span id="cb10-2"><a href="summarizedexperiment-review.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## we only have one with the name &quot;counts&quot;</span></span>
 <span id="cb10-3"><a href="summarizedexperiment-review.html#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="summarizedexperiment-review.html#cb10-4" aria-hidden="true" tabindex="-1"></a>se</span>
@@ -353,7 +353,7 @@ Add another assay that has the log10 of your original counts
 <span id="cb10-54"><a href="summarizedexperiment-review.html#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
 <span id="cb10-55"><a href="summarizedexperiment-review.html#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span>
 <span id="cb10-56"><a href="summarizedexperiment-review.html#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-57"><a href="summarizedexperiment-review.html#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="do">## If you use assays() whitout specifying the elemnt you want to see it shows you the length</span></span>
+<span id="cb10-57"><a href="summarizedexperiment-review.html#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="do">## If you use assays() without specifying the element you want to see it shows you the length</span></span>
 <span id="cb10-58"><a href="summarizedexperiment-review.html#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="do">## of the list and the name of each element</span></span>
 <span id="cb10-59"><a href="summarizedexperiment-review.html#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(se)</span>
 <span id="cb10-60"><a href="summarizedexperiment-review.html#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of length 1</span></span>
@@ -363,7 +363,7 @@ Add another assay that has the log10 of your original counts
 <span id="cb10-64"><a href="summarizedexperiment-review.html#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span>
 <span id="cb10-65"><a href="summarizedexperiment-review.html#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;counts&quot;</span></span>
 <span id="cb10-66"><a href="summarizedexperiment-review.html#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-67"><a href="summarizedexperiment-review.html#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="do">## Which can also be use to change names</span></span>
+<span id="cb10-67"><a href="summarizedexperiment-review.html#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="do">## Which can also be use to change the name of the assays</span></span>
 <span id="cb10-68"><a href="summarizedexperiment-review.html#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(se)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;foo&quot;</span></span>
 <span id="cb10-69"><a href="summarizedexperiment-review.html#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span>
 <span id="cb10-70"><a href="summarizedexperiment-review.html#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;foo&quot;</span></span>
@@ -377,8 +377,6 @@ Explore the metadata and add a new column that has the library size of each samp
 <span id="cb11-3"><a href="summarizedexperiment-review.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
 <span id="cb11-4"><a href="summarizedexperiment-review.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521 </span></span>
 <span id="cb11-5"><a href="summarizedexperiment-review.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   20637971   18809481   25348649   15163415   24448408   30818215   19126151   21164133</span></span></code></pre></div>
-<p><br />
-<br /></p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value
 #&gt;  version  R version 4.3.0 (2023-04-21)
