@@ -21,7 +21,7 @@ library(RefManageR)
 bib <- c(
     smokingMouse = citation("smokingMouse")[1],
     SummarizedExperiment = citation("SummarizedExperiment")[1]
-    )
+)
 
 options(max.print = 50)
 ```
@@ -30,7 +30,7 @@ options(max.print = 50)
 ## Overview
 The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations (features) of the samples, as well as additional metadata. Usually, this type of object is automatically generated as the output of other software (ie. `SPEAQeasy`), but you can also build them. 
 
-One of the main characteristics of `SumarizedExperiment` is that it allows you to handle you data in a "coordinated" way. For example, if you want to subset your data, with `SummarizedExperiment` you can do so without worring your assays and metadata unsync.
+One of the main characteristics of `SummarizedExperiment` is that it allows you to handle you data in a "coordinated" way. For example, if you want to subset your data, with `SummarizedExperiment` you can do so without worrying your assays and metadata unsync.
 
 
 ## Quiz
@@ -46,7 +46,7 @@ One of the main characteristics of `SumarizedExperiment` is that it allows you t
 </figure>
 
 
-3. What type of data can we store on an assay? Can we add assays to our object? 
+3. What type of data can we store on an assay?
 
 4. What information does `colData` has? 
 
@@ -57,14 +57,14 @@ We are gonna use the same sample data set as yesterday from the `airway` library
 
 ```{r, echo=FALSE}
 suppressPackageStartupMessages(library(SummarizedExperiment))
-suppressPackageStartupMessages(data(airway, package="airway"))
+suppressPackageStartupMessages(data(airway, package = "airway"))
 ```
 
 ```{r}
 library(SummarizedExperiment)
 library(airway)
 
-data(airway, package="airway")
+data(airway, package = "airway")
 se <- airway
 ```
 
@@ -87,12 +87,12 @@ font-family: sans-serif;
 
 
 ```{r}
-## For a you could only print the summary of the object but since the idea is to understand 
-## how to explore the object try to find other function that gives you the answer
+## For a) you could only print the summary of the object but since the idea is to understand
+## how to explore the object find other function that gives you the answer.
 se
 
-## Same thing for b, you could just print the colData and count the samples, but this is not 
-## efficient when our data consists in hundreds of samples. Find the answer using other tools
+## Same thing for b, you could just print the colData and count the samples, but this is not
+## efficient when our data consists in hundreds of samples. Find the answer using other tools.
 
 colData(se)
 ```
@@ -103,7 +103,7 @@ Add another assay that has the log10 of your original counts
 </p>
 
 ```{r}
-## In our object, if you look at the part that says assays, we can see that at the moment 
+## In our object, if you look at the part that says assays, we can see that at the moment
 ## we only have one with the name "counts"
 
 se
@@ -119,14 +119,14 @@ assays(se)$counts
 assay(se, 1)
 assay(se, "counts")
 
-## If you use assays() whitout specifying the elemnt you want to see it shows you the length
+## If you use assays() without specifying the element you want to see it shows you the length
 ## of the list and the name of each element
 assays(se)
 
 ## To obtain a list of names as a vector you can do:
 assayNames(se)
 
-## Which can also be use to change names
+## Which can also be use to change the name of the assays
 assayNames(se)[1] <- "foo"
 assayNames(se)
 assayNames(se)[1] <- "counts"
@@ -142,14 +142,7 @@ Explore the metadata and add a new column that has the library size of each samp
 ## To calculate the library size use
 
 apply(assay(se), 2, sum)
-
 ```
-
-
-<br />
-<br />
-
-
 
 
 ```{r echo=FALSE}
@@ -158,7 +151,3 @@ library("sessioninfo")
 options(width = 120)
 session_info()
 ```
-
-
-
-
