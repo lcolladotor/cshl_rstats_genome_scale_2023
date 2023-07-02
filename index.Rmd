@@ -51,10 +51,11 @@ See [CSHLData2023](https://docs.google.com/document/d/1pdvZFjJBwRUpA_VJOAFu4z-0E
 
 * [CSHL course](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23)
 * [GitHub source code](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023)
-* [Slack](https://cshldata-2023.slack.com).
-* [LieberInstitute/template_project](https://github.com/LieberInstitute/template_project)
+* [Slack](https://cshldata-2023.slack.com)
 * Example real project (by Daianna): [LieberInstitute/smokingMouse_Indirects](https://github.com/LieberInstitute/smokingMouse_Indirects)
 * `SPEAQeasyWorkshop2023` for BioC2023 (by Daianna and Renee): [LieberInstitute/SPEAQeasyWorkshop2023](https://github.com/LieberInstitute/SPEAQeasyWorkshop2023)
+* [LieberInstitute/template_project](https://github.com/LieberInstitute/template_project)
+* [LIBD rstats club](http://research.libd.org/rstatsclub/): check the [public schedule](https://docs.google.com/spreadsheets/d/1is8dZSd0FZ9Qi1Zvq1uRhm-P1McnJRd_zxdAfCRoMfA/edit?usp=sharing)
   
 
 ## Course Prerequisites {-}
