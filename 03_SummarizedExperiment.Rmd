@@ -41,13 +41,9 @@ One of the main characteristics of `SumarizedExperiment` is that it allows you t
 
 3. Which is the structure of the `SummarizedExperiment` class? 
 
-```{r include = FALSE}
-# download current version of SE diagram
-#download.file("https://docs.google.com/feeds/download/drawings/Export?id=18OcDb80FpvSGRYnFl-8vUqwNNLaNHrG1I9SWKHCselo&exportFormat=svg", "SE.svg")
-download.file("https://docs.google.com/feeds/download/drawings/Export?id=1kiC8Qlo1mhSnLDqkGiRNPSo6GWn3C2duBszCFbJCB-g&exportFormat=svg", "SE.svg")
-```
-
-![](SE.svg)
+<figure>
+    <img src="Figures/se_structure.png" width="700px" align=center />
+</figure>
 
 
 3. What type of data can we store on an assay? Can we add assays to our object? 
