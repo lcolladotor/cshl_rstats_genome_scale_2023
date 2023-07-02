@@ -1,3 +1,104 @@
 # SPEAQeasy introduction
 
 Instructor: Leo
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for your <a href="https://twitter.com/biorxivpreprint?ref_src=twsrc%5Etfw">@biorxivpreprint</a> first pre-print! 🙌🏽<br><br>SPEAQeasy is our <a href="https://twitter.com/nextflowio?ref_src=twsrc%5Etfw">@nextflowio</a> implementation of the <a href="https://twitter.com/hashtag/RNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#RNAseq</a> processing pipeline that produces <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a>-friendly <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> objects that we use at <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw">@LieberInstitute</a><br><br>📜 <a href="https://t.co/zKuBRtBCmY">https://t.co/zKuBRtBCmY</a> <a href="https://t.co/F83fXI90eP">pic.twitter.com/F83fXI90eP</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1337637531945496577?ref_src=twsrc%5Etfw">December 12, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+## 2022-04-20 overview slides
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/33scakbTNO0?start=318" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<script defer class="speakerdeck-embed" data-slide="7" data-id="3c32410b600740abb4724486e83ebd30" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
+
+## SPEAQeasy main links
+
+* Paper: https://doi.org/10.1186/s12859-021-04142-3
+* Documentation website: http://research.libd.org/SPEAQeasy/
+  - Source code: https://github.com/LieberInstitute/SPEAQeasy
+* Example website: http://research.libd.org/SPEAQeasy-example/
+  - Source code: https://github.com/LieberInstitute/SPEAQeasy-example
+* Differential expression analysis bootcamp: https://lcolladotor.github.io/bioc_team_ds/differential-expression-analysis.html
+  - 3 sessions, each 2 hours long
+  
+## Pipeline outputs
+
+* Documentation chapter: http://research.libd.org/SPEAQeasy/outputs.html
+
+That's enough links! Lets download some data to check it out. We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
+
+```{r download_data_biocfilecache_speaqeasy_example}
+## Load the container package for this type of data
+library("SummarizedExperiment")
+
+## Download and cache the file
+library("BiocFileCache")
+bfc <- BiocFileCache::BiocFileCache()
+cached_rse_gene_example <- BiocFileCache::bfcrpath(
+    x = bfc,
+    "https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData"
+)
+
+## Check the local path on our cache
+cached_rse_gene_example
+
+## Load the rse_gene object
+load(cached_rse_gene_example, verbose = TRUE)
+
+## General overview of the object
+rse_gene
+```
+
+## Exercises
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+
+</style>
+
+<p class="exercise">
+**Exercise 1**:
+Either by exploring the object `rse_gene` or by checking the `SPEAQeasy` documentation, what are the possible values for the variable `trimmed`?
+</p>
+
+<p class="exercise">
+**Exercise 2**:
+Across genes (`rse_gene`), exons (`rse_exon`), exon-exon junctions (`rse_jx`), and transcripts (`rse_tx`), what part of the output is identical?
+</p>
+
+## Solutions
+
+<style>
+p.solution  {
+background-color: #9C42C9;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+
+<p class="solution">
+**Solution 1**:
+From http://research.libd.org/SPEAQeasy/outputs.html#quality-metrics the answer was:
+</p>
+
+> A boolean value (“TRUE” or “FALSE”), indicating whether the given sample underwent trimming
+
+With code, it's this:
+
+```{r}
+class(rse_gene$trimmed)
+
+## logical vectors can take 2 values (plus the third `NA` if it's missing)
+```
+
+<p class="solution">
+**Solution 2**:
+From http://research.libd.org/SPEAQeasy/outputs.html#coldata-of-rse-objects the answer is that all objects have identical `colData()`.
+</p>
+
