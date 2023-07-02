@@ -243,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-10"><a href="smokingmouse-rse.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb12-11"><a href="smokingmouse-rse.html#cb12-11" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb12-12"><a href="smokingmouse-rse.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC1 </span></span>
-<span id="cb12-13"><a href="smokingmouse-rse.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55b38a334e3_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb12-13"><a href="smokingmouse-rse.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55b4ebdbc5a_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb12-14"><a href="smokingmouse-rse.html#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-15"><a href="smokingmouse-rse.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb12-16"><a href="smokingmouse-rse.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -374,7 +374,7 @@ font-family: sans-serif;
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="smokingmouse-rse.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original dimensions of the data</span></span>
 <span id="cb16-2"><a href="smokingmouse-rse.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene)</span>
 <span id="cb16-3"><a href="smokingmouse-rse.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 55401   208</span></span>
-<span id="cb16-4"><a href="smokingmouse-rse.html#cb16-4" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[,<span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt<span class="sc">==</span><span class="st">&#39;Nicotine&#39;</span>)]</span>
+<span id="cb16-4"><a href="smokingmouse-rse.html#cb16-4" aria-hidden="true" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[, <span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt <span class="sc">==</span> <span class="st">&quot;Nicotine&quot;</span>)]</span>
 <span id="cb16-5"><a href="smokingmouse-rse.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">## New dimensions</span></span>
 <span id="cb16-6"><a href="smokingmouse-rse.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_nic)</span>
 <span id="cb16-7"><a href="smokingmouse-rse.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 55401    65</span></span></code></pre></div>
