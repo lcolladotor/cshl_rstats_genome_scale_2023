@@ -115,7 +115,6 @@ p.exercise  {
 background-color: #E4EDE2;
 padding: 9px;
 border: 1px solid black;
-margin-left: 25px;
 border-radius: 10px;
 font-family: sans-serif;
 }
