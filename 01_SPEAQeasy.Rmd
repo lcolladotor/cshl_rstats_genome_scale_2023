@@ -58,7 +58,6 @@ border: 1px solid black;
 border-radius: 10px;
 font-family: sans-serif;
 }
-
 </style>
 
 <p class="exercise">
@@ -75,12 +74,13 @@ Across genes (`rse_gene`), exons (`rse_exon`), exon-exon junctions (`rse_jx`), a
 
 <style>
 p.solution  {
-background-color: #9C42C9;
+background-color: #C093D6;
 padding: 9px;
 border: 1px solid black;
 border-radius: 10px;
 font-family: sans-serif;
 }
+</style>
 
 <p class="solution">
 **Solution 1**:
@@ -96,6 +96,8 @@ class(rse_gene$trimmed)
 
 ## logical vectors can take 2 values (plus the third `NA` if it's missing)
 ```
+
+</p>
 
 <p class="solution">
 **Solution 2**:
