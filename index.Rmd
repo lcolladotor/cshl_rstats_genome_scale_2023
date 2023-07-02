@@ -69,7 +69,8 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 
 ## Install required packages
 BiocManager::install(
-    c(  "usethis", ## Utilities
+    c(
+        "usethis", ## Utilities
         "BiocFileCache",
         "RefManageR",
         "here",

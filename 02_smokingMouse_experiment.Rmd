@@ -20,7 +20,7 @@ library(RefManageR)
 bib <- c(
     smokingMouse = citation("smokingMouse")[1],
     SummarizedExperiment = citation("SummarizedExperiment")[1]
-    )
+)
 ```
 
 

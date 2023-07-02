@@ -135,7 +135,7 @@ For illustrative purposes, we'll use nicotine data at the gene level only so let
 ```{r extract_nicotine_data}
 ## Original dimensions of the data
 dim(rse_gene)
-rse_gene_nic <- rse_gene[,which(rse_gene$Expt=='Nicotine')]
+rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine")]
 ## New dimensions
 dim(rse_gene_nic)
 ```
@@ -155,7 +155,7 @@ table(rse_gene_nic$Expt)
 ```{r exercise3_data, eval=FALSE, echo=FALSE}
 ## Solution
 table(rse_gene$Age)
-pup_samples <- rse_gene[, which(rse_gene$Age=='Pup')]
+pup_samples <- rse_gene[, which(rse_gene$Age == "Pup")]
 table(pup_samples$Sex)
 ```
 
