@@ -61,18 +61,3 @@ As presented in **Figure 1: A)**, 36 pregnant dams and 35 non-pregnant female ad
 
  </figcaption>
 </figure>
-
-
-
-```{r echo=FALSE}
-## Session info
-library("sessioninfo")
-options(width = 120)
-session_info()
-```
-
-
-
-
-
-
