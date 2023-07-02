@@ -12,6 +12,9 @@ As previously described, the smoking mouse project is a complex study with more 
 For illustrative purposes, we'll use nicotine data at the gene level which reside in a `RangedSummarizedExperiment` (RSE) object called `rse_gene`. We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
 
 ```{r download_data_biocfilecache}
+## Load the container package for this type of data
+library("SummarizedExperiment")
+
 ## Download and cache the file
 library("BiocFileCache")
 bfc <- BiocFileCache::BiocFileCache()

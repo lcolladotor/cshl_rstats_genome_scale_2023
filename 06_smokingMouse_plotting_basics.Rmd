@@ -4,6 +4,9 @@ Instructor: Daianna
 
 
 ```{r download_data_biocfilecache_repeat}
+## Load the container package for this type of data
+library("SummarizedExperiment")
+
 ## Download data
 library("BiocFileCache")
 bfc <- BiocFileCache::BiocFileCache()
