@@ -649,6 +649,97 @@ p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
    Try the function yourself with different QC metrics and sample variables! 
 </div>
 
+## Miscellaneous about CPM values
+
+```{r}
+## Why do we see log(CPM + 0.5) values smaller than -1?
+log2(0.5)
+
+## Maybe the prior count is getting shrunk
+log2(0.05)
+
+## logcounts values we see across all samples
+summary(as.vector(assays(rse_gene)$logcounts))
+
+## Sample 203 in particular has some cases like it
+summary(assays(rse_gene)$logcounts[, 203])
+
+## Where we find one gene in sample 203 with that property
+i_gene <- which.min(assays(rse_gene)$logcounts[, 203])
+
+## We can check the logcounts and counts
+assays(rse_gene)$logcounts[i_gene, 203]
+assays(rse_gene)$counts[i_gene, 203]
+
+## What if we try to reverse engineer the number?
+2^assays(rse_gene)$logcounts[i_gene, 203]
+log2(0.01578469)
+0.01578469 / 0.5
+0.5 * 0.03156938
+
+## Hm... 31 doesn't ring any bells
+1 / 0.03156938
+```
+
+* Bioconductor website for browsing code: https://code.bioconductor.org/
+* Bioconductor support website: https://support.bioconductor.org/
+
+Links Leo showed:
+
+* `smokingMouse_indirects` code for computing the `logcounts` https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L35
+* https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9
+* https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14
+* https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L78
+* https://code.bioconductor.org/browse/edgeR/blob/devel/src/R_calculate_cpm.cpp#L30
+* https://code.bioconductor.org/browse/edgeR/blob/devel/src/add_prior.cpp#L29
+* https://support.bioconductor.org/post/search/?query=prior.count+edgeR
+* https://support.bioconductor.org/p/59846/
+* https://support.bioconductor.org/p/59846/
+
+```{r}
+## Check the documentation
+## ?edgeR::cpm
+## > If log-values are computed, then a small count, given by prior.count but scaled to be proportional to the library size, is added to y to avoid taking the log of zero.
+
+## https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L100C51-L100C135
+## Let's save the output of calcNormFactors
+DGElist_with_norm <- edgeR::calcNormFactors(rse_gene, method = "TMM")
+class(DGElist_with_norm)
+
+## https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9
+## We can see that it has the lib.size and norm.factors values there
+head(DGElist_with_norm$samples[, seq_len(3)])
+
+## Exploring lib.size across all samples
+summary(DGElist_with_norm$samples$lib.size)
+DGElist_with_norm$samples$lib.size[203]
+
+## https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14
+## We can see there how edgeR::cpm() computes the adjusted library sizes
+summary(DGElist_with_norm$samples$norm.factors)
+DGElist_with_norm$samples$norm.factors[203]
+
+## adjusted library sizes
+DGElist_with_norm$samples$lib.size[203] * DGElist_with_norm$samples$norm.factors[203]
+
+## Let's save these values for all samples
+adj_lib_size <- DGElist_with_norm$samples$lib.size * DGElist_with_norm$samples$norm.factors
+adj_lib_size[203]
+
+## Proportional adjusted library size to the mean adjusted library size
+adj_lib_size[203] / mean(adj_lib_size)
+1 / (adj_lib_size[203] / mean(adj_lib_size))
+## Hm.... we are missing something to get to the values we saw earlier when we
+## tried to reverse engineer the issue.
+
+## Hm.... I couldn't recalculate that -5.98 value manually
+log2(0.5 / (adj_lib_size[203] / mean(adj_lib_size) * 2))
+```
+
+In the end, I (Leo) don't know enough C++ to fully understand the math of what `edgeR` is doing. But well, the point is that it is scaling that `prior.count` (`0.5` in the `smokingMouse` case instead of the default value of `2`) which results in a smaller number, and hence why the `log2()` value of it is smaller than `-1`.
+
+<script defer class="speakerdeck-embed" data-slide="24" data-id="434ae0541ae64731a95f35431acb754d" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
 
 ## References {-}
 

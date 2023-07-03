@@ -1,4 +1,4 @@
-## ----download_data_biocfilecache_repeat--------------------------
+## ----download_data_biocfilecache_repeat----------------------
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -20,7 +20,7 @@ load(cached_rse_gene, verbose = TRUE)
 rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine")]
 
 
-## ----Data preparation, message=FALSE, warning=FALSE--------------
+## ----Data preparation, message=FALSE, warning=FALSE----------
 library("ggplot2")
 
 ## Histogram and density plot of read counts before and after normalization
@@ -43,7 +43,7 @@ plot <- ggplot(logcounts_data, aes(x = logcounts)) +
 plot + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----  message=FALSE, warning=FALSE------------------------------
+## ----  message=FALSE, warning=FALSE--------------------------
 ## Retain genes that passed filtering step
 rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
 
@@ -59,7 +59,7 @@ plot <- ggplot(filt_logcounts_data, aes(x = logcounts)) +
 plot + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----QC_boxplots,  message=FALSE, warning=FALSE------------------
+## ----QC_boxplots,  message=FALSE, warning=FALSE--------------
 library("Hmisc")
 library("stringr")
 library("cowplot")
@@ -156,31 +156,31 @@ multiple_QC_boxplots <- function(sample_var) {
 }
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_boxplots("Age")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_boxplots("Sex")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_boxplots("Group")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_boxplots("Pregnancy")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_boxplots("plate")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_boxplots("flowcell")
 
 
-## ----"QC scatterplots", message=FALSE, warning=FALSE-------------
+## ----"QC scatterplots", message=FALSE, warning=FALSE---------
 ## Scatterplots for a pair of QC metrics
 
 QC_scatterplots <- function(sample_var, qc_metric1, qc_metric2) {
@@ -254,23 +254,23 @@ multiple_QC_scatterplots <- function(qc_metric1, qc_metric2) {
 }
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_scatterplots("mitoRate", "rRNA_rate")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_scatterplots("mitoRate", "totalAssignedGene")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_scatterplots("sum", "detected")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_scatterplots("sum", "totalAssignedGene")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 multiple_QC_scatterplots("detected", "totalAssignedGene")
 
 
@@ -280,7 +280,7 @@ multiple_QC_scatterplots("detected", "totalAssignedGene")
 ## ## Because in mitoMapped you take reads that mapped to the whole mt chr, in subsets_Mito_sum only reads that were aligned to mt genes. But there's almost a perfect correlation between these two metrics.
 
 
-## ----"QC sample filtering", message=FALSE, warning=FALSE---------
+## ----"QC sample filtering", message=FALSE, warning=FALSE-----
 library("scater")
 library("rlang")
 library("ggrepel")
@@ -368,7 +368,7 @@ rse_gene_pups$Retention_after_QC_filtering <- as.vector(sapply(rse_gene_pups$SAM
 }))
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 ## Boxplots of QC metrics after sample filtering
 
 ## Boxplots
@@ -432,7 +432,7 @@ boxplots_after_QC_filtering <- function(rse_gene, qc_metric, sample_var) {
 }
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 ## Plots
 
 ## All samples together
@@ -440,13 +440,13 @@ p <- boxplots_after_QC_filtering(rse_gene_filt, "mitoRate", "Age")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 ## Adult samples
 p <- boxplots_after_QC_filtering(rse_gene_adults, "mitoRate", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE----------------------------
 ## Pup samples
 p <- boxplots_after_QC_filtering(rse_gene_pups, "rRNA_rate", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
@@ -465,4 +465,74 @@ p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 ## 
 ## p <- boxplots_after_QC_filtering(rse_gene_adults, "sum", "Group")
 ## p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
+
+
+## ------------------------------------------------------------
+## Why do we see log(CPM + 0.5) values smaller than -1?
+log2(0.5)
+
+## Maybe the prior count is getting shrunk
+log2(0.05)
+
+## logcounts values we see across all samples
+summary(as.vector(assays(rse_gene)$logcounts))
+
+## Sample 203 in particular has some cases like it
+summary(assays(rse_gene)$logcounts[, 203])
+
+## Where we find one gene in sample 203 with that property
+i_gene <- which.min(assays(rse_gene)$logcounts[, 203])
+
+## We can check the logcounts and counts
+assays(rse_gene)$logcounts[i_gene, 203]
+assays(rse_gene)$counts[i_gene, 203]
+
+## What if we try to reverse engineer the number?
+2^assays(rse_gene)$logcounts[i_gene, 203]
+log2(0.01578469)
+0.01578469 / 0.5
+0.5 * 0.03156938
+
+## Hm... 31 doesn't ring any bells
+1 / 0.03156938
+
+
+## ------------------------------------------------------------
+## Check the documentation
+## ?edgeR::cpm
+## > If log-values are computed, then a small count, given by prior.count but scaled to be proportional to the library size, is added to y to avoid taking the log of zero.
+
+## https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L100C51-L100C135
+## Let's save the output of calcNormFactors
+DGElist_with_norm <- edgeR::calcNormFactors(rse_gene, method = "TMM")
+class(DGElist_with_norm)
+
+## https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9
+## We can see that it has the lib.size and norm.factors values there
+head(DGElist_with_norm$samples[, seq_len(3)])
+
+## Exploring lib.size across all samples
+summary(DGElist_with_norm$samples$lib.size)
+DGElist_with_norm$samples$lib.size[203]
+
+## https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14
+## We can see there how edgeR::cpm() computes the adjusted library sizes
+summary(DGElist_with_norm$samples$norm.factors)
+DGElist_with_norm$samples$norm.factors[203]
+
+## adjusted library sizes
+DGElist_with_norm$samples$lib.size[203] * DGElist_with_norm$samples$norm.factors[203]
+
+## Let's save these values for all samples
+adj_lib_size <- DGElist_with_norm$samples$lib.size * DGElist_with_norm$samples$norm.factors
+adj_lib_size[203]
+
+## Proportional adjusted library size to the mean adjusted library size
+adj_lib_size[203] / mean(adj_lib_size)
+1 / (adj_lib_size[203] / mean(adj_lib_size))
+## Hm.... we are missing something to get to the values we saw earlier when we
+## tried to reverse engineer the issue.
+
+## Hm.... I couldn't recalculate that -5.98 value manually
+log2(0.5 / (adj_lib_size[203] / mean(adj_lib_size) * 2))
 
