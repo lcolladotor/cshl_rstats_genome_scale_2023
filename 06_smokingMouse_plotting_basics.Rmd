@@ -52,10 +52,11 @@ The main objective of this first part is to explore the quality of the samples, 
 </figure>
 
 
-## 1. Data preparation {-}
+## Data preparation
+
 Even before exploring the samples, the first step is to normalize the counts and filter non-expressed genes; we won't do the processes themselves since we already have normalized and filtered data but let's check why these steps are important and where to extract the data we need for posterior analyses.  
 
-### 1.1 Data normalization {-}
+### Data normalization
  
 Data normalization is a primordial step when working with expression data because raw counts do not necessarily reflect real expression measures of the genes since there are technical differences in the way the libraries are prepared and sequenced, as well as intrinsic differences in the genes that are translated into more or less mapping reads. Particularly, there are *within-sample effects* that are the differences between genes in the same sample, such as their **length** (the longer the gene, the more reads it will have) and **GC content**, factors that contribute to variations in their counts. On the other hand, *between-sample effects* are differences between samples such as the **sequencing depth**, i.e., the total number of molecules sequenced, and the **library size**, i.e., the total number of reads of each sample [1].
 
@@ -94,7 +95,7 @@ plot + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 As presented, after data transformation, we can now see a more widespread distribution of the counts, but note that most of them are zeros in the first plot (the one with the raw counts) and those zeros remain after normalization, corresponding to counts below 0 in the second plot. That is because we haven't filtered the low and zero-expressed genes. 
 
 
-### 1.2 Gene filtering {-}
+### Gene filtering
 
 Low-expressed or non-expressed genes in many samples are not of biological interest in a study of differential expression because they don't inform about the gene expression changes and they are, by definition, not differentially expressed, so we have to drop them using `filterByExpr()` from `r BiocStyle::Biocpkg("edgeR")` that only keeps genes with at least *K* CPM in *n* samples and with a minimum total number of counts across all samples.
 
@@ -119,11 +120,12 @@ In this third plot we can observe a curve that is closer (though not completely)
 With the object `rse_gene_filt` we can proceed with downstream analyses. 
 
 
-## 2. Exploratory Data Analysis {-}
+## Exploratory Data Analysis
+
 The first formal step that we will be performing is the sample exploration. This crucial initial part of the analysis consists of an examination of differences and relationships between Quality-Control (QC) metrics of the samples from different groups in order to identify poor-quality samples that must be removed before DEA. After that, the sample variables in the meta-data also need to be analyzed and filtered based on the percentage of gene expression variance that they explain for each gene. 
 
 
-### 2.1 Quality Control Analysis {-}
+### Quality Control Analysis
 
 First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See **Sample Information** section in chapter 04 for the description of the variables.  
 
@@ -154,7 +156,7 @@ font-family: sans-serif;
 </div>
 
 
-**2.1.1 Evaluate QC metrics for groups of samples**
+#### Evaluate QC metrics for groups of samples
 
 Fortunately, we can identify to some extent possible factors that could have influenced on the quality of the samples, as well as isolated samples that are problematic. To do that, we will create boxplots that present the distribution of the samples' metrics separating them by sample variables. 
 
@@ -301,7 +303,7 @@ For the flowcell, again not worrying distinctiveness are detected, with the exce
 In all the previous plots we can appreciate a group of samples placed below in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> that correspond to pup samples. The relationship is more fuzzy in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>.
 
 
-**2.1.2 Examine relationships between QC metrics of samples**
+#### Examine relationships between QC metrics of samples
 
 Secondly, we want to analyze if there are relationships between QC variables that explain the presence of samples with two or more particular QC metrics. For that, scatterplots are useful because they enable the evaluation of pairs of samples' QC metrics. 
 
@@ -439,7 +441,7 @@ multiple_QC_scatterplots("subsets_Mito_sum", "mitoMapped")
 Remarkably, samples were not differentiated by any other variable (including Group!) but the differences between adult and pup metrics suggest that they must be splitted into two different groups for the following analyses.
 
 
-**2.1.3 QC sample filtering**
+#### QC sample filtering
 
 After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based, precisely, on these metrics. For that, we will use `isOutlier()` from `r BiocStyle::Biocpkg("scater")` to identify outlier samples only at the lower end or the higher end, depending on the QC metric.
 
