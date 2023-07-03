@@ -338,11 +338,12 @@ This will be an open ended exercise. Think of it as time to practice what we’v
 </p>
 <p>If you prefer a more structured exercise:</p>
 <p class="exercise">
-<p><strong>Exercise option 2</strong>:
+<strong>Exercise option 2</strong>:
 1. Choose two <code>recount3</code> studies that can be used to study similar research questions. For example, two studies with brain samples across age.
 2. Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.
 - If you don’t want to choose another <code>recount3</code> study, you could use the <code>smokingMouse</code> data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.
-- Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.</p>
+- Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.
+</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-1" aria-hidden="true" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
 <span id="cb85-2"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
 <span id="cb85-3"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
@@ -350,6 +351,7 @@ This will be an open ended exercise. Think of it as time to practice what we’v
 <span id="cb85-5"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
 <span id="cb85-6"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
 <span id="cb85-7"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p class="exercise">
 <ol start="3" style="list-style-type: decimal">
 <li>Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use <code>GGally::ggpairs()</code> for this <a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="uri">https://ggobi.github.io/ggally/reference/ggpairs.html</a>. Or <code>ggpubr::ggscatter()</code> <a href="https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html" class="uri">https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html</a>.</li>
 </ol>
