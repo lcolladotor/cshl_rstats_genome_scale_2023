@@ -1,3 +1,256 @@
 # Differential gene expression analysis with limma
 
 Instructor: Leo
+
+## SRP045638 data
+
+We'll use data from https://www.ncbi.nlm.nih.gov/sra/?term=SRP045638 processed and made available through the `recount3` project. First, we need to download the data with the same commands we saw earlier.
+
+```{r download_SRP045638}
+library("recount3")
+
+human_projects <- available_projects()
+
+rse_gene_SRP045638 <- create_rse(
+    subset(
+        human_projects,
+        project == "SRP045638" & project_type == "data_sources"
+    )
+)
+assay(rse_gene_SRP045638, "counts") <- compute_read_counts(rse_gene_SRP045638)
+```
+
+Now that we have the data and have computed the read counts (which will be needed for downstream analyses), we can use `expand_sra_attributes()` to make it easier to use the sample information in downstream analyses. However, we have to resolve some issues with this data first.
+
+```{r describe_issue}
+## Can you notice the problem with the sample information?
+rse_gene_SRP045638$sra.sample_attributes[1:3]
+```
+
+Lets resolve the issue we detected with this sample information. We'll resolve this by eliminating some information that is only present in a subset of samples and that we don't need.
+
+```{r solve_issue}
+rse_gene_SRP045638$sra.sample_attributes <- gsub("dev_stage;;Fetal\\|", "", rse_gene_SRP045638$sra.sample_attributes)
+rse_gene_SRP045638$sra.sample_attributes[1:3]
+```
+
+Now we can continue our work using similar code from the one we used earlier.
+
+```{r attributes}
+rse_gene_SRP045638 <- expand_sra_attributes(rse_gene_SRP045638)
+
+colData(rse_gene_SRP045638)[
+    ,
+    grepl("^sra_attribute", colnames(colData(rse_gene_SRP045638)))
+]
+```
+
+As well use the sampel information for building our statistical model, it will important that we make sure that it is on the correct format R expects later on.
+
+```{r re_cast}
+## Recast character vectors into numeric or factor ones
+rse_gene_SRP045638$sra_attribute.age <- as.numeric(rse_gene_SRP045638$sra_attribute.age)
+rse_gene_SRP045638$sra_attribute.disease <- factor(tolower(rse_gene_SRP045638$sra_attribute.disease))
+rse_gene_SRP045638$sra_attribute.RIN <- as.numeric(rse_gene_SRP045638$sra_attribute.RIN)
+rse_gene_SRP045638$sra_attribute.sex <- factor(rse_gene_SRP045638$sra_attribute.sex)
+
+## Summary of our variables of interest
+summary(as.data.frame(colData(rse_gene_SRP045638)[
+    ,
+    grepl("^sra_attribute.[age|disease|RIN|sex]", colnames(colData(rse_gene_SRP045638)))
+]))
+```
+
+<a href="https://r4ds.had.co.nz/explore-intro.html"><img src="images/data-science-explore.png" width="800px" /></a>
+
+We'll now create a few variables from this sample information so we can use them in our analysis.
+
+```{r new_variables}
+## We'll want to look for differences between prenatal and postnatal samples
+rse_gene_SRP045638$prenatal <- factor(ifelse(rse_gene_SRP045638$sra_attribute.age < 0, "prenatal", "postnatal"))
+table(rse_gene_SRP045638$prenatal)
+
+## http://rna.recount.bio/docs/quality-check-fields.html
+rse_gene_SRP045638$assigned_gene_prop <- rse_gene_SRP045638$recount_qc.gene_fc_count_all.assigned / rse_gene_SRP045638$recount_qc.gene_fc_count_all.total
+summary(rse_gene_SRP045638$assigned_gene_prop)
+with(colData(rse_gene_SRP045638), plot(assigned_gene_prop, sra_attribute.RIN))
+
+## Hm... lets check if therese a difference between these two groups
+with(colData(rse_gene_SRP045638), tapply(assigned_gene_prop, prenatal, summary))
+```
+
+We can next drop some samples that we consider of low quality as well as genes that have low expression levels.
+
+
+```{r filter_rse}
+## Lets save our full object for now in case we change our minds later on
+rse_gene_SRP045638_unfiltered <- rse_gene_SRP045638
+
+## Lets drop some bad samples. On a real analysis, you would likely use
+## some statistical method for identifying outliers such as scuttle::isOutlier()
+hist(rse_gene_SRP045638$assigned_gene_prop)
+table(rse_gene_SRP045638$assigned_gene_prop < 0.3)
+rse_gene_SRP045638 <- rse_gene_SRP045638[, rse_gene_SRP045638$assigned_gene_prop > 0.3]
+
+## Lets compute the mean expression levels.
+## 
+## Note: in a real analysis we would likely do this with RPKMs or CPMs instead
+## of counts. That is, we would use one of the following options:
+# edgeR::filterByExpr() https://bioconductor.org/packages/edgeR/ https://rdrr.io/bioc/edgeR/man/filterByExpr.html
+# genefilter::genefilter() https://bioconductor.org/packages/genefilter/ https://rdrr.io/bioc/genefilter/man/genefilter.html
+# jaffelab::expression_cutoff() http://research.libd.org/jaffelab/reference/expression_cutoff.html
+#
+gene_means <- rowMeans(assay(rse_gene_SRP045638, "counts"))
+summary(gene_means)
+
+## We can now drop genes with low expression levels
+rse_gene_SRP045638 <- rse_gene_SRP045638[gene_means > 0.1, ]
+
+## Final dimensions of our RSE object
+dim(rse_gene_SRP045638)
+
+## Percent of genes that we retained:
+round(nrow(rse_gene_SRP045638) / nrow(rse_gene_SRP045638_unfiltered) * 100, 2)
+```
+
+We are now ready to continue with the differential expression analysis. Well, almost! 😅
+
+
+## Data normalization
+
+* Read the _A hypothetical scenario_ in one of the `edgeR` papers https://genomebiology.biomedcentral.com/articles/10.1186/gb-2010-11-3-r25#Sec2 to understand the concept of _composition bias_.
+* This concept is still relevant nowadays with single cell RNA-seq (scRNA-seq) data as you can see at http://bioconductor.org/books/3.16/OSCA.multisample/multi-sample-comparisons.html#performing-the-de-analysis. In that chapter they describe a series of steps for re-using bulk RNA-seq methods with scRNA-seq data.
+
+
+```{r normalize}
+library("edgeR")
+dge <- DGEList(
+    counts = assay(rse_gene_SRP045638, "counts"),
+    genes = rowData(rse_gene_SRP045638)
+)
+dge <- calcNormFactors(dge)
+```
+
+## Differential expression
+
+First of all, lets define our differential expression model. Typically, we would explore the data more to check that there are no other quality control issues with our samples and to explore in more detail the relationship between our sample phenotype variables.
+
+```{r explore_gene_prop_by_age}
+library("ggplot2")
+ggplot(as.data.frame(colData(rse_gene_SRP045638)), aes(y = assigned_gene_prop, x = prenatal)) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    ylab("Assigned Gene Prop") +
+    xlab("Age Group")
+```
+
+For example, we would explore the contribution of different variables to the gene expression variability we observe using the [`variancePartition`](https://bioconductor.org/packages/variancePartition) and [`scater`](https://bioconductor.org/packages/scater) Bioconductor packages, among others. We'll do more of this tomorrow but you can also check this [LIBD rstats club](https://docs.google.com/document/d/1hil3zwPN6BW6HlwldLbM1FdlLIBWKFNXRUqJJEK_-eY/edit)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OdNU5LUOHng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+For now, we'll use the following stastistical model.
+
+```{r statiscal_model}
+mod <- model.matrix(~ prenatal + sra_attribute.RIN + sra_attribute.sex + assigned_gene_prop,
+    data = colData(rse_gene_SRP045638)
+)
+colnames(mod)
+```
+
+
+Now that we have a model, we can use `limma` to actually compute the differential expression statistics and extract the results.
+
+```{r run_limma}
+library("limma")
+vGene <- voom(dge, mod, plot = TRUE)
+
+eb_results <- eBayes(lmFit(vGene))
+
+de_results <- topTable(
+    eb_results,
+    coef = 2,
+    number = nrow(rse_gene_SRP045638),
+    sort.by = "none"
+)
+dim(de_results)
+head(de_results)
+
+## Differentially expressed genes between pre and post natal with FDR < 5%
+table(de_results$adj.P.Val < 0.05)
+
+## We can now visualize the resulting differential expression results
+plotMA(eb_results, coef = 2)
+
+## We can also make a volcano plot
+volcanoplot(eb_results, coef = 2, highlight = 3, names = de_results$gene_name)
+de_results[de_results$gene_name %in% c("ZSCAN2", "VASH2", "KIAA0922"), ]
+```
+
+* https://www.genecards.org/cgi-bin/carddisp.pl?gene=ZSCAN2
+* https://www.genecards.org/cgi-bin/carddisp.pl?gene=VASH2
+* https://www.genecards.org/cgi-bin/carddisp.pl?gene=KIAA0922
+
+## Visualizing DEGs
+
+
+From `vGene$E` we can extract the normalized expression values that `limma-voom` computed. We can check the top 50 differentially expressed genes (DEGs) for example.
+
+```{r pheatmap}
+## Extract the normalized expression values from our limma-voom result
+## from earlier
+exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 50, ]
+
+## We can now build a table with information about our samples and 
+## then make the names a bit more friendly by making them easier to
+## understand
+df <- as.data.frame(colData(rse_gene_SRP045638)[, c("prenatal", "sra_attribute.RIN", "sra_attribute.sex")])
+colnames(df) <- c("AgeGroup", "RIN", "Sex")
+
+## Next, we can make a basic heatmap
+library("pheatmap")
+pheatmap(
+    exprs_heatmap,
+    cluster_rows = TRUE,
+    cluster_cols = TRUE,
+    show_rownames = FALSE,
+    show_colnames = FALSE,
+    annotation_col = df
+)
+```
+
+We'll learn more about gene expression heatmaps tomorrow!
+
+Overall, these DEG results are not as surprising since there is a huge difference between pre and post natal gene expression in the human DLPFC. We can see that more clearly with a MDS (multidimensional scaling) plot just like its described [in the limma workflow](http://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/limmaWorkflow.html#unsupervised-clustering-of-samples). Tomas will teach you more about dimension reduction tomorrow.
+
+```{r plot_mds}
+## For nicer colors
+library("RColorBrewer")
+
+## Mapping age groups into colors
+col.group <- df$AgeGroup
+levels(col.group) <- brewer.pal(nlevels(col.group), "Set1")
+col.group <- as.character(col.group)
+
+## MDS by age groups
+plotMDS(vGene$E, labels = df$AgeGroup, col = col.group)
+
+## Mapping Sex values into colors
+col.sex <- df$Sex
+levels(col.sex) <- brewer.pal(nlevels(col.sex), "Dark2")
+col.sex <- as.character(col.sex)
+
+## MDS by Sex
+plotMDS(vGene$E, labels = df$Sex, col = col.sex)
+```
+
+## Community
+
+Some `edgeR` and `limma` authors:
+
+* https://twitter.com/mritchieau
+* https://twitter.com/davisjmcc
+* https://twitter.com/markrobinsonca
+* https://twitter.com/AliciaOshlack
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">If you&#39;ve ever been dazed by design matrices or confused by contrasts when performing gene expression analysis in limma, the new article by Charity Law is for you <a href="https://t.co/ZSMOA20tdm">https://t.co/ZSMOA20tdm</a> <a href="https://twitter.com/hashtag/bioconductor?src=hash&amp;ref_src=twsrc%5Etfw">#bioconductor</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> (1/2)</p>&mdash; Matt Ritchie (@mritchieau) <a href="https://twitter.com/mritchieau/status/1338639551128952832?ref_src=twsrc%5Etfw">December 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
