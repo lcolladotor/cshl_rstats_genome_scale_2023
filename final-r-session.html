@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>17 Downloading public Visium spatial data and visualizing it with spatialLIBD | Statistical Analysis of Genome Scale Data 2023</title>
-  <meta name="description" content="17 Downloading public Visium spatial data and visualizing it with spatialLIBD | Statistical Analysis of Genome Scale Data 2023" />
+  <title>Final R Session | Statistical Analysis of Genome Scale Data 2023</title>
+  <meta name="description" content="Final R Session | Statistical Analysis of Genome Scale Data 2023" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="17 Downloading public Visium spatial data and visualizing it with spatialLIBD | Statistical Analysis of Genome Scale Data 2023" />
+  <meta property="og:title" content="Final R Session | Statistical Analysis of Genome Scale Data 2023" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2023" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="17 Downloading public Visium spatial data and visualizing it with spatialLIBD | Statistical Analysis of Genome Scale Data 2023" />
+  <meta name="twitter:title" content="Final R Session | Statistical Analysis of Genome Scale Data 2023" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"/>
-<link rel="next" href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"/>
+<link rel="prev" href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -232,9 +232,258 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd" class="section level1 hasAnchor" number="17">
-<h1><span class="header-section-number">17</span> Downloading public Visium spatial data and visualizing it with spatialLIBD<a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Instructor: Leo</p>
+<div id="final-r-session" class="section level1 unnumbered hasAnchor">
+<h1>Final R Session<a href="final-r-session.html#final-r-session" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is the final R session after all the code in this book is run sequentially.</p>
+<pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;  setting  value
+#&gt;  version  R version 4.3.0 (2023-04-21)
+#&gt;  os       Ubuntu 22.04.2 LTS
+#&gt;  system   x86_64, linux-gnu
+#&gt;  ui       X11
+#&gt;  language (EN)
+#&gt;  collate  en_US.UTF-8
+#&gt;  ctype    en_US.UTF-8
+#&gt;  tz       UTC
+#&gt;  date     2023-07-03
+#&gt;  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;  package                * version   date (UTC) lib source
+#&gt;  airway                 * 1.20.0    2023-04-27 [1] Bioconductor
+#&gt;  AnnotationDbi            1.62.1    2023-05-02 [1] Bioconductor
+#&gt;  AnnotationHub            3.8.0     2023-04-25 [1] Bioconductor
+#&gt;  aod                      1.3.2     2022-04-02 [1] RSPM (R 4.3.0)
+#&gt;  attempt                  0.3.1     2020-05-03 [1] RSPM (R 4.3.0)
+#&gt;  backports                1.4.1     2021-12-13 [1] RSPM (R 4.3.0)
+#&gt;  base64enc                0.1-3     2015-07-28 [2] RSPM (R 4.3.0)
+#&gt;  beachmat                 2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  beeswarm                 0.4.0     2021-06-01 [1] RSPM (R 4.3.0)
+#&gt;  benchmarkme              1.0.8     2022-06-12 [1] RSPM (R 4.3.0)
+#&gt;  benchmarkmeData          1.0.4     2020-04-23 [1] RSPM (R 4.3.0)
+#&gt;  bibtex                   0.5.1     2023-01-26 [1] RSPM (R 4.3.0)
+#&gt;  Biobase                * 2.60.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocFileCache          * 2.8.0     2023-04-25 [1] Bioconductor
+#&gt;  BiocGenerics           * 0.46.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocIO                   1.10.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocManager              1.30.21   2023-06-10 [1] RSPM (R 4.3.0)
+#&gt;  BiocNeighbors            1.18.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocParallel           * 1.34.2    2023-05-22 [1] Bioconductor
+#&gt;  BiocSingular             1.16.0    2023-04-25 [1] Bioconductor
+#&gt;  BiocStyle              * 2.28.0    2023-04-25 [1] Bioconductor
+#&gt;  biocthis               * 1.10.3    2023-06-07 [1] Bioconductor
+#&gt;  BiocVersion              3.17.1    2022-11-04 [2] Bioconductor
+#&gt;  Biostrings               2.68.1    2023-05-16 [1] Bioconductor
+#&gt;  bit                      4.0.5     2022-11-15 [1] RSPM (R 4.3.0)
+#&gt;  bit64                    4.0.5     2020-08-30 [1] RSPM (R 4.3.0)
+#&gt;  bitops                   1.0-7     2021-04-24 [1] RSPM (R 4.3.0)
+#&gt;  blob                     1.2.4     2023-03-17 [1] RSPM (R 4.3.0)
+#&gt;  bookdown                 0.34      2023-05-09 [1] RSPM (R 4.3.0)
+#&gt;  boot                     1.3-28.1  2022-11-22 [3] CRAN (R 4.3.0)
+#&gt;  broom                    1.0.5     2023-06-09 [1] RSPM (R 4.3.0)
+#&gt;  bslib                    0.5.0     2023-06-09 [2] RSPM (R 4.3.0)
+#&gt;  cachem                   1.0.8     2023-05-01 [2] RSPM (R 4.3.0)
+#&gt;  caTools                  1.18.2    2021-03-28 [1] RSPM (R 4.3.0)
+#&gt;  checkmate                2.2.0     2023-04-27 [1] RSPM (R 4.3.0)
+#&gt;  circlize                 0.4.15    2022-05-10 [1] RSPM (R 4.3.0)
+#&gt;  cli                      3.6.1     2023-03-23 [2] RSPM (R 4.3.0)
+#&gt;  clue                     0.3-64    2023-01-31 [1] RSPM (R 4.3.0)
+#&gt;  cluster                  2.1.4     2022-08-22 [3] CRAN (R 4.3.0)
+#&gt;  codetools                0.2-19    2023-02-01 [3] CRAN (R 4.3.0)
+#&gt;  colorspace               2.1-0     2023-01-23 [1] RSPM (R 4.3.0)
+#&gt;  colourpicker             1.2.0     2022-10-28 [1] RSPM (R 4.3.0)
+#&gt;  ComplexHeatmap         * 2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  config                   0.3.1     2020-12-17 [1] RSPM (R 4.3.0)
+#&gt;  cowplot                * 1.1.1     2020-12-30 [1] RSPM (R 4.3.0)
+#&gt;  crayon                   1.5.2     2022-09-29 [2] RSPM (R 4.3.0)
+#&gt;  curl                     5.0.1     2023-06-07 [2] RSPM (R 4.3.0)
+#&gt;  data.table               1.14.8    2023-02-17 [1] RSPM (R 4.3.0)
+#&gt;  DBI                      1.1.3     2022-06-18 [1] RSPM (R 4.3.0)
+#&gt;  dbplyr                 * 2.3.2     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  DelayedArray             0.26.5    2023-06-30 [1] Bioconductor
+#&gt;  DelayedMatrixStats       1.22.1    2023-06-09 [1] Bioconductor
+#&gt;  digest                   0.6.32    2023-06-26 [2] RSPM (R 4.3.0)
+#&gt;  doParallel               1.0.17    2022-02-07 [1] RSPM (R 4.3.0)
+#&gt;  dotCall64                1.0-2     2022-10-03 [1] RSPM (R 4.3.0)
+#&gt;  dplyr                    1.1.2     2023-04-20 [1] RSPM (R 4.3.0)
+#&gt;  dqrng                    0.3.0     2021-05-01 [1] RSPM (R 4.3.0)
+#&gt;  DropletUtils             1.20.0    2023-04-25 [1] Bioconductor
+#&gt;  DT                       0.28      2023-05-18 [1] RSPM (R 4.3.0)
+#&gt;  edgeR                  * 3.42.4    2023-05-31 [1] Bioconductor
+#&gt;  ellipsis                 0.3.2     2021-04-29 [2] RSPM (R 4.3.0)
+#&gt;  EnvStats                 2.7.0     2022-03-07 [1] RSPM (R 4.3.0)
+#&gt;  evaluate                 0.21      2023-05-05 [2] RSPM (R 4.3.0)
+#&gt;  ExperimentHub            2.8.0     2023-04-25 [1] Bioconductor
+#&gt;  ExploreModelMatrix     * 1.12.0    2023-04-25 [1] Bioconductor
+#&gt;  fansi                    1.0.4     2023-01-22 [2] RSPM (R 4.3.0)
+#&gt;  farver                   2.1.1     2022-07-06 [1] RSPM (R 4.3.0)
+#&gt;  fastmap                  1.1.1     2023-02-24 [2] RSPM (R 4.3.0)
+#&gt;  fields                   14.1      2022-08-12 [1] RSPM (R 4.3.0)
+#&gt;  filelock                 1.0.2     2018-10-05 [1] RSPM (R 4.3.0)
+#&gt;  foreach                  1.5.2     2022-02-02 [1] RSPM (R 4.3.0)
+#&gt;  foreign                  0.8-84    2022-12-06 [3] CRAN (R 4.3.0)
+#&gt;  Formula                  1.2-5     2023-02-24 [1] RSPM (R 4.3.0)
+#&gt;  fs                       1.6.2     2023-04-25 [2] RSPM (R 4.3.0)
+#&gt;  generics                 0.1.3     2022-07-05 [1] RSPM (R 4.3.0)
+#&gt;  GenomeInfoDb           * 1.36.1    2023-06-21 [1] Bioconductor
+#&gt;  GenomeInfoDbData         1.2.10    2023-05-17 [1] Bioconductor
+#&gt;  GenomicAlignments        1.36.0    2023-04-25 [1] Bioconductor
+#&gt;  GenomicRanges          * 1.52.0    2023-04-25 [1] Bioconductor
+#&gt;  GetoptLong               1.0.5     2020-12-15 [1] RSPM (R 4.3.0)
+#&gt;  ggbeeswarm               0.7.2     2023-04-29 [1] RSPM (R 4.3.0)
+#&gt;  ggplot2                * 3.4.2     2023-04-03 [1] RSPM (R 4.3.0)
+#&gt;  ggrepel                * 0.9.3     2023-02-03 [1] RSPM (R 4.3.0)
+#&gt;  GlobalOptions            0.1.2     2020-06-10 [1] RSPM (R 4.3.0)
+#&gt;  glue                     1.6.2     2022-02-24 [2] RSPM (R 4.3.0)
+#&gt;  golem                    0.4.1     2023-06-05 [1] RSPM (R 4.3.0)
+#&gt;  gplots                   3.1.3     2022-04-25 [1] RSPM (R 4.3.0)
+#&gt;  gridExtra                2.3       2017-09-09 [1] RSPM (R 4.3.0)
+#&gt;  gtable                   0.3.3     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  gtools                   3.9.4     2022-11-27 [1] RSPM (R 4.3.0)
+#&gt;  HDF5Array                1.28.1    2023-05-01 [1] Bioconductor
+#&gt;  here                   * 1.0.1     2020-12-13 [1] RSPM (R 4.3.0)
+#&gt;  highr                    0.10      2022-12-22 [2] RSPM (R 4.3.0)
+#&gt;  Hmisc                  * 5.1-0     2023-05-08 [1] RSPM (R 4.3.0)
+#&gt;  hms                      1.1.3     2023-03-21 [1] RSPM (R 4.3.0)
+#&gt;  htmlTable                2.4.1     2022-07-07 [1] RSPM (R 4.3.0)
+#&gt;  htmltools                0.5.5     2023-03-23 [2] RSPM (R 4.3.0)
+#&gt;  htmlwidgets              1.6.2     2023-03-17 [2] RSPM (R 4.3.0)
+#&gt;  httpuv                   1.6.11    2023-05-11 [2] RSPM (R 4.3.0)
+#&gt;  httr                     1.4.6     2023-05-08 [2] RSPM (R 4.3.0)
+#&gt;  igraph                   1.5.0     2023-06-16 [1] RSPM (R 4.3.0)
+#&gt;  interactiveDisplayBase   1.38.0    2023-04-25 [1] Bioconductor
+#&gt;  IRanges                * 2.34.1    2023-06-22 [1] Bioconductor
+#&gt;  irlba                    2.3.5.1   2022-10-03 [1] RSPM (R 4.3.0)
+#&gt;  iSEE                   * 2.12.0    2023-04-25 [1] Bioconductor
+#&gt;  iterators                1.0.14    2022-02-05 [1] RSPM (R 4.3.0)
+#&gt;  jquerylib                0.1.4     2021-04-26 [2] RSPM (R 4.3.0)
+#&gt;  jsonlite                 1.8.7     2023-06-29 [2] RSPM (R 4.3.0)
+#&gt;  KEGGREST                 1.40.0    2023-04-25 [1] Bioconductor
+#&gt;  KernSmooth               2.23-21   2023-05-03 [3] RSPM (R 4.3.0)
+#&gt;  knitr                    1.43      2023-05-25 [2] RSPM (R 4.3.0)
+#&gt;  labeling                 0.4.2     2020-10-20 [1] RSPM (R 4.3.0)
+#&gt;  later                    1.3.1     2023-05-02 [2] RSPM (R 4.3.0)
+#&gt;  lattice                  0.21-8    2023-04-05 [3] CRAN (R 4.3.0)
+#&gt;  lazyeval                 0.2.2     2019-03-15 [1] RSPM (R 4.3.0)
+#&gt;  lifecycle                1.0.3     2022-10-07 [2] RSPM (R 4.3.0)
+#&gt;  limma                  * 3.56.2    2023-06-04 [1] Bioconductor
+#&gt;  lme4                     1.1-33    2023-04-25 [1] RSPM (R 4.3.0)
+#&gt;  lobstr                 * 1.1.2     2022-06-22 [1] RSPM (R 4.3.0)
+#&gt;  locfit                   1.5-9.8   2023-06-11 [1] RSPM (R 4.3.0)
+#&gt;  lubridate                1.9.2     2023-02-10 [1] RSPM (R 4.3.0)
+#&gt;  magick                   2.7.4     2023-03-09 [1] RSPM (R 4.3.0)
+#&gt;  magrittr                 2.0.3     2022-03-30 [2] RSPM (R 4.3.0)
+#&gt;  maps                     3.4.1     2022-10-30 [1] RSPM (R 4.3.0)
+#&gt;  MASS                     7.3-60    2023-05-04 [3] RSPM (R 4.3.0)
+#&gt;  Matrix                   1.5-4.1   2023-05-18 [3] RSPM (R 4.3.0)
+#&gt;  MatrixGenerics         * 1.12.2    2023-06-09 [1] Bioconductor
+#&gt;  matrixStats            * 1.0.0     2023-06-02 [1] RSPM (R 4.3.0)
+#&gt;  memoise                  2.0.1     2021-11-26 [2] RSPM (R 4.3.0)
+#&gt;  mgcv                     1.8-42    2023-03-02 [3] CRAN (R 4.3.0)
+#&gt;  mime                     0.12      2021-09-28 [2] RSPM (R 4.3.0)
+#&gt;  miniUI                   0.1.1.1   2018-05-18 [2] RSPM (R 4.3.0)
+#&gt;  minqa                    1.2.5     2022-10-19 [1] RSPM (R 4.3.0)
+#&gt;  munsell                  0.5.0     2018-06-12 [1] RSPM (R 4.3.0)
+#&gt;  mvtnorm                  1.2-2     2023-06-08 [1] RSPM (R 4.3.0)
+#&gt;  nlme                     3.1-162   2023-01-31 [3] CRAN (R 4.3.0)
+#&gt;  nloptr                   2.0.3     2022-05-26 [1] RSPM (R 4.3.0)
+#&gt;  nnet                     7.3-19    2023-05-03 [3] RSPM (R 4.3.0)
+#&gt;  paletteer                1.5.0     2022-10-19 [1] RSPM (R 4.3.0)
+#&gt;  patchwork              * 1.1.2     2022-08-19 [1] RSPM (R 4.3.0)
+#&gt;  pbkrtest                 0.5.2     2023-01-19 [1] RSPM (R 4.3.0)
+#&gt;  pheatmap               * 1.0.12    2019-01-04 [1] RSPM (R 4.3.0)
+#&gt;  pillar                   1.9.0     2023-03-22 [2] RSPM (R 4.3.0)
+#&gt;  pkgconfig                2.0.3     2019-09-22 [2] RSPM (R 4.3.0)
+#&gt;  plotly                   4.10.2    2023-06-03 [1] RSPM (R 4.3.0)
+#&gt;  plyr                     1.8.8     2022-11-11 [1] RSPM (R 4.3.0)
+#&gt;  png                      0.1-8     2022-11-29 [1] RSPM (R 4.3.0)
+#&gt;  postcards              * 0.2.3     2022-01-07 [1] RSPM (R 4.3.0)
+#&gt;  prettyunits              1.1.1     2020-01-24 [2] RSPM (R 4.3.0)
+#&gt;  progress                 1.2.2     2019-05-16 [1] RSPM (R 4.3.0)
+#&gt;  promises                 1.2.0.1   2021-02-11 [2] RSPM (R 4.3.0)
+#&gt;  purrr                    1.0.1     2023-01-10 [2] RSPM (R 4.3.0)
+#&gt;  R.cache                  0.16.0    2022-07-21 [1] RSPM (R 4.3.0)
+#&gt;  R.methodsS3              1.8.2     2022-06-13 [1] RSPM (R 4.3.0)
+#&gt;  R.oo                     1.25.0    2022-06-12 [1] RSPM (R 4.3.0)
+#&gt;  R.utils                  2.12.2    2022-11-11 [1] RSPM (R 4.3.0)
+#&gt;  R6                       2.5.1     2021-08-19 [2] RSPM (R 4.3.0)
+#&gt;  rappdirs                 0.3.3     2021-01-31 [2] RSPM (R 4.3.0)
+#&gt;  rbibutils                2.2.13    2023-01-13 [1] RSPM (R 4.3.0)
+#&gt;  RColorBrewer           * 1.1-3     2022-04-03 [1] RSPM (R 4.3.0)
+#&gt;  Rcpp                     1.0.10    2023-01-22 [2] RSPM (R 4.3.0)
+#&gt;  RCurl                    1.98-1.12 2023-03-27 [1] RSPM (R 4.3.0)
+#&gt;  Rdpack                   2.4       2022-07-20 [1] RSPM (R 4.3.0)
+#&gt;  recount3               * 1.10.2    2023-05-07 [1] Bioconductor
+#&gt;  RefManageR             * 1.4.0     2022-09-30 [1] RSPM (R 4.3.0)
+#&gt;  remaCor                  0.0.16    2023-06-21 [1] RSPM (R 4.3.0)
+#&gt;  rematch2                 2.1.2     2020-05-01 [2] RSPM (R 4.3.0)
+#&gt;  reshape2                 1.4.4     2020-04-09 [1] RSPM (R 4.3.0)
+#&gt;  restfulr                 0.0.15    2022-06-16 [1] RSPM (R 4.3.0)
+#&gt;  rhdf5                    2.44.0    2023-04-25 [1] Bioconductor
+#&gt;  rhdf5filters             1.12.1    2023-04-30 [1] Bioconductor
+#&gt;  Rhdf5lib                 1.22.0    2023-04-25 [1] Bioconductor
+#&gt;  RhpcBLASctl              0.23-42   2023-02-11 [1] RSPM (R 4.3.0)
+#&gt;  rintrojs                 0.3.2     2022-08-09 [1] RSPM (R 4.3.0)
+#&gt;  rjson                    0.2.21    2022-01-09 [1] RSPM (R 4.3.0)
+#&gt;  rlang                  * 1.1.1     2023-04-28 [2] RSPM (R 4.3.0)
+#&gt;  rmarkdown                2.22      2023-06-01 [2] RSPM (R 4.3.0)
+#&gt;  rpart                    4.1.19    2022-10-21 [3] CRAN (R 4.3.0)
+#&gt;  rprojroot                2.0.3     2022-04-02 [2] RSPM (R 4.3.0)
+#&gt;  Rsamtools                2.16.0    2023-04-25 [1] Bioconductor
+#&gt;  RSQLite                  2.3.1     2023-04-03 [1] RSPM (R 4.3.0)
+#&gt;  rstudioapi               0.14      2022-08-22 [2] RSPM (R 4.3.0)
+#&gt;  rsvd                     1.0.5     2021-04-16 [1] RSPM (R 4.3.0)
+#&gt;  rtracklayer              1.60.0    2023-04-25 [1] Bioconductor
+#&gt;  S4Arrays                 1.0.4     2023-05-14 [1] Bioconductor
+#&gt;  S4Vectors              * 0.38.1    2023-05-02 [1] Bioconductor
+#&gt;  sass                     0.4.6     2023-05-03 [2] RSPM (R 4.3.0)
+#&gt;  ScaledMatrix             1.8.1     2023-05-03 [1] Bioconductor
+#&gt;  scales                   1.2.1     2022-08-20 [1] RSPM (R 4.3.0)
+#&gt;  scater                 * 1.28.0    2023-04-25 [1] Bioconductor
+#&gt;  scuttle                * 1.10.1    2023-05-02 [1] Bioconductor
+#&gt;  sessioninfo            * 1.2.2     2021-12-06 [2] RSPM (R 4.3.0)
+#&gt;  shape                    1.4.6     2021-05-19 [1] RSPM (R 4.3.0)
+#&gt;  shiny                    1.7.4     2022-12-15 [2] RSPM (R 4.3.0)
+#&gt;  shinyAce                 0.4.2     2022-05-06 [1] RSPM (R 4.3.0)
+#&gt;  shinydashboard           0.7.2     2021-09-30 [1] RSPM (R 4.3.0)
+#&gt;  shinyjs                  2.1.0     2021-12-23 [1] RSPM (R 4.3.0)
+#&gt;  shinyWidgets             0.7.6     2023-01-08 [1] RSPM (R 4.3.0)
+#&gt;  SingleCellExperiment   * 1.22.0    2023-04-25 [1] Bioconductor
+#&gt;  smokingMouse           * 0.99.5    2023-06-28 [1] Github (LieberInstitute/smokingMouse@2e7640c)
+#&gt;  spam                     2.9-1     2022-08-07 [1] RSPM (R 4.3.0)
+#&gt;  sparseMatrixStats        1.12.1    2023-06-20 [1] Bioconductor
+#&gt;  SpatialExperiment      * 1.10.0    2023-04-25 [1] Bioconductor
+#&gt;  spatialLIBD            * 1.12.0    2023-04-27 [1] Bioconductor
+#&gt;  statmod                  1.5.0     2023-01-06 [1] RSPM (R 4.3.0)
+#&gt;  stringi                  1.7.12    2023-01-11 [2] RSPM (R 4.3.0)
+#&gt;  stringr                * 1.5.0     2022-12-02 [2] RSPM (R 4.3.0)
+#&gt;  styler                   1.10.1    2023-06-05 [1] RSPM (R 4.3.0)
+#&gt;  SummarizedExperiment   * 1.30.2    2023-06-06 [1] Bioconductor
+#&gt;  tibble                   3.2.1     2023-03-20 [2] RSPM (R 4.3.0)
+#&gt;  tidyr                    1.3.0     2023-01-24 [1] RSPM (R 4.3.0)
+#&gt;  tidyselect               1.2.0     2022-10-10 [1] RSPM (R 4.3.0)
+#&gt;  timechange               0.2.0     2023-01-11 [1] RSPM (R 4.3.0)
+#&gt;  usethis                * 2.2.1     2023-06-23 [2] RSPM (R 4.3.0)
+#&gt;  utf8                     1.2.3     2023-01-31 [2] RSPM (R 4.3.0)
+#&gt;  variancePartition      * 1.30.2    2023-06-07 [1] Bioconductor
+#&gt;  vctrs                    0.6.3     2023-06-14 [2] RSPM (R 4.3.0)
+#&gt;  vipor                    0.4.5     2017-03-22 [1] RSPM (R 4.3.0)
+#&gt;  viridis                  0.6.3     2023-05-03 [1] RSPM (R 4.3.0)
+#&gt;  viridisLite              0.4.2     2023-05-02 [1] RSPM (R 4.3.0)
+#&gt;  withr                    2.5.0     2022-03-03 [2] RSPM (R 4.3.0)
+#&gt;  xfun                     0.39      2023-04-20 [2] RSPM (R 4.3.0)
+#&gt;  XML                      3.99-0.14 2023-03-19 [1] RSPM (R 4.3.0)
+#&gt;  xml2                     1.3.4     2023-04-27 [2] RSPM (R 4.3.0)
+#&gt;  xtable                   1.8-4     2019-04-21 [2] RSPM (R 4.3.0)
+#&gt;  XVector                  0.40.0    2023-04-25 [1] Bioconductor
+#&gt;  yaml                     2.3.7     2023-01-23 [2] RSPM (R 4.3.0)
+#&gt;  zlibbioc                 1.46.0    2023-04-25 [1] Bioconductor
+#&gt; 
+#&gt;  [1] /__w/_temp/Library
+#&gt;  [2] /usr/local/lib/R/site-library
+#&gt;  [3] /usr/local/lib/R/library
+#&gt; 
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 
 </div>
 <div class="container">
@@ -285,8 +534,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-<a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
