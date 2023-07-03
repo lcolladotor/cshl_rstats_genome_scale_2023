@@ -29,8 +29,8 @@ _Don’t let useful data go to waste_ by Franziska Denk https://doi.org/10.1038/
     - Pre-print: May 2021 https://doi.org/10.1101/2021.05.21.445138
     - Paper: November 2021 https://doi.org/10.1186/s13059-021-02533-6
     
-* These project help so anyone, particularly those without access to a _high performance computing_ (HPC) system (aka a compute cluster), can access these data.
-* It's like democratizing access to the data ^^.
+* These projects help such that anyone, particularly those without access to a _high performance computing_ (HPC) system (aka a compute cluster), can access these datasets.
+* It's like democratizing access to the gene expression data ^^.
 
 ## Using recount3
 
