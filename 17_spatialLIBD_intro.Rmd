@@ -155,10 +155,9 @@ font-family: sans-serif;
 **Exercise 1**:
 </p>
 
+<div class="alert alert-info">
 * Plot a continuous variable of your choice with and without the histology image on the background.
   - For example, visualize the k-means with $k = 10$ clustering results computed by `SpaceRanger`. 
 * Use custom colors of your choice. See https://emilhvitfeldt.github.io/r-color-palettes/discrete.html to choose a color palette.
   - For example, use the `Polychrome::palette36()` colors.
-
-
-
+</div>
