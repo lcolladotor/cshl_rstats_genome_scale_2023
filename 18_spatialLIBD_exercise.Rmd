@@ -1,3 +1,34 @@
 # Re-use of bulk RNA-seq methods for spatial data exercise
 
 Instructor: Leo
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Hot of the pre-print press! 🔥 Our latest work <a href="https://twitter.com/hashtag/spatialDLPFC?src=hash&amp;ref_src=twsrc%5Etfw">#spatialDLPFC</a> pairs <a href="https://twitter.com/hashtag/snRNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#snRNAseq</a> and <a href="https://twitter.com/hashtag/Visium?src=hash&amp;ref_src=twsrc%5Etfw">#Visium</a> spatial transcriptomic data in the human <a href="https://twitter.com/hashtag/DLPFC?src=hash&amp;ref_src=twsrc%5Etfw">#DLPFC</a> building a neuroanatomical atlas of this critical brain region 🧠<a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw">@LieberInstitute</a> <a href="https://twitter.com/10xGenomics?ref_src=twsrc%5Etfw">@10xGenomics</a> <a href="https://twitter.com/hashtag/scitwitter?src=hash&amp;ref_src=twsrc%5Etfw">#scitwitter</a><br>📰 <a href="https://t.co/NJWJ1mwB9J">https://t.co/NJWJ1mwB9J</a> <a href="https://t.co/l8W154XZ50">pic.twitter.com/l8W154XZ50</a></p>&mdash; Louise Huuki-Myers (@lahuuki) <a href="https://twitter.com/lahuuki/status/1626686409313763328?ref_src=twsrc%5Etfw">February 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+## Spatial registration
+
+Louise A. Huuki-Myers recently contributed a new vignette to `spatialLIBD` as noted on the package news / changelog: http://research.libd.org/spatialLIBD/news/index.html#spatiallibd-1132. To follow it, you might want to have the latest version of `spatialLIBD` installed. You can install it with this command:
+
+```{r, eval = FALSE}
+BiocManager::install("LieberInstitute/spatialLIBD")
+```
+
+Alternatively, you could have a Bioconductor devel setup, but that's beyond the scope of this course. Using the `devel` docker image at http://bioconductor.org/help/docker/ is probably the easiest option.
+
+After installing this version of `spatialLIBD`, you should be able to run without any issues the code Louise explains at http://research.libd.org/spatialLIBD/articles/guide_to_spatial_registration.html. This same information is displayed at https://bioconductor.org/packages/devel/data/experiment/vignettes/spatialLIBD/inst/doc/guide_to_spatial_registration.html.
+
+## Exercise
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="exercise">
+**Exercise**:
+Follow the vignette on spatial registration. Do the results change when you use `cutoff_merge_ratio = 0.1`? What is this argument controlling?
+</p>
