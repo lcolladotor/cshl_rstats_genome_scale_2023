@@ -146,3 +146,57 @@ Explore the metadata and add a new column that has the library size of each samp
 
 apply(assay(se), 2, sum)
 ```
+
+
+## Solutions
+
+<style>
+p.solution  {
+background-color: #C093D6;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+
+<p class="solution">
+**Solution 1**:
+</p>
+
+```{r}
+## For a), dim() gives the desired answer
+
+dim(se)
+
+## For b), 
+
+colData(se)[colData(se)$dex == "trt", ]
+```
+
+
+<p class="solution">
+**Solution 2**:
+</p>
+
+```{r}
+## There are multiple ways to do it
+
+assay(se, "logcounts") <- log10(assay(se, "counts"))
+
+assays(se)$logcounts_v2 <- log10(assays(se)$counts)
+```
+
+<p class="solution">
+**Solution 3**:
+</p>
+
+```{r}
+## To add the library size we an use..
+
+colData(se)$library_size <- apply(assay(se), 2, sum)
+
+names(colData(se))
+```
+
