@@ -1,4 +1,4 @@
-## ----"download_10x_data"---------------------------------------------
+## ----"download_10x_data"-------------------------------------
 ## Download and save a local cache of the data provided by 10x Genomics
 bfc <- BiocFileCache::BiocFileCache()
 lymph.url <-
@@ -14,7 +14,7 @@ lymph.url <-
 lymph.data <- sapply(lymph.url, BiocFileCache::bfcrpath, x = bfc)
 
 
-## ----"extract_files"-------------------------------------------------
+## ----"extract_files"-----------------------------------------
 ## Extract the files to a temporary location
 ## (they'll be deleted once you close your R session)
 xx <- sapply(lymph.data, utils::untar, exdir = file.path(tempdir(), "outs"))
@@ -40,7 +40,7 @@ list.files(lymph.dirs)
 ## 1.4G	genes/genes.gtf
 
 
-## ----"use_gencode_gtf"-----------------------------------------------
+## ----"use_gencode_gtf"---------------------------------------
 ## Download the Gencode v32 GTF file and cache it
 gtf_cache <- BiocFileCache::bfcrpath(
     bfc,
@@ -54,7 +54,7 @@ gtf_cache <- BiocFileCache::bfcrpath(
 gtf_cache
 
 
-## ----wrapper_functions-----------------------------------------------
+## ----wrapper_functions---------------------------------------
 ## Import the data as a SpatialExperiment object using wrapper functions
 ## provided by spatialLIBD
 library("spatialLIBD")
@@ -73,7 +73,7 @@ spe_wrapper
 lobstr::obj_size(spe_wrapper)
 
 
-## ----"run_shiny_app_wrapper"-----------------------------------------
+## ----"run_shiny_app_wrapper"---------------------------------
 ## Run our shiny app
 if (interactive()) {
     vars <- colnames(colData(spe_wrapper))

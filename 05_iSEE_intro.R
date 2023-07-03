@@ -1,4 +1,4 @@
-## --------------------------------------------------------------------
+## ------------------------------------------------------------
 ## Lets build a simple SummarizedExperiment object following information
 ## from the documentation
 library("SummarizedExperiment")
@@ -42,13 +42,13 @@ rse <- SummarizedExperiment(
 rse
 
 
-## ----isee_basic, eval = FALSE----------------------------------------
+## ----isee_basic, eval = FALSE--------------------------------
 ## ## Let's explore the `rse` object interactively
 ## library("iSEE")
 ## iSEE::iSEE(rse)
 
 
-## ----download_sce_layer----------------------------------------------
+## ----download_sce_layer--------------------------------------
 ## Lets get some data using spatialLIBD
 sce_layer <- spatialLIBD::fetch_data("sce_layer")
 sce_layer
@@ -57,6 +57,6 @@ sce_layer
 lobstr::obj_size(sce_layer)
 
 
-## ----explore_sce_layer, eval = FALSE---------------------------------
+## ----explore_sce_layer, eval = FALSE-------------------------
 ## iSEE::iSEE(sce_layer)
 
