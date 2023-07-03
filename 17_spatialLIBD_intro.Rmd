@@ -124,6 +124,12 @@ if (interactive()) {
 
 The result should look pretty much like https://libd.shinyapps.io/spatialLIBD_Human_Lymph_Node_10x/.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cCUHRdI4NSc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The apps showcased above are linked to and described at http://research.libd.org/spatialDLPFC/#interactive-websites. This video was part of Nicholas J. Eagles recent LIBD seminar presentation.
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Congrats Nick for successfully completing your 1st🥇 <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw">@LieberInstitute</a> seminar 🙌🏽<br><br>Nick presented <a href="https://twitter.com/hashtag/spatialDLPFC?src=hash&amp;ref_src=twsrc%5Etfw">#spatialDLPFC</a> spot deconvolution results <a href="https://twitter.com/10xGenomics?ref_src=twsrc%5Etfw">@10xGenomics</a> <a href="https://twitter.com/hashtag/snRNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#snRNAseq</a> <a href="https://twitter.com/hashtag/Visium?src=hash&amp;ref_src=twsrc%5Etfw">#Visium</a> <a href="https://twitter.com/hashtag/VisiumSPG?src=hash&amp;ref_src=twsrc%5Etfw">#VisiumSPG</a><br><br>🛝 <a href="https://t.co/2wMLSkTLyW">https://t.co/2wMLSkTLyW</a><br><br>Interact with the data <a href="https://t.co/ya4oyiMVsN">https://t.co/ya4oyiMVsN</a><a href="https://t.co/cTdGNswysy">https://t.co/cTdGNswysy</a> <a href="https://t.co/Ggmnnmj2nA">pic.twitter.com/Ggmnnmj2nA</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1673831490965106691?ref_src=twsrc%5Etfw">June 27, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 ## Visualize spatial plots
 
 Now that we have explored the spatially resolved transcriptomics data with the `spatialLIBD::run_app()` `shiny` website, lets make some plots ourselves.
