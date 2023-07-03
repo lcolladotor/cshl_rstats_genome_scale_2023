@@ -28,6 +28,8 @@ Teach assistants:
 * [Daianna González Padilla](https://daianna21.github.io/), [Twitter](https://twitter.com/daianna_glez)
 * [Fernanda Renee García Flores](https://reneegf.github.io/), [Twitter](https://twitter.com/SubmarineGene)
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a>, <a href="https://twitter.com/SubmarineGene?ref_src=twsrc%5Etfw">@SubmarineGene</a>, and <a href="https://twitter.com/daianna_glez?ref_src=twsrc%5Etfw">@daianna_glez</a> to <a href="https://twitter.com/cshlcourses?ref_src=twsrc%5Etfw">@cshlcourses</a> on Statistical Analysis of Genome Scale Data. Materials here:<a href="https://t.co/0JGzEEf3Yx">https://t.co/0JGzEEf3Yx</a></p>&mdash; Sean Davis (@seandavis12) <a href="https://twitter.com/seandavis12/status/1675926879826485253?ref_src=twsrc%5Etfw">July 3, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 ## Download course materials {-}
 
 Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2023')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2023**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023). This command downloads a static version of the course materials. 
@@ -35,7 +37,7 @@ Download the materials for this course with `usethis::use_course('lcolladotor/cs
 If you want to be able to easily download updates, we recommend using `Git`. [_Happy Git and GitHub for the useR_](https://happygitwithr.com/) is great for getting your computer ready to use `Git` and `GitHub`. If you already have a `GitHub` account, you can instead use this command to download the course:
 
 ```bash
-## Downloado the first time
+## Download it the first time
 git clone https://github.com/lcolladotor/cshl_rstats_genome_scale_2023.git
 
 ## To update the contents, use:
