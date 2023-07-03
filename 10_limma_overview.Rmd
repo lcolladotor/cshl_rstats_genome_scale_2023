@@ -75,7 +75,7 @@ rse_gene_SRP045638$assigned_gene_prop <- rse_gene_SRP045638$recount_qc.gene_fc_c
 summary(rse_gene_SRP045638$assigned_gene_prop)
 with(colData(rse_gene_SRP045638), plot(assigned_gene_prop, sra_attribute.RIN))
 
-## Hm... lets check if therese a difference between these two groups
+## Hm... lets check if there is a difference between these two groups
 with(colData(rse_gene_SRP045638), tapply(assigned_gene_prop, prenatal, summary))
 ```
 
@@ -123,6 +123,7 @@ We are now ready to continue with the differential expression analysis. Well, al
 
 
 ```{r normalize}
+## Use edgeR::calcNormFactors() to address the composition bias
 library("edgeR")
 dge <- DGEList(
     counts = assay(rse_gene_SRP045638, "counts"),
@@ -246,7 +247,7 @@ col.sex <- as.character(col.sex)
 limma::plotMDS(vGene$E, labels = df$Sex, col = col.sex)
 ```
 
-A lot of times, running the differential expression analysis is not the hard part. Building your model and having all the covariates you need can be much more work!
+A lot of times, running the differential expression analysis is not the hard part. Building your model and having all the covariates you need can take much more work!
 
 <script defer class="speakerdeck-embed" data-slide="56" data-id="3c32410b600740abb4724486e83ebd30" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
 
