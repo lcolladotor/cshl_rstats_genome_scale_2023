@@ -67,4 +67,11 @@ exercise-with-variancepartition-and-complexheatmap
 tbd
 introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data
 downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd
+download-data-from-10x-genomics
+add-gene-annotation-information
+from-10x
+from-gencode
+wrapper-functions-for-reading-the-data
+visualize-spatial-plots
+exercise-3
 re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise
