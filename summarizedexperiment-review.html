@@ -170,6 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#overview-2"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
 <li class="chapter" data-level="3.2" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#quiz"><i class="fa fa-check"></i><b>3.2</b> Quiz</a></li>
 <li class="chapter" data-level="3.3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#exercises-1"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+<li class="chapter" data-level="3.4" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#solutions-1"><i class="fa fa-check"></i><b>3.4</b> Solutions</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
 <ul>
@@ -456,6 +457,54 @@ Explore the metadata and add a new column that has the library size of each samp
 <span id="cb24-3"><a href="summarizedexperiment-review.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
 <span id="cb24-4"><a href="summarizedexperiment-review.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521 </span></span>
 <span id="cb24-5"><a href="summarizedexperiment-review.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   20637971   18809481   25348649   15163415   24448408   30818215   19126151   21164133</span></span></code></pre></div>
+</div>
+<div id="solutions-1" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Solutions<a href="summarizedexperiment-review.html#solutions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<style>
+p.solution  {
+background-color: #C093D6;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+<p class="solution">
+<strong>Solution 1</strong>:
+</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="summarizedexperiment-review.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## For a), dim() gives the desired answer</span></span>
+<span id="cb25-2"><a href="summarizedexperiment-review.html#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="summarizedexperiment-review.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(se)</span>
+<span id="cb25-4"><a href="summarizedexperiment-review.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 63677     8</span></span>
+<span id="cb25-5"><a href="summarizedexperiment-review.html#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="summarizedexperiment-review.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="do">## For b), </span></span>
+<span id="cb25-7"><a href="summarizedexperiment-review.html#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="summarizedexperiment-review.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)[<span class="fu">colData</span>(se)<span class="sc">$</span>dex <span class="sc">==</span> <span class="st">&quot;trt&quot;</span>, ]</span>
+<span id="cb25-9"><a href="summarizedexperiment-review.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DataFrame with 4 rows and 9 columns</span></span>
+<span id="cb25-10"><a href="summarizedexperiment-review.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            SampleName     cell      dex    albut        Run avgLength Experiment    Sample    BioSample</span></span>
+<span id="cb25-11"><a href="summarizedexperiment-review.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              &lt;factor&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;   &lt;factor&gt; &lt;integer&gt;   &lt;factor&gt;  &lt;factor&gt;     &lt;factor&gt;</span></span>
+<span id="cb25-12"><a href="summarizedexperiment-review.html#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SRR1039509 GSM1275863  N61311       trt    untrt SRR1039509       126  SRX384346 SRS508567 SAMN02422675</span></span>
+<span id="cb25-13"><a href="summarizedexperiment-review.html#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SRR1039513 GSM1275867  N052611      trt    untrt SRR1039513        87  SRX384350 SRS508572 SAMN02422670</span></span>
+<span id="cb25-14"><a href="summarizedexperiment-review.html#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SRR1039517 GSM1275871  N080611      trt    untrt SRR1039517       126  SRX384354 SRS508576 SAMN02422673</span></span>
+<span id="cb25-15"><a href="summarizedexperiment-review.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SRR1039521 GSM1275875  N061011      trt    untrt SRR1039521        98  SRX384358 SRS508580 SAMN02422677</span></span></code></pre></div>
+<p class="solution">
+<strong>Solution 2</strong>:
+</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="summarizedexperiment-review.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## There are multiple ways to do it</span></span>
+<span id="cb26-2"><a href="summarizedexperiment-review.html#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="summarizedexperiment-review.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="st">&quot;logcounts&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">assay</span>(se, <span class="st">&quot;counts&quot;</span>))</span>
+<span id="cb26-4"><a href="summarizedexperiment-review.html#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="summarizedexperiment-review.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(se)<span class="sc">$</span>logcounts_v2 <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">assays</span>(se)<span class="sc">$</span>counts)</span></code></pre></div>
+<p class="solution">
+<strong>Solution 3</strong>:
+</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="summarizedexperiment-review.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To add the library size we an use..</span></span>
+<span id="cb27-2"><a href="summarizedexperiment-review.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="summarizedexperiment-review.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)<span class="sc">$</span>library_size <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
+<span id="cb27-4"><a href="summarizedexperiment-review.html#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="summarizedexperiment-review.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">colData</span>(se))</span>
+<span id="cb27-6"><a href="summarizedexperiment-review.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;SampleName&quot;   &quot;cell&quot;         &quot;dex&quot;          &quot;albut&quot;        &quot;Run&quot;          &quot;avgLength&quot;    &quot;Experiment&quot;  </span></span>
+<span id="cb27-7"><a href="summarizedexperiment-review.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;Sample&quot;       &quot;BioSample&quot;    &quot;library_size&quot;</span></span></code></pre></div>
 
 </div>
 </div>

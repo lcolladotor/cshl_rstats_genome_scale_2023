@@ -15,6 +15,7 @@ summarizedexperiment-review
 overview-2
 quiz
 exercises-1
+solutions-1
 smokingmouse-rse
 download-data
 data-overview
