@@ -204,6 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#examine-relationships-between-qc-metrics-of-samples"><i class="fa fa-check"></i><b>6.4.2</b> Examine relationships between QC metrics of samples</a></li>
 <li class="chapter" data-level="6.4.3" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#qc-sample-filtering"><i class="fa fa-check"></i><b>6.4.3</b> QC sample filtering</a></li>
 </ul></li>
+<li class="chapter" data-level="6.5" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#miscellaneous-about-cpm-values"><i class="fa fa-check"></i><b>6.5</b> Miscellaneous about CPM values</a></li>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a>
@@ -353,13 +354,13 @@ This will be an open ended exercise. Think of it as time to practice what we’v
 <li>If you don’t want to choose another <code>recount3</code> study, you could use the <code>smokingMouse</code> data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.</li>
 <li>Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.</li>
 </ul>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-1" aria-hidden="true" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
-<span id="cb88-2"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
-<span id="cb88-3"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
-<span id="cb88-4"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">organism =</span> <span class="st">&quot;human&quot;</span>,</span>
-<span id="cb88-5"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
-<span id="cb88-6"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
-<span id="cb88-7"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb88-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-1" aria-hidden="true" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
+<span id="cb90-2"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
+<span id="cb90-3"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
+<span id="cb90-4"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">organism =</span> <span class="st">&quot;human&quot;</span>,</span>
+<span id="cb90-5"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
+<span id="cb90-6"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
+<span id="cb90-7"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb90-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use <code>GGally::ggpairs()</code> for this <a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="uri">https://ggobi.github.io/ggally/reference/ggpairs.html</a>. Or <code>ggpubr::ggscatter()</code> <a href="https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html" class="uri">https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html</a>.</li>
 </ol>

@@ -204,6 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#examine-relationships-between-qc-metrics-of-samples"><i class="fa fa-check"></i><b>6.4.2</b> Examine relationships between QC metrics of samples</a></li>
 <li class="chapter" data-level="6.4.3" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#qc-sample-filtering"><i class="fa fa-check"></i><b>6.4.3</b> QC sample filtering</a></li>
 </ul></li>
+<li class="chapter" data-level="6.5" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#miscellaneous-about-cpm-values"><i class="fa fa-check"></i><b>6.5</b> Miscellaneous about CPM values</a></li>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a>
@@ -322,7 +323,7 @@ downloaded so this time the code below will run faster.</p>
 <span id="cb38-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb38-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-13" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb38-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
-<span id="cb38-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/5fb3f740649_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb38-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/5fd49fda8f8_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb38-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb38-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -833,6 +834,128 @@ It is always important to trace the QC metrics of the filtered samples to verify
 <p>Try the function yourself with different QC metrics and sample variables!</p>
 </div>
 </div>
+</div>
+<div id="miscellaneous-about-cpm-values" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Miscellaneous about CPM values<a href="rse-plotting-basics-with-smokingmouse.html#miscellaneous-about-cpm-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Why do we see log(CPM + 0.5) values smaller than -1?</span></span>
+<span id="cb60-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log2</span>(<span class="fl">0.5</span>)</span>
+<span id="cb60-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -1</span></span>
+<span id="cb60-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Maybe the prior count is getting shrunk</span></span>
+<span id="cb60-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">log2</span>(<span class="fl">0.05</span>)</span>
+<span id="cb60-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -4.321928</span></span>
+<span id="cb60-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="do">## logcounts values we see across all samples</span></span>
+<span id="cb60-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">as.vector</span>(<span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts))</span>
+<span id="cb60-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb60-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -5.9853 -5.9853 -5.9853 -2.7514  0.4171 18.2732</span></span>
+<span id="cb60-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Sample 203 in particular has some cases like it</span></span>
+<span id="cb60-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts[, <span class="dv">203</span>])</span>
+<span id="cb60-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb60-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -5.9853 -5.9853 -5.9853 -2.6620  0.6067 12.5785</span></span>
+<span id="cb60-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Where we find one gene in sample 203 with that property</span></span>
+<span id="cb60-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-20" aria-hidden="true" tabindex="-1"></a>i_gene <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts[, <span class="dv">203</span>])</span>
+<span id="cb60-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-22" aria-hidden="true" tabindex="-1"></a><span class="do">## We can check the logcounts and counts</span></span>
+<span id="cb60-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-23" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts[i_gene, <span class="dv">203</span>]</span>
+<span id="cb60-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1 </span></span>
+<span id="cb60-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            -5.985331</span></span>
+<span id="cb60-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-26" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts[i_gene, <span class="dv">203</span>]</span>
+<span id="cb60-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1 </span></span>
+<span id="cb60-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    0</span></span>
+<span id="cb60-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-30"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-30" aria-hidden="true" tabindex="-1"></a><span class="do">## What if we try to reverse engineer the number?</span></span>
+<span id="cb60-31"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-31" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="fu">assays</span>(rse_gene)<span class="sc">$</span>logcounts[i_gene, <span class="dv">203</span>]</span>
+<span id="cb60-32"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102693.1 </span></span>
+<span id="cb60-33"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           0.01578469</span></span>
+<span id="cb60-34"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-34" aria-hidden="true" tabindex="-1"></a><span class="fu">log2</span>(<span class="fl">0.01578469</span>)</span>
+<span id="cb60-35"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -5.98533</span></span>
+<span id="cb60-36"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-36" aria-hidden="true" tabindex="-1"></a><span class="fl">0.01578469</span> <span class="sc">/</span> <span class="fl">0.5</span></span>
+<span id="cb60-37"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.03156938</span></span>
+<span id="cb60-38"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-38" aria-hidden="true" tabindex="-1"></a><span class="fl">0.5</span> <span class="sc">*</span> <span class="fl">0.03156938</span></span>
+<span id="cb60-39"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.01578469</span></span>
+<span id="cb60-40"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-41"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-41" aria-hidden="true" tabindex="-1"></a><span class="do">## Hm... 31 doesn&#39;t ring any bells</span></span>
+<span id="cb60-42"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-42" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="fl">0.03156938</span></span>
+<span id="cb60-43"><a href="rse-plotting-basics-with-smokingmouse.html#cb60-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 31.67626</span></span></code></pre></div>
+<ul>
+<li>Bioconductor website for browsing code: <a href="https://code.bioconductor.org/" class="uri">https://code.bioconductor.org/</a></li>
+<li>Bioconductor support website: <a href="https://support.bioconductor.org/" class="uri">https://support.bioconductor.org/</a></li>
+</ul>
+<p>Links Leo showed:</p>
+<ul>
+<li><code>smokingMouse_indirects</code> code for computing the <code>logcounts</code> <a href="https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L35" class="uri">https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L35</a></li>
+<li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9</a></li>
+<li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14</a></li>
+<li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L78" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L78</a></li>
+<li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/src/R_calculate_cpm.cpp#L30" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/src/R_calculate_cpm.cpp#L30</a></li>
+<li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/src/add_prior.cpp#L29" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/src/add_prior.cpp#L29</a></li>
+<li><a href="https://support.bioconductor.org/post/search/?query=prior.count+edgeR" class="uri">https://support.bioconductor.org/post/search/?query=prior.count+edgeR</a></li>
+<li><a href="https://support.bioconductor.org/p/59846/" class="uri">https://support.bioconductor.org/p/59846/</a></li>
+<li><a href="https://support.bioconductor.org/p/59846/" class="uri">https://support.bioconductor.org/p/59846/</a></li>
+</ul>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the documentation</span></span>
+<span id="cb61-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ?edgeR::cpm</span></span>
+<span id="cb61-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &gt; If log-values are computed, then a small count, given by prior.count but scaled to be proportional to the library size, is added to y to avoid taking the log of zero.</span></span>
+<span id="cb61-4"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="do">## https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L100C51-L100C135</span></span>
+<span id="cb61-6"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Let&#39;s save the output of calcNormFactors</span></span>
+<span id="cb61-7"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-7" aria-hidden="true" tabindex="-1"></a>DGElist_with_norm <span class="ot">&lt;-</span> edgeR<span class="sc">::</span><span class="fu">calcNormFactors</span>(rse_gene, <span class="at">method =</span> <span class="st">&quot;TMM&quot;</span>)</span>
+<span id="cb61-8"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(DGElist_with_norm)</span>
+<span id="cb61-9"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;DGEList&quot;</span></span>
+<span id="cb61-10"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;package&quot;)</span></span>
+<span id="cb61-11"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;edgeR&quot;</span></span>
+<span id="cb61-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="do">## https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9</span></span>
+<span id="cb61-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-14" aria-hidden="true" tabindex="-1"></a><span class="do">## We can see that it has the lib.size and norm.factors values there</span></span>
+<span id="cb61-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(DGElist_with_norm<span class="sc">$</span>samples[, <span class="fu">seq_len</span>(<span class="dv">3</span>)])</span>
+<span id="cb61-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         group lib.size norm.factors</span></span>
+<span id="cb61-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample1     1 37119948    0.9601434</span></span>
+<span id="cb61-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample2     1 24904754    0.9783991</span></span>
+<span id="cb61-19"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample3     1 27083602    0.9740923</span></span>
+<span id="cb61-20"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample4     1 48312479    0.9408362</span></span>
+<span id="cb61-21"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample5     1 34921004    0.9772143</span></span>
+<span id="cb61-22"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample6     1 31558549    0.9246274</span></span>
+<span id="cb61-23"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-24"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Exploring lib.size across all samples</span></span>
+<span id="cb61-25"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>lib.size)</span>
+<span id="cb61-26"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></span>
+<span id="cb61-27"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   6908739  26209304  29205003  29475155  34809355 114202414</span></span>
+<span id="cb61-28"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-28" aria-hidden="true" tabindex="-1"></a>DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>lib.size[<span class="dv">203</span>]</span>
+<span id="cb61-29"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 34869201</span></span>
+<span id="cb61-30"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-31"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-31" aria-hidden="true" tabindex="-1"></a><span class="do">## https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14</span></span>
+<span id="cb61-32"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-32" aria-hidden="true" tabindex="-1"></a><span class="do">## We can see there how edgeR::cpm() computes the adjusted library sizes</span></span>
+<span id="cb61-33"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-33" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>norm.factors)</span>
+<span id="cb61-34"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb61-35"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.3595  0.9656  1.1230  1.0306  1.1589  1.2336</span></span>
+<span id="cb61-36"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-36" aria-hidden="true" tabindex="-1"></a>DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>norm.factors[<span class="dv">203</span>]</span>
+<span id="cb61-37"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.19894</span></span>
+<span id="cb61-38"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-39"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-39" aria-hidden="true" tabindex="-1"></a><span class="do">## adjusted library sizes</span></span>
+<span id="cb61-40"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-40" aria-hidden="true" tabindex="-1"></a>DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>lib.size[<span class="dv">203</span>] <span class="sc">*</span> DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>norm.factors[<span class="dv">203</span>]</span>
+<span id="cb61-41"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41806065</span></span>
+<span id="cb61-42"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-43"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-43" aria-hidden="true" tabindex="-1"></a><span class="do">## Let&#39;s save these values for all samples</span></span>
+<span id="cb61-44"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-44" aria-hidden="true" tabindex="-1"></a>adj_lib_size <span class="ot">&lt;-</span> DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>lib.size <span class="sc">*</span> DGElist_with_norm<span class="sc">$</span>samples<span class="sc">$</span>norm.factors</span>
+<span id="cb61-45"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-45" aria-hidden="true" tabindex="-1"></a>adj_lib_size[<span class="dv">203</span>]</span>
+<span id="cb61-46"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41806065</span></span>
+<span id="cb61-47"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-48"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-48" aria-hidden="true" tabindex="-1"></a><span class="do">## Proportional adjusted library size to the mean adjusted library size</span></span>
+<span id="cb61-49"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-49" aria-hidden="true" tabindex="-1"></a>adj_lib_size[<span class="dv">203</span>] <span class="sc">/</span> <span class="fu">mean</span>(adj_lib_size)</span>
+<span id="cb61-50"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.319791</span></span>
+<span id="cb61-51"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-51" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> (adj_lib_size[<span class="dv">203</span>] <span class="sc">/</span> <span class="fu">mean</span>(adj_lib_size))</span>
+<span id="cb61-52"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.7576956</span></span>
+<span id="cb61-53"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-53" aria-hidden="true" tabindex="-1"></a><span class="do">## Hm.... we are missing something to get to the values we saw earlier when we</span></span>
+<span id="cb61-54"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-54" aria-hidden="true" tabindex="-1"></a><span class="do">## tried to reverse engineer the issue.</span></span>
+<span id="cb61-55"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-56"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-56" aria-hidden="true" tabindex="-1"></a><span class="do">## Hm.... I couldn&#39;t recalculate that -5.98 value manually</span></span>
+<span id="cb61-57"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-57" aria-hidden="true" tabindex="-1"></a><span class="fu">log2</span>(<span class="fl">0.5</span> <span class="sc">/</span> (adj_lib_size[<span class="dv">203</span>] <span class="sc">/</span> <span class="fu">mean</span>(adj_lib_size) <span class="sc">*</span> <span class="dv">2</span>))</span>
+<span id="cb61-58"><a href="rse-plotting-basics-with-smokingmouse.html#cb61-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -2.40031</span></span></code></pre></div>
+<p>In the end, I (Leo) don’t know enough C++ to fully understand the math of what <code>edgeR</code> is doing. But well, the point is that it is scaling that <code>prior.count</code> (<code>0.5</code> in the <code>smokingMouse</code> case instead of the default value of <code>2</code>) which results in a smaller number, and hence why the <code>log2()</code> value of it is smaller than <code>-1</code>.</p>
+<script defer class="speakerdeck-embed" data-slide="24" data-id="434ae0541ae64731a95f35431acb754d" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 </div>
 <div id="references" class="section level2 unnumbered hasAnchor">
 <h2>References<a href="rse-plotting-basics-with-smokingmouse.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>

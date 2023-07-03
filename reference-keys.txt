@@ -37,6 +37,7 @@ quality-control-analysis
 evaluate-qc-metrics-for-groups-of-samples
 examine-relationships-between-qc-metrics-of-samples
 qc-sample-filtering
+miscellaneous-about-cpm-values
 biocthis-introduction
 related-past-materials
 biocthis-main-commands
