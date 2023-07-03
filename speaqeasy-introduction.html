@@ -285,7 +285,7 @@ Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for 
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="speaqeasy-introduction.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb10-2"><a href="speaqeasy-introduction.html#cb10-2" aria-hidden="true" tabindex="-1"></a>cached_rse_gene_example</span></code></pre></div>
 <pre><code>##                                                                  BFC1 
-## &quot;/github/home/.cache/R/BiocFileCache/55c246fe397_rse_speaqeasy.RData&quot;</code></pre>
+## &quot;/github/home/.cache/R/BiocFileCache/55d52812a8c_rse_speaqeasy.RData&quot;</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="speaqeasy-introduction.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb12-2"><a href="speaqeasy-introduction.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene_example, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Loading objects:
@@ -300,6 +300,9 @@ Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for 
 ## rowData names(10): Length gencodeID ... NumTx gencodeTx
 ## colnames(40): R13896_H7JKMBBXX R13903_HCTYLBBXX ... R15120_HFY2MBBXX R15134_HFFGHBBXX
 ## colData names(67): SAMPLE_ID FQCbasicStats ... AgeDeath BrNum</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="speaqeasy-introduction.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
+<span id="cb16-2"><a href="speaqeasy-introduction.html#cb16-2" aria-hidden="true" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(rse_gene)</span></code></pre></div>
+<pre><code>## 35.78 MB</code></pre>
 </div>
 <div id="exercises" class="section level2 hasAnchor" number="1.4">
 <h2><span class="header-section-number">1.4</span> Exercises<a href="speaqeasy-introduction.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -340,9 +343,9 @@ From <a href="http://research.libd.org/SPEAQeasy/outputs.html#quality-metrics" c
 <p>A boolean value (“TRUE” or “FALSE”), indicating whether the given sample underwent trimming</p>
 </blockquote>
 <p>With code, it’s this:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="speaqeasy-introduction.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rse_gene<span class="sc">$</span>trimmed)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="speaqeasy-introduction.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rse_gene<span class="sc">$</span>trimmed)</span></code></pre></div>
 <pre><code>## [1] &quot;logical&quot;</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="speaqeasy-introduction.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## logical vectors can take 2 values (plus the third `NA` if it&#39;s missing)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="speaqeasy-introduction.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## logical vectors can take 2 values (plus the third `NA` if it&#39;s missing)</span></span></code></pre></div>
 </p>
 <p class="solution">
 <strong>Solution 2</strong>:
