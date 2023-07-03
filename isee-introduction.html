@@ -181,16 +181,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="isee-introduction.html"><a href="isee-introduction.html#toy-rse-data"><i class="fa fa-check"></i><b>5.1</b> Toy RSE data</a></li>
-<li class="chapter" data-level="5.2" data-path="isee-introduction.html"><a href="isee-introduction.html#isee"><i class="fa fa-check"></i><b>5.2</b> iSEE</a></li>
-<li class="chapter" data-level="5.3" data-path="isee-introduction.html"><a href="isee-introduction.html#exercise-with-data-from-spatiallibd"><i class="fa fa-check"></i><b>5.3</b> Exercise with data from spatialLIBD</a></li>
-<li class="chapter" data-level="5.4" data-path="isee-introduction.html"><a href="isee-introduction.html#community"><i class="fa fa-check"></i><b>5.4</b> Community</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#download-the-smokingmouse-data"><i class="fa fa-check"></i><b>6.1</b> Download the smokingMouse data</a></li>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a>
 <ul>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-normalization"><i class="fa fa-check"></i>1.1 Data normalization</a></li>
@@ -242,152 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="isee-introduction" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">5</span> iSEE introduction<a href="isee-introduction.html#isee-introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Leo</p>
-<div id="toy-rse-data" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Toy RSE data<a href="isee-introduction.html#toy-rse-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="isee-introduction.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets build a simple SummarizedExperiment object following information</span></span>
-<span id="cb30-2"><a href="isee-introduction.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="do">## from the documentation</span></span>
-<span id="cb30-3"><a href="isee-introduction.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
-<span id="cb30-4"><a href="isee-introduction.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ?SummarizedExperiment</span></span>
-<span id="cb30-5"><a href="isee-introduction.html#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="isee-introduction.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Adapted from the official documentation:</span></span>
-<span id="cb30-7"><a href="isee-introduction.html#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="isee-introduction.html#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="do">## First we create the data pieces that we&#39;ll use to build our </span></span>
-<span id="cb30-9"><a href="isee-introduction.html#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="do">## SummarizedExperiment object. In this case, we&#39;ll have 200 genes</span></span>
-<span id="cb30-10"><a href="isee-introduction.html#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="do">## measured in 6 samples.</span></span>
-<span id="cb30-11"><a href="isee-introduction.html#cb30-11" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb30-12"><a href="isee-introduction.html#cb30-12" aria-hidden="true" tabindex="-1"></a>ncols <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb30-13"><a href="isee-introduction.html#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-14"><a href="isee-introduction.html#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Let&#39;s make up some count numbers at random</span></span>
-<span id="cb30-15"><a href="isee-introduction.html#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20210223</span>)</span>
-<span id="cb30-16"><a href="isee-introduction.html#cb30-16" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(nrows <span class="sc">*</span> ncols, <span class="dv">1</span>, <span class="fl">1e4</span>), nrows)</span>
-<span id="cb30-17"><a href="isee-introduction.html#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-18"><a href="isee-introduction.html#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Then some basic infomratino for our genes</span></span>
-<span id="cb30-19"><a href="isee-introduction.html#cb30-19" aria-hidden="true" tabindex="-1"></a>rowRanges <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(</span>
-<span id="cb30-20"><a href="isee-introduction.html#cb30-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>)),</span>
-<span id="cb30-21"><a href="isee-introduction.html#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">IRanges</span>(<span class="fu">floor</span>(<span class="fu">runif</span>(<span class="dv">200</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>)), <span class="at">width =</span> <span class="dv">100</span>),</span>
-<span id="cb30-22"><a href="isee-introduction.html#cb30-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">strand =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>), <span class="dv">200</span>, <span class="cn">TRUE</span>),</span>
-<span id="cb30-23"><a href="isee-introduction.html#cb30-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;ID%03d&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>)</span>
-<span id="cb30-24"><a href="isee-introduction.html#cb30-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-25"><a href="isee-introduction.html#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rowRanges) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;gene_&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">length</span>(rowRanges)))</span>
-<span id="cb30-26"><a href="isee-introduction.html#cb30-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-27"><a href="isee-introduction.html#cb30-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Next, we create some information about samples</span></span>
-<span id="cb30-28"><a href="isee-introduction.html#cb30-28" aria-hidden="true" tabindex="-1"></a>colData <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(</span>
-<span id="cb30-29"><a href="isee-introduction.html#cb30-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;ChIP&quot;</span>, <span class="st">&quot;Input&quot;</span>), <span class="dv">3</span>),</span>
-<span id="cb30-30"><a href="isee-introduction.html#cb30-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb30-31"><a href="isee-introduction.html#cb30-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-32"><a href="isee-introduction.html#cb30-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-33"><a href="isee-introduction.html#cb30-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Finally we put all these pieces together in a single R object</span></span>
-<span id="cb30-34"><a href="isee-introduction.html#cb30-34" aria-hidden="true" tabindex="-1"></a>rse <span class="ot">&lt;-</span> <span class="fu">SummarizedExperiment</span>(</span>
-<span id="cb30-35"><a href="isee-introduction.html#cb30-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">assays =</span> <span class="fu">SimpleList</span>(<span class="at">counts =</span> counts),</span>
-<span id="cb30-36"><a href="isee-introduction.html#cb30-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowRanges =</span> rowRanges,</span>
-<span id="cb30-37"><a href="isee-introduction.html#cb30-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">colData =</span> colData</span>
-<span id="cb30-38"><a href="isee-introduction.html#cb30-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-39"><a href="isee-introduction.html#cb30-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-40"><a href="isee-introduction.html#cb30-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Overview</span></span>
-<span id="cb30-41"><a href="isee-introduction.html#cb30-41" aria-hidden="true" tabindex="-1"></a>rse</span>
-<span id="cb30-42"><a href="isee-introduction.html#cb30-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
-<span id="cb30-43"><a href="isee-introduction.html#cb30-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 200 6 </span></span>
-<span id="cb30-44"><a href="isee-introduction.html#cb30-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; metadata(0):</span></span>
-<span id="cb30-45"><a href="isee-introduction.html#cb30-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; assays(1): counts</span></span>
-<span id="cb30-46"><a href="isee-introduction.html#cb30-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rownames(200): gene_1 gene_2 ... gene_199 gene_200</span></span>
-<span id="cb30-47"><a href="isee-introduction.html#cb30-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rowData names(1): feature_id</span></span>
-<span id="cb30-48"><a href="isee-introduction.html#cb30-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colnames(6): A B ... E F</span></span>
-<span id="cb30-49"><a href="isee-introduction.html#cb30-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colData names(1): Treatment</span></span></code></pre></div>
-</div>
-<div id="isee" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> iSEE<a href="isee-introduction.html#isee" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>How can you make plots from <code>SummarizedExperiment</code> objects without having to
-write any code? The answer is with <code>iSEE</code> 🎨</p>
-<ul>
-<li><a href="http://bioconductor.org/packages/iSEE" class="uri">http://bioconductor.org/packages/iSEE</a></li>
-<li><a href="http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a></li>
-</ul>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="isee-introduction.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Let&#39;s explore the `rse` object interactively</span></span>
-<span id="cb31-2"><a href="isee-introduction.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
-<span id="cb31-3"><a href="isee-introduction.html#cb31-3" aria-hidden="true" tabindex="-1"></a>iSEE<span class="sc">::</span><span class="fu">iSEE</span>(rse)</span></code></pre></div>
-</div>
-<div id="exercise-with-data-from-spatiallibd" class="section level2 hasAnchor" number="5.3">
-<h2><span class="header-section-number">5.3</span> Exercise with data from spatialLIBD<a href="isee-introduction.html#exercise-with-data-from-spatiallibd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li>We’ll download a <code>SingleCellExperiment</code> object, which is similar to <code>SummarizedExperiment</code> as it extends it.
-<ul>
-<li><a href="http://bioconductor.org/packages/SingleCellExperiment" class="uri">http://bioconductor.org/packages/SingleCellExperiment</a></li>
-<li><a href="http://bioconductor.org/packages/spatialLIBD" class="uri">http://bioconductor.org/packages/spatialLIBD</a></li>
-<li><a href="https://doi.org/10.1038/s41593-020-00787-0" class="uri">https://doi.org/10.1038/s41593-020-00787-0</a></li>
-<li><a href="https://osca.bioconductor.org/" class="uri">https://osca.bioconductor.org/</a></li>
-<li><a href="https://www.nature.com/articles/s41592-019-0654-x" class="uri">https://www.nature.com/articles/s41592-019-0654-x</a> Figures 2 and 3</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="isee-introduction.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
-<span id="cb32-2"><a href="isee-introduction.html#cb32-2" aria-hidden="true" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
-<span id="cb32-3"><a href="isee-introduction.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb32-4"><a href="isee-introduction.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-03 00:21:23.370626 loading file /github/home/.cache/R/BiocFileCache/55c3e1d4a7a_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
-<span id="cb32-5"><a href="isee-introduction.html#cb32-5" aria-hidden="true" tabindex="-1"></a>sce_layer</span>
-<span id="cb32-6"><a href="isee-introduction.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
-<span id="cb32-7"><a href="isee-introduction.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
-<span id="cb32-8"><a href="isee-introduction.html#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; metadata(0):</span></span>
-<span id="cb32-9"><a href="isee-introduction.html#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
-<span id="cb32-10"><a href="isee-introduction.html#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rownames(22331): ENSG00000243485 ENSG00000238009 ... ENSG00000278384 ENSG00000271254</span></span>
-<span id="cb32-11"><a href="isee-introduction.html#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... is_top_hvg is_top_hvg_sce_layer</span></span>
-<span id="cb32-12"><a href="isee-introduction.html#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colnames(76): 151507_Layer1 151507_Layer2 ... 151676_Layer6 151676_WM</span></span>
-<span id="cb32-13"><a href="isee-introduction.html#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colData names(13): sample_name layer_guess ... layer_guess_reordered_short spatialLIBD</span></span>
-<span id="cb32-14"><a href="isee-introduction.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; reducedDimNames(6): PCA TSNE_perplexity5 ... UMAP_neighbors15 PCAsub</span></span>
-<span id="cb32-15"><a href="isee-introduction.html#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mainExpName: NULL</span></span>
-<span id="cb32-16"><a href="isee-introduction.html#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; altExpNames(0):</span></span>
-<span id="cb32-17"><a href="isee-introduction.html#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-18"><a href="isee-introduction.html#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
-<span id="cb32-19"><a href="isee-introduction.html#cb32-19" aria-hidden="true" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(sce_layer)</span>
-<span id="cb32-20"><a href="isee-introduction.html#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33.99 MB</span></span></code></pre></div>
-<ul>
-<li>Just like with our <code>rse</code> object, we can use <code>iSEE::iSEE()</code> to explore the data.</li>
-</ul>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="isee-introduction.html#cb33-1" aria-hidden="true" tabindex="-1"></a>iSEE<span class="sc">::</span><span class="fu">iSEE</span>(sce_layer)</span></code></pre></div>
-<style>
-p.exercise  {
-background-color: #E4EDE2;
-padding: 9px;
-border: 1px solid black;
-border-radius: 10px;
-font-family: sans-serif;
-}
-</style>
-<p class="exercise">
-<strong>Exercise 1</strong>:
-Create a plot and download a PDF that reproduces as closely as possible the plot on the right side of the following slide.
-</p>
-<script async class="speakerdeck-embed" data-slide="10" data-id="329db23f5f17460da31f45c7695a9f06" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-<p class="exercise">
-<strong>Exercise 2</strong>:
-Explore with a <em>heatmap</em> the expression of the genes <code>MOBP</code>, <code>MBP</code>, and <code>PCP4</code>. If we use <em>clustering</em> (group genes based on similar expression patterns), which two genes are most similar to each other?
-</p>
-<p class="exercise">
-<strong>Exercise 3</strong>:
-In which dorsolateral prefrontal cortex (DLPFC) layers (<code>L1</code>, <code>L2</code>, …, <code>L6</code> grey matter layers, and <code>WM</code> for <em>white matter</em>) do we see the highest expression for the genes <em>MOBP</em> and <em>MBP</em>?
-</p>
-<p>This list of ENSEMBL IDs will be useful:</p>
-<pre><code>ENSG00000168314
-ENSG00000183036
-ENSG00000197971</code></pre>
-</div>
-<div id="community" class="section level2 hasAnchor" number="5.4">
-<h2><span class="header-section-number">5.4</span> Community<a href="isee-introduction.html#community" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><code>iSEE</code> authors:</p>
-<ul>
-<li>Kévin Rue-Albrecht <a href="https://twitter.com/KevinRUE67" class="uri">https://twitter.com/KevinRUE67</a></li>
-<li>Federico Marini <a href="https://twitter.com/FedeBioinfo" class="uri">https://twitter.com/FedeBioinfo</a></li>
-<li>Charlotte Soneson <a href="https://twitter.com/CSoneson" class="uri">https://twitter.com/CSoneson</a></li>
-<li>Aaron Lun <a href="https://twitter.com/realAaronLun" class="uri">https://twitter.com/realAaronLun</a></li>
-<li>Another example exploring data with <code>SummarizedExperiment</code> and <code>iSEE</code>:</li>
-</ul>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Today we explored RNA-seq data from <a href="https://twitter.com/StefanoBerto83?ref_src=twsrc%5Etfw"><span class="citation">@StefanoBerto83</span></a> et al who made it easy to re-use. Thank you! ^^<a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><span class="citation">@lcolladotor</span></a> used <a href="https://twitter.com/hashtag/shiny?src=hash&amp;ref_src=twsrc%5Etfw">#shiny</a> + <a href="https://twitter.com/hashtag/ggpubr?src=hash&amp;ref_src=twsrc%5Etfw">#ggpubr</a> as well as <a href="https://twitter.com/hashtag/iSEE?src=hash&amp;ref_src=twsrc%5Etfw">#iSEE</a><br><br>📔 <a href="https://t.co/iUQHE0xqRc">https://t.co/iUQHE0xqRc</a><br>🗞️ <a href="https://t.co/qhAdXbhY9c">https://t.co/qhAdXbhY9c</a><a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a><a href="https://t.co/OXTukByhoo">https://t.co/OXTukByhoo</a>
-</p>
-— LIBD rstats club (<span class="citation">@LIBDrstats</span>) <a href="https://twitter.com/LIBDrstats/status/1360349352250789890?ref_src=twsrc%5Etfw">February 12, 2021</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-</div>
 </div>
 <div class="container">
     <footer class="site-footer">
