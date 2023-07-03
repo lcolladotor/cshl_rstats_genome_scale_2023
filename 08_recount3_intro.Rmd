@@ -46,25 +46,6 @@ library("recount3")
 Next we need to identify a study of interest as well as choose whether we want the data at the gene, exon, or some other feature level. Once we have identified our study of interest, we can download the files and build a `SummarizedExperiment` object using `recount3::create_rse()` as we'll show next. `create_rse()` has arguments through which we can control what *annotation* we want to use (they are organism-dependent).
 
 ```{r 'quick_example'}
-## Cambiaremos el URL de recount3 a Amazon (AWS)
-## para evitar problems de TLS versión 1.2 en
-## Windows (luego tiene una versión más vieja).
-
-# ## Primero vemos el URL actual
-# getOption(
-#     "recount3_url",
-#     "http://duffel.rail.bio/recount3"
-# )
-# 
-# ## Ahora si lo cambiamos
-# options(recount3_url = "https://recount-opendata.s3.amazonaws.com/recount3/release")
-# 
-# ## Y vemos que ya funcionó el cambio.
-# getOption(
-#     "recount3_url",
-#     "http://duffel.rail.bio/recount3"
-# )
-
 ## Lets download all the available projects
 human_projects <- available_projects()
 
