@@ -76,3 +76,5 @@ wrapper-functions-for-reading-the-data
 visualize-spatial-plots
 exercise-3
 re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise
+spatial-registration
+exercise-4
