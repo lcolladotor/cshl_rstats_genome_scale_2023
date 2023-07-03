@@ -648,11 +648,3 @@ p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 1. Evans, C., Hardin, J., & Stoebel, D. M. (2018). Selecting between-sample RNA-Seq normalization methods from the perspective of their assumptions. *Briefings in bioinformatics*, 19(5), 776-792.
 
 2. Bedre, R. (2023). Gene expression units explained: RPM, RPKM, FPKM, TPM, *DESeq*, TMM, SCnorm, GeTMM, and ComBat-Seq. Web site: https://www.reneshbedre.com/blog/expression_units.html
-
-
-```{r echo=FALSE}
-## Session info
-library("sessioninfo")
-options(width = 120)
-session_info()
-```

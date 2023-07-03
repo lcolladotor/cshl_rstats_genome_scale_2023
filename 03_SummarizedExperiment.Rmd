@@ -143,11 +143,3 @@ Explore the metadata and add a new column that has the library size of each samp
 
 apply(assay(se), 2, sum)
 ```
-
-
-```{r echo=FALSE}
-## Session info
-library("sessioninfo")
-options(width = 120)
-session_info()
-```

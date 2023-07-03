@@ -1,0 +1,10 @@
+# Final R Session {-}
+
+This is the final R session after all the code in this book is run sequentially.
+
+```{r echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```

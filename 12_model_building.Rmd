@@ -755,11 +755,3 @@ plot
 2. Hoffman, G. (2022). variancePartition: Quantifying and interpreting drivers of variation in multilevel gene expression experiments.
 
 3. van den Berg, S. M. (2022). Analysing data using linear models. Web site: https://bookdown.org/pingapang9/linear_models_bookdown/
-
-
-```{r echo=FALSE}
-## Session info
-library("sessioninfo")
-options(width = 120)
-session_info()
-```

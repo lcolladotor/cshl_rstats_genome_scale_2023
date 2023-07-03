@@ -161,13 +161,3 @@ table(rse_gene$Age)
 pup_samples <- rse_gene[, which(rse_gene$Age == "Pup")]
 table(pup_samples$Sex)
 ```
-
-
-
-```{r echo=FALSE}
-## Session info
-library("sessioninfo")
-options(width = 120)
-session_info()
-```
-
