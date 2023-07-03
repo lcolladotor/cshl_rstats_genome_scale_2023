@@ -8,3 +8,5 @@ library("sessioninfo")
 options(width = 120)
 session_info()
 ```
+
+This interactive book was last updated at `r Sys.time()`.

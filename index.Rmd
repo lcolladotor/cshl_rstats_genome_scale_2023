@@ -132,7 +132,7 @@ Details on the R version used for making this book. The source code is available
 ## Load the package at the top of your script
 library("sessioninfo")
 
-##  Utilities
+## Utilities
 library("BiocFileCache")
 library("BiocStyle")
 library("biocthis")
@@ -184,12 +184,8 @@ session_info()
 proc.time()
 ```
 
-This book was last updated at `r Sys.time()`.
+This interactive book was last updated at `r Sys.time()`.
 
 ## License  {-}
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-
-
-
