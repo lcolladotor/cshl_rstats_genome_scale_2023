@@ -73,6 +73,8 @@ Either by exploring the object `rse_gene` or by checking the `SPEAQeasy` documen
 Across genes (`rse_gene`), exons (`rse_exon`), exon-exon junctions (`rse_jx`), and transcripts (`rse_tx`), what part of the output is identical?
 </p>
 
+If you want to answer this question with data, you could use the 4 `RSE` objects from the BrainSEQ Phase II study that are available at http://eqtl.brainseq.org/phase2/. They were created with the scripts at https://github.com/LieberInstitute/brainseq_phase2#rse_gene_unfilteredrdata. Note that these are much larger objects since they contain information for 900 samples.
+
 ## Solutions
 
 <style>
