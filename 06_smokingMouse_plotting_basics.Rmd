@@ -2,6 +2,11 @@
 
 Instructor: Daianna
 
+## Download the smokingMouse data
+
+We've used these commands already in an earlier chapter. Here we'll re-download
+the data, though tecnically we are using the cached data we had previously
+downloaded so this time the code below will run faster.
 
 ```{r download_data_biocfilecache_repeat}
 ## Load the container package for this type of data
