@@ -161,6 +161,8 @@ colnames(mod)
 
 Now that we have a model, we can use `limma` to actually compute the differential expression statistics and extract the results.
 
+<script defer class="speakerdeck-embed" data-slide="57" data-id="3c32410b600740abb4724486e83ebd30" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
+
 ```{r run_limma}
 library("limma")
 vGene <- voom(dge, mod, plot = TRUE)
@@ -243,6 +245,10 @@ col.sex <- as.character(col.sex)
 ## MDS by Sex
 limma::plotMDS(vGene$E, labels = df$Sex, col = col.sex)
 ```
+
+A lot of times, running the differential expression analysis is not the hard part. Building your model and having all the covariates you need can be much more work!
+
+<script defer class="speakerdeck-embed" data-slide="56" data-id="3c32410b600740abb4724486e83ebd30" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
 
 ## Community
 
