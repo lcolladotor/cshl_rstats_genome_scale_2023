@@ -46,6 +46,9 @@ load(cached_rse_gene_example, verbose = TRUE)
 
 ## General overview of the object
 rse_gene
+
+## We can check how big the object is with lobstr
+lobstr::obj_size(rse_gene)
 ```
 
 ## Exercises
