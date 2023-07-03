@@ -93,7 +93,7 @@ table(rse_gene_SRP045638$assigned_gene_prop < 0.3)
 rse_gene_SRP045638 <- rse_gene_SRP045638[, rse_gene_SRP045638$assigned_gene_prop > 0.3]
 
 ## Lets compute the mean expression levels.
-## 
+##
 ## Note: in a real analysis we would likely do this with RPKMs or CPMs instead
 ## of counts. That is, we would use one of the following options:
 # edgeR::filterByExpr() https://bioconductor.org/packages/edgeR/ https://rdrr.io/bioc/edgeR/man/filterByExpr.html
@@ -204,7 +204,7 @@ From `vGene$E` we can extract the normalized expression values that `limma-voom`
 ## from earlier
 exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 50, ]
 
-## We can now build a table with information about our samples and 
+## We can now build a table with information about our samples and
 ## then make the names a bit more friendly by making them easier to
 ## understand
 df <- as.data.frame(colData(rse_gene_SRP045638)[, c("prenatal", "sra_attribute.RIN", "sra_attribute.sex")])

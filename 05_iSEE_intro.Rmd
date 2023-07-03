@@ -12,7 +12,7 @@ library("SummarizedExperiment")
 
 ## Adapted from the official documentation:
 
-## First we create the data pieces that we'll use to build our 
+## First we create the data pieces that we'll use to build our
 ## SummarizedExperiment object. In this case, we'll have 200 genes
 ## measured in 6 samples.
 nrows <- 200
