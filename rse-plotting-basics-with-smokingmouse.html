@@ -190,6 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
 <ul>
+<li class="chapter" data-level="6.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#download-the-smokingmouse-data"><i class="fa fa-check"></i><b>6.1</b> Download the smokingMouse data</a></li>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i>1. Data preparation</a>
 <ul>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-normalization"><i class="fa fa-check"></i>1.1 Data normalization</a></li>
@@ -241,6 +242,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rse-plotting-basics-with-smokingmouse" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> RSE plotting basics with smokingMouse<a href="rse-plotting-basics-with-smokingmouse.html#rse-plotting-basics-with-smokingmouse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Daianna</p>
+<div id="download-the-smokingmouse-data" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Download the smokingMouse data<a href="rse-plotting-basics-with-smokingmouse.html#download-the-smokingmouse-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ve used these commands already in an earlier chapter. Here we’ll re-download
+the data, though tecnically we are using the cached data we had previously
+downloaded so this time the code below will run faster.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the container package for this type of data</span></span>
 <span id="cb35-2"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
 <span id="cb35-3"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -255,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb35-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb35-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-13" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb35-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
-<span id="cb35-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55d31831aa5_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb35-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55c79be16c7_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb35-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb35-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -282,6 +288,7 @@ DEG: differentially expressed genes; GO: Gene Ontology; KEGG: Kyoto Encyclopedia
 </font>
 </figcaption>
 </figure>
+</div>
 <div id="data-preparation" class="section level2 unnumbered hasAnchor">
 <h2>1. Data preparation<a href="rse-plotting-basics-with-smokingmouse.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Even before exploring the samples, the first step is to normalize the counts and filter non-expressed genes; we won’t do the processes themselves since we already have normalized and filtered data but let’s check why these steps are important and where to extract the data we need for posterior analyses.</p>
