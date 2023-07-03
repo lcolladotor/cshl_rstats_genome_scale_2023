@@ -39,7 +39,7 @@ If you want to be able to easily download updates, we recommend using `Git`. [_H
 git clone https://github.com/lcolladotor/cshl_rstats_genome_scale_2023.git
 
 ## To update the contents, use:
-cd cshl_rstats_genome_scale_202
+cd cshl_rstats_genome_scale_2023
 git pull
 ```
 
