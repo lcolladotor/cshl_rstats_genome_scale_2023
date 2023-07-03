@@ -17,7 +17,7 @@ output:
 
 # Overview {-}
 
-Here you can find the files for the July 2023 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23) portion taught by Leo and his team (July 3rd to July 6th).
+Here you can find the files for the July 2023 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23) portion taught by Leo and his team (July 3rd to July 6th). See [CSHLData2023](https://seandavi.github.io/CSHLData2023/) for a list of all instructors and related materials.
 
 Instructor:
 
@@ -65,6 +65,7 @@ See [CSHLData2023](https://docs.google.com/document/d/1pdvZFjJBwRUpA_VJOAFu4z-0E
 ## External links {-}
 
 * [CSHL course](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23)
+* [CSHLData2023](https://seandavi.github.io/CSHLData2023/)
 * [GitHub source code](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023)
 * [Slack](https://cshldata-2023.slack.com)
 * Example real project (by Daianna): [LieberInstitute/smokingMouse_Indirects](https://github.com/LieberInstitute/smokingMouse_Indirects)
