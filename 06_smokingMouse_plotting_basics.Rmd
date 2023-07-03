@@ -125,7 +125,7 @@ With the object `rse_gene_filt` we can proceed with downstream analyses.
 The first formal step that we will be performing is the sample exploration. This crucial initial part of the analysis consists of an examination of differences and relationships between Quality-Control (QC) metrics of the samples from different groups in order to identify poor-quality samples that must be removed before DEA. After that, the sample variables in the meta-data also need to be analyzed and filtered based on the percentage of gene expression variance that they explain for each gene. 
 
 
-### Quality Control Analysis
+## Quality Control Analysis
 
 First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See **Sample Information** section in chapter 04 for the description of the variables.  
 
@@ -156,7 +156,7 @@ font-family: sans-serif;
 </div>
 
 
-#### Evaluate QC metrics for groups of samples
+### Evaluate QC metrics for groups of samples
 
 Fortunately, we can identify to some extent possible factors that could have influenced on the quality of the samples, as well as isolated samples that are problematic. To do that, we will create boxplots that present the distribution of the samples' metrics separating them by sample variables. 
 
@@ -303,7 +303,7 @@ For the flowcell, again not worrying distinctiveness are detected, with the exce
 In all the previous plots we can appreciate a group of samples placed below in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> that correspond to pup samples. The relationship is more fuzzy in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>.
 
 
-#### Examine relationships between QC metrics of samples
+### Examine relationships between QC metrics of samples
 
 Secondly, we want to analyze if there are relationships between QC variables that explain the presence of samples with two or more particular QC metrics. For that, scatterplots are useful because they enable the evaluation of pairs of samples' QC metrics. 
 
@@ -441,7 +441,7 @@ multiple_QC_scatterplots("subsets_Mito_sum", "mitoMapped")
 Remarkably, samples were not differentiated by any other variable (including Group!) but the differences between adult and pup metrics suggest that they must be splitted into two different groups for the following analyses.
 
 
-#### QC sample filtering
+### QC sample filtering
 
 After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based, precisely, on these metrics. For that, we will use `isOutlier()` from `r BiocStyle::Biocpkg("scater")` to identify outlier samples only at the lower end or the higher end, depending on the QC metric.
 
