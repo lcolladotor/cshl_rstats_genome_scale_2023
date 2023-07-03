@@ -1,4 +1,4 @@
-## ----download_data_biocfilecache_speaqeasy_example-------------------
+## ----download_data_biocfilecache_speaqeasy_example---------------
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -23,7 +23,7 @@ rse_gene
 lobstr::obj_size(rse_gene)
 
 
-## --------------------------------------------------------------------
+## ----------------------------------------------------------------
 class(rse_gene$trimmed)
 
 ## logical vectors can take 2 values (plus the third `NA` if it's missing)
