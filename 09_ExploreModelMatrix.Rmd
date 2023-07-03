@@ -1,3 +1,109 @@
 # Interpreting model coefficients with ExploreModelMatrix
 
 Instructor: Leo
+
+## Model objects in R
+
+* Linear regression review https://lcolladotor.github.io/bioc_team_ds/helping-others.html#linear-regression-example
+* With R, we use the `model.matrix()` to build regression models using the `Y ~ X1 + X2` formula syntax as exemplified below.
+
+```{r model.matrix}
+## ?model.matrix
+mat <- with(trees, model.matrix(log(Volume) ~ log(Height) + log(Girth)))
+mat
+colnames(mat)
+```
+
+* How do we interpret the columns of our model matrix `mat`?
+
+```{r lm_example}
+summary(lm(log(Volume) ~ log(Height) + log(Girth), data = trees))
+```
+
+## ExploreModelMatrix
+
+* It's a Bioconductor package which is useful to understand statistical models we use in differential expression analyses. It is interactive and helps us by creating some visual aids.
+  - http://www.bioconductor.org/packages/ExploreModelMatrix
+* For more details, check their paper https://doi.org/10.12688/f1000research.24187.2.
+* We'll go over the examples they provide at http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html
+
+
+## Example 1
+
+```{r EMM_example1}
+## Example data
+(sampleData <- data.frame(
+    genotype = rep(c("A", "B"), each = 4),
+    treatment = rep(c("ctrl", "trt"), 4)
+))
+
+## Let's make the visual aids provided by ExploreModelMatrix
+vd <- ExploreModelMatrix::VisualizeDesign(
+    sampleData = sampleData,
+    designFormula = ~ genotype + treatment,
+    textSizeFitted = 4
+)
+
+## Now lets plot these images
+cowplot::plot_grid(plotlist = vd$plotlist)
+```
+
+Interactively, we can run the following code:
+
+```{r EMM_example1_interactive, eval = FALSE}
+## We are using shiny again here
+app <- ExploreModelMatrix(
+    sampleData = sampleData,
+    designFormula = ~ genotype + treatment
+)
+if (interactive()) shiny::runApp(app)
+```
+
+## Example 2
+
+http://bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html#example-2
+
+## Example 3
+
+http://bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html#example-3
+
+## Exercise
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="exercise">
+**Exercise 1**:
+Interpret `ResponseResistant.Treatmentpre` from the second example. It could be useful to take a screenshot and to draw some annotations on it.
+</p>
+
+<p class="exercise">
+**Exercise 2**:
+Whis is the `0` important at the beginning of the formula in the third example?
+</p>
+
+## To learn more
+
+_A guide to creating design matrices for gene expression experiments_:
+
+* http://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html
+* https://f1000research.com/articles/9-1444
+
+_“Model matrix not full rank”_
+
+* http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#model-matrix-not-full-rank
+
+## Community
+
+Some of the `ExploreModelMatrix` authors:
+
+* https://twitter.com/CSoneson
+* https://twitter.com/FedeBioinfo
+* https://twitter.com/mikelove
