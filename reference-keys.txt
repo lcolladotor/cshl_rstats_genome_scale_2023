@@ -22,7 +22,12 @@ assays
 sample-data
 gene-information
 isee-introduction
+toy-rse-data
+isee
+exercise-with-data-from-spatiallibd
+community
 rse-plotting-basics-with-smokingmouse
+download-the-smokingmouse-data
 biocthis-introduction
 recount3-introduction
 interpreting-model-coefficients-with-exploremodelmatrix
