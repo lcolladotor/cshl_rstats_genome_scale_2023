@@ -47,7 +47,14 @@ exercise-1
 to-learn-more
 community-3
 differential-gene-expression-analysis-with-limma
+srp045638-data
+data-normalization-1
+differential-expression
+visualizing-degs
+community-4
 differential-gene-expression-exercise-with-recount3-data
+recap
+exercise-2
 de-model-building-with-variancepartition
 download-the-smokingmouse-data-and-subset-it
 explore-gene-level-effects

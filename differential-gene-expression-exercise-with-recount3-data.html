@@ -226,8 +226,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.7" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#to-learn-more"><i class="fa fa-check"></i><b>9.7</b> To learn more</a></li>
 <li class="chapter" data-level="9.8" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#community-3"><i class="fa fa-check"></i><b>9.8</b> Community</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a></li>
-<li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
+<li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#srp045638-data"><i class="fa fa-check"></i><b>10.1</b> SRP045638 data</a></li>
+<li class="chapter" data-level="10.2" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#data-normalization-1"><i class="fa fa-check"></i><b>10.2</b> Data normalization</a></li>
+<li class="chapter" data-level="10.3" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#differential-expression"><i class="fa fa-check"></i><b>10.3</b> Differential expression</a></li>
+<li class="chapter" data-level="10.4" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#visualizing-degs"><i class="fa fa-check"></i><b>10.4</b> Visualizing DEGs</a></li>
+<li class="chapter" data-level="10.5" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#community-4"><i class="fa fa-check"></i><b>10.5</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html#recap"><i class="fa fa-check"></i><b>11.1</b> Recap</a></li>
+<li class="chapter" data-level="11.2" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html#exercise-2"><i class="fa fa-check"></i><b>11.2</b> Exercise</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#download-the-smokingmouse-data-and-subset-it"><i class="fa fa-check"></i><b>12.1</b> Download the smokingMouse data and subset it</a></li>
@@ -267,7 +278,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="differential-gene-expression-exercise-with-recount3-data" class="section level1 hasAnchor" number="11">
 <h1><span class="header-section-number">11</span> Differential gene expression exercise with recount3 data<a href="differential-gene-expression-exercise-with-recount3-data.html#differential-gene-expression-exercise-with-recount3-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Leo</p>
+<div id="recap" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Recap<a href="differential-gene-expression-exercise-with-recount3-data.html#recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far we know how to:</p>
+<ul>
+<li>choose a study from <code>recount3</code></li>
+<li>download data for a study with <code>recount3::create_rse()</code></li>
+<li>explore the data interactively with <code>iSEE</code></li>
+<li>expand <em>Sequence Read Archive</em> (SRA) attributes
+<ul>
+<li>sometimes we need to clean them up a bit before we can use them</li>
+</ul></li>
+<li>use <code>edgeR::calcNormFactors()</code> to reduce <em>composition bias</em></li>
+<li>build a differential gene expression model with <code>model.matrix()</code></li>
+<li>explore and interpret the model with <code>ExploreModelMatrix</code></li>
+<li>use <code>limma::voom()</code> and related functions to compute the differential gene expression statistics</li>
+<li>extract the DEG statistics with <code>limma::topTable(sort.by = "none")</code></li>
+<li>use some <code>limma</code> functions for making MA or volcano plots</li>
+</ul>
+<p>among several other plots and tools we learned along the way.</p>
+<p>Alternatively to <code>recount3</code>, we have learned about the <code>RangedSummarizedExperiment</code> objects produced by <code>SPEAQeasy</code> and in particular the one we are using on the <code>smokingMouse</code> project.</p>
+<p>You might have your own data already. Maybe you have it as an <code>AnnData</code> python object. If so, you can convert it to R with <em><a href="https://bioconductor.org/packages/3.17/zellkonverter">zellkonverter</a></em>.</p>
+</div>
+<div id="exercise-2" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Exercise<a href="differential-gene-expression-exercise-with-recount3-data.html#exercise-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+<p class="exercise">
+<strong>Exercise option 1</strong>:
+This will be an open ended exercise. Think of it as time to practice what we’ve learnt using data from <code>recount3</code> or another subset of the <code>smokingMouse</code> dataset. You could also choose to re-run code from earlier parts of the course and ask clarifying questions. You could also use this time to adapt some of the code we’ve covered to use it with your own dataset.
+</p>
+<p>If you prefer a more structured exercise:</p>
+<p class="exercise">
+<p><strong>Exercise option 2</strong>:
+1. Choose two <code>recount3</code> studies that can be used to study similar research questions. For example, two studies with brain samples across age.
+2. Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.
+- If you don’t want to choose another <code>recount3</code> study, you could use the <code>smokingMouse</code> data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.
+- Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-1" aria-hidden="true" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
+<span id="cb85-2"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
+<span id="cb85-3"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
+<span id="cb85-4"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">organism =</span> <span class="st">&quot;human&quot;</span>,</span>
+<span id="cb85-5"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
+<span id="cb85-6"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
+<span id="cb85-7"><a href="differential-gene-expression-exercise-with-recount3-data.html#cb85-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use <code>GGally::ggpairs()</code> for this <a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="uri">https://ggobi.github.io/ggally/reference/ggpairs.html</a>. Or <code>ggpubr::ggscatter()</code> <a href="https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html" class="uri">https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html</a>.</li>
+</ol>
+<ul>
+<li>For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.</li>
+<li>Or between the nicotine-exposed pups and the smoking-exposed pups in <code>smokingMouse</code>.</li>
+<li>Or using the two <code>recount3</code> studies you chose.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Are there any DEGs FDR &lt; 5% in both datasets? Or FDR &lt; 5% in dataset 1 that have a p-value &lt; 5% in the other one?</li>
+</ol>
+<ul>
+<li>You could choose to make a <em>concordance at the top</em> plot like at <a href="http://leekgroup.github.io/recount-analyses/example_de/recount_SRP019936.html" class="uri">http://leekgroup.github.io/recount-analyses/example_de/recount_SRP019936.html</a>, though you will likely need more time to complete this.</li>
+</ul>
+</p>
 
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">
