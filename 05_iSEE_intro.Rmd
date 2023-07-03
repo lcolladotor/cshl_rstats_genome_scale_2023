@@ -1,3 +1,136 @@
 # iSEE introduction
 
 Instructor: Leo
+
+## Toy RSE data
+
+```{r}
+## Lets build a simple SummarizedExperiment object following information
+## from the documentation
+library("SummarizedExperiment")
+## ?SummarizedExperiment
+
+## Adapted from the official documentation:
+
+## First we create the data pieces that we'll use to build our 
+## SummarizedExperiment object. In this case, we'll have 200 genes
+## measured in 6 samples.
+nrows <- 200
+ncols <- 6
+
+## Let's make up some count numbers at random
+set.seed(20210223)
+counts <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
+
+## Then some basic infomratino for our genes
+rowRanges <- GRanges(
+    rep(c("chr1", "chr2"), c(50, 150)),
+    IRanges(floor(runif(200, 1e5, 1e6)), width = 100),
+    strand = sample(c("+", "-"), 200, TRUE),
+    feature_id = sprintf("ID%03d", 1:200)
+)
+names(rowRanges) <- paste0("gene_", seq_len(length(rowRanges)))
+
+## Next, we create some information about samples
+colData <- DataFrame(
+    Treatment = rep(c("ChIP", "Input"), 3),
+    row.names = LETTERS[1:6]
+)
+
+## Finally we put all these pieces together in a single R object
+rse <- SummarizedExperiment(
+    assays = SimpleList(counts = counts),
+    rowRanges = rowRanges,
+    colData = colData
+)
+
+## Overview
+rse
+```
+
+## iSEE
+
+How can you make plots from `SummarizedExperiment` objects without having to
+write any code? The answer is with `iSEE` 🎨
+
+* http://bioconductor.org/packages/iSEE
+* http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
+
+
+```{r isee_basic, eval = FALSE}
+## Let's explore the `rse` object interactively
+library("iSEE")
+iSEE::iSEE(rse)
+```
+
+## Exercise with data from spatialLIBD
+
+* We'll download a `SingleCellExperiment` object, which is similar to `SummarizedExperiment` as it extends it.
+    - http://bioconductor.org/packages/SingleCellExperiment
+    - http://bioconductor.org/packages/spatialLIBD
+    - https://doi.org/10.1038/s41593-020-00787-0
+    - https://osca.bioconductor.org/
+    - https://www.nature.com/articles/s41592-019-0654-x Figures 2 and 3
+
+```{r download_sce_layer}
+## Lets get some data using spatialLIBD
+sce_layer <- spatialLIBD::fetch_data("sce_layer")
+sce_layer
+
+## We can check how big the object is with lobstr
+lobstr::obj_size(sce_layer)
+```
+
+* Just like with our `rse` object, we can use `iSEE::iSEE()` to explore the data.
+
+```{r explore_sce_layer, eval = FALSE}
+iSEE::iSEE(sce_layer)
+```
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="exercise">
+**Exercise 1**:
+Create a plot and download a PDF that reproduces as closely as possible the plot on the right side of the following slide. 
+</p>
+
+<script async class="speakerdeck-embed" data-slide="10" data-id="329db23f5f17460da31f45c7695a9f06" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<p class="exercise">
+**Exercise 2**:
+Explore with a _heatmap_ the expression of the genes `MOBP`, `MBP`, and `PCP4`. If we use _clustering_ (group genes based on similar expression patterns), which two genes are most similar to each other?
+</p>
+
+<p class="exercise">
+**Exercise 3**:
+In which dorsolateral prefrontal cortex (DLPFC) layers (`L1`, `L2`, ..., `L6` grey matter layers, and `WM` for _white matter_) do we see the highest expression for the genes _MOBP_ and _MBP_?
+</p>
+
+This list of ENSEMBL IDs will be useful:
+
+```
+ENSG00000168314
+ENSG00000183036
+ENSG00000197971
+```
+
+## Community
+
+`iSEE` authors:
+
+* Kévin Rue-Albrecht https://twitter.com/KevinRUE67
+* Federico Marini https://twitter.com/FedeBioinfo
+* Charlotte Soneson https://twitter.com/CSoneson
+* Aaron Lun https://twitter.com/realAaronLun
+* Another example exploring data with `SummarizedExperiment` and `iSEE`:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Today we explored RNA-seq data from <a href="https://twitter.com/StefanoBerto83?ref_src=twsrc%5Etfw">@StefanoBerto83</a> et al who made it easy to re-use. Thank you! ^^<a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a> used <a href="https://twitter.com/hashtag/shiny?src=hash&amp;ref_src=twsrc%5Etfw">#shiny</a> + <a href="https://twitter.com/hashtag/ggpubr?src=hash&amp;ref_src=twsrc%5Etfw">#ggpubr</a> as well as <a href="https://twitter.com/hashtag/iSEE?src=hash&amp;ref_src=twsrc%5Etfw">#iSEE</a><br><br>📔 <a href="https://t.co/iUQHE0xqRc">https://t.co/iUQHE0xqRc</a><br>🗞️ <a href="https://t.co/qhAdXbhY9c">https://t.co/qhAdXbhY9c</a><a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a><a href="https://t.co/OXTukByhoo">https://t.co/OXTukByhoo</a></p>&mdash; LIBD rstats club (@LIBDrstats) <a href="https://twitter.com/LIBDrstats/status/1360349352250789890?ref_src=twsrc%5Etfw">February 12, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
