@@ -3,15 +3,15 @@
 Instructor: Daianna
 
 
-## Explore gene-level effects {-}
+## Explore gene-level effects
 
 Once the quality and the variability of the samples have been evaluated, the next step is to explore the differences in the expression of the genes themselves in the sample groups, or in other words, to quantify the contribution of the multiple sample variables of the study in the gene expression variation, which constitutes one of the fundamental challenges when analyzing complex RNA-seq datasets [1].
 
 To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study nicotine effects, we can implement an analysis of variance partition. `variancePartition` is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables of the experimental design of high-throughput genomics studies [1].
 
-### 1. Variance Partition Analysis  {-}
+## Variance Partition Analysis
 
-**1.1 Canonical Correlation Analysis** 
+### Canonical Correlation Analysis
 
 Before the analysis itself, we need to measure the correlation between the sample variables. This is an important step because highly correlated variables can produce unstable estimates of the variance fractions and hinder the identification of the variables that really contribute to the expression variation. There are at least two problems with that:
 
@@ -277,7 +277,7 @@ After identifying which variables are correlated and exploring the metrics of co
 
 
 
-**1.2 Fit model and extract fraction of variance explained**
+### Fit model and extract fraction of variance explained
 
 Briefly, `variancePartition` fits a linear model for each gene separately and `calcVarPart()` computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [1].
 
@@ -506,7 +506,7 @@ plot + theme(
 
 But what does it mean that a variable explains a high percentage of the expression variation of a gene? Look at the following plots and try the function with other variables to observe the relationships that exists between the gene expression values in the samples and samples' variables. 
 
-**1.3 Examine expression of most affected genes by each sample variable**
+### Examine expression of most affected genes by each sample variable
 
 In the following plots you can appreciate the expression values in the samples of the most affected genes by a certain variable (i.e., the genes for which the variable explains the highest percentages of variance) vs. the values of the samples for the same variable. In simple words, each dot is a sample, in the y-axis the expression of the gene in each sample and in the x-axis the samples' values for the variable. The idea is to observe the strong relationships that exists for the sample variables and the gene expression of such affected genes, which ends up causing the variables to explain high percentages of gene expression variation and which obligate us to adjust for them the models of DEA so that we don´t get DEGs driven by sample quality differences.  
 
