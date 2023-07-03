@@ -65,6 +65,7 @@ examine-expression-of-most-affected-genes-by-each-sample-variable
 expression-heatmaps-with-complexheatmap
 exercise-with-variancepartition-and-complexheatmap
 tbd
+options
 introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data
 community-5
 downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd
