@@ -220,9 +220,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
 <li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
 <ul>
-<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i>Explore gene-level effects</a>
+<li class="chapter" data-level="12.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i><b>12.1</b> Explore gene-level effects</a></li>
+<li class="chapter" data-level="12.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i><b>12.2</b> Variance Partition Analysis</a>
 <ul>
-<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
+<li class="chapter" data-level="12.2.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#canonical-correlation-analysis"><i class="fa fa-check"></i><b>12.2.1</b> Canonical Correlation Analysis</a></li>
+<li class="chapter" data-level="12.2.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.2.2</b> Fit model and extract fraction of variance explained</a></li>
+<li class="chapter" data-level="12.2.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.2.3</b> Examine expression of most affected genes by each sample variable</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
@@ -273,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb25-13"><a href="smokingmouse-rse.html#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb25-14"><a href="smokingmouse-rse.html#cb25-14" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb25-15"><a href="smokingmouse-rse.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
-<span id="cb25-16"><a href="smokingmouse-rse.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55e6c3859d6_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb25-16"><a href="smokingmouse-rse.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/55f185c55d5_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb25-17"><a href="smokingmouse-rse.html#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-18"><a href="smokingmouse-rse.html#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb25-19"><a href="smokingmouse-rse.html#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>

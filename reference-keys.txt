@@ -41,6 +41,11 @@ interpreting-model-coefficients-with-exploremodelmatrix
 differential-gene-expression-analysis-with-limma
 differential-gene-expression-exercise-with-recount3-data
 de-model-building-with-variancepartition
+explore-gene-level-effects
+variance-partition-analysis
+canonical-correlation-analysis
+fit-model-and-extract-fraction-of-variance-explained
+examine-expression-of-most-affected-genes-by-each-sample-variable
 expression-heatmaps-with-complexheatmap
 exercise-with-variancepartition-and-complexheatmap
 tbd

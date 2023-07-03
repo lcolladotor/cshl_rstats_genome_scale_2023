@@ -220,9 +220,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
 <li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
 <ul>
-<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i>Explore gene-level effects</a>
+<li class="chapter" data-level="12.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i><b>12.1</b> Explore gene-level effects</a></li>
+<li class="chapter" data-level="12.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i><b>12.2</b> Variance Partition Analysis</a>
 <ul>
-<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
+<li class="chapter" data-level="12.2.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#canonical-correlation-analysis"><i class="fa fa-check"></i><b>12.2.1</b> Canonical Correlation Analysis</a></li>
+<li class="chapter" data-level="12.2.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.2.2</b> Fit model and extract fraction of variance explained</a></li>
+<li class="chapter" data-level="12.2.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.2.3</b> Examine expression of most affected genes by each sample variable</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
@@ -332,7 +335,7 @@ write any code? The answer is with <code>iSEE</code> 🎨</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="isee-introduction.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
 <span id="cb32-2"><a href="isee-introduction.html#cb32-2" aria-hidden="true" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
 <span id="cb32-3"><a href="isee-introduction.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb32-4"><a href="isee-introduction.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-03 01:15:57.197429 loading file /github/home/.cache/R/BiocFileCache/55e52fe36de_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
+<span id="cb32-4"><a href="isee-introduction.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-03 01:19:33.432095 loading file /github/home/.cache/R/BiocFileCache/55f70e8caf2_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
 <span id="cb32-5"><a href="isee-introduction.html#cb32-5" aria-hidden="true" tabindex="-1"></a>sce_layer</span>
 <span id="cb32-6"><a href="isee-introduction.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span id="cb32-7"><a href="isee-introduction.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>

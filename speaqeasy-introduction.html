@@ -220,9 +220,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
 <li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
 <ul>
-<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i>Explore gene-level effects</a>
+<li class="chapter" data-level="12.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i><b>12.1</b> Explore gene-level effects</a></li>
+<li class="chapter" data-level="12.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i><b>12.2</b> Variance Partition Analysis</a>
 <ul>
-<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i>1. Variance Partition Analysis</a></li>
+<li class="chapter" data-level="12.2.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#canonical-correlation-analysis"><i class="fa fa-check"></i><b>12.2.1</b> Canonical Correlation Analysis</a></li>
+<li class="chapter" data-level="12.2.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.2.2</b> Fit model and extract fraction of variance explained</a></li>
+<li class="chapter" data-level="12.2.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.2.3</b> Examine expression of most affected genes by each sample variable</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
@@ -303,8 +306,8 @@ Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for 
 <pre><code>## adding rname &#39;https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData&#39;</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="speaqeasy-introduction.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb10-2"><a href="speaqeasy-introduction.html#cb10-2" aria-hidden="true" tabindex="-1"></a>cached_rse_gene_example</span></code></pre></div>
-<pre><code>##                                                                 BFC1 
-## &quot;/github/home/.cache/R/BiocFileCache/55e7b37d5a_rse_speaqeasy.RData&quot;</code></pre>
+<pre><code>##                                                                  BFC1 
+## &quot;/github/home/.cache/R/BiocFileCache/55f1bced12e_rse_speaqeasy.RData&quot;</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="speaqeasy-introduction.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb12-2"><a href="speaqeasy-introduction.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene_example, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Loading objects:
