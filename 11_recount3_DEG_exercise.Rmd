@@ -1,3 +1,70 @@
 # Differential gene expression exercise with recount3 data
 
 Instructor: Leo
+
+## Recap
+
+So far we know how to:
+
+* choose a study from `recount3`
+* download data for a study with `recount3::create_rse()`
+* explore the data interactively with `iSEE`
+* expand _Sequence Read Archive_ (SRA) attributes
+  - sometimes we need to clean them up a bit before we can use them
+* use `edgeR::calcNormFactors()` to reduce _composition bias_
+* build a differential gene expression model with `model.matrix()`
+* explore and interpret the model with `ExploreModelMatrix`
+* use `limma::voom()` and related functions to compute the differential gene expression statistics
+* extract the DEG statistics with `limma::topTable(sort.by = "none")`
+* use some `limma` functions for making MA or volcano plots
+
+among several other plots and tools we learned along the way.
+
+Alternatively to `recount3`, we have learned about the `RangedSummarizedExperiment` objects produced by `SPEAQeasy` and in particular the one we are using on the `smokingMouse` project.
+
+You might have your own data already. Maybe you have it as an `AnnData` python object. If so, you can convert it to R with `r BiocStyle::Biocpkg("zellkonverter")`.
+
+## Exercise
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="exercise">
+**Exercise option 1**:
+This will be an open ended exercise. Think of it as time to practice what we've learnt using data from `recount3` or another subset of the `smokingMouse` dataset. You could also choose to re-run code from earlier parts of the course and ask clarifying questions. You could also use this time to adapt some of the code we've covered to use it with your own dataset.
+</p>
+
+
+If you prefer a more structured exercise:
+
+<p class="exercise">
+**Exercise option 2**:
+1. Choose two `recount3` studies that can be used to study similar research questions. For example, two studies with brain samples across age.
+2. Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.
+  - If you don't want to choose another `recount3` study, you could use the `smokingMouse` data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.
+  - Or you could use the GTEx brain data from `recount3`, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.
+ 
+```{r eval = FALSE}
+recount3::create_rse_manual(
+    project = "BRAIN",
+    project_home = "data_sources/gtex",
+    organism = "human",
+    annotation = "gencode_v26",
+    type = "gene"
+)
+```
+
+3. Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use `GGally::ggpairs()` for this https://ggobi.github.io/ggally/reference/ggpairs.html. Or `ggpubr::ggscatter()` https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html.
+  - For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.
+  - Or between the nicotine-exposed pups and the smoking-exposed pups in `smokingMouse`.
+  - Or using the two `recount3` studies you chose.
+4. Are there any DEGs FDR < 5% in both datasets? Or FDR < 5% in dataset 1 that have a p-value < 5% in the other one?
+  - You could choose to make a _concordance at the top_ plot like at http://leekgroup.github.io/recount-analyses/example_de/recount_SRP019936.html, though you will likely need more time to complete this.
+</p>
