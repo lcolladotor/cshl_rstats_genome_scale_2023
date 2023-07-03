@@ -4,7 +4,7 @@ Instructor: Leo
 
 ## Download data from 10x Genomics
 
-We'll run some code adapted from http://research.libd.org/spatialLIBD/articles/TenX_data_download.html (also https://bioconductor.org/packages/devel/data/experiment/vignettes/spatialLIBD/inst/doc/TenX_data_download.html). We'll explore spatially resolved transcriptomics data from the [Visium platform by 10x Genomics](https://www.10xgenomics.com/products/spatial-gene-expression).
+We'll run some code adapted from http://research.libd.org/spatialLIBD/articles/TenX_data_download.html (also available at https://bioconductor.org/packages/devel/data/experiment/vignettes/spatialLIBD/inst/doc/TenX_data_download.html). We'll explore spatially resolved transcriptomics data from the [Visium platform by 10x Genomics](https://www.10xgenomics.com/products/spatial-gene-expression).
 
 We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
 
@@ -153,10 +153,12 @@ font-family: sans-serif;
 
 <p class="exercise">
 **Exercise 1**:
+</p>
+
 * Plot a continuous variable of your choice with and without the histology image on the background.
   - For example, visualize the k-means with $k = 10$ clustering results computed by `SpaceRanger`. 
 * Use custom colors of your choice. See https://emilhvitfeldt.github.io/r-color-palettes/discrete.html to choose a color palette.
   - For example, use the `Polychrome::palette36()` colors.
-</p>
+
 
 

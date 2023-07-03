@@ -46,11 +46,12 @@ If you prefer a more structured exercise:
 
 <p class="exercise">
 **Exercise option 2**:
+</p>
+
 1. Choose two `recount3` studies that can be used to study similar research questions. For example, two studies with brain samples across age.
 2. Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.
   - If you don't want to choose another `recount3` study, you could use the `smokingMouse` data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.
   - Or you could use the GTEx brain data from `recount3`, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.
-</p>
  
 ```{r eval = FALSE}
 recount3::create_rse_manual(
@@ -62,11 +63,9 @@ recount3::create_rse_manual(
 )
 ```
 
-<p class="exercise">
 3. Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use `GGally::ggpairs()` for this https://ggobi.github.io/ggally/reference/ggpairs.html. Or `ggpubr::ggscatter()` https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html.
   - For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.
   - Or between the nicotine-exposed pups and the smoking-exposed pups in `smokingMouse`.
   - Or using the two `recount3` studies you chose.
 4. Are there any DEGs FDR < 5% in both datasets? Or FDR < 5% in dataset 1 that have a p-value < 5% in the other one?
   - You could choose to make a _concordance at the top_ plot like at http://leekgroup.github.io/recount-analyses/example_de/recount_SRP019936.html, though you will likely need more time to complete this.
-</p>
