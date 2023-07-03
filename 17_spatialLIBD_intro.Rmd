@@ -1,3 +1,156 @@
 # Downloading public Visium spatial data and visualizing it with spatialLIBD
 
 Instructor: Leo
+
+## Download data from 10x Genomics
+
+We'll run some code adapted from http://research.libd.org/spatialLIBD/articles/TenX_data_download.html (also https://bioconductor.org/packages/devel/data/experiment/vignettes/spatialLIBD/inst/doc/TenX_data_download.html). We'll explore spatially resolved transcriptomics data from the [Visium platform by 10x Genomics](https://www.10xgenomics.com/products/spatial-gene-expression).
+
+We'll use `r Biocpkg("BiocFileCache")` to keep the data in a local cache in case we want to run this example again and don't want to re-download the data from the web.
+
+```{r "download_10x_data"}
+## Download and save a local cache of the data provided by 10x Genomics
+bfc <- BiocFileCache::BiocFileCache()
+lymph.url <-
+    paste0(
+        "https://cf.10xgenomics.com/samples/spatial-exp/",
+        "1.1.0/V1_Human_Lymph_Node/",
+        c(
+            "V1_Human_Lymph_Node_filtered_feature_bc_matrix.tar.gz",
+            "V1_Human_Lymph_Node_spatial.tar.gz",
+            "V1_Human_Lymph_Node_analysis.tar.gz"
+        )
+    )
+lymph.data <- sapply(lymph.url, BiocFileCache::bfcrpath, x = bfc)
+```
+
+10x Genomics provides the files in compressed tarballs (`.tar.gz` file extension). Which is why we'll need to use `utils::untar()` to decompress the files. This will create new directories and we will use `list.files()` to see what files these directories contain.
+
+```{r "extract_files"}
+## Extract the files to a temporary location
+## (they'll be deleted once you close your R session)
+xx <- sapply(lymph.data, utils::untar, exdir = file.path(tempdir(), "outs"))
+## The names are the URLs, which are long and thus too wide to be shown here,
+## so we shorten them to only show the file name prior to displaying the
+## utils::untar() output status
+names(xx) <- basename(names(xx))
+xx
+
+## List the files we downloaded and extracted
+## These files are typically SpaceRanger outputs
+lymph.dirs <- file.path(
+    tempdir(), "outs",
+    c("filtered_feature_bc_matrix", "spatial", "raw_feature_bc_matrix", "analysis")
+)
+list.files(lymph.dirs)
+```
+
+
+## Add gene annotation information
+
+These files do not include much information about the genes, such as their chromosomes, coordinates, and other gene annotation information. We thus recommend that you read in this information from a gene annotation file: typically a `gtf` file. For a real case scenario, you'll mostly likely have access to the GTF file provided by 10x Genomics. However, we cannot download that file without downloading other files for this example. 
+
+### From 10x
+
+Depending on the version of `spaceranger` you used, you might have used different GTF files 10x Genomics has made available at https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest and described at https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build. These files are too big though and we won't download them in this example. For instance, _References - 2020-A (July 7, 2020)_ for _Human reference (GRCh38)_ is 11 GB in size and contains files we do not need here. If you did have the file locally, we would just need the path to this GTF file later.
+
+For example, in our computing cluster this GTF file is located at the following path and is 1.4 GB in size:
+
+```{bash, eval = FALSE}
+$ cd /dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A
+$ du -sh --apparent-size genes/genes.gtf
+1.4G	genes/genes.gtf
+```
+
+### From Gencode
+
+In the absence of the GTF file used by 10x Genomics, we'll use the GTF file from Gencode v32 which we can download and that is much smaller. That's because the build notes from _References - 2020-A (July 7, 2020)_ and _Human reference, GRCh38 (GENCODE v32/Ensembl 98)_ at https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build#GRCh38_2020A show that 10x Genomics used Gencode v32. They also used Ensembl version 98 which is why a few genes we have in our object are going to be missing. Let's download this GTF file. 
+
+
+```{r "use_gencode_gtf"}
+## Download the Gencode v32 GTF file and cache it
+gtf_cache <- BiocFileCache::bfcrpath(
+    bfc,
+    paste0(
+        "ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+        "release_32/gencode.v32.annotation.gtf.gz"
+    )
+)
+
+## Show the GTF cache location
+gtf_cache
+```
+
+## Wrapper functions for reading the data
+
+To facilitate reading in the data and preparing it to visualize it interactively using `spatialLIBD::run_app()`, we implemented `read10xVisiumWrapper()` which expands `SpatialExperiment::read10xVisium()` and performs the steps described in more detail at http://research.libd.org/spatialLIBD/articles/TenX_data_download.html. In this example, we'll load all four images created by SpaceRanger: lowres, hires, detected, and aligned. That way we can toggle between them on the web application.
+
+```{r wrapper_functions}
+## Import the data as a SpatialExperiment object using wrapper functions
+## provided by spatialLIBD
+library("spatialLIBD")
+spe_wrapper <- read10xVisiumWrapper(
+    samples = file.path(tempdir(), "outs"),
+    sample_id = "lymph",
+    type = "sparse", data = "filtered",
+    images = c("lowres", "hires", "detected", "aligned"), load = TRUE,
+    reference_gtf = gtf_cache
+)
+
+## Explore the object
+spe_wrapper
+
+## Size of the data
+lobstr::obj_size(spe_wrapper)
+```
+
+```{r "run_shiny_app_wrapper"}
+## Run our shiny app
+if (interactive()) {
+    vars <- colnames(colData(spe_wrapper))
+
+    run_app(
+        spe_wrapper,
+        sce_layer = NULL,
+        modeling_results = NULL,
+        sig_genes = NULL,
+        title = "spatialLIBD: human lymph node by 10x Genomics (made with wrapper)",
+        spe_discrete_vars = c(vars[grep("10x_", vars)], "ManualAnnotation"),
+        spe_continuous_vars = c("sum_umi", "sum_gene", "expr_chrM", "expr_chrM_ratio"),
+        default_cluster = "10x_graphclust"
+    )
+}
+```
+
+The result should look pretty much like https://libd.shinyapps.io/spatialLIBD_Human_Lymph_Node_10x/.
+
+## Visualize spatial plots
+
+Now that we have explored the spatially resolved transcriptomics data with the `spatialLIBD::run_app()` `shiny` website, lets make some plots ourselves.
+
+Check out the documentation for these two functions:
+
+* `spatialLIBD::vis_gene()` http://research.libd.org/spatialLIBD/reference/vis_gene.html for continuous variables, including gene expression values
+* `spatialLIBD::vis_clus()` http://research.libd.org/spatialLIBD/reference/vis_clus.html for discrete variables
+
+## Exercise
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="exercise">
+**Exercise 1**:
+* Plot a continuous variable of your choice with and without the histology image on the background.
+  - For example, visualize the k-means with $k = 10$ clustering results computed by `SpaceRanger`. 
+* Use custom colors of your choice. See https://emilhvitfeldt.github.io/r-color-palettes/discrete.html to choose a color palette.
+  - For example, use the `Polychrome::palette36()` colors.
+</p>
+
+
