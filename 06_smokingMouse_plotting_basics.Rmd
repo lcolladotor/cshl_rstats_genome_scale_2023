@@ -5,7 +5,7 @@ Instructor: Daianna
 ## Download the smokingMouse data
 
 We've used these commands already in an earlier chapter. Here we'll re-download
-the data, though tecnically we are using the cached data we had previously
+the data, though technically we are using the cached data we had previously
 downloaded so this time the code below will run faster.
 
 ```{r download_data_biocfilecache_repeat}
@@ -69,7 +69,7 @@ As outlined in **Data overview and download**, the scaling factors were obtained
 After data normalization and scaling, we’d expect the read counts to follow a Norm distribution, something we can confirm comparing the counts' distribution before and after the normalization. Consider both datasets contain the exact same genes. 
 
 ```{r Data preparation, message=FALSE, warning=FALSE}
-library(ggplot2)
+library("ggplot2")
 
 ## Histogram and density plot of read counts before and after normalization
 
@@ -159,9 +159,9 @@ font-family: sans-serif;
 Fortunately, we can identify to some extent possible factors that could have influenced on the quality of the samples, as well as isolated samples that are problematic. To do that, we will create boxplots that present the distribution of the samples' metrics separating them by sample variables. 
 
 ```{r QC_boxplots,  message=FALSE, warning=FALSE}
-library(Hmisc)
-library(stringr)
-library(cowplot)
+library("Hmisc")
+library("stringr")
+library("cowplot")
 
 ## Define QC metrics of interest
 qc_metrics <- c("mitoRate", "overallMapRate", "totalAssignedGene", "rRNA_rate", "sum", "detected", "ERCCsumLogErr")
@@ -444,9 +444,9 @@ Remarkably, samples were not differentiated by any other variable (including Gro
 After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based, precisely, on these metrics. For that, we will use `isOutlier()` from `r BiocStyle::Biocpkg("scater")` to identify outlier samples only at the lower end or the higher end, depending on the QC metric.
 
 ```{r "QC sample filtering", message=FALSE, warning=FALSE}
-library(scater)
-library(rlang)
-library(ggrepel)
+library("scater")
+library("rlang")
+library("ggrepel")
 
 ## Separate data by Age
 rse_gene_pups <- rse_gene_filt[, which(rse_gene_filt$Age == "Pup")]

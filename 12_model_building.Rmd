@@ -2,6 +2,39 @@
 
 Instructor: Daianna
 
+## Download the smokingMouse data and subset it
+
+We've used these commands already in an earlier chapters.
+
+```{r download_data_biocfilecache_repeat}
+## Load the container package for this type of data
+library("SummarizedExperiment")
+
+## Download data
+library("BiocFileCache")
+bfc <- BiocFileCache::BiocFileCache()
+cached_rse_gene <- BiocFileCache::bfcrpath(
+    x = bfc,
+    "https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata"
+)
+
+## Check the local path on our cache
+cached_rse_gene
+
+## Load the rse_gene object
+load(cached_rse_gene, verbose = TRUE)
+
+## Nicotine data
+rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine")]
+
+## Retain genes that passed filtering step
+rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
+
+## Separate data by Age
+rse_gene_pups <- rse_gene_filt[, which(rse_gene_filt$Age == "Pup")]
+rse_gene_adults <- rse_gene_filt[, which(rse_gene_filt$Age == "Adult")]
+```
+
 
 ## Explore gene-level effects
 
@@ -24,8 +57,8 @@ Hence, to drop such variables we must identify them fist. Pearson correlation ca
 
 
 ```{r message=FALSE, warning=FALSE}
-library(variancePartition)
-library(pheatmap)
+library("variancePartition")
+library("pheatmap")
 
 #######################   Variance Partition Analysis   #######################
 
