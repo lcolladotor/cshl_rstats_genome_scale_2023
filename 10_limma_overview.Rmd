@@ -144,7 +144,7 @@ ggplot(as.data.frame(colData(rse_gene_SRP045638)), aes(y = assigned_gene_prop, x
     xlab("Age Group")
 ```
 
-For example, we would explore the contribution of different variables to the gene expression variability we observe using the [`variancePartition`](https://bioconductor.org/packages/variancePartition) and [`scater`](https://bioconductor.org/packages/scater) Bioconductor packages, among others. We'll do more of this tomorrow but you can also check this [LIBD rstats club](https://docs.google.com/document/d/1hil3zwPN6BW6HlwldLbM1FdlLIBWKFNXRUqJJEK_-eY/edit)
+For example, we would explore the contribution of different variables to the gene expression variability we observe using the [`variancePartition`](https://bioconductor.org/packages/variancePartition) and [`scater`](https://bioconductor.org/packages/scater) Bioconductor packages, among others. We'll do more of this tomorrow but you can also check these [LIBD rstats club notes](https://docs.google.com/document/d/1hil3zwPN6BW6HlwldLbM1FdlLIBWKFNXRUqJJEK_-eY/edit).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OdNU5LUOHng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
