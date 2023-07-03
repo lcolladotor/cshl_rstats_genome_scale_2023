@@ -50,6 +50,7 @@ If you prefer a more structured exercise:
 2. Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.
   - If you don't want to choose another `recount3` study, you could use the `smokingMouse` data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.
   - Or you could use the GTEx brain data from `recount3`, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.
+</p>
  
 ```{r eval = FALSE}
 recount3::create_rse_manual(
@@ -61,6 +62,7 @@ recount3::create_rse_manual(
 )
 ```
 
+<p class="exercise">
 3. Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use `GGally::ggpairs()` for this https://ggobi.github.io/ggally/reference/ggpairs.html. Or `ggpubr::ggscatter()` https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html.
   - For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.
   - Or between the nicotine-exposed pups and the smoking-exposed pups in `smokingMouse`.
