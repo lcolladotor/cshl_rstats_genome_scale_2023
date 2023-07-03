@@ -34,7 +34,7 @@ rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filte
 rse_gene_pups <- rse_gene_filt[, which(rse_gene_filt$Age == "Pup")]
 rse_gene_adults <- rse_gene_filt[, which(rse_gene_filt$Age == "Adult")]
 
-library("scran")
+library("scuttle")
 ## Filter adult samples
 outliers_library_size <- isOutlier(rse_gene_adults$sum, nmads = 3, type = "lower")
 outliers_detected_num <- isOutlier(rse_gene_adults$detected, nmads = 3, type = "lower")
