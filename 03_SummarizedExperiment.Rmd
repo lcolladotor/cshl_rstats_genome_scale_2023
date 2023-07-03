@@ -26,6 +26,9 @@ bib <- c(
 options(max.print = 50)
 ```
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lqxtgpD-heM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[_LIBD rstats club notes_](https://docs.google.com/document/d/1umDODmdQldf5w2lNDoFe-unmezHPonpCiKD270VwkrQ/edit?usp=sharing)
 
 ## Overview
 The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations (features) of the samples, as well as additional metadata. Usually, this type of object is automatically generated as the output of other software (ie. `SPEAQeasy`), but you can also build them. 
