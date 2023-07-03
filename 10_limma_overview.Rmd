@@ -233,7 +233,7 @@ levels(col.group) <- brewer.pal(nlevels(col.group), "Set1")
 col.group <- as.character(col.group)
 
 ## MDS by age groups
-plotMDS(vGene$E, labels = df$AgeGroup, col = col.group)
+limma::plotMDS(vGene$E, labels = df$AgeGroup, col = col.group)
 
 ## Mapping Sex values into colors
 col.sex <- df$Sex
@@ -241,7 +241,7 @@ levels(col.sex) <- brewer.pal(nlevels(col.sex), "Dark2")
 col.sex <- as.character(col.sex)
 
 ## MDS by Sex
-plotMDS(vGene$E, labels = df$Sex, col = col.sex)
+limma::plotMDS(vGene$E, labels = df$Sex, col = col.sex)
 ```
 
 ## Community
