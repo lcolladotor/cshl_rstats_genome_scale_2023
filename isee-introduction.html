@@ -208,7 +208,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>7.2</b> biocthis main commands</a></li>
 <li class="chapter" data-level="7.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-1"><i class="fa fa-check"></i><b>7.3</b> Community</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
+<li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="recount3-introduction.html"><a href="recount3-introduction.html#recount-projects"><i class="fa fa-check"></i><b>8.1</b> recount projects</a></li>
+<li class="chapter" data-level="8.2" data-path="recount3-introduction.html"><a href="recount3-introduction.html#using-recount3"><i class="fa fa-check"></i><b>8.2</b> Using recount3</a></li>
+<li class="chapter" data-level="8.3" data-path="recount3-introduction.html"><a href="recount3-introduction.html#exercise"><i class="fa fa-check"></i><b>8.3</b> Exercise</a></li>
+<li class="chapter" data-level="8.4" data-path="recount3-introduction.html"><a href="recount3-introduction.html#community-2"><i class="fa fa-check"></i><b>8.4</b> Community</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a></li>
 <li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a></li>
 <li class="chapter" data-level="11" data-path="differential-gene-expression-exercise-with-recount3-data.html"><a href="differential-gene-expression-exercise-with-recount3-data.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise with recount3 data</a></li>
@@ -326,7 +332,7 @@ write any code? The answer is with <code>iSEE</code> 🎨</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="isee-introduction.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
 <span id="cb32-2"><a href="isee-introduction.html#cb32-2" aria-hidden="true" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
 <span id="cb32-3"><a href="isee-introduction.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb32-4"><a href="isee-introduction.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-03 00:49:39.944301 loading file /github/home/.cache/R/BiocFileCache/55c293b1a6b_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
+<span id="cb32-4"><a href="isee-introduction.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-03 01:15:03.968751 loading file /github/home/.cache/R/BiocFileCache/55ccf803e3_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
 <span id="cb32-5"><a href="isee-introduction.html#cb32-5" aria-hidden="true" tabindex="-1"></a>sce_layer</span>
 <span id="cb32-6"><a href="isee-introduction.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span id="cb32-7"><a href="isee-introduction.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>

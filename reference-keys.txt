@@ -33,6 +33,10 @@ related-past-materials
 biocthis-main-commands
 community-1
 recount3-introduction
+recount-projects
+using-recount3
+exercise
+community-2
 interpreting-model-coefficients-with-exploremodelmatrix
 differential-gene-expression-analysis-with-limma
 differential-gene-expression-exercise-with-recount3-data
