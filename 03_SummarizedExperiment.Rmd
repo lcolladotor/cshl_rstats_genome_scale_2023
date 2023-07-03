@@ -170,7 +170,7 @@ font-family: sans-serif;
 
 dim(se)
 
-## For b), 
+## For b),
 
 colData(se)[colData(se)$dex == "trt", ]
 ```

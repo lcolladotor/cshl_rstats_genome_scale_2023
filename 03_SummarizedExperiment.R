@@ -1,4 +1,4 @@
-## ---- include = FALSE------------------------------------------------
+## ---- include = FALSE--------------------------------------------
 knitr::opts_chunk$set(
     collapse = TRUE,
     comment = "#>"
@@ -21,12 +21,12 @@ bib <- c(
 options(max.print = 50)
 
 
-## ---- echo=FALSE-----------------------------------------------------
+## ---- echo=FALSE-------------------------------------------------
 suppressPackageStartupMessages(library(SummarizedExperiment))
 suppressPackageStartupMessages(data(airway, package = "airway"))
 
 
-## --------------------------------------------------------------------
+## ----------------------------------------------------------------
 library(SummarizedExperiment)
 library(airway)
 
@@ -34,7 +34,7 @@ data(airway, package = "airway")
 se <- airway
 
 
-## --------------------------------------------------------------------
+## ----------------------------------------------------------------
 ## For a) you could only print the summary of the object but since the idea is to understand
 ## how to explore the object find other function that gives you the answer.
 se
@@ -45,7 +45,7 @@ se
 colData(se)
 
 
-## --------------------------------------------------------------------
+## ----------------------------------------------------------------
 ## In our object, if you look at the part that says assays, we can see that at the moment
 ## we only have one with the name "counts"
 
@@ -75,8 +75,34 @@ assayNames(se)
 assayNames(se)[1] <- "counts"
 
 
-## --------------------------------------------------------------------
+## ----------------------------------------------------------------
 ## To calculate the library size use
 
 apply(assay(se), 2, sum)
+
+
+## ----------------------------------------------------------------
+## For a), dim() gives the desired answer
+
+dim(se)
+
+## For b),
+
+colData(se)[colData(se)$dex == "trt", ]
+
+
+## ----------------------------------------------------------------
+## There are multiple ways to do it
+
+assay(se, "logcounts") <- log10(assay(se, "counts"))
+
+assays(se)$logcounts_v2 <- log10(assays(se)$counts)
+
+
+## ----------------------------------------------------------------
+## To add the library size we an use..
+
+colData(se)$library_size <- apply(assay(se), 2, sum)
+
+names(colData(se))
 
