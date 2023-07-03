@@ -1,3 +1,10 @@
 # TBD
 
 Instructor: Leo
+
+## Options
+
+These are the options I've heard interest in so far:
+
+* `postcards` for making your own personal website
+  - Requires a `git` and `GitHub` setup
