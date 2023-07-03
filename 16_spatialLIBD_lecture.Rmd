@@ -7,3 +7,8 @@ Instructor: Leo
 <script defer class="speakerdeck-embed" data-id="0d787ea8865b4c8cb1c4f4bdebd5d3e6" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
 
 `r BiocStyle::Biocpkg("SummarizedExperiment")` --> `r BiocStyle::Biocpkg("SingleCellExperiment")` --> `r BiocStyle::Biocpkg("SpatialExperiment")` --> `r BiocStyle::Biocpkg("spatialLIBD")`
+
+## Community
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Are you analyzing spatially-resolved transcriptomics data? Visium from <a href="https://twitter.com/10xGenomics?ref_src=twsrc%5Etfw">@10xGenomics</a>? You might want to use <a href="https://twitter.com/hashtag/SpatialExperiment?src=hash&amp;ref_src=twsrc%5Etfw">#SpatialExperiment</a> which provides a common infrastructure fully compatible with <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a>&#39;s ecosystem <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a><br><br>More details? Open access paper 📜<a href="https://t.co/4Y2RN4Wz2z">https://t.co/4Y2RN4Wz2z</a> <a href="https://t.co/49wE5Dv5HF">https://t.co/49wE5Dv5HF</a> <a href="https://t.co/QpI4lvCF2r">pic.twitter.com/QpI4lvCF2r</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1520066354241449988?ref_src=twsrc%5Etfw">April 29, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
