@@ -97,7 +97,7 @@ spe_wrapper <- read10xVisiumWrapper(
     reference_gtf = gtf_cache
 )
 
-## Explore the object
+## Explore the resulting SpatialExperiment object
 spe_wrapper
 
 ## Size of the data
