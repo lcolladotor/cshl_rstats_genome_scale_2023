@@ -29,6 +29,9 @@ community
 rse-plotting-basics-with-smokingmouse
 download-the-smokingmouse-data
 biocthis-introduction
+related-past-materials
+biocthis-main-commands
+community-1
 recount3-introduction
 interpreting-model-coefficients-with-exploremodelmatrix
 differential-gene-expression-analysis-with-limma

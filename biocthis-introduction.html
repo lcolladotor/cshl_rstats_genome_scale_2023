@@ -202,7 +202,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a></li>
+<li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#related-past-materials"><i class="fa fa-check"></i><b>7.1</b> Related past materials</a></li>
+<li class="chapter" data-level="7.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>7.2</b> biocthis main commands</a></li>
+<li class="chapter" data-level="7.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-1"><i class="fa fa-check"></i><b>7.3</b> Community</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a></li>
 <li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a></li>
 <li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a></li>
@@ -242,7 +247,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="biocthis-introduction" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">7</span> biocthis introduction<a href="biocthis-introduction.html#biocthis-introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Leo</p>
+<div id="related-past-materials" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Related past materials<a href="biocthis-introduction.html#related-past-materials" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>I’ve taught a lot about <code>biocthis</code> over the years. Here’s a 2020 video:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aMTxkYsM-8o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+<script defer class="speakerdeck-embed" data-id="f2e58b59b83244179f062c2852af25ff" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<p>and more recently, these are the <a href="https://docs.google.com/document/d/117p0sKFKpMSZy90ZWc56_J-MhwfSMEnMVkqAVqZStaA/edit?usp=sharing"><em>LIBD rstats club 2023-03-10 notes</em></a>. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="biocthis-main-commands" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> biocthis main commands<a href="biocthis-introduction.html#biocthis-main-commands" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><a href="https://bioconductor.org/packages/biocthis" class="uri">https://bioconductor.org/packages/biocthis</a></li>
+<li><code>pkgdown</code> documentation website: <a href="https://lcolladotor.github.io/biocthis/" class="uri">https://lcolladotor.github.io/biocthis/</a>
+<ul>
+<li><code>biocthis::use_bioc_pkg_templates()</code> documentation: <a href="https://lcolladotor.github.io/biocthis/reference/use_bioc_pkg_templates.html" class="uri">https://lcolladotor.github.io/biocthis/reference/use_bioc_pkg_templates.html</a></li>
+</ul></li>
+</ul>
+<p>These are the main steps you will need to know to make a Bioconductor package
+with <code>biocthis</code>:</p>
+<ol style="list-style-type: decimal">
+<li>You first will need to create a package using a command from <code>usethis</code>.</li>
+</ol>
+<ul>
+<li>For example: <code>usethis::create_package("~/cshl2023pkg")</code></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Now that you have a package, we can use <code>biocthis</code> to create 4 template R
+scripts that will guide you and help you make the full structure for a
+Bioconductor R package.</li>
+</ol>
+<ul>
+<li>On your new R package (<code>cshl2023pkg</code>), we can now use <code>biocthis::use_bioc_pkg_templates()</code>.</li>
+</ul>
+</div>
+<div id="community-1" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Community<a href="biocthis-introduction.html#community-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+I’m on a Friday night mood now enjoying <a href="https://twitter.com/lmwebr?ref_src=twsrc%5Etfw"><span class="citation">@lmwebr</span></a>’s <a href="https://twitter.com/hashtag/OSTA?src=hash&amp;ref_src=twsrc%5Etfw">#OSTA</a> workshop 🔥, feeling grateful 🙏🏽 to everyone who nominated me for the <a href="https://twitter.com/hashtag/BioC2021?src=hash&amp;ref_src=twsrc%5Etfw">#BioC2021</a> community award 🥇&amp; celebrating 🍺 <a href="https://t.co/2oFLdGO3Uh">https://t.co/2oFLdGO3Uh</a><br><br>See you in <a href="https://twitter.com/hashtag/BioC2022?src=hash&amp;ref_src=twsrc%5Etfw">#BioC2022</a>🤞🏽 <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/CDSBMexico?ref_src=twsrc%5Etfw"><span class="citation">@CDSBMexico</span></a> <a href="https://t.co/0SGHDfiRCs">https://t.co/0SGHDfiRCs</a> <a href="https://t.co/UmM9nMP2W2">pic.twitter.com/UmM9nMP2W2</a>
+</p>
+— 🇲🇽 Leonardo Collado-Torres (<span class="citation">@lcolladotor</span>) <a href="https://twitter.com/lcolladotor/status/1423805153724059649?ref_src=twsrc%5Etfw">August 7, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><code>biocthis</code> is one of the reasons for my 2021 Bioconductor community award :-)</p>
+<p>Do you want to play an active role? Join the <a href="https://community-bioc.slack.com/archives/C04NPB74Y78"><code>cloud-working-group</code></a> Slack channel.</p>
 
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Soon I’ll process and upload the video to YouTube. By soon, I mean, later this summer.<a href="biocthis-introduction.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 <div class="container">
     <footer class="site-footer">
