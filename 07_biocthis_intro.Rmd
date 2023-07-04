@@ -50,7 +50,9 @@ BiocManager::install("lcolladotor/biocthis")
 
 Check the git commit history at
 https://github.com/lcolladotor/cshl2023pkg/commits/devel and the GitHub Actions
-history at https://github.com/lcolladotor/cshl2023pkg/actions.
+history at https://github.com/lcolladotor/cshl2023pkg/actions. We can see at
+https://app.codecov.io/gh/lcolladotor/cshl2023pkg the _code coverage_ results
+for this demonstration package.
 
 ## Community
 
