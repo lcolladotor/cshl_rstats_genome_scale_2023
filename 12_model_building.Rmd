@@ -492,7 +492,7 @@ varPartAnalysis <- function(age, formula) {
 ```
 
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 ## Violin plots
 
 #####  Model with all variables  #####
@@ -511,7 +511,7 @@ plot + theme(
 
 As presented above, in adults we can notice that <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> has a larger mean FVE than <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> so we keep the former. Same reason to remove <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that is correlated with <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell</span> </mark> and with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>, and to drop <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> that goes after <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark>.
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 #####  Model without correlated variables  #####
 
 ## Adult plots without mitoRate, plate and sum
@@ -530,7 +530,7 @@ Notwithstanding, in this new reduced model Group contribution doesn't increment 
 
 In pups, based on the model with all variables, again <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> must be removed, as well as <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> that are correlated with <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>.
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 #####  Model with all variables  #####
 
 ## Pups
@@ -545,7 +545,7 @@ plot + theme(
 ```
 
 Without correlated variables, Group's contribution increases but so does the residual source.
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 #####  Model without correlated variables  #####
 
 ## Pup plots without sum, rRNA_rate and plate
@@ -672,7 +672,7 @@ plot_gene_expr_sample <- function(age, sample_var) {
 ```
 
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 ## Adults
 
 ## Plots for top affected genes by 'totalAssignedGene'
@@ -688,7 +688,7 @@ plots <- plot_gene_expr_sample("adults", "Group")
 plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
 ```
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 ## Pups
 
 ## Plots for top affected genes by 'overallMapRate'
@@ -719,7 +719,7 @@ font-family: sans-serif;
 📑 **Exercise 1**: What % of variance does <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark> explain for gene ENSMUSG00000042348.10 in pups? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is upregulated or downregulated?
 </p>
 
-```{r exercise1_varPart, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE}
+```{r exercise1_varPart, message=FALSE, warning=FALSE}
 ## Solution
 
 ## Gene ID
@@ -764,7 +764,7 @@ plot
 📑 **Exercise 2**: Do the same for gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
 </p>
 
-```{r exercise2_varPart, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE}
+```{r exercise2_varPart, message=FALSE, warning=FALSE}
 ## Solution
 
 ## Gene ID
