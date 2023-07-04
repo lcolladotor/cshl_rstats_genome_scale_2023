@@ -91,10 +91,14 @@ suppressPackageStartupMessages(library("ComplexHeatmap"))
 suppressPackageStartupMessages(library("circlize"))
 ```
 
-```{r download_data_biocfilecache}
-## Load the container package for this type of data
+```{r}
 library("SummarizedExperiment")
+library("ComplexHeatmap")
+library("circlize")
+```
 
+
+```{r download_data_biocfilecache_expheatmap}
 ## Download and cache the file
 library("BiocFileCache")
 bfc <- BiocFileCache::BiocFileCache()
