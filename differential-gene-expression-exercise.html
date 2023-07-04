@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14 Exercise with variancePartition and ComplexHeatmap | Statistical Analysis of Genome Scale Data 2023</title>
-  <meta name="description" content="14 Exercise with variancePartition and ComplexHeatmap | Statistical Analysis of Genome Scale Data 2023" />
+  <title>11 Differential gene expression exercise | Statistical Analysis of Genome Scale Data 2023</title>
+  <meta name="description" content="11 Differential gene expression exercise | Statistical Analysis of Genome Scale Data 2023" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14 Exercise with variancePartition and ComplexHeatmap | Statistical Analysis of Genome Scale Data 2023" />
+  <meta property="og:title" content="11 Differential gene expression exercise | Statistical Analysis of Genome Scale Data 2023" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2023" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14 Exercise with variancePartition and ComplexHeatmap | Statistical Analysis of Genome Scale Data 2023" />
+  <meta name="twitter:title" content="11 Differential gene expression exercise | Statistical Analysis of Genome Scale Data 2023" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="expression-heatmaps-with-complexheatmap.html"/>
-<link rel="next" href="tbd.html"/>
+<link rel="prev" href="differential-gene-expression-analysis-with-limma.html"/>
+<link rel="next" href="de-model-building-with-variancepartition.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -302,10 +302,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exercise-with-variancepartition-and-complexheatmap" class="section level1 hasAnchor" number="14">
-<h1><span class="header-section-number">14</span> Exercise with variancePartition and ComplexHeatmap<a href="exercise-with-variancepartition-and-complexheatmap.html#exercise-with-variancepartition-and-complexheatmap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Instructors: Daianna and Renee</p>
+<div id="differential-gene-expression-exercise" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> Differential gene expression exercise<a href="differential-gene-expression-exercise.html#differential-gene-expression-exercise" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Instructor: Leo</p>
+<div id="recap" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Recap<a href="differential-gene-expression-exercise.html#recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far we know how to:</p>
+<ul>
+<li>choose a study from <code>recount3</code></li>
+<li>download data for a study with <code>recount3::create_rse()</code></li>
+<li>explore the data interactively with <code>iSEE</code></li>
+<li>expand <em>Sequence Read Archive</em> (SRA) attributes
+<ul>
+<li>sometimes we need to clean them up a bit before we can use them</li>
+</ul></li>
+<li>use <code>edgeR::calcNormFactors()</code> to reduce <em>composition bias</em></li>
+<li>build a differential gene expression model with <code>model.matrix()</code></li>
+<li>explore and interpret the model with <code>ExploreModelMatrix</code></li>
+<li>use <code>limma::voom()</code> and related functions to compute the differential gene expression statistics</li>
+<li>extract the DEG statistics with <code>limma::topTable(sort.by = "none")</code></li>
+<li>use some <code>limma</code> functions for making MA or volcano plots</li>
+</ul>
+<p>among several other plots and tools we learned along the way.</p>
+<p>Alternatively to <code>recount3</code>, we have learned about the <code>RangedSummarizedExperiment</code> objects produced by <code>SPEAQeasy</code> and in particular the one we are using on the <code>smokingMouse</code> project.</p>
+<p>You might have your own data already. Maybe you have it as an <code>AnnData</code> python object. If so, you can convert it to R with <em><a href="https://bioconductor.org/packages/3.17/zellkonverter">zellkonverter</a></em>.</p>
+</div>
+<div id="exercise-2" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Exercise<a href="differential-gene-expression-exercise.html#exercise-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+<p class="exercise">
+<strong>Exercise option 1</strong>:
+This will be an open ended exercise. Think of it as time to practice what we’ve learnt using data from <code>recount3</code> or another subset of the <code>smokingMouse</code> dataset. You could also choose to re-run code from earlier parts of the course and ask clarifying questions. You could also use this time to adapt some of the code we’ve covered to use it with your own dataset.
+</p>
+<p>If you prefer a more structured exercise:</p>
+<p class="exercise">
+<strong>Exercise option 2</strong>:
+</p>
+<div class="alert alert-info">
+<ol style="list-style-type: decimal">
+<li>Choose two <code>recount3</code> studies that can be used to study similar research questions. For example, two studies with brain samples across age.</li>
+<li>Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.</li>
+</ol>
+<ul>
+<li>If you don’t want to choose another <code>recount3</code> study, you could use the <code>smokingMouse</code> data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.</li>
+<li>Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.</li>
+</ul>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="differential-gene-expression-exercise.html#cb91-1" aria-hidden="true" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
+<span id="cb91-2"><a href="differential-gene-expression-exercise.html#cb91-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
+<span id="cb91-3"><a href="differential-gene-expression-exercise.html#cb91-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
+<span id="cb91-4"><a href="differential-gene-expression-exercise.html#cb91-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">organism =</span> <span class="st">&quot;human&quot;</span>,</span>
+<span id="cb91-5"><a href="differential-gene-expression-exercise.html#cb91-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
+<span id="cb91-6"><a href="differential-gene-expression-exercise.html#cb91-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
+<span id="cb91-7"><a href="differential-gene-expression-exercise.html#cb91-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use <code>GGally::ggpairs()</code> for this <a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="uri">https://ggobi.github.io/ggally/reference/ggpairs.html</a>. Or <code>ggpubr::ggscatter()</code> <a href="https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html" class="uri">https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html</a>.</li>
+</ol>
+<ul>
+<li>For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.</li>
+<li>Or between the nicotine-exposed pups and the smoking-exposed pups in <code>smokingMouse</code>.</li>
+<li>Or using the two <code>recount3</code> studies you chose.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Are there any DEGs FDR &lt; 5% in both datasets? Or FDR &lt; 5% in dataset 1 that have a p-value &lt; 5% in the other one?</li>
+</ol>
+<ul>
+<li>You could choose to make a <em>concordance at the top</em> plot like at <a href="http://leekgroup.github.io/recount-analyses/example_de/recount_SRP019936.html" class="uri">http://leekgroup.github.io/recount-analyses/example_de/recount_SRP019936.html</a>, though you will likely need more time to complete this.</li>
+</ul>
+</div>
 
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">
@@ -355,8 +428,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-<a href="expression-heatmaps-with-complexheatmap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tbd.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="differential-gene-expression-analysis-with-limma.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="de-model-building-with-variancepartition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
