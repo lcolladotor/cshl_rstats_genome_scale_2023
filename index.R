@@ -41,6 +41,9 @@
 ## ## Install smokingMouse, which is currently under review at Bioconductor
 ## ## at https://github.com/Bioconductor/Contributions/issues/3024.
 ## BiocManager::install("LieberInstitute/smokingMouse")
+## 
+## ## Required to access some recent bug fixes on biocthis
+## BiocManager::install("lcolladotor/biocthis")
 
 
 ## ----session_packages, eval = TRUE, message = FALSE----------

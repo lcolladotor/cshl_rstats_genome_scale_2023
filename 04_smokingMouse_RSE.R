@@ -1,4 +1,4 @@
-## ----download_data_biocfilecache-------------------------------------
+## ----download_data_biocfilecache-----------------------------
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -20,7 +20,7 @@ load(cached_rse_gene, verbose = TRUE)
 rse_gene
 
 
-## ----explore_assays--------------------------------------------------
+## ----explore_assays------------------------------------------
 ## Explore main assay (of raw counts)
 assay(rse_gene)[1:3, 1:3] ## counts for first 3 genes and 3 samples
 ## Access the same raw data with assays()
@@ -29,22 +29,22 @@ assays(rse_gene)$counts[1:3, 1:3]
 assays(rse_gene)$logcounts[1:3, 1:3]
 
 
-## ----explore_colData-------------------------------------------------
+## ----explore_colData-----------------------------------------
 ## Data for first 3 samples and 5 variables
 colData(rse_gene)[1:3, 1:5]
 
 
-## ----explore_rowData-------------------------------------------------
+## ----explore_rowData-----------------------------------------
 ## Data for first 3 genes and 5 variables
 rowData(rse_gene)[1:3, 1:5]
 
 
-## ----exercise1_data, eval=FALSE, echo=FALSE--------------------------
+## ----exercise1_data, eval=FALSE, echo=FALSE------------------
 ## ## Solution
 ## head(rse_gene_nic$flowcell)
 
 
-## ----extract_nicotine_data-------------------------------------------
+## ----extract_nicotine_data-----------------------------------
 ## Original dimensions of the data
 dim(rse_gene)
 rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine")]
@@ -52,12 +52,12 @@ rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine")]
 dim(rse_gene_nic)
 
 
-## ----exercise2_data, eval=FALSE, echo=FALSE--------------------------
+## ----exercise2_data, eval=FALSE, echo=FALSE------------------
 ## ## Solution
 ## table(rse_gene_nic$Expt)
 
 
-## ----exercise3_data, eval=FALSE, echo=FALSE--------------------------
+## ----exercise3_data, eval=FALSE, echo=FALSE------------------
 ## ## Solution
 ## table(rse_gene$Age)
 ## pup_samples <- rse_gene[, which(rse_gene$Age == "Pup")]
