@@ -22,7 +22,7 @@ These are the main steps you will need to know to make a Bioconductor package
 with `biocthis`:
 
 1. You first will need to create a package using a command from `usethis`.
-  - For example: `usethis::create_package("~/cshl2023pkg")`
+  - For example: `usethis::create_package("~/Desktop/cshl2023pkg")`
 2. Now that you have a package, we can use `biocthis` to create 4 template R
 scripts that will guide you and help you make the full structure for a 
 Bioconductor R package.
