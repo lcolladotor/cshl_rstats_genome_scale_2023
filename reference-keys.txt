@@ -41,6 +41,7 @@ miscellaneous-about-cpm-values
 biocthis-introduction
 related-past-materials
 biocthis-main-commands
+live-demo
 community-1
 recount3-introduction
 recount-projects
