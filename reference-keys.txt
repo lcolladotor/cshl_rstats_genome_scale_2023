@@ -75,6 +75,7 @@ fit-model-and-extract-fraction-of-variance-explained
 examine-expression-of-most-affected-genes-by-each-sample-variable
 expression-heatmaps-with-complexheatmap
 exercise-with-variancepartition-and-complexheatmap
+steps
 tbd
 options
 introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data

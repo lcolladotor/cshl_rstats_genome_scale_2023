@@ -258,7 +258,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a></li>
-<li class="chapter" data-level="14" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>14</b> Exercise with variancePartition and ComplexHeatmap</a></li>
+<li class="chapter" data-level="14" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>14</b> Exercise with variancePartition and ComplexHeatmap</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html#steps"><i class="fa fa-check"></i><b>14.1</b> Steps:</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="tbd.html"><a href="tbd.html"><i class="fa fa-check"></i><b>15</b> TBD</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="tbd.html"><a href="tbd.html#options"><i class="fa fa-check"></i><b>15.1</b> Options</a></li>
@@ -305,7 +308,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="exercise-with-variancepartition-and-complexheatmap" class="section level1 hasAnchor" number="14">
 <h1><span class="header-section-number">14</span> Exercise with variancePartition and ComplexHeatmap<a href="exercise-with-variancepartition-and-complexheatmap.html#exercise-with-variancepartition-and-complexheatmap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructors: Daianna and Renee</p>
+<p>Now is your turn to work on variance partition analysis and to create heatmaps to visualize expression patterns of DEGs.
+With the same dataset that you have (<code>rse_gene</code>) perform the the variance partition analysis with smoking data for pups (i.e., taking <strong>pup</strong> samples from the <strong>smoking</strong> experiment) just as we did with nicotine data.</p>
+<div id="steps" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Steps:<a href="exercise-with-variancepartition-and-complexheatmap.html#steps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Subset the complete <code>rse_gene</code> object to smoking and pup data only.</li>
+<li>Assume that all smoking pup samples are high quality and use them all for the variance partition analysis.</li>
+<li>Use <code>fitExtractVarPartModel()</code> to fit a model for each gene and extract the variance explained by each variable; do it with normalized counts.</li>
+<li>Which variables contribute more to gene expression changes? Which ones should be included in the models for DEA? Why?</li>
+<li>Now select DEGs (for the smoking experiment) only. Create heatmaps to visualize the expression of these genes. Is it enough to use normalized counts directly from <code>assays(rse_gene_smoking)$logcounts</code>? Why?</li>
+<li>Is there any clustering of the samples by <code>Group</code> or any other sample variable?</li>
+<li>Separate upregulated and downregulated DEGs (by <code>logFC</code>) and create their individual heatmaps. What do you observe?</li>
+</ol>
 
+</div>
 </div>
 <div class="container">
     <footer class="site-footer">
