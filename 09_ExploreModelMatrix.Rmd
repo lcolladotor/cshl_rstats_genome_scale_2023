@@ -31,6 +31,9 @@ summary(lm(log(Volume) ~ log(Height) + log(Girth), data = trees))
 ## Example 1
 
 ```{r EMM_example1}
+## Load ExploreModelMatrix
+library("ExploreModelMatrix")
+
 ## Example data
 (sampleData <- data.frame(
     genotype = rep(c("A", "B"), each = 4),
