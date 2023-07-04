@@ -74,7 +74,7 @@ Before the analysis itself, we need to measure the correlation between the sampl
 
 Additionally, the analysis is better performed with simpler models, specially when we have a limited number of samples in the study. 
  
-Hence, to drop such variables we must identify them fist. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with `canCorPairs()` that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [2].
+Hence, to drop such variables we must identify them first. Pearson correlation can be used for comparing continuous variables but the models can contain categorical variables as well, so in order to obtain the correlation between a continuous and a categorical variable, or between two categorical variables, we will perform a Canonical Correlation Analysis (CCA) with `canCorPairs()` that assesses the degree to which the variables co-vary and contain the same information. This function returns rho / sum(rho), the fraction of the maximum possible correlation. Note that CCA returns correlations values between 0 and 1 [2].
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -124,7 +124,7 @@ plot_CCA <- function(age) {
 ```
 
 
-As you can see and in agreement to what we observed in the previous correlation plots, for adults there's a strong correlation between  <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>  and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>; we already know it's a negative correlation. There's also a strong correlation between <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell </span> </mark> and between <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>. 
+As you can see, and in agreement to what we observed in the previous correlation plots, for adults there's a strong correlation between  <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>  and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>; we already know it's a negative correlation. There's also a strong correlation between <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> flowcell </span> </mark> and between <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> plate</span> </mark> and <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> overallMapRate</span> </mark>. 
 
 ```{r message=FALSE, warning=FALSE}
 ## Heatmap for adult samples
@@ -140,7 +140,7 @@ CCA_pups <- plot_CCA("pups")
 
 Importantly, in both groups of age <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark> is not highly correlated with any other variable. This is desirable because if this variable, the one that separates experimental and control samples, were correlated with another, then its individual contribution to gene expression changes would be diminished, affecting the results of the differential expression analysis: we would obtain gene differences driven by other variables rather than <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark>. Also, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> are correlated. 
 
-Let's explore why these variables are correlated in the next plots. 
+Let's explore why these variables are correlated in the following plots. 
 
 ```{r message=FALSE, warning=FALSE}
 library("ggplot2")
@@ -329,7 +329,7 @@ plots + theme(plot.margin = unit(c(1, 2.5, 1, 2.5), "cm"))
 ***Hint***: What would happen if all experimental samples were in one plate or flowcell and controls in another?
 </div>
 
-After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How to discern which of the correlated variables to keep and which to drop? As recommended in the `variancePartition` user’s guide [2], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let's review how `variancePartition` works. 
+After identifying which variables are correlated and exploring the metrics of control and experimental samples the next step is to determine which of these variables must be removed. How do we discern which of the correlated variables to keep and which to drop? As recommended in the `variancePartition` user’s guide [2], initially we can fit a linear model for each gene taking all sample variables and then define which ones explain a higher percentage of variance in many genes. But first let's review how `variancePartition` works. 
 
 
 
@@ -337,7 +337,7 @@ After identifying which variables are correlated and exploring the metrics of co
 
 Briefly, `variancePartition` fits a linear model for each gene separately and `calcVarPart()` computes the fraction of variance in gene expression that is explained by each variable of the study design, plus the residual variation. The effect of each variable is assessed while jointly accounting for all others [1].
 
-Basically what it does is to calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [1].
+Basically what it does is calculate the data variance given by each variable and that of the total model fit, summarizing the contribution of each variable in terms of the fraction of variation explained (FVE). Since it calculates the fraction of total variation attributable to each aspect of the study design, these fractions naturally sum to 1 [1].
 
 `variancePartition` fits two types of models:
 
@@ -371,12 +371,12 @@ font-family: sans-serif;
 
 <p class="comment">
 ❓***What are random and fixed effects? How to determine if a variable is one or the other?*** **Categorical variables** are usually modeled as **random effects**, i.e., traits such as the batch, sex, flowcell, plate, individual, variables 'randomly chosen or selected from a population' and whose specific levels are not of particular interest, only the grouping of the samples by those variables. These are control variables/factors that vary randomly across individuals or groups and we use them because we must control for these effects. Think of them as having different effects on gene expression (the dependent variable) depending on their values. 
-**Continuous variables** must be modeled as **fixed effects**, they cannot be modeled as random effects. These correspond to variables that can be measured somehow and whose levels are themselves of interest (the QC metrics, for instance); these effects would be the same for all genes. 
+**Continuous variables** must be modeled as **fixed effects**; they cannot be modeled as random effects. These correspond to variables that can be measured somehow and whose levels are themselves of interest (the QC metrics, for instance); these effects would be the same for all genes. 
 </p>
 
 <p class="comment">
 ❓***Why is this effect distinction important?***
-Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making a wrong inference when using a **general linear model (GLM)**. If we have clustered data where the variables' values have distinct effects on gene expression, we must work with an extension of GLM, with the **linear mixed model (LMM)** that contains a mix of both fixed and random effects [3].
+Because when we have clustered data, like gene expression values grouped by sex, plate, etc. we are violating the relevant assumption of independence, making an incorrect inference when using a **general linear model (GLM)**. If we have clustered data where the variables' values have distinct effects on gene expression, we must work with an extension of GLM, with the **linear mixed model (LMM)** that contains a mix of both fixed and random effects [3].
 </p>
 
 

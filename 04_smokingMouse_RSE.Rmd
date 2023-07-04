@@ -55,8 +55,8 @@ assays(rse_gene)$logcounts[1:3, 1:3]
 ### Sample data
 
 * <mark style= "background-color: #FCF3CF"> Yellow </mark> variables correspond to SPEAQeasy outputs that are going to be used in downstream analyses. 
-* <mark style= "background-color: #FAECF8"> Pink </mark> variables are specific of the study, such as sample metadata and some others containing additional information of the genes. 
-* <mark style= "background-color: #DFF0FE"> Blue </mark> variables are Quality-Control metrics computed by `addPerCellQC()` of `r BiocStyle::Biocpkg("scuttle")`.
+* <mark style= "background-color: #FAECF8"> Pink </mark> variables are specific to the study, such as sample metadata and some others containing additional information about the genes. 
+* <mark style= "background-color: #DFF0FE"> Blue </mark> variables are quality-control metrics computed by `addPerCellQC()` of `r BiocStyle::Biocpkg("scuttle")`.
 
 The same RSE contains the sample information in `colData(RSE)`:
 

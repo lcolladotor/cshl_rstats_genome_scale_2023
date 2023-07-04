@@ -54,11 +54,11 @@ The main objective of this first part is to explore the quality of the samples, 
 
 ## Data preparation
 
-Even before exploring the samples, the first step is to normalize the counts and filter non-expressed genes; we won't do the processes themselves since we already have normalized and filtered data but let's check why these steps are important and where to extract the data we need for posterior analyses.  
+Even before exploring the samples, we must normalize the counts and filter non-expressed genes; we won't do the processes themselves since we already have normalized and filtered data but let's check why these steps are important and where to extract the data we need for posterior analyses.  
 
 ### Data normalization
  
-Data normalization is a primordial step when working with expression data because raw counts do not necessarily reflect real expression measures of the genes since there are technical differences in the way the libraries are prepared and sequenced, as well as intrinsic differences in the genes that are translated into more or less mapping reads. Particularly, there are *within-sample effects* that are the differences between genes in the same sample, such as their **length** (the longer the gene, the more reads it will have) and **GC content**, factors that contribute to variations in their counts. On the other hand, *between-sample effects* are differences between samples such as the **sequencing depth**, i.e., the total number of molecules sequenced, and the **library size**, i.e., the total number of reads of each sample [1].
+Data normalization is a relevant preliminary step when working with expression data because raw counts do not necessarily reflect real expression measures of the genes, since there are technical differences in the way the libraries are prepared and sequenced, as well as intrinsic differences in the genes that are translated into more or less mapped reads. Particularly, there are *within-sample effects* that are the differences between genes in the same sample, such as their **length** (the longer the gene, the more reads it will have) and **GC content**, factors that contribute to variations in their counts. On the other hand, *between-sample effects* are differences between samples such as the **sequencing depth**, i.e., the total number of molecules sequenced, and the **library size**, i.e., the total number of reads of each sample [1].
 
 These variables lead to virtually different mRNA amounts but of course are not due to the biological or treatment conditions of interest (such as nicotine administration in this example) so in order to remove, or at least, to minimize this technical bias and obtain measures comparable and consistent across samples, raw counts must be normalized by these factors. The data that we'll use in this case are already normalized in `assays(rse_gene)$logcounts`. Specifically, the assay contains counts per million (CPM), also known as reads per million (RPM), one basic gene expression unit that only normalizes by the sequencing depth and is computed by dividing the read counts of a gene in a sample by a scaling factor given by the total mapping reads of the sample per million [2]:
 
@@ -67,7 +67,7 @@ $$CPM = \frac{read \ \ counts \ \ of \ \ gene \ \ \times \ \ 10^6 }{Total \ \ ma
 
 As outlined in **Data overview and download**, the scaling factors were obtained with `calcNormFactors()` applying the Trimmed Mean of M-Values (TMM) method, the `r BiocStyle::Biocpkg("edgeR")` package's default normalization method that assumes that most genes are not differentially expressed. The effective library sizes of the samples and the CPM of each observation were computed with the `r BiocStyle::Biocpkg("edgeR")` function `cpm()` setting the `log` argument to `TRUE` and `prior.count` to 0.5 to receive values in $log_2(CPM+0.5)$.
 
-After data normalization and scaling, we’d expect the read counts to follow a Normal distribution, something we can confirm comparing the counts' distribution before and after the normalization. Consider both datasets contain the exact same genes. 
+After data normalization and scaling, we’d expect the read counts to follow a normal distribution, something we can confirm by comparing the counts' distribution before and after the normalization. Consider both datasets contain the exact same genes. 
 
 ```{r Data preparation, message=FALSE, warning=FALSE}
 library("ggplot2")
@@ -97,7 +97,7 @@ As presented, after data transformation, we can now see a more widespread distri
 
 ### Gene filtering
 
-Low-expressed or non-expressed genes in many samples are not of biological interest in a study of differential expression because they don't inform about the gene expression changes and they are, by definition, not differentially expressed, so we have to drop them using `filterByExpr()` from `r BiocStyle::Biocpkg("edgeR")` that only keeps genes with at least *K* CPM in *n* samples and with a minimum total number of counts across all samples.
+Lowly-expressed or non-expressed genes in many samples are not of biological interest in a study of differential expression because they don't inform about the gene expression changes and they are, by definition, not differentially expressed, so we have to drop them using `filterByExpr()` from `r BiocStyle::Biocpkg("edgeR")` that only keeps genes with at least *K* CPM in *n* samples and with a minimum total number of counts across all samples.
 
 ```{r,  message=FALSE, warning=FALSE}
 ## Retain genes that passed filtering step
@@ -115,19 +115,19 @@ plot <- ggplot(filt_logcounts_data, aes(x = logcounts)) +
 plot + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 ```
 
-In this third plot we can observe a curve that is closer (though not completely) to a Normal distribution and with less low-expressed genes. 
+In this third plot we can observe a curve that is closer (though not completely) to a normal distribution and with less lowly-expressed genes. 
 
 With the object `rse_gene_filt` we can proceed with downstream analyses. 
 
 
 ## Exploratory Data Analysis
 
-The first formal step that we will be performing is the sample exploration. This crucial initial part of the analysis consists of an examination of differences and relationships between Quality-Control (QC) metrics of the samples from different groups in order to identify poor-quality samples that must be removed before DEA. After that, the sample variables in the meta-data also need to be analyzed and filtered based on the percentage of gene expression variance that they explain for each gene. 
+The first formal step that we will be performing is the sample exploration. This crucial initial part of the analysis consists of an examination of differences and relationships between Quality-Control (QC) metrics of the samples from different groups in order to identify poor-quality samples that must be removed before DEA. After that, the sample variables in the metadata also need to be analyzed and filtered based on the percentage of gene expression variance that they explain for each gene. 
 
 
 ## Quality Control Analysis
 
-First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See **Sample Information** section in chapter 04 for the description of the variables.  
+First we have to explore and compare the the quality-control metrics of the samples in the different groups given by covariates such as age, sex, pregnancy state, group, plate and flowcell. See **Sample Information** section in chapter 04 for a description of these variables.  
 
 <style>
 p.comment {
@@ -263,7 +263,7 @@ multiple_QC_boxplots("Age")
 ```
 
 Initially, when we separate samples by Age, we can appreciate a clear segregation of adult and pup samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark>, with higher mitochondrial rates for adult samples and thus, being lower quality samples than the pup ones. We can also see that pup samples have higher <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>, again being higher quality. The samples are very similar in the rest of the QC metrics.
-The former differences must be taken into account because they guide further sample separation by Age, which is necessary to avoid dropping most of the adult samples (that are lower quality) in the **QC-based sample filtering** (see below) and to prevent misinterpreting sample variation given by quality and not by mice age itself. 
+The former differences must be taken into account because they guide further sample separation by Age, which is necessary to avoid dropping most of the adult samples (that are lower quality) in the **QC-based sample filtering** (see below) and to prevent misinterpreting sample variation given by quality and not by mouse age itself. 
 
 ```{r message=FALSE, warning=FALSE}
 multiple_QC_boxplots("Sex")
@@ -276,7 +276,7 @@ With Sex, female and male samples have similar QC metrics but there are some fem
 multiple_QC_boxplots("Group")
 ```
 
-Notably, for Group no evident contrasts are seen in the quality of the samples, which means that both, control and exposed samples have similar metrics and therefore, the differences between them won't be determined by technical factors but effectively by gene expression changes. 
+Notably, for Group no evident contrasts are seen in the quality of the samples, which means that both control and exposed samples have similar metrics and therefore the differences between them won't be determined by technical factors but effectively by gene expression changes. 
 
 ```{r message=FALSE, warning=FALSE}
 multiple_QC_boxplots("Pregnancy")
@@ -284,7 +284,7 @@ multiple_QC_boxplots("Pregnancy")
 
 Pregnancy variable is interesting because pregnant dams were obviously females and adults, which we already noted are lower quality. Accordingly to that, pregnant samples present overall higher <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and lower <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark>  (library size) and <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> detected</span> </mark> (number of expressed genes) than some samples coming from non-pregnant mice. However, these samples have smaller |<mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> ERCCsumLogErr</span> </mark>|, which means that they had smaller differences between expected and observed concentrations of control transcripts. 
 
-Notwithstanding, we must clarify one more time that as in Sex, the trends observed in Pregnancy are all given by Age: it is Age the variable that fully segregates samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and almost completely in </mark>, lower <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>. Because all pregnant dams were adults, their metrics will be positioned where the adult samples did, but there were also not pregnant adults that share similar QC values. 
+Notwithstanding, we must clarify one more time that as in Sex, the trends observed in Pregnancy are all given by Age: it is Age the variable that fully segregates samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> and almost completely in </mark>, lower <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>. Because all pregnant dams were adults, their metrics will be positioned where the adult samples were, but there were also not-pregnant adults that share similar QC values. 
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -298,7 +298,7 @@ have low (though not much lower) <mark style= "background-color: #FCF3CF"> <span
 multiple_QC_boxplots("flowcell")
 ```
 
-For the flowcell, again not worrying distinctiveness are detected, with the exception of a few individual samples far from the rest. 
+For the flowcell, again no worrying distinctions are seen, with the exception of a few individual samples far from the rest. 
 
 In all the previous plots we can appreciate a group of samples placed below in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> that correspond to pup samples. The relationship is more fuzzy in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark>.
 
@@ -385,7 +385,7 @@ multiple_QC_scatterplots <- function(qc_metric1, qc_metric2) {
 multiple_QC_scatterplots("mitoRate", "rRNA_rate")
 ```
 
-For <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> vs <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> plots there's a poor positive correlation which was anticipated since no obvious relationship exists between them, though if cytoplasmic mRNAs wouldn’t have been well captured (lowering the total number of mapping reads) we could expect an increase in both mitochondrial and ribosomal rates. 
+For <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> vs <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark> plots there's a negligible positive correlation which was anticipated since no obvious relationship exists between them, though if cytoplasmic mRNAs weren't well captured (lowering the total number of mapping reads) we could expect an increase in both mitochondrial and ribosomal rates. 
 
 Note the complete separation of samples in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> mitoRate</span> </mark> (but not in <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> rRNA_rate</span> </mark>) by Age, which in turn causes the grouping of male samples (all pups). 
 
@@ -407,7 +407,7 @@ Noticeably, a positive correlation is present for <mark style= "background-color
 multiple_QC_scatterplots("sum", "totalAssignedGene")
 ```
 
-Contrary to expectations, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> is not correlated to <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and it is unexpected because higher proportions of genes' reads could initially increase library size. However, since <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> is a fraction of the total reads, it could be that a high fraction of reads mapping to genes reflects a small number of total reads and do not necessarily implies more expressed genes (and therefore bigger libraries). In other words, even when <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> equals 1, if the total number of reads is small, the genes won't be widely covered by them and the libraries won't be sizeable. Observe the separarion of samples by Age. 
+Contrary to expectations, <mark style= "background-color: #DFF0FE"> <span style="font-family: monospace"> sum</span> </mark> is not correlated to <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> and this is unexpected because higher proportions of genes' reads could initially increase library size. However, since <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> is a fraction of the total reads, it could be that a high fraction of reads mapping to genes reflects a small number of total reads and does not necessarily imply more expressed genes (and therefore bigger libraries). In other words, even when <mark style= "background-color: #FCF3CF"> <span style="font-family: monospace"> totalAssignedGene</span> </mark> equals 1, if the total number of reads is small, the genes won't be widely covered by them and the libraries won't be sizeable. Observe the separarion of samples by Age. 
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -443,7 +443,7 @@ Remarkably, samples were not differentiated by any other variable (including Gro
 
 ### QC sample filtering
 
-After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based, precisely, on these metrics. For that, we will use `isOutlier()` from `r BiocStyle::Biocpkg("scater")` to identify outlier samples only at the lower end or the higher end, depending on the QC metric.
+After assessing how different or similar are the QC values between samples, we can now proceed to sample filtering based precisely, on these metrics. For that, we will use `isOutlier()` from `r BiocStyle::Biocpkg("scater")` to identify outlier samples only at the lower end or the higher end, depending on the QC metric.
 
 ```{r "QC sample filtering", message=FALSE, warning=FALSE}
 library("scater")
@@ -534,7 +534,7 @@ rse_gene_pups$Retention_after_QC_filtering <- as.vector(sapply(rse_gene_pups$SAM
 ```
 
 We already filtered outlier samples ... but what have we removed?
-It is always important to trace the QC metrics of the filtered samples to verify that they really are poor-quality. We don't want to get rid of useful samples! So lets go back to the QC boxplots but now coloring samples according to whether they passed or not the filtering and also distinguishing samples' groups by shape. 
+It is always important to trace the QC metrics of the filtered samples to verify that they really are poor quality. We don't want to get rid of useful samples! So let's go back to the QC boxplots but now color samples according to whether they passed or not the filtering step and also distinguishing samples' groups by shape. 
 
 ```{r message=FALSE, warning=FALSE}
 ## Boxplots of QC metrics after sample filtering
