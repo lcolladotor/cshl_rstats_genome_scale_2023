@@ -1,4 +1,4 @@
-# Differential gene expression exercise with recount3 data
+# Differential gene expression exercise
 
 Instructor: Leo
 
