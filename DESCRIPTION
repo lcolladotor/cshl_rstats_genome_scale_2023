@@ -22,6 +22,7 @@ RoxygenNote: 7.2.3
 URL: https://github.com/lcolladotor/cshl_rstats_genome_scale_2023
 Imports:
     airway,
+    circlize
     BiocFileCache,
     BiocStyle,
     biocthis,
