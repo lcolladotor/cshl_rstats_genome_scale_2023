@@ -1,3 +1,18 @@
 # Exercise with variancePartition and ComplexHeatmap
 
 Instructors: Daianna and Renee
+
+Now is your turn to work on variance partition analysis and to create heatmaps to visualize expression patterns of DEGs.
+With the same dataset that you have (`rse_gene`) perform the the variance partition analysis with smoking data for pups (i.e., taking **pup** samples from the **smoking** experiment) just as we did with nicotine data. 
+
+## Steps: 
+1. Subset the complete `rse_gene` object to smoking and pup data only.
+2. Assume that all smoking pup samples are high quality and use them all for the variance partition analysis.
+3. Use `fitExtractVarPartModel()` to fit a model for each gene and extract the variance explained by each variable; do it with normalized counts. 
+4. Which variables contribute more to gene expression changes? Which ones should be included in the models for DEA? Why?
+5. Now select DEGs (for the smoking experiment) only. Create heatmaps to visualize the expression of these genes. Is it enough to use normalized counts directly from `assays(rse_gene_smoking)$logcounts`? Why? 
+6. Is there any clustering of the samples by `Group` or any other sample variable?
+7. Separate upregulated and downregulated DEGs (by `logFC`) and create their individual heatmaps. What do you observe? 
+
+
+
