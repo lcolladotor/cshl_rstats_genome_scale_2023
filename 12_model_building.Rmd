@@ -102,7 +102,7 @@ plot_CCA <- function(age) {
     if (age == "adults") {
         formula <- ~ Group + Pregnancy + plate + flowcell + mitoRate + overallMapRate + totalAssignedGene + rRNA_rate + sum + detected + ERCCsumLogErr
     }
-    ## For pups: none is pregnant (so 'Pregnancy' variable is not considered)
+    ## For pups: none is pregnant (so the 'Pregnancy' variable is not considered)
     else {
         formula <- ~ Group + Sex + plate + flowcell + mitoRate + overallMapRate + totalAssignedGene + rRNA_rate + sum + detected + ERCCsumLogErr
     }
