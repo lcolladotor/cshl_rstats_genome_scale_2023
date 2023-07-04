@@ -74,6 +74,14 @@ canonical-correlation-analysis
 fit-model-and-extract-fraction-of-variance-explained
 examine-expression-of-most-affected-genes-by-each-sample-variable
 expression-heatmaps-with-complexheatmap
+introduction-1
+complexheatmap
+heatmap-with-expression-data
+download-data-1
+prepare-the-data
+create-annotations
+plot-our-heatmap
+complexheatmap-exercise-solution
 exercise-with-variancepartition-and-complexheatmap
 steps
 tbd

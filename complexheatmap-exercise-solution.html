@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 smokingMouse study | Statistical Analysis of Genome Scale Data 2023</title>
-  <meta name="description" content="2 smokingMouse study | Statistical Analysis of Genome Scale Data 2023" />
+  <title>14 ComplexHeatmap exercise solution | Statistical Analysis of Genome Scale Data 2023</title>
+  <meta name="description" content="14 ComplexHeatmap exercise solution | Statistical Analysis of Genome Scale Data 2023" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 smokingMouse study | Statistical Analysis of Genome Scale Data 2023" />
+  <meta property="og:title" content="14 ComplexHeatmap exercise solution | Statistical Analysis of Genome Scale Data 2023" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2023" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 smokingMouse study | Statistical Analysis of Genome Scale Data 2023" />
+  <meta name="twitter:title" content="14 ComplexHeatmap exercise solution | Statistical Analysis of Genome Scale Data 2023" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="speaqeasy-introduction.html"/>
-<link rel="next" href="summarizedexperiment-review.html"/>
+<link rel="prev" href="expression-heatmaps-with-complexheatmap.html"/>
+<link rel="next" href="exercise-with-variancepartition-and-complexheatmap.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -317,49 +317,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="smokingmouse-study" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2</span> smokingMouse study<a href="smokingmouse-study.html#smokingmouse-study" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Instructor: Daianna</p>
-<p>As part of your training, we’ll guide you through an analysis with real bulk RNA-seq data.
-The dataset that we’ll be using is a <code>RangedSummarizedExperiment</code> coming from the <code>smokingMouse</code> (Gonzalez-Padilla and Collado-Torres, 2023) package, but in this chapter we’ll explain you the study design and the experimental stages that preceded the data generation.</p>
-<p>The smoking mouse study is a project currently being developed at the <a href="https://www.libd.org">Lieber Institute for Brain Development</a> by Daianna Gonzalez-Padilla and Leonardo Collado-Torres.</p>
-<div id="introduction" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Introduction<a href="smokingmouse-study.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Nowadays, maternal smoking during pregnancy (MSDP) is one of the major health concerns worldwide not only because of the effects on the smoker but because the health of the offspring could be dramatically affected by smoking exposure, particularly their cognitive and behavioral traits. But are those effects caused by cigarette smoke only? Or are those alterations given by a specific component of cigarettes such as nicotine? The latter is a very relevant question because most of the studies have focused on analyzing smoking effects, ignoring the role of nicotine, an active component of the cigarettes. Understanding which effects are specifically dictated by nicotine prenatal exposure will enable more directed studies of this drug on the developing brain, once affected genes have been identified and experimentally proven.</p>
-</div>
-<div id="overview-1" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Overview<a href="smokingmouse-study.html#overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This study consisted of a series of bulk RNA-sequencing experiments performed on brain samples from adult mice and pups and on blood samples from adults. Adult mice were either exposed to cigarette smoke (what we call smoking experiment and smoking mice) or controls of the smoking experiment, or they were administered nicotine (nicotine experiment and nicotine mice) or controls of the nicotine experiment, and they were either pregnant or not. Smoking, nicotine and control pups are pups that were born to smoking, nicotine and control pregnant mice, respectively. This experimental design allowed us to contrast the altered features in both conditions and to compare the effects in different mouse ages, sexes, tissues and pregnancy states.</p>
-<p>The original datasets contain gene, transcript, exon, and exon-exon junction expression levels across 208 samples, but in this course we’ll only use gene data in nicotine samples to simplify the analyses.</p>
-</div>
-<div id="goals" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Goals<a href="smokingmouse-study.html#goals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This project actually aimed to answer 4 questions, all related to smoking and nicotine effects in mouse.</p>
-<div id="main-objective" class="section level3 hasAnchor" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Main objective<a href="smokingmouse-study.html#main-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The main goal was to identify and differentiate the effects of prenatal nicotine and smoking exposures on gene, transcript, exon and junction expression of developing brain of pups. Basically, to perform a differential expression analysis on mouse data to find significant feature expression changes.</p>
-</div>
-<div id="secondary-objectives" class="section level3 hasAnchor" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Secondary objectives<a href="smokingmouse-study.html#secondary-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>To evaluate the affected genes by each substance on adult brain in order to compare pup and adult results.</li>
-<li>To examine the effects of smoking on adult blood and brain to search for overlapping biomarkers in both tissues (Can blood analyses capture environmental effects on brain?)</li>
-<li>To compare mouse differentially expressed genes (DEGs) with results from previous studies in human (Semick, S.A. et al. (2018) and Toikumo, S. et al. (2023)).</li>
-</ul>
-<p>Check <a href="https://github.com/LieberInstitute/smokingMouse_Indirects/tree/main/code">here</a> for the code of the original and complete analyses done.</p>
-</div>
-</div>
-<div id="study-design" class="section level2 hasAnchor" number="2.4">
-<h2><span class="header-section-number">2.4</span> Study design<a href="smokingmouse-study.html#study-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As presented in <strong>Figure 1: A)</strong>, 36 pregnant dams and 35 non-pregnant female adult mice were either administered nicotine by intraperitoneal injection (IP; n=12), exposed to cigarette smoke in smoking chambers (n=24), or controls (n=35; 11 nicotine controls and 24 smoking controls). A total of 137 pups were born to pregnant dams: 19 were born to mice that were administered nicotine, 46 to mice exposed to cigarette smoke and the remaining 72 to control mice (23 to nicotine controls and 49 to smoking controls). Samples from frontal cortices of P0 pups and adults were obtained, as well as blood samples from smoking-exposed and smoking control adults. Then, as shown in <strong>B)</strong> RNA was extracted from all those samples and RNA-seq libraries were prepared and sequenced to obtain expression counts for genes, exons, transcripts, and exon-exon junctions.</p>
-<figure>
-<img src="http://research.libd.org/smokingMouse/reference/figures/Study_design.png" align="center" width="800px" />
-<figcaption style="color: gray; line-height: 0.88; text-align: justify">
-<p><font size="-1.5"><b>Figure 1</b>: <b>Experimental design of the study</b>.</p>
-</figcaption>
-</figure>
+<div id="complexheatmap-exercise-solution" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">14</span> ComplexHeatmap exercise solution<a href="complexheatmap-exercise-solution.html#complexheatmap-exercise-solution" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="complexheatmap-exercise-solution.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="do">## For a) we need to use he function anno_barplot() to generate the barplot and gpar() to fill the bars</span></span>
+<span id="cb122-2"><a href="complexheatmap-exercise-solution.html#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="complexheatmap-exercise-solution.html#cb122-3" aria-hidden="true" tabindex="-1"></a>top_ans <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(</span>
+<span id="cb122-4"><a href="complexheatmap-exercise-solution.html#cb122-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">df =</span> <span class="fu">as.data.frame</span>(<span class="fu">colData</span>(rse_gene_pup_nic)[, <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>, <span class="st">&quot;Group&quot;</span>)]),</span>
+<span id="cb122-5"><a href="complexheatmap-exercise-solution.html#cb122-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">library_size =</span> <span class="fu">anno_barplot</span>(<span class="fu">colData</span>(rse_gene_pup_nic)<span class="sc">$</span>sum, <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="st">&quot;#ffd500&quot;</span>)),</span>
+<span id="cb122-6"><a href="complexheatmap-exercise-solution.html#cb122-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(</span>
+<span id="cb122-7"><a href="complexheatmap-exercise-solution.html#cb122-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Sex&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;F&quot;</span> <span class="ot">=</span> <span class="st">&quot;hotpink1&quot;</span>, <span class="st">&quot;M&quot;</span> <span class="ot">=</span> <span class="st">&quot;dodgerblue&quot;</span>),</span>
+<span id="cb122-8"><a href="complexheatmap-exercise-solution.html#cb122-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Group&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Control&quot;</span> <span class="ot">=</span> <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;Experimental&quot;</span> <span class="ot">=</span> <span class="st">&quot;deepskyblue3&quot;</span>)</span>
+<span id="cb122-9"><a href="complexheatmap-exercise-solution.html#cb122-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb122-10"><a href="complexheatmap-exercise-solution.html#cb122-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb122-11"><a href="complexheatmap-exercise-solution.html#cb122-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-12"><a href="complexheatmap-exercise-solution.html#cb122-12" aria-hidden="true" tabindex="-1"></a><span class="do">## For b), I want to know if a gene is protein_coding or not_protein_coding.</span></span>
+<span id="cb122-13"><a href="complexheatmap-exercise-solution.html#cb122-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-14"><a href="complexheatmap-exercise-solution.html#cb122-14" aria-hidden="true" tabindex="-1"></a><span class="do">## First, we can explore the rowData of our object to see if we have a column with </span></span>
+<span id="cb122-15"><a href="complexheatmap-exercise-solution.html#cb122-15" aria-hidden="true" tabindex="-1"></a><span class="do">## that information</span></span>
+<span id="cb122-16"><a href="complexheatmap-exercise-solution.html#cb122-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-17"><a href="complexheatmap-exercise-solution.html#cb122-17" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">rowData</span>(rse_gene_pup_nic))</span>
+<span id="cb122-18"><a href="complexheatmap-exercise-solution.html#cb122-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;Length&quot;                           &quot;gencodeID&quot;                        &quot;ensemblID&quot;                       </span></span>
+<span id="cb122-19"><a href="complexheatmap-exercise-solution.html#cb122-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;gene_type&quot;                        &quot;EntrezID&quot;                         &quot;Symbol&quot;                          </span></span>
+<span id="cb122-20"><a href="complexheatmap-exercise-solution.html#cb122-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;meanExprs&quot;                        &quot;retained_after_feature_filtering&quot; &quot;DE_in_adult_blood_smoking&quot;       </span></span>
+<span id="cb122-21"><a href="complexheatmap-exercise-solution.html#cb122-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] &quot;DE_in_adult_brain_nicotine&quot;       &quot;DE_in_adult_brain_smoking&quot;        &quot;DE_in_pup_brain_nicotine&quot;        </span></span>
+<span id="cb122-22"><a href="complexheatmap-exercise-solution.html#cb122-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;DE_in_pup_brain_smoking&quot;          &quot;FDR&quot;</span></span>
+<span id="cb122-23"><a href="complexheatmap-exercise-solution.html#cb122-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-24"><a href="complexheatmap-exercise-solution.html#cb122-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Maybe gene_type has what we need</span></span>
+<span id="cb122-25"><a href="complexheatmap-exercise-solution.html#cb122-25" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>gene_type)</span>
+<span id="cb122-26"><a href="complexheatmap-exercise-solution.html#cb122-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;sense_intronic&quot;                     &quot;protein_coding&quot;                     &quot;antisense&quot;                         </span></span>
+<span id="cb122-27"><a href="complexheatmap-exercise-solution.html#cb122-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;processed_transcript&quot;               &quot;unprocessed_pseudogene&quot;             &quot;processed_pseudogene&quot;              </span></span>
+<span id="cb122-28"><a href="complexheatmap-exercise-solution.html#cb122-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;TEC&quot;                                &quot;transcribed_processed_pseudogene&quot;   &quot;lincRNA&quot;                           </span></span>
+<span id="cb122-29"><a href="complexheatmap-exercise-solution.html#cb122-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] &quot;transcribed_unitary_pseudogene&quot;     &quot;snoRNA&quot;                             &quot;polymorphic_pseudogene&quot;            </span></span>
+<span id="cb122-30"><a href="complexheatmap-exercise-solution.html#cb122-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;transcribed_unprocessed_pseudogene&quot; &quot;bidirectional_promoter_lncRNA&quot;</span></span>
+<span id="cb122-31"><a href="complexheatmap-exercise-solution.html#cb122-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-32"><a href="complexheatmap-exercise-solution.html#cb122-32" aria-hidden="true" tabindex="-1"></a><span class="do">## It does but not in the format we need it, so we need to create a new column to complete the task</span></span>
+<span id="cb122-33"><a href="complexheatmap-exercise-solution.html#cb122-33" aria-hidden="true" tabindex="-1"></a><span class="do">## This columns is going to have protein_coding and not_protein_coding as elements</span></span>
+<span id="cb122-34"><a href="complexheatmap-exercise-solution.html#cb122-34" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>pc_status <span class="ot">&lt;-</span> <span class="st">&quot;protein_coding&quot;</span></span>
+<span id="cb122-35"><a href="complexheatmap-exercise-solution.html#cb122-35" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>pc_status[<span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>gene_type <span class="sc">!=</span> <span class="st">&quot;protein_coding&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;not_protein_coding&quot;</span></span>
+<span id="cb122-36"><a href="complexheatmap-exercise-solution.html#cb122-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-37"><a href="complexheatmap-exercise-solution.html#cb122-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Now we can add the information and specify the color</span></span>
+<span id="cb122-38"><a href="complexheatmap-exercise-solution.html#cb122-38" aria-hidden="true" tabindex="-1"></a>left_ans <span class="ot">&lt;-</span> <span class="fu">rowAnnotation</span>(</span>
+<span id="cb122-39"><a href="complexheatmap-exercise-solution.html#cb122-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">FDR =</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5000</span>, <span class="at">size =</span> <span class="fu">dim</span>(rse_gene_pup_nic)[<span class="dv">1</span>], <span class="at">prob =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fl">0.0012</span>, <span class="dv">1001</span>), <span class="fu">rep</span>(<span class="fl">0.00005</span>, <span class="dv">4000</span>))) <span class="sc">/</span> <span class="dv">10000</span>,</span>
+<span id="cb122-40"><a href="complexheatmap-exercise-solution.html#cb122-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">pc_status =</span> <span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>pc_status,</span>
+<span id="cb122-41"><a href="complexheatmap-exercise-solution.html#cb122-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(<span class="at">FDR =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.049</span>), <span class="fu">c</span>(<span class="st">&quot;#ecf39e&quot;</span>, <span class="st">&quot;#4f772d&quot;</span>)), <span class="at">pc_status =</span> <span class="fu">c</span>(<span class="st">&quot;not_protein_coding&quot;</span> <span class="ot">=</span> <span class="st">&quot;#ffe5d9&quot;</span>, <span class="st">&quot;protein_coding&quot;</span> <span class="ot">=</span> <span class="st">&quot;#9d8189&quot;</span>)),</span>
+<span id="cb122-42"><a href="complexheatmap-exercise-solution.html#cb122-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation_legend_param =</span> <span class="fu">list</span>(<span class="at">FDR =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.03</span>, <span class="fl">0.04</span>, <span class="fl">0.05</span>)))</span>
+<span id="cb122-43"><a href="complexheatmap-exercise-solution.html#cb122-43" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="complexheatmap-exercise-solution.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Heatmap</span>(logs_pup_nic,</span>
+<span id="cb123-2"><a href="complexheatmap-exercise-solution.html#cb123-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot; &quot;</span>,</span>
+<span id="cb123-3"><a href="complexheatmap-exercise-solution.html#cb123-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_row_names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb123-4"><a href="complexheatmap-exercise-solution.html#cb123-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">top_annotation =</span> top_ans,</span>
+<span id="cb123-5"><a href="complexheatmap-exercise-solution.html#cb123-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">left_annotation =</span> left_ans,</span>
+<span id="cb123-6"><a href="complexheatmap-exercise-solution.html#cb123-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_km =</span> <span class="dv">2</span>,</span>
+<span id="cb123-7"><a href="complexheatmap-exercise-solution.html#cb123-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">column_km =</span> <span class="dv">2</span>,</span>
+<span id="cb123-8"><a href="complexheatmap-exercise-solution.html#cb123-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="fl">0.0001</span>, <span class="dv">00001</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="st">&quot;darkblue&quot;</span>, <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;lightsalmon&quot;</span>, <span class="st">&quot;darkred&quot;</span>)),</span>
+<span id="cb123-9"><a href="complexheatmap-exercise-solution.html#cb123-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb123-10"><a href="complexheatmap-exercise-solution.html#cb123-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">column_title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb123-11"><a href="complexheatmap-exercise-solution.html#cb123-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">column_names_gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">7</span>)</span>
+<span id="cb123-12"><a href="complexheatmap-exercise-solution.html#cb123-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="1000px" /></p>
 
-</div>
 </div>
 <div class="container">
     <footer class="site-footer">
@@ -409,8 +425,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-<a href="speaqeasy-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="summarizedexperiment-review.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="expression-heatmaps-with-complexheatmap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercise-with-variancepartition-and-complexheatmap.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
