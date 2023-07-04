@@ -3,3 +3,257 @@
 Instructor: Renee
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Congrats to <a href="https://twitter.com/rodriguez_lion?ref_src=twsrc%5Etfw">@rodriguez_lion</a> - final chapter of his PhD thesis - as well as co-1st author <a href="https://twitter.com/mattntran?ref_src=twsrc%5Etfw">@mattntran</a>, and <a href="https://twitter.com/SubmarineGene?ref_src=twsrc%5Etfw">@SubmarineGene</a> who joined the project late, but was invaluable to getting it finished, and much thanks to <a href="https://twitter.com/CerceoPage?ref_src=twsrc%5Etfw">@CerceoPage</a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a> for co-supervising!</p>&mdash; Keri Martinowich (@martinowk) <a href="https://twitter.com/martinowk/status/1675881303940423680?ref_src=twsrc%5Etfw">July 3, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+
+```{r vignetteSetup_expheatmap, echo=FALSE, message=FALSE, warning = FALSE}
+## For links
+library(BiocStyle)
+
+## Bib setup
+library(RefManageR)
+
+## Write bibliography information
+bib <- c(
+    smokingMouse = citation("smokingMouse")[1],
+    SummarizedExperiment = citation("SummarizedExperiment")[1],
+    ComplexHeatmap = citation("ComplexHeatmap")[1]
+)
+
+options(max.print = 50)
+```
+
+
+## Introduction
+
+Heatmaps are efficient to visualize associations between different sources of data sets and reveal potential patterns (e.g. patterns of expression in your genes). There are multiple packages in R that allow you to create heatmaps, the most widely use include: 
+
+- [ggplot2 heatmaps](https://r-graph-gallery.com/79-levelplot-with-ggplot2.html)
+
+- [pheatmap](https://davetang.org/muse/2018/05/15/making-a-heatmap-in-r-with-the-pheatmap-package/)
+
+- [ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap/)
+
+
+All of these are good and useful, but adding extra information to your heatmaps can get really messy depending on the package you are using.
+
+
+For example, in the next heatmap we are showing the expression of marker genes in multiple cell types. The columns are separated by the group from which they are markers. Then the rows (cell types), have two different classifications: `group` and `Population`, plus a barplot that shows the number of nuclei that cell type contains. 
+
+
+<figure>
+    <img src="Figures/LS_heatmap.png" width="700px" align=center />
+</figure>
+
+## ComplexHeatmap
+
+The ComplexHeatmap package provides a highly flexible way to arrange multiple heatmaps and supports self-defined annotation graphics.The ComplexHeatmap package is implemented in an object-oriented way. To describe a heatmap list, there are following classes:
+
+**Heatmap class**: a single heatmap containing heatmap body, row/column names, titles, dendrograms and row/column annotations.
+
+**HeatmapAnnotation class**: defines a list of row annotations and column annotations. The heatmap annotations can be components of heatmap, also they can be independent as heatmaps.
+
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+
+</style>
+
+<p class="exercise">
+**Exercise 1**:
+Explore the [Bioconductor page for this package](https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html), go to the vignette and find a function that would allow you to add the barplot on the right side of the heatmap previously shown. 
+</p>
+
+## Heatmap with expression data
+
+Now, we are gonna make our own heatmap with the SmokingMouse data. In this heatmap we want to see the difference of expression between both `Control` and `Experimental` for all the DEG in `Pup`, as well as the `Sex` of the samples and the FDR of the genes.
+
+Let's download and prepare our data first. 
+
+### Download data
+
+```{r, echo=FALSE}
+suppressPackageStartupMessages(library("SummarizedExperiment"))
+suppressPackageStartupMessages(data(airway, package = "airway"))
+suppressPackageStartupMessages(library("ComplexHeatmap"))
+suppressPackageStartupMessages(library("circlize"))
+```
+
+```{r download_data_biocfilecache}
+## Load the container package for this type of data
+library("SummarizedExperiment")
+
+## Download and cache the file
+library("BiocFileCache")
+bfc <- BiocFileCache::BiocFileCache()
+cached_rse_gene <- BiocFileCache::bfcrpath(
+    x = bfc,
+    "https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata"
+)
+
+## Check the local path on our cache
+cached_rse_gene
+
+## Load the rse_gene object
+load(cached_rse_gene, verbose = TRUE)
+
+## General overview of the object
+rse_gene
+```
+
+
+### Prepare the data
+
+```{r}
+## Extract genes and samples of interest
+rse_gene_pup_nic <- rse_gene[rowData(rse_gene)$DE_in_pup_brain_nicotine == TRUE, rse_gene$Age == "Pup" & rse_gene$Expt == "Nicotine"]
+
+## Extract logcounts and add name columns
+logs_pup_nic <- assay(rse_gene_pup_nic, 2)
+colnames(logs_pup_nic) <- paste0("Pup_", 1:dim(rse_gene_pup_nic)[2])
+
+## Create function to remove technical variables' contributions,
+## this is from jaffelab package (https://github.com/LieberInstitute/jaffelab)
+cleaningY <- function(y, mod, P) {
+    stopifnot(P <= ncol(mod))
+    stopifnot(`Input matrix is not full rank` = qr(mod)$rank ==
+        ncol(mod))
+    Hat <- solve(t(mod) %*% mod) %*% t(mod)
+    ty <- t(y)
+    ty[is.na(ty)] <- 0
+    beta <- (Hat %*% ty)
+    cleany <- y - t(as.matrix(mod[, -c(seq_len(P))]) %*% beta[-seq_len(P), ])
+    return(cleany)
+}
+
+## Remove contribution of technical variables
+formula <- ~ Group + Sex + plate + flowcell + rRNA_rate + totalAssignedGene + ERCCsumLogErr +
+    overallMapRate + mitoRate
+model <- model.matrix(formula, data = colData(rse_gene_pup_nic))
+logs_pup_nic <- cleaningY(logs_pup_nic, model, P = 2)
+
+## Center the data to make differences more evident
+logs_pup_nic <- (logs_pup_nic - rowMeans(logs_pup_nic)) / rowSds(logs_pup_nic)
+```
+
+
+### Create annotations
+
+```{r}
+## Prepare annotation for our heatmap
+## For this heatmap I want to be able to see the Group to which each sample belongs
+## as well as the Sex of the pup
+
+top_ans <- HeatmapAnnotation(
+    df = as.data.frame(colData(rse_gene_pup_nic)[, c("Sex", "Group")]),
+    col = list(
+        "Sex" = c("F" = "hotpink1", "M" = "dodgerblue"),
+        "Group" = c("Control" = "brown2", "Experimental" = "deepskyblue3")
+    )
+)
+
+## Also, I want to add the FDR associated to each gene
+## Even though we do have that data, for this particular exercise we are gonna simulate it
+
+rowData(rse_gene_pup_nic)$FDR <- sample(
+    x = 0:5000,
+    size = dim(rse_gene_pup_nic)[1],
+    prob = c(rep(0.0012, 1001), rep(0.00005, 4000))
+) / 10000
+
+left_ans <- rowAnnotation(
+    FDR = rowData(rse_gene_pup_nic)$FDR,
+    col = list(FDR = colorRamp2(c(0, 0.049), c("#ecf39e", "#4f772d"))),
+    annotation_legend_param = list(FDR = list(at = c(0, 0.01, 0.02, 0.03, 0.04, 0.05)))
+)
+```
+
+### Plot our heatmap
+
+```{r, out.width = "1000px"}
+## Finally, let's plot!
+Heatmap(logs_pup_nic,
+    name = "logcounts",
+    show_row_names = FALSE,
+    top_annotation = top_ans,
+    left_annotation = left_ans,
+    row_km = 2,
+    column_km = 2,
+    col = colorRamp2(c(-4, -0.0001, 00001, 4), c("darkblue", "lightblue", "lightsalmon", "darkred")),
+    row_title = NULL,
+    column_title = NULL, 
+    column_names_gp = gpar(fontsize = 7)
+)
+```
+
+
+<p class="exercise">
+**Exercise 2**:
+**a)** Add a barplot as a `topAnnotation` with the library sizes (`sum`) of each sample. Fill the bars with the color of your choice
+**b)**  Classify the genes according to whether they are `proteing_coding` or not (`not_proteing_coding`).
+</p>
+
+# ComplexHeatmap exercise solution
+
+```{r}
+## For a) we need to use he function anno_barplot() to generate the barplot and gpar() to fill the bars
+
+top_ans <- HeatmapAnnotation(
+    df = as.data.frame(colData(rse_gene_pup_nic)[, c("Sex", "Group")]),
+    library_size = anno_barplot(colData(rse_gene_pup_nic)$sum, gp = gpar(fill = "#ffd500")),
+    col = list(
+        "Sex" = c("F" = "hotpink1", "M" = "dodgerblue"),
+        "Group" = c("Control" = "brown2", "Experimental" = "deepskyblue3")
+    )
+)
+
+## For b), I want to know if a gene is protein_coding or not_protein_coding.
+
+## First, we can explore the rowData of our object to see if we have a column with 
+## that information
+
+names(rowData(rse_gene_pup_nic))
+
+## Maybe gene_type has what we need
+unique(rowData(rse_gene_pup_nic)$gene_type)
+
+## It does but not in the format we need it, so we need to create a new column to complete the task
+## This columns is going to have protein_coding and not_protein_coding as elements
+rowData(rse_gene_pup_nic)$pc_status <- "protein_coding"
+rowData(rse_gene_pup_nic)$pc_status[rowData(rse_gene_pup_nic)$gene_type != "protein_coding"] <- "not_protein_coding"
+
+## Now we can add the information and specify the color
+left_ans <- rowAnnotation(
+    FDR = sample(x = 0:5000, size = dim(rse_gene_pup_nic)[1], prob = c(rep(0.0012, 1001), rep(0.00005, 4000))) / 10000,
+    pc_status = rowData(rse_gene_pup_nic)$pc_status,
+    col = list(FDR = colorRamp2(c(0, 0.049), c("#ecf39e", "#4f772d")), pc_status = c("not_protein_coding" = "#ffe5d9", "protein_coding" = "#9d8189")),
+    annotation_legend_param = list(FDR = list(at = c(0, 0.01, 0.02, 0.03, 0.04, 0.05)))
+)
+```
+
+```{r, out.width = "1000px"}
+Heatmap(logs_pup_nic,
+    name = " ",
+    show_row_names = FALSE,
+    top_annotation = top_ans,
+    left_annotation = left_ans,
+    row_km = 2,
+    column_km = 2,
+    col = colorRamp2(c(-4, -0.0001, 00001, 4), c("darkblue", "lightblue", "lightsalmon", "darkred")),
+    row_title = NULL,
+    column_title = NULL,
+    column_names_gp = gpar(fontsize = 7)
+)
+```
