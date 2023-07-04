@@ -38,7 +38,15 @@ involved in.
 
 Here is the live demo result https://github.com/lcolladotor/cshl2023pkg/ with
 its companion documentation website at
-https://lcolladotor.github.io/cshl2023pkg/.
+https://lcolladotor.github.io/cshl2023pkg/. Note that you will currently need
+the development version of `biocthis` which addresses the issues documented at
+https://github.com/r-lib/usethis/issues/1856.
+
+```{r, eval = FALSE}
+## Install biocthis development version
+BiocManager::install("lcolladotor/biocthis")
+```
+
 
 Check the git commit history at
 https://github.com/lcolladotor/cshl2023pkg/commits/devel and the GitHub Actions
