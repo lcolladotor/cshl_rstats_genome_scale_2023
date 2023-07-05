@@ -122,7 +122,10 @@ rse_gene
 
 ```{r}
 ## Extract genes and samples of interest
-rse_gene_pup_nic <- rse_gene[rowData(rse_gene)$DE_in_pup_brain_nicotine == TRUE, rse_gene$Age == "Pup" & rse_gene$Expt == "Nicotine"]
+rse_gene_pup_nic <- rse_gene[
+    rowData(rse_gene)$DE_in_pup_brain_nicotine == TRUE,
+    rse_gene$Age == "Pup" & rse_gene$Expt == "Nicotine"
+]
 
 ## Extract logcounts and add name columns
 logs_pup_nic <- assay(rse_gene_pup_nic, 2)

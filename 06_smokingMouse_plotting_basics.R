@@ -1,4 +1,4 @@
-## ----download_data_biocfilecache_repeat------------------
+## ----download_data_biocfilecache_repeat------------------------------------------------------------
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -20,7 +20,7 @@ load(cached_rse_gene, verbose = TRUE)
 rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine")]
 
 
-## ----Data preparation, message=FALSE, warning=FALSE------
+## ----Data preparation, message=FALSE, warning=FALSE------------------------------------------------
 library("ggplot2")
 
 ## Histogram and density plot of read counts before and after normalization
@@ -43,7 +43,7 @@ plot <- ggplot(logcounts_data, aes(x = logcounts)) +
 plot + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----  message=FALSE, warning=FALSE----------------------
+## ----  message=FALSE, warning=FALSE----------------------------------------------------------------
 ## Retain genes that passed filtering step
 rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
 
@@ -59,7 +59,7 @@ plot <- ggplot(filt_logcounts_data, aes(x = logcounts)) +
 plot + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----QC_boxplots,  message=FALSE, warning=FALSE----------
+## ----QC_boxplots,  message=FALSE, warning=FALSE----------------------------------------------------
 library("Hmisc")
 library("stringr")
 library("cowplot")
@@ -156,31 +156,31 @@ multiple_QC_boxplots <- function(sample_var) {
 }
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_boxplots("Age")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_boxplots("Sex")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_boxplots("Group")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_boxplots("Pregnancy")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_boxplots("plate")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_boxplots("flowcell")
 
 
-## ----"QC scatterplots", message=FALSE, warning=FALSE-----
+## ----"QC scatterplots", message=FALSE, warning=FALSE-----------------------------------------------
 ## Scatterplots for a pair of QC metrics
 
 QC_scatterplots <- function(sample_var, qc_metric1, qc_metric2) {
@@ -254,33 +254,33 @@ multiple_QC_scatterplots <- function(qc_metric1, qc_metric2) {
 }
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_scatterplots("mitoRate", "rRNA_rate")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_scatterplots("mitoRate", "totalAssignedGene")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_scatterplots("sum", "detected")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_scatterplots("sum", "totalAssignedGene")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 multiple_QC_scatterplots("detected", "totalAssignedGene")
 
 
-## ----exercise1_EDA, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE----
+## ----exercise1_EDA, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE--------------------------
 ## ## Solution
 ## multiple_QC_scatterplots("subsets_Mito_sum", "mitoMapped")
 ## ## Because in mitoMapped you take reads that mapped to the whole mt chr, in subsets_Mito_sum only reads that were aligned to mt genes. But there's almost a perfect correlation between these two metrics.
 
 
-## ----"QC sample filtering", message=FALSE, warning=FALSE----
+## ----"QC sample filtering", message=FALSE, warning=FALSE-------------------------------------------
 library("scater")
 library("rlang")
 library("ggrepel")
@@ -368,7 +368,7 @@ rse_gene_pups$Retention_after_QC_filtering <- as.vector(sapply(rse_gene_pups$SAM
 }))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 ## Boxplots of QC metrics after sample filtering
 
 ## Boxplots
@@ -432,7 +432,7 @@ boxplots_after_QC_filtering <- function(rse_gene, qc_metric, sample_var) {
 }
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 ## Plots
 
 ## All samples together
@@ -440,19 +440,19 @@ p <- boxplots_after_QC_filtering(rse_gene_filt, "mitoRate", "Age")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 ## Adult samples
 p <- boxplots_after_QC_filtering(rse_gene_adults, "mitoRate", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE------------------------------------------------------------------
 ## Pup samples
 p <- boxplots_after_QC_filtering(rse_gene_pups, "rRNA_rate", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----exercise2_EDA, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE----
+## ----exercise2_EDA, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE---------------------------
 ## ## Solution
 ## p <- boxplots_after_QC_filtering(rse_gene_adults, "mitoRate", "Pregnancy")
 ## p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
@@ -467,7 +467,7 @@ p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 ## p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## --------------------------------------------------------
+## --------------------------------------------------------------------------------------------------
 ## Why do we see log(CPM + 0.5) values smaller than -1?
 log2(0.5)
 
@@ -497,7 +497,7 @@ log2(0.01578469)
 1 / 0.03156938
 
 
-## --------------------------------------------------------
+## --------------------------------------------------------------------------------------------------
 ## Check the documentation
 ## ?edgeR::cpm
 ## > If log-values are computed, then a small count, given by prior.count but scaled to be proportional to the library size, is added to y to avoid taking the log of zero.

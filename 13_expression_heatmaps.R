@@ -1,11 +1,11 @@
-## ---- include = FALSE-----------------------------------------------------------------------
+## ---- include = FALSE------------------------------------------------------------------------------
 knitr::opts_chunk$set(
     collapse = TRUE,
     comment = "#>"
 )
 
 
-## ----vignetteSetup_expheatmap, echo=FALSE, message=FALSE, warning = FALSE-------------------
+## ----vignetteSetup_expheatmap, echo=FALSE, message=FALSE, warning = FALSE--------------------------
 ## For links
 library(BiocStyle)
 
@@ -22,20 +22,20 @@ bib <- c(
 options(max.print = 50)
 
 
-## ---- echo=FALSE----------------------------------------------------------------------------
+## ---- echo=FALSE-----------------------------------------------------------------------------------
 suppressPackageStartupMessages(library("SummarizedExperiment"))
 suppressPackageStartupMessages(data(airway, package = "airway"))
 suppressPackageStartupMessages(library("ComplexHeatmap"))
 suppressPackageStartupMessages(library("circlize"))
 
 
-## -------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------
 library("SummarizedExperiment")
 library("ComplexHeatmap")
 library("circlize")
 
 
-## ----download_data_biocfilecache_expheatmap-------------------------------------------------
+## ----download_data_biocfilecache_expheatmap--------------------------------------------------------
 ## Download and cache the file
 library("BiocFileCache")
 bfc <- BiocFileCache::BiocFileCache()
@@ -54,9 +54,12 @@ load(cached_rse_gene, verbose = TRUE)
 rse_gene
 
 
-## -------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------
 ## Extract genes and samples of interest
-rse_gene_pup_nic <- rse_gene[rowData(rse_gene)$DE_in_pup_brain_nicotine == TRUE, rse_gene$Age == "Pup" & rse_gene$Expt == "Nicotine"]
+rse_gene_pup_nic <- rse_gene[
+    rowData(rse_gene)$DE_in_pup_brain_nicotine == TRUE,
+    rse_gene$Age == "Pup" & rse_gene$Expt == "Nicotine"
+]
 
 ## Extract logcounts and add name columns
 logs_pup_nic <- assay(rse_gene_pup_nic, 2)
@@ -86,7 +89,7 @@ logs_pup_nic <- cleaningY(logs_pup_nic, model, P = 2)
 logs_pup_nic <- (logs_pup_nic - rowMeans(logs_pup_nic)) / rowSds(logs_pup_nic)
 
 
-## -------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------
 ## Prepare annotation for our heatmap
 ## For this heatmap I want to be able to see the Group to which each sample belongs
 ## as well as the Sex of the pup
@@ -115,7 +118,7 @@ left_ans <- rowAnnotation(
 )
 
 
-## ---- out.width = "1000px"------------------------------------------------------------------
+## ---- out.width = "1000px"-------------------------------------------------------------------------
 ## Finally, let's plot!
 Heatmap(logs_pup_nic,
     name = "logcounts",
@@ -131,7 +134,7 @@ Heatmap(logs_pup_nic,
 )
 
 
-## -------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------
 ## For a) we need to use he function anno_barplot() to generate the barplot and gpar() to fill the bars
 
 top_ans <- HeatmapAnnotation(
@@ -167,7 +170,7 @@ left_ans <- rowAnnotation(
 )
 
 
-## ---- out.width = "1000px"------------------------------------------------------------------
+## ---- out.width = "1000px"-------------------------------------------------------------------------
 Heatmap(logs_pup_nic,
     name = " ",
     show_row_names = FALSE,
