@@ -73,9 +73,6 @@ variance-partition-analysis
 canonical-correlation-analysis
 fit-model-and-extract-fraction-of-variance-explained
 examine-expression-of-most-affected-genes-by-each-sample-variable
-solutions-2
-exercise-1-1
-exercise-2-1
 expression-heatmaps-with-complexheatmap
 introduction-1
 complexheatmap
