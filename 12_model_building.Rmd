@@ -650,8 +650,6 @@ plot_gene_expr <- function(age, sample_var, gene_id) {
 }
 ```
 
-
-
 ```{r message=FALSE, warning=FALSE}
 ## Function to plot gene expression vs sample variable data for top 3 most affected genes
 
@@ -719,7 +717,17 @@ font-family: sans-serif;
 📑 **Exercise 1**: What % of variance does <mark style= "background-color: #FAECF8"> <span style="font-family: monospace"> Group</span> </mark> explain for gene ENSMUSG00000042348.10 in pups? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is upregulated or downregulated?
 </p>
 
-```{r exercise1_varPart, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+
+
+<p class="exercise">
+📑 **Exercise 2**: Do the same for gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
+</p>
+
+## Solutions
+
+### Exercise 1
+
+```{r exercise1_varPart, message=FALSE, warning=FALSE}
 ## Solution
 
 ## Gene ID
@@ -759,12 +767,9 @@ plot <- ggplot(
 plot
 ```
 
+### Exercise 2
 
-<p class="exercise">
-📑 **Exercise 2**: Do the same for gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
-</p>
-
-```{r exercise2_varPart, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+```{r exercise2_varPart, message=FALSE, warning=FALSE}
 ## Solution
 
 ## Gene ID

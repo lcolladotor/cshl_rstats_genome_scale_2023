@@ -1,4 +1,4 @@
-## ----download_data_biocfilecache_repeat_modeling--------------------------------------------
+## ----download_data_biocfilecache_repeat_modeling----
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -48,7 +48,7 @@ not_outliers <- which(!(outliers_library_size | outliers_detected_num | outliers
 rse_gene_pups_qc <- rse_gene_pups[, not_outliers]
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 library("variancePartition")
 library("pheatmap")
 library("rlang")
@@ -95,17 +95,17 @@ plot_CCA <- function(age) {
 }
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Heatmap for adult samples
 CCA_adults <- plot_CCA("adults")
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Heatmap for pup samples
 CCA_pups <- plot_CCA("pups")
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 library("ggplot2")
 ## 1.1  Barplots/Boxplots/Scatterplots for each pair of correlated variables
 
@@ -220,23 +220,23 @@ corr_plots <- function(age, sample_var1, sample_var2, sample_color) {
 }
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Correlation plot for adults
 p <- corr_plots("adults", "mitoRate", "totalAssignedGene", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 p <- corr_plots("adults", "flowcell", "plate", NULL)
 p + theme(plot.margin = unit(c(1.5, 4.5, 1.5, 4.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 p <- corr_plots("adults", "plate", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5.3, 2, 5.3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Correlation plots
 p <- corr_plots("adults", "sum", "detected", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
@@ -245,23 +245,23 @@ p <- corr_plots("pups", "sum", "detected", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## ## Correlation plot for pups
 p <- corr_plots("pups", "rRNA_rate", "overallMapRate", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 p <- corr_plots("pups", "plate", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5.3, 2, 5.3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 p <- corr_plots("pups", "flowcell", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5.3, 2, 5.3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 p1 <- corr_plots("adults", "Group", "plate", NULL)
 p2 <- corr_plots("pups", "Group", "plate", NULL)
 p3 <- corr_plots("adults", "Group", "flowcell", NULL)
@@ -272,7 +272,7 @@ plots <- plot_grid(p1, p2, p3, p4, ncol = 2)
 plots + theme(plot.margin = unit(c(1, 2.5, 1, 2.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## 2. Fit model
 
 ## Fit a linear mixed model (LMM) that takes continuous variables as fixed effects and categorical variables as random effects
@@ -297,7 +297,7 @@ varPartAnalysis <- function(age, formula) {
 }
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Violin plots
 
 #####  Model with all variables  #####
@@ -314,7 +314,7 @@ plot + theme(
 )
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 #####  Model without correlated variables  #####
 
 ## Adult plots without mitoRate, plate and sum
@@ -329,7 +329,7 @@ plot + theme(
 )
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 #####  Model with all variables  #####
 
 ## Pups
@@ -343,7 +343,7 @@ plot + theme(
 )
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 #####  Model without correlated variables  #####
 
 ## Pup plots without sum, rRNA_rate and plate
@@ -358,7 +358,7 @@ plot + theme(
 )
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Plot of gene expression lognorm counts vs. sample variable
 plot_gene_expr <- function(age, sample_var, gene_id) {
     rse_gene <- eval(parse_expr(paste("rse_gene", age, "qc", sep = "_")))
@@ -442,7 +442,7 @@ plot_gene_expr <- function(age, sample_var, gene_id) {
 }
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Function to plot gene expression vs sample variable data for top 3 most affected genes
 
 plot_gene_expr_sample <- function(age, sample_var) {
@@ -461,7 +461,7 @@ plot_gene_expr_sample <- function(age, sample_var) {
 }
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Adults
 
 ## Plots for top affected genes by 'totalAssignedGene'
@@ -477,7 +477,7 @@ plots <- plot_gene_expr_sample("adults", "Group")
 plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## ----message=FALSE, warning=FALSE----
 ## Pups
 
 ## Plots for top affected genes by 'overallMapRate'
@@ -493,82 +493,82 @@ plots <- plot_gene_expr_sample("pups", "Group")
 plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
 
 
-## ----exercise1_varPart, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE----------------
-## ## Solution
-## 
-## ## Gene ID
-## gene_id <- "ENSMUSG00000042348.10"
-## ## % of variance explained by Group
-## percentage <- 100 * signif(varPart_data_pups[gene_id, "Group"], digits = 3)
-## ## Sample colors
-## colors <- c("Control" = "brown2", "Experimental" = "deepskyblue3")
-## ## Gene expression logcounts
-## rse_gene_pups_qc$gene_expr <- assays(rse_gene_pups_qc)$logcounts[gene_id, ]
-## 
-## ## Plot
-## plot <- ggplot(
-##     data = as.data.frame(colData(rse_gene_pups_qc)),
-##     mapping = aes(x = Group, y = gene_expr, color = Group)
-## ) +
-##     geom_boxplot(size = 0.25, width = 0.32, color = "black", outlier.color = "#FFFFFFFF") +
-##     geom_jitter(width = 0.15, alpha = 1, size = 1) +
-##     scale_color_manual(values = colors) +
-##     theme_bw() +
-##     guides(color = "none") +
-##     labs(
-##         title = gene_id,
-##         subtitle = paste0("Variance explained: ", percentage, "%"),
-##         y = "lognorm counts"
-##     ) +
-##     theme(
-##         plot.margin = unit(c(2, 6, 2, 6), "cm"),
-##         axis.title = element_text(size = (7)),
-##         axis.text = element_text(size = (6)),
-##         plot.title = element_text(hjust = 0.5, size = 7.5, face = "bold"),
-##         plot.subtitle = element_text(size = 7, color = "gray40"),
-##         legend.text = element_text(size = 6),
-##         legend.title = element_text(size = 7)
-##     )
-## 
-## plot
+## ----exercise1_varPart, message=FALSE, warning=FALSE----
+## Solution
+
+## Gene ID
+gene_id <- "ENSMUSG00000042348.10"
+## % of variance explained by Group
+percentage <- 100 * signif(varPart_data_pups[gene_id, "Group"], digits = 3)
+## Sample colors
+colors <- c("Control" = "brown2", "Experimental" = "deepskyblue3")
+## Gene expression logcounts
+rse_gene_pups_qc$gene_expr <- assays(rse_gene_pups_qc)$logcounts[gene_id, ]
+
+## Plot
+plot <- ggplot(
+    data = as.data.frame(colData(rse_gene_pups_qc)),
+    mapping = aes(x = Group, y = gene_expr, color = Group)
+) +
+    geom_boxplot(size = 0.25, width = 0.32, color = "black", outlier.color = "#FFFFFFFF") +
+    geom_jitter(width = 0.15, alpha = 1, size = 1) +
+    scale_color_manual(values = colors) +
+    theme_bw() +
+    guides(color = "none") +
+    labs(
+        title = gene_id,
+        subtitle = paste0("Variance explained: ", percentage, "%"),
+        y = "lognorm counts"
+    ) +
+    theme(
+        plot.margin = unit(c(2, 6, 2, 6), "cm"),
+        axis.title = element_text(size = (7)),
+        axis.text = element_text(size = (6)),
+        plot.title = element_text(hjust = 0.5, size = 7.5, face = "bold"),
+        plot.subtitle = element_text(size = 7, color = "gray40"),
+        legend.text = element_text(size = 6),
+        legend.title = element_text(size = 7)
+    )
+
+plot
 
 
-## ----exercise2_varPart, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE----------------
-## ## Solution
-## 
-## ## Gene ID
-## gene_id <- "ENSMUSG00000064372.1"
-## ## % of variance explained by Group
-## percentage <- 100 * signif(varPart_data_pups[gene_id, "Group"], digits = 3)
-## ## Sample colors
-## colors <- c("Control" = "brown2", "Experimental" = "deepskyblue3")
-## ## Gene expression logcounts
-## rse_gene_pups_qc$gene_expr <- assays(rse_gene_pups_qc)$logcounts[gene_id, ]
-## 
-## ## Plot
-## plot <- ggplot(
-##     data = as.data.frame(colData(rse_gene_pups_qc)),
-##     mapping = aes(x = Group, y = gene_expr, color = Group)
-## ) +
-##     geom_boxplot(size = 0.25, width = 0.32, color = "black", outlier.color = "#FFFFFFFF") +
-##     geom_jitter(width = 0.15, alpha = 1, size = 1) +
-##     scale_color_manual(values = colors) +
-##     theme_bw() +
-##     guides(color = "none") +
-##     labs(
-##         title = gene_id,
-##         subtitle = paste0("Variance explained: ", percentage, "%"),
-##         y = "lognorm counts"
-##     ) +
-##     theme(
-##         plot.margin = unit(c(2, 6, 2, 6), "cm"),
-##         axis.title = element_text(size = (7)),
-##         axis.text = element_text(size = (6)),
-##         plot.title = element_text(hjust = 0.5, size = 7.5, face = "bold"),
-##         plot.subtitle = element_text(size = 7, color = "gray40"),
-##         legend.text = element_text(size = 6),
-##         legend.title = element_text(size = 7)
-##     )
-## 
-## plot
+## ----exercise2_varPart, message=FALSE, warning=FALSE----
+## Solution
+
+## Gene ID
+gene_id <- "ENSMUSG00000064372.1"
+## % of variance explained by Group
+percentage <- 100 * signif(varPart_data_pups[gene_id, "Group"], digits = 3)
+## Sample colors
+colors <- c("Control" = "brown2", "Experimental" = "deepskyblue3")
+## Gene expression logcounts
+rse_gene_pups_qc$gene_expr <- assays(rse_gene_pups_qc)$logcounts[gene_id, ]
+
+## Plot
+plot <- ggplot(
+    data = as.data.frame(colData(rse_gene_pups_qc)),
+    mapping = aes(x = Group, y = gene_expr, color = Group)
+) +
+    geom_boxplot(size = 0.25, width = 0.32, color = "black", outlier.color = "#FFFFFFFF") +
+    geom_jitter(width = 0.15, alpha = 1, size = 1) +
+    scale_color_manual(values = colors) +
+    theme_bw() +
+    guides(color = "none") +
+    labs(
+        title = gene_id,
+        subtitle = paste0("Variance explained: ", percentage, "%"),
+        y = "lognorm counts"
+    ) +
+    theme(
+        plot.margin = unit(c(2, 6, 2, 6), "cm"),
+        axis.title = element_text(size = (7)),
+        axis.text = element_text(size = (6)),
+        plot.title = element_text(hjust = 0.5, size = 7.5, face = "bold"),
+        plot.subtitle = element_text(size = 7, color = "gray40"),
+        legend.text = element_text(size = 6),
+        legend.title = element_text(size = 7)
+    )
+
+plot
 
