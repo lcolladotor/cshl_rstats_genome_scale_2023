@@ -686,7 +686,7 @@ log2(0.01578469)
 
 Links Leo showed:
 
-* `smokingMouse_indirects` code for computing the `logcounts` https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L35
+* `smokingMouse_indirects` code for computing the `logcounts` https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L100
 * https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9
 * https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14
 * https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L78
