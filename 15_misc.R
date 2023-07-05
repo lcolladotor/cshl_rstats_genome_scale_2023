@@ -1,6 +1,6 @@
 ## ----postcards_proj, eval = FALSE----
 ## ## Create an RStudio project first with this particular name
-## usethis::create_project("YourGitHubUsername.github.io")
+## usethis::create_project("~/Desktop/YourGitHubUsername.github.io")
 ## 
 ## ## Configure Git and GitHub
 ## ## If you don't have git, check "Happy Git and GitHub for the useR" available
