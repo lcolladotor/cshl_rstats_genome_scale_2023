@@ -155,6 +155,9 @@ logs_pup_nic <- cleaningY(logs_pup_nic, model, P = 2)
 logs_pup_nic <- (logs_pup_nic - rowMeans(logs_pup_nic)) / rowSds(logs_pup_nic)
 ```
 
+More for on centering and scaling, see this video:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ### Create annotations
 
