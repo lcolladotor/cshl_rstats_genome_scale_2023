@@ -53,6 +53,7 @@ postcards::create_postcard(template = "solana")
 * Make a `git commit` to save your new files including `index.html` and then `git push` to upload your files to GitHub.
 * You will soon have a publicly website available at https://YourGitHubUsername.github.io/
 * Feel free to keep editing your website. Remember to `knit`, then `git add` + `git commit` the new versions of your files, then `git push` to upload them to GitHub.
+  - If you want to, use `fontawesome` like at https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L7 or emojis like at https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L24.
 * Share your website and source code through the [`random`](https://cshldata-2023.slack.com/archives/C058SB8TB1C) Slack channel.
 * (optional) Announce your new website using the `#rstats` hasthag and/or the author of `postcards` https://twitter.com/seankross.
 
