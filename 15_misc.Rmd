@@ -47,8 +47,8 @@ postcards::create_postcard(template = "onofre")
 postcards::create_postcard(template = "solana")
 ```
 
-* Fill out your information using `Markdown` syntax. For example: https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31.
-* Add links to your own profiles like at https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12
+* Fill out your information using `Markdown` syntax. For example: https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33.
+* Add links to your own profiles like at https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12.
 * Click the `knit` blue button on RStudio. This is the same as running `rmarkdown::render("index.Rmd")` on the console. This will create the `index.html` file.
 * Make a `git commit` to save your new files including `index.html` and then `git push` to upload your files to GitHub.
 * You will soon have a publicly website available at https://YourGitHubUsername.github.io/
