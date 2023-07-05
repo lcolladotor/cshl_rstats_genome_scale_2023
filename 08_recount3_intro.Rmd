@@ -12,7 +12,7 @@ _Don’t let useful data go to waste_ by Franziska Denk https://doi.org/10.1038/
 
 * `ReCount`: data from 20 studies
     - http://bowtie-bio.sourceforge.net/recount/index.shtml
-    - Artículo del 2011 https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449
+    - Paper from 2011 https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449
 
 * `recount`: over 70k human bulk RNA-seq samples uniformly processed
     - https://jhubiostatistics.shinyapps.io/recount/
