@@ -1,4 +1,4 @@
-## ----download_data_biocfilecache_repeat_modeling---------
+## ----download_data_biocfilecache_repeat_modeling--------------------------------------------
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -48,9 +48,10 @@ not_outliers <- which(!(outliers_library_size | outliers_detected_num | outliers
 rse_gene_pups_qc <- rse_gene_pups[, not_outliers]
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 library("variancePartition")
 library("pheatmap")
+library("rlang")
 
 #######################   Variance Partition Analysis   #######################
 
@@ -94,19 +95,18 @@ plot_CCA <- function(age) {
 }
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## Heatmap for adult samples
 CCA_adults <- plot_CCA("adults")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## Heatmap for pup samples
 CCA_pups <- plot_CCA("pups")
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 library("ggplot2")
-library("rlang")
 ## 1.1  Barplots/Boxplots/Scatterplots for each pair of correlated variables
 
 corr_plots <- function(age, sample_var1, sample_var2, sample_color) {
@@ -220,23 +220,23 @@ corr_plots <- function(age, sample_var1, sample_var2, sample_color) {
 }
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## Correlation plot for adults
 p <- corr_plots("adults", "mitoRate", "totalAssignedGene", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 p <- corr_plots("adults", "flowcell", "plate", NULL)
 p + theme(plot.margin = unit(c(1.5, 4.5, 1.5, 4.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 p <- corr_plots("adults", "plate", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5.3, 2, 5.3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## Correlation plots
 p <- corr_plots("adults", "sum", "detected", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
@@ -245,23 +245,23 @@ p <- corr_plots("pups", "sum", "detected", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## ## Correlation plot for pups
 p <- corr_plots("pups", "rRNA_rate", "overallMapRate", "Group")
 p + theme(plot.margin = unit(c(2, 4, 2, 4), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 p <- corr_plots("pups", "plate", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5.3, 2, 5.3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 p <- corr_plots("pups", "flowcell", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5.3, 2, 5.3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 p1 <- corr_plots("adults", "Group", "plate", NULL)
 p2 <- corr_plots("pups", "Group", "plate", NULL)
 p3 <- corr_plots("adults", "Group", "flowcell", NULL)
@@ -272,7 +272,7 @@ plots <- plot_grid(p1, p2, p3, p4, ncol = 2)
 plots + theme(plot.margin = unit(c(1, 2.5, 1, 2.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## 2. Fit model
 
 ## Fit a linear mixed model (LMM) that takes continuous variables as fixed effects and categorical variables as random effects
@@ -297,68 +297,68 @@ varPartAnalysis <- function(age, formula) {
 }
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE------------
-## ## Violin plots
-## 
-## #####  Model with all variables  #####
-## 
-## ## Adults
-## ## Define variables; random effects indicated with (1| )
-## formula <- ~ (1 | Group) + (1 | Pregnancy) + (1 | plate) + (1 | flowcell) + mitoRate + overallMapRate +
-##     totalAssignedGene + rRNA_rate + sum + detected + ERCCsumLogErr
-## plot <- varPartAnalysis("adults", formula)[[1]]
-## plot + theme(
-##     plot.margin = unit(c(1, 1, 1, 1), "cm"),
-##     axis.text.x = element_text(size = (7)),
-##     axis.text.y = element_text(size = (7.5))
-## )
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## Violin plots
+
+#####  Model with all variables  #####
+
+## Adults
+## Define variables; random effects indicated with (1| )
+formula <- ~ (1 | Group) + (1 | Pregnancy) + (1 | plate) + (1 | flowcell) + mitoRate + overallMapRate +
+    totalAssignedGene + rRNA_rate + sum + detected + ERCCsumLogErr
+plot <- varPartAnalysis("adults", formula)[[1]]
+plot + theme(
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    axis.text.x = element_text(size = (7)),
+    axis.text.y = element_text(size = (7.5))
+)
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE------------
-## #####  Model without correlated variables  #####
-## 
-## ## Adult plots without mitoRate, plate and sum
-## formula <- ~ (1 | Group) + (1 | Pregnancy) + (1 | flowcell) + overallMapRate + totalAssignedGene + rRNA_rate + detected + ERCCsumLogErr
-## varPart <- varPartAnalysis("adults", formula)
-## varPart_data_adults <- varPart[[2]]
-## plot <- varPart[[1]]
-## plot + theme(
-##     plot.margin = unit(c(1, 1, 1, 1), "cm"),
-##     axis.text.x = element_text(size = (7)),
-##     axis.text.y = element_text(size = (7.5))
-## )
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+#####  Model without correlated variables  #####
+
+## Adult plots without mitoRate, plate and sum
+formula <- ~ (1 | Group) + (1 | Pregnancy) + (1 | flowcell) + overallMapRate + totalAssignedGene + rRNA_rate + detected + ERCCsumLogErr
+varPart <- varPartAnalysis("adults", formula)
+varPart_data_adults <- varPart[[2]]
+plot <- varPart[[1]]
+plot + theme(
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    axis.text.x = element_text(size = (7)),
+    axis.text.y = element_text(size = (7.5))
+)
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE------------
-## #####  Model with all variables  #####
-## 
-## ## Pups
-## formula <- ~ (1 | Group) + (1 | Sex) + (1 | plate) + (1 | flowcell) + mitoRate + overallMapRate +
-##     totalAssignedGene + rRNA_rate + sum + detected + ERCCsumLogErr
-## plot <- varPartAnalysis("pups", formula)[[1]]
-## plot + theme(
-##     plot.margin = unit(c(1, 1, 1, 1), "cm"),
-##     axis.text.x = element_text(size = (7)),
-##     axis.text.y = element_text(size = (7.5))
-## )
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+#####  Model with all variables  #####
+
+## Pups
+formula <- ~ (1 | Group) + (1 | Sex) + (1 | plate) + (1 | flowcell) + mitoRate + overallMapRate +
+    totalAssignedGene + rRNA_rate + sum + detected + ERCCsumLogErr
+plot <- varPartAnalysis("pups", formula)[[1]]
+plot + theme(
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    axis.text.x = element_text(size = (7)),
+    axis.text.y = element_text(size = (7.5))
+)
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE------------
-## #####  Model without correlated variables  #####
-## 
-## ## Pup plots without sum, rRNA_rate and plate
-## formula <- ~ (1 | Group) + (1 | Sex) + (1 | flowcell) + mitoRate + overallMapRate + totalAssignedGene + detected + ERCCsumLogErr
-## varPart <- varPartAnalysis("pups", formula)
-## varPart_data_pups <- varPart[[2]]
-## plot <- varPart[[1]]
-## plot + theme(
-##     plot.margin = unit(c(1, 1, 1, 1), "cm"),
-##     axis.text.x = element_text(size = (7)),
-##     axis.text.y = element_text(size = (7.5))
-## )
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+#####  Model without correlated variables  #####
+
+## Pup plots without sum, rRNA_rate and plate
+formula <- ~ (1 | Group) + (1 | Sex) + (1 | flowcell) + mitoRate + overallMapRate + totalAssignedGene + detected + ERCCsumLogErr
+varPart <- varPartAnalysis("pups", formula)
+varPart_data_pups <- varPart[[2]]
+plot <- varPart[[1]]
+plot + theme(
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    axis.text.x = element_text(size = (7)),
+    axis.text.y = element_text(size = (7.5))
+)
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## Plot of gene expression lognorm counts vs. sample variable
 plot_gene_expr <- function(age, sample_var, gene_id) {
     rse_gene <- eval(parse_expr(paste("rse_gene", age, "qc", sep = "_")))
@@ -442,7 +442,7 @@ plot_gene_expr <- function(age, sample_var, gene_id) {
 }
 
 
-## ----message=FALSE, warning=FALSE------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
 ## Function to plot gene expression vs sample variable data for top 3 most affected genes
 
 plot_gene_expr_sample <- function(age, sample_var) {
@@ -450,7 +450,7 @@ plot_gene_expr_sample <- function(age, sample_var) {
     varPart_data <- eval(parse_expr(paste0("varPart_data_", age)))
 
     ## Top 3 genes most affected by sample variable
-    affected_genes <- rownames(varPart_data[order(varPart_data[, "Group"], decreasing = TRUE), ][1:3, ])
+    affected_genes <- rownames(varPart_data[order(varPart_data[, sample_var], decreasing = TRUE), ][1:3, ])
 
     ## Plots
     plots <- list()
@@ -461,39 +461,39 @@ plot_gene_expr_sample <- function(age, sample_var) {
 }
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE------------
-## ## Adults
-## 
-## ## Plots for top affected genes by 'totalAssignedGene'
-## plots <- plot_gene_expr_sample("adults", "totalAssignedGene")
-## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
-## 
-## ## Plots for top affected genes by 'overallMapRate'
-## plots <- plot_gene_expr_sample("adults", "overallMapRate")
-## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
-## 
-## ## Plots for top affected genes by 'Group'
-## plots <- plot_gene_expr_sample("adults", "Group")
-## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## Adults
+
+## Plots for top affected genes by 'totalAssignedGene'
+plots <- plot_gene_expr_sample("adults", "totalAssignedGene")
+plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
+
+## Plots for top affected genes by 'overallMapRate'
+plots <- plot_gene_expr_sample("adults", "overallMapRate")
+plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
+
+## Plots for top affected genes by 'Group'
+plots <- plot_gene_expr_sample("adults", "Group")
+plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE------------
-## ## Pups
-## 
-## ## Plots for top affected genes by 'overallMapRate'
-## plots <- plot_gene_expr_sample("pups", "overallMapRate")
-## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
-## 
-## ## Plots for top affected genes by 'totalAssignedGene'
-## plots <- plot_gene_expr_sample("pups", "totalAssignedGene")
-## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
-## 
-## ## Plots for top affected genes by 'Group'
-## plots <- plot_gene_expr_sample("pups", "Group")
-## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
+## ----message=FALSE, warning=FALSE-----------------------------------------------------------
+## Pups
+
+## Plots for top affected genes by 'overallMapRate'
+plots <- plot_gene_expr_sample("pups", "overallMapRate")
+plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
+
+## Plots for top affected genes by 'totalAssignedGene'
+plots <- plot_gene_expr_sample("pups", "totalAssignedGene")
+plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
+
+## Plots for top affected genes by 'Group'
+plots <- plot_gene_expr_sample("pups", "Group")
+plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
 
 
-## ----exercise1_varPart, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE----
+## ----exercise1_varPart, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE----------------
 ## ## Solution
 ## 
 ## ## Gene ID
@@ -533,7 +533,7 @@ plot_gene_expr_sample <- function(age, sample_var) {
 ## plot
 
 
-## ----exercise2_varPart, message=FALSE, warning=FALSE,  eval=FALSE, echo=FALSE----
+## ----exercise2_varPart, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE----------------
 ## ## Solution
 ## 
 ## ## Gene ID

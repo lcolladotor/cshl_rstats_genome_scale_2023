@@ -197,7 +197,7 @@ Heatmap(logs_pup_nic,
     column_km = 2,
     col = colorRamp2(c(-4, -0.0001, 00001, 4), c("darkblue", "lightblue", "lightsalmon", "darkred")),
     row_title = NULL,
-    column_title = NULL, 
+    column_title = NULL,
     column_names_gp = gpar(fontsize = 7)
 )
 ```
@@ -225,7 +225,7 @@ top_ans <- HeatmapAnnotation(
 
 ## For b), I want to know if a gene is protein_coding or not_protein_coding.
 
-## First, we can explore the rowData of our object to see if we have a column with 
+## First, we can explore the rowData of our object to see if we have a column with
 ## that information
 
 names(rowData(rse_gene_pup_nic))
