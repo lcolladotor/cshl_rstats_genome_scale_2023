@@ -57,4 +57,24 @@ postcards::create_postcard(template = "solana")
 * Share your website and source code through the [`random`](https://cshldata-2023.slack.com/archives/C058SB8TB1C) Slack channel.
 * (optional) Announce your new website using the `#rstats` hasthag and/or the author of `postcards` https://twitter.com/seankross.
 
+## Organizing your work
 
+* https://here.r-lib.org/
+  - `here` is a great package for avoiding hard coded (full paths) to files.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XTuJ8vGnzBU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+[_LIBD rstats club notes_](https://docs.google.com/document/d/1oAW3z9eo0LRAPeEqqm4VyPfOz8NF0vhfd76jwcJkkog/edit)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-GdqCf0dFPU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+* https://lcolladotor.github.io/bioc_team_ds/organizing-your-work.html
+  - My team's documentation on how to organize our work.
+* https://github.com/LieberInstitute/template_project
+  - Here's our template for how to organize code in a new project. By using a uniform organization, we make it easier for all of us to understand where code lives. This in turn makes it easier to adapt and re-use code across projects.
+  
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Along the way we figured out how to organize our code <a href="https://t.co/1KuhHGxLGC">https://t.co/1KuhHGxLGC</a><br><br>This structure helped collaborators join the project within the last months, understand our code base, and make 🤩 contributions<a href="https://t.co/IbjHZUi92d">https://t.co/IbjHZUi92d</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1626687327333683201?ref_src=twsrc%5Etfw">February 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+* https://lcolladotor.github.io/bioc_team_ds/how-to-ask-for-help.html
+  - Some of my team's guidelines for _how to ask for help_
