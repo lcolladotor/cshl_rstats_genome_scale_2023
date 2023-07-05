@@ -255,6 +255,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.3.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.3.2</b> Fit model and extract fraction of variance explained</a></li>
 <li class="chapter" data-level="12.3.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.3.3</b> Examine expression of most affected genes by each sample variable</a></li>
 </ul></li>
+<li class="chapter" data-level="12.4" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#solutions-2"><i class="fa fa-check"></i><b>12.4</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-1-1"><i class="fa fa-check"></i><b>12.4.1</b> Exercise 1</a></li>
+<li class="chapter" data-level="12.4.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-2-1"><i class="fa fa-check"></i><b>12.4.2</b> Exercise 2</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a>
@@ -277,6 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>16</b> Miscellaneous</a>
 <ul>
 <li class="chapter" data-level="16.1" data-path="miscellaneous.html"><a href="miscellaneous.html#postcards"><i class="fa fa-check"></i><b>16.1</b> postcards</a></li>
+<li class="chapter" data-level="16.2" data-path="miscellaneous.html"><a href="miscellaneous.html#organizing-your-work"><i class="fa fa-check"></i><b>16.2</b> Organizing your work</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><i class="fa fa-check"></i><b>17</b> Introduction to the world of spatially-resolved transcriptomics with Visium data</a>
 <ul>
@@ -344,30 +350,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://reneegf.github.io/" class="uri">https://reneegf.github.io/</a> + <a href="https://github.com/reneegf/reneegf.github.io" class="uri">https://github.com/reneegf/reneegf.github.io</a></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="miscellaneous.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
-<span id="cb128-2"><a href="miscellaneous.html#cb128-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;YourGitHubUsername.github.io&quot;</span>)</span>
-<span id="cb128-3"><a href="miscellaneous.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-4"><a href="miscellaneous.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
-<span id="cb128-5"><a href="miscellaneous.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
-<span id="cb128-6"><a href="miscellaneous.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
-<span id="cb128-7"><a href="miscellaneous.html#cb128-7" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
-<span id="cb128-8"><a href="miscellaneous.html#cb128-8" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="miscellaneous.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
+<span id="cb130-2"><a href="miscellaneous.html#cb130-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;YourGitHubUsername.github.io&quot;</span>)</span>
+<span id="cb130-3"><a href="miscellaneous.html#cb130-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-4"><a href="miscellaneous.html#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
+<span id="cb130-5"><a href="miscellaneous.html#cb130-5" aria-hidden="true" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
+<span id="cb130-6"><a href="miscellaneous.html#cb130-6" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
+<span id="cb130-7"><a href="miscellaneous.html#cb130-7" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
+<span id="cb130-8"><a href="miscellaneous.html#cb130-8" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
 <p>Create your website template using <code>postcards</code> by choosing one of the options below. This will create an <code>index.Rmd</code> file.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="miscellaneous.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
-<span id="cb129-2"><a href="miscellaneous.html#cb129-2" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
-<span id="cb129-3"><a href="miscellaneous.html#cb129-3" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
-<span id="cb129-4"><a href="miscellaneous.html#cb129-4" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
-<span id="cb129-5"><a href="miscellaneous.html#cb129-5" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
-<span id="cb129-6"><a href="miscellaneous.html#cb129-6" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="miscellaneous.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
+<span id="cb131-2"><a href="miscellaneous.html#cb131-2" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
+<span id="cb131-3"><a href="miscellaneous.html#cb131-3" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
+<span id="cb131-4"><a href="miscellaneous.html#cb131-4" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
+<span id="cb131-5"><a href="miscellaneous.html#cb131-5" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
+<span id="cb131-6"><a href="miscellaneous.html#cb131-6" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
 <ul>
-<li>Fill out your information using <code>Markdown</code> syntax. For example: <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31</a>.</li>
-<li>Add links to your own profiles like at <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12</a></li>
+<li>Fill out your information using <code>Markdown</code> syntax. For example: <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33</a>.</li>
+<li>Add links to your own profiles like at <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12</a>.</li>
 <li>Click the <code>knit</code> blue button on RStudio. This is the same as running <code>rmarkdown::render("index.Rmd")</code> on the console. This will create the <code>index.html</code> file.</li>
 <li>Make a <code>git commit</code> to save your new files including <code>index.html</code> and then <code>git push</code> to upload your files to GitHub.</li>
 <li>You will soon have a publicly website available at <a href="https://YourGitHubUsername.github.io/" class="uri">https://YourGitHubUsername.github.io/</a></li>
-<li>Feel free to keep editing your website. Remember to <code>knit</code>, then <code>git add</code> + <code>git commit</code> the new versions of your files, then <code>git push</code> to upload them to GitHub.</li>
+<li>Feel free to keep editing your website. Remember to <code>knit</code>, then <code>git add</code> + <code>git commit</code> the new versions of your files, then <code>git push</code> to upload them to GitHub.
+<ul>
+<li>If you want to, use <code>fontawesome</code> like at <a href="https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L7" class="uri">https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L7</a> or emojis like at <a href="https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L24" class="uri">https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L24</a>.</li>
+</ul></li>
 <li>Share your website and source code through the <a href="https://cshldata-2023.slack.com/archives/C058SB8TB1C"><code>random</code></a> Slack channel.</li>
 <li>(optional) Announce your new website using the <code>#rstats</code> hasthag and/or the author of <code>postcards</code> <a href="https://twitter.com/seankross" class="uri">https://twitter.com/seankross</a>.</li>
+</ul>
+</div>
+<div id="organizing-your-work" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> Organizing your work<a href="miscellaneous.html#organizing-your-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><a href="https://here.r-lib.org/" class="uri">https://here.r-lib.org/</a>
+<ul>
+<li><code>here</code> is a great package for avoiding hard coded (full paths) to files.</li>
+</ul></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XTuJ8vGnzBU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+<p><a href="https://docs.google.com/document/d/1oAW3z9eo0LRAPeEqqm4VyPfOz8NF0vhfd76jwcJkkog/edit"><em>LIBD rstats club notes</em></a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-GdqCf0dFPU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+<ul>
+<li><a href="https://lcolladotor.github.io/bioc_team_ds/organizing-your-work.html" class="uri">https://lcolladotor.github.io/bioc_team_ds/organizing-your-work.html</a>
+<ul>
+<li>My team’s documentation on how to organize our work.</li>
+</ul></li>
+<li><a href="https://github.com/LieberInstitute/template_project" class="uri">https://github.com/LieberInstitute/template_project</a>
+<ul>
+<li>Here’s our template for how to organize code in a new project. By using a uniform organization, we make it easier for all of us to understand where code lives. This in turn makes it easier to adapt and re-use code across projects.</li>
+</ul></li>
+</ul>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Along the way we figured out how to organize our code <a href="https://t.co/1KuhHGxLGC">https://t.co/1KuhHGxLGC</a><br><br>This structure helped collaborators join the project within the last months, understand our code base, and make 🤩 contributions<a href="https://t.co/IbjHZUi92d">https://t.co/IbjHZUi92d</a>
+</p>
+— 🇲🇽 Leonardo Collado-Torres (<span class="citation">@lcolladotor</span>) <a href="https://twitter.com/lcolladotor/status/1626687327333683201?ref_src=twsrc%5Etfw">February 17, 2023</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<ul>
+<li><a href="https://lcolladotor.github.io/bioc_team_ds/how-to-ask-for-help.html" class="uri">https://lcolladotor.github.io/bioc_team_ds/how-to-ask-for-help.html</a>
+<ul>
+<li>Some of my team’s guidelines for <em>how to ask for help</em></li>
+</ul></li>
 </ul>
 
 </div>

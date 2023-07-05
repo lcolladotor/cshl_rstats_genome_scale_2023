@@ -73,6 +73,9 @@ variance-partition-analysis
 canonical-correlation-analysis
 fit-model-and-extract-fraction-of-variance-explained
 examine-expression-of-most-affected-genes-by-each-sample-variable
+solutions-2
+exercise-1-1
+exercise-2-1
 expression-heatmaps-with-complexheatmap
 introduction-1
 complexheatmap
@@ -86,6 +89,7 @@ exercise-with-variancepartition-and-complexheatmap
 steps
 miscellaneous
 postcards
+organizing-your-work
 introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data
 community-5
 downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd
