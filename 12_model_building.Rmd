@@ -89,7 +89,7 @@ library("rlang")
 
 ## 1. Canonical Correlation Analysis (CCA)
 
-## Asses the correlation between each pair of sample variables
+## Assess the correlation between each pair of sample variables
 
 ## Plot heatmap of correlations
 plot_CCA <- function(age) {
