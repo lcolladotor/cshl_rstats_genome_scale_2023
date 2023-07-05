@@ -1,9 +1,9 @@
-## ----'start', message=FALSE------------------------------------------
+## ----'start', message=FALSE----
 ## Load recount3 R package
 library("recount3")
 
 
-## ----'quick_example'-------------------------------------------------
+## ----'quick_example'--------
 ## Lets download all the available projects
 human_projects <- available_projects()
 
@@ -23,7 +23,7 @@ rse_gene_SRP009615
 lobstr::obj_size(rse_gene_SRP009615)
 
 
-## ----"interactive_display", eval = FALSE-----------------------------
+## ----"interactive_display", eval = FALSE----
 ## ## Explore available human projects interactively
 ## proj_info_interactive <- interactiveDisplayBase::display(human_projects)
 ## ## Choose only 1 row in the table, then click on "send".
@@ -34,7 +34,7 @@ lobstr::obj_size(rse_gene_SRP009615)
 ## rse_gene_interactive <- create_rse(proj_info_interactive)
 
 
-## ----"tranform_counts"-----------------------------------------------
+## ----"tranform_counts"------
 ## We'll compute read counts, which is what most downstream software
 ## uses.
 ## For other types of transformations such as RPKM and TPM, use
@@ -42,7 +42,7 @@ lobstr::obj_size(rse_gene_SRP009615)
 assay(rse_gene_SRP009615, "counts") <- compute_read_counts(rse_gene_SRP009615)
 
 
-## ----"expand_attributes"---------------------------------------------
+## ----"expand_attributes"----
 ## Lets make it easier to use the information available for this study
 ## that was provided by the original authors of the study.
 rse_gene_SRP009615 <- expand_sra_attributes(rse_gene_SRP009615)

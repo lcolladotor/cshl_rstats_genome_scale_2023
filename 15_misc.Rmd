@@ -1,10 +1,59 @@
-# TBD
+# Miscellaneous
 
 Instructor: Leo
 
-## Options
+## postcards
 
-These are the options I've heard interest in so far:
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b7d3bbee06d14a548a664e76ea9110d8" title="Updating spatialLIBD: from SingleCellExperiment to VisiumExperiment classes" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
 
-* `postcards` for making your own personal website
-  - Requires a `git` and `GitHub` setup
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q6eRD8Nyxfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0S_tRne5UNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+_The above video is in Spanish._
+
+* Similar to https://pages.github.com/
+* `postcards` has 5 templates https://github.com/seankross/postcards
+* Your website should ideally say something about you, your interests, your projects, and how to contact you. Here are some examples with their source code:
+  - https://amy-peterson.github.io/ + https://github.com/amy-peterson/amy-peterson.github.com
+  - http://jtleek.com/ + https://github.com/jtleek/jtleek.github.io
+  - http://aejaffe.com/ + https://github.com/andrewejaffe/andrewejaffe.github.io
+  - https://hadley.nz/ + https://github.com/hadley/hadley.github.com
+  - https://emarquezz.github.io/ + https://github.com/emarquezz/emarquezz.github.io
+  - https://bpardo99.github.io/ + https://github.com/bpardo99/bpardo99.github.io
+  - https://daianna21.github.io/ + https://github.com/daianna21/daianna21.github.io
+  - https://reneegf.github.io/ + https://github.com/reneegf/reneegf.github.io
+
+
+```{r postcards_proj, eval = FALSE}
+## Create an RStudio project first with this particular name
+usethis::create_project("YourGitHubUsername.github.io")
+
+## Configure Git and GitHub
+## If you don't have git, check "Happy Git and GitHub for the useR" available
+## at https://happygitwithr.com/
+usethis::use_git()
+usethis::use_github()
+```
+
+Create your website template using `postcards` by choosing one of the options below. This will create an `index.Rmd` file.
+
+```{r postcards_create, eval = FALSE}
+## Choose only one of these options, whichever you liked the most
+postcards::create_postcard(template = "jolla")
+postcards::create_postcard(template = "jolla-blue")
+postcards::create_postcard(template = "trestles")
+postcards::create_postcard(template = "onofre")
+postcards::create_postcard(template = "solana")
+```
+
+* Fill out your information using `Markdown` syntax. For example: https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31.
+* Add links to your own profiles like at https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12
+* Click the `knit` blue button on RStudio. This is the same as running `rmarkdown::render("index.Rmd")` on the console. This will create the `index.html` file.
+* Make a `git commit` to save your new files including `index.html` and then `git push` to upload your files to GitHub.
+* You will soon have a publicly website available at https://YourGitHubUsername.github.io/
+* Feel free to keep editing your website. Remember to `knit`, then `git add` + `git commit` the new versions of your files, then `git push` to upload them to GitHub.
+* Share your website and source code through the [`random`](https://cshldata-2023.slack.com/archives/C058SB8TB1C) Slack channel.
+* (optional) Announce your new website using the `#rstats` hasthag and/or the author of `postcards` https://twitter.com/seankross.
+
+
