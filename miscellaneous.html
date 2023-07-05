@@ -255,6 +255,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.3.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.3.2</b> Fit model and extract fraction of variance explained</a></li>
 <li class="chapter" data-level="12.3.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.3.3</b> Examine expression of most affected genes by each sample variable</a></li>
 </ul></li>
+<li class="chapter" data-level="12.4" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#solutions-2"><i class="fa fa-check"></i><b>12.4</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-1-1"><i class="fa fa-check"></i><b>12.4.1</b> Exercise 1</a></li>
+<li class="chapter" data-level="12.4.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-2-1"><i class="fa fa-check"></i><b>12.4.2</b> Exercise 2</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a>
@@ -345,21 +350,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://reneegf.github.io/" class="uri">https://reneegf.github.io/</a> + <a href="https://github.com/reneegf/reneegf.github.io" class="uri">https://github.com/reneegf/reneegf.github.io</a></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="miscellaneous.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
-<span id="cb128-2"><a href="miscellaneous.html#cb128-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;YourGitHubUsername.github.io&quot;</span>)</span>
-<span id="cb128-3"><a href="miscellaneous.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-4"><a href="miscellaneous.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
-<span id="cb128-5"><a href="miscellaneous.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
-<span id="cb128-6"><a href="miscellaneous.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
-<span id="cb128-7"><a href="miscellaneous.html#cb128-7" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
-<span id="cb128-8"><a href="miscellaneous.html#cb128-8" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="miscellaneous.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
+<span id="cb130-2"><a href="miscellaneous.html#cb130-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;YourGitHubUsername.github.io&quot;</span>)</span>
+<span id="cb130-3"><a href="miscellaneous.html#cb130-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-4"><a href="miscellaneous.html#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
+<span id="cb130-5"><a href="miscellaneous.html#cb130-5" aria-hidden="true" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
+<span id="cb130-6"><a href="miscellaneous.html#cb130-6" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
+<span id="cb130-7"><a href="miscellaneous.html#cb130-7" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
+<span id="cb130-8"><a href="miscellaneous.html#cb130-8" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
 <p>Create your website template using <code>postcards</code> by choosing one of the options below. This will create an <code>index.Rmd</code> file.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="miscellaneous.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
-<span id="cb129-2"><a href="miscellaneous.html#cb129-2" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
-<span id="cb129-3"><a href="miscellaneous.html#cb129-3" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
-<span id="cb129-4"><a href="miscellaneous.html#cb129-4" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
-<span id="cb129-5"><a href="miscellaneous.html#cb129-5" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
-<span id="cb129-6"><a href="miscellaneous.html#cb129-6" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="miscellaneous.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
+<span id="cb131-2"><a href="miscellaneous.html#cb131-2" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
+<span id="cb131-3"><a href="miscellaneous.html#cb131-3" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
+<span id="cb131-4"><a href="miscellaneous.html#cb131-4" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
+<span id="cb131-5"><a href="miscellaneous.html#cb131-5" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
+<span id="cb131-6"><a href="miscellaneous.html#cb131-6" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
 <ul>
 <li>Fill out your information using <code>Markdown</code> syntax. For example: <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33</a>.</li>
 <li>Add links to your own profiles like at <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12</a>.</li>

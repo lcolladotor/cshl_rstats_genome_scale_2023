@@ -255,6 +255,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.3.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.3.2</b> Fit model and extract fraction of variance explained</a></li>
 <li class="chapter" data-level="12.3.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.3.3</b> Examine expression of most affected genes by each sample variable</a></li>
 </ul></li>
+<li class="chapter" data-level="12.4" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#solutions-2"><i class="fa fa-check"></i><b>12.4</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-1-1"><i class="fa fa-check"></i><b>12.4.1</b> Exercise 1</a></li>
+<li class="chapter" data-level="12.4.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-2-1"><i class="fa fa-check"></i><b>12.4.2</b> Exercise 2</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a>
@@ -340,7 +345,7 @@ downloaded so this time the code below will run faster.</p>
 <span id="cb38-12"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb38-13"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-13" aria-hidden="true" tabindex="-1"></a>cached_rse_gene</span>
 <span id="cb38-14"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
-<span id="cb38-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/44476471da1_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb38-15"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/44244b15e3a_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb38-16"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-17"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb38-18"><a href="rse-plotting-basics-with-smokingmouse.html#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
@@ -903,7 +908,7 @@ It is always important to trace the QC metrics of the filtered samples to verify
 </ul>
 <p>Links Leo showed:</p>
 <ul>
-<li><code>smokingMouse_indirects</code> code for computing the <code>logcounts</code> <a href="https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L35" class="uri">https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L35</a></li>
+<li><code>smokingMouse_indirects</code> code for computing the <code>logcounts</code> <a href="https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L100" class="uri">https://github.com/LieberInstitute/smokingMouse_Indirects/blob/704692a357ec391348ebc3568188d41827328ba5/code/02_build_objects/02_build_objects.R#L100</a></li>
 <li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L9</a></li>
 <li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L14</a></li>
 <li><a href="https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L78" class="uri">https://code.bioconductor.org/browse/edgeR/blob/devel/R/cpm.R#L78</a></li>
