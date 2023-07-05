@@ -4,8 +4,6 @@ Instructor: Leo
 
 ## postcards
 
-<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b7d3bbee06d14a548a664e76ea9110d8" title="Updating spatialLIBD: from SingleCellExperiment to VisiumExperiment classes" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Q6eRD8Nyxfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0S_tRne5UNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
