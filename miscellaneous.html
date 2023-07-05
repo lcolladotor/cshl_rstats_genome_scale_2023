@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>17 Introduction to the world of spatially-resolved transcriptomics with Visium data | Statistical Analysis of Genome Scale Data 2023</title>
-  <meta name="description" content="17 Introduction to the world of spatially-resolved transcriptomics with Visium data | Statistical Analysis of Genome Scale Data 2023" />
+  <title>16 Miscellaneous | Statistical Analysis of Genome Scale Data 2023</title>
+  <meta name="description" content="16 Miscellaneous | Statistical Analysis of Genome Scale Data 2023" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="17 Introduction to the world of spatially-resolved transcriptomics with Visium data | Statistical Analysis of Genome Scale Data 2023" />
+  <meta property="og:title" content="16 Miscellaneous | Statistical Analysis of Genome Scale Data 2023" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2023" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="17 Introduction to the world of spatially-resolved transcriptomics with Visium data | Statistical Analysis of Genome Scale Data 2023" />
+  <meta name="twitter:title" content="16 Miscellaneous | Statistical Analysis of Genome Scale Data 2023" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="miscellaneous.html"/>
-<link rel="next" href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"/>
+<link rel="prev" href="exercise-with-variancepartition-and-complexheatmap.html"/>
+<link rel="next" href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -317,34 +317,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data" class="section level1 hasAnchor" number="17">
-<h1><span class="header-section-number">17</span> Introduction to the world of spatially-resolved transcriptomics with Visium data<a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html#introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="miscellaneous" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">16</span> Miscellaneous<a href="miscellaneous.html#miscellaneous" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Instructor: Leo</p>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Thank you <a href="https://twitter.com/hashtag/GBD23?src=hash&amp;ref_src=twsrc%5Etfw">#GBD23</a> <a href="https://twitter.com/MinaRyten?ref_src=twsrc%5Etfw"><span class="citation">@MinaRyten</span></a> <a href="https://twitter.com/LabGandhi?ref_src=twsrc%5Etfw"><span class="citation">@LabGandhi</span></a> John Hardy 🇬🇧 for hosting us!🙌🏽<br><br>Hopefully our <a href="https://twitter.com/hashtag/deconvochallenge?src=hash&amp;ref_src=twsrc%5Etfw">#deconvochallenge</a> <a href="https://twitter.com/hashtag/spatialLIBD?src=hash&amp;ref_src=twsrc%5Etfw">#spatialLIBD</a> <a href="https://twitter.com/hashtag/spatialDLPFC?src=hash&amp;ref_src=twsrc%5Etfw">#spatialDLPFC</a> <a href="https://twitter.com/hashtag/Visium_SPG_AD?src=hash&amp;ref_src=twsrc%5Etfw">#Visium_SPG_AD</a> work + <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a> 📦s + <a href="https://twitter.com/10xGenomics?ref_src=twsrc%5Etfw"><span class="citation">@10xGenomics</span></a> <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw"><span class="citation">@LieberInstitute</span></a> data will be useful to you<a href="https://twitter.com/eventsWCS?ref_src=twsrc%5Etfw"><span class="citation">@eventsWCS</span></a> <a href="https://twitter.com/UCLchildhealth?ref_src=twsrc%5Etfw"><span class="citation">@UCLchildhealth</span></a> <a href="https://twitter.com/TheCrick?ref_src=twsrc%5Etfw"><span class="citation">@TheCrick</span></a> <a href="https://twitter.com/UCLIoN?ref_src=twsrc%5Etfw"><span class="citation">@UCLIoN</span></a> <a href="https://twitter.com/ucl?ref_src=twsrc%5Etfw"><span class="citation">@ucl</span></a> <a href="https://t.co/vJcpL4tcQK">pic.twitter.com/vJcpL4tcQK</a>
-</p>
-— 🇲🇽 Leonardo Collado-Torres (<span class="citation">@lcolladotor</span>) <a href="https://twitter.com/lcolladotor/status/1661837334084460552?ref_src=twsrc%5Etfw">May 25, 2023</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<script defer class="speakerdeck-embed" data-id="0d787ea8865b4c8cb1c4f4bdebd5d3e6" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
-<p><em><a href="https://bioconductor.org/packages/3.17/SummarizedExperiment">SummarizedExperiment</a></em> –&gt; <em><a href="https://bioconductor.org/packages/3.17/SingleCellExperiment">SingleCellExperiment</a></em> –&gt; <em><a href="https://bioconductor.org/packages/3.17/SpatialExperiment">SpatialExperiment</a></em> –&gt; <em><a href="https://bioconductor.org/packages/3.17/spatialLIBD">spatialLIBD</a></em></p>
-<div id="community-5" class="section level2 hasAnchor" number="17.1">
-<h2><span class="header-section-number">17.1</span> Community<a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html#community-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Are you analyzing spatially-resolved transcriptomics data? Visium from <a href="https://twitter.com/10xGenomics?ref_src=twsrc%5Etfw"><span class="citation">@10xGenomics</span></a>? You might want to use <a href="https://twitter.com/hashtag/SpatialExperiment?src=hash&amp;ref_src=twsrc%5Etfw">#SpatialExperiment</a> which provides a common infrastructure fully compatible with <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a>'s ecosystem <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a><br><br>More details? Open access paper 📜<a href="https://t.co/4Y2RN4Wz2z">https://t.co/4Y2RN4Wz2z</a> <a href="https://t.co/49wE5Dv5HF">https://t.co/49wE5Dv5HF</a> <a href="https://t.co/QpI4lvCF2r">pic.twitter.com/QpI4lvCF2r</a>
-</p>
-— 🇲🇽 Leonardo Collado-Torres (<span class="citation">@lcolladotor</span>) <a href="https://twitter.com/lcolladotor/status/1520066354241449988?ref_src=twsrc%5Etfw">April 29, 2022</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Our paper describing our package <a href="https://twitter.com/hashtag/spatialLIBD?src=hash&amp;ref_src=twsrc%5Etfw">#spatialLIBD</a> is finally out! 🎉🎉🎉<br><br>spatialLIBD is an <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> / <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a> package to visualize spatial transcriptomics data.<br>⁰<br>This is especially exciting for me as it is my first paper as a first author 🦑.<a href="https://t.co/COW013x4GA">https://t.co/COW013x4GA</a><br><br>1/9 <a href="https://t.co/xevIUg3IsA">pic.twitter.com/xevIUg3IsA</a>
-</p>
-— Brenda Pardo (<span class="citation">@PardoBree</span>) <a href="https://twitter.com/PardoBree/status/1388253938391175173?ref_src=twsrc%5Etfw">April 30, 2021</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div id="postcards" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> postcards<a href="miscellaneous.html#postcards" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b7d3bbee06d14a548a664e76ea9110d8" title="Updating spatialLIBD: from SingleCellExperiment to VisiumExperiment classes" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 420px;" data-ratio="1.3333333333333333">
+</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q6eRD8Nyxfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0S_tRne5UNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p><em>The above video is in Spanish.</em></p>
+<ul>
+<li>Similar to <a href="https://pages.github.com/" class="uri">https://pages.github.com/</a></li>
+<li><code>postcards</code> has 5 templates <a href="https://github.com/seankross/postcards" class="uri">https://github.com/seankross/postcards</a></li>
+<li>Your website should ideally say something about you, your interests, your projects, and how to contact you. Here are some examples with their source code:
+<ul>
+<li><a href="https://amy-peterson.github.io/" class="uri">https://amy-peterson.github.io/</a> + <a href="https://github.com/amy-peterson/amy-peterson.github.com" class="uri">https://github.com/amy-peterson/amy-peterson.github.com</a></li>
+<li><a href="http://jtleek.com/" class="uri">http://jtleek.com/</a> + <a href="https://github.com/jtleek/jtleek.github.io" class="uri">https://github.com/jtleek/jtleek.github.io</a></li>
+<li><a href="http://aejaffe.com/" class="uri">http://aejaffe.com/</a> + <a href="https://github.com/andrewejaffe/andrewejaffe.github.io" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io</a></li>
+<li><a href="https://hadley.nz/" class="uri">https://hadley.nz/</a> + <a href="https://github.com/hadley/hadley.github.com" class="uri">https://github.com/hadley/hadley.github.com</a></li>
+<li><a href="https://emarquezz.github.io/" class="uri">https://emarquezz.github.io/</a> + <a href="https://github.com/emarquezz/emarquezz.github.io" class="uri">https://github.com/emarquezz/emarquezz.github.io</a></li>
+<li><a href="https://bpardo99.github.io/" class="uri">https://bpardo99.github.io/</a> + <a href="https://github.com/bpardo99/bpardo99.github.io" class="uri">https://github.com/bpardo99/bpardo99.github.io</a></li>
+<li><a href="https://daianna21.github.io/" class="uri">https://daianna21.github.io/</a> + <a href="https://github.com/daianna21/daianna21.github.io" class="uri">https://github.com/daianna21/daianna21.github.io</a></li>
+<li><a href="https://reneegf.github.io/" class="uri">https://reneegf.github.io/</a> + <a href="https://github.com/reneegf/reneegf.github.io" class="uri">https://github.com/reneegf/reneegf.github.io</a></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="miscellaneous.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
+<span id="cb128-2"><a href="miscellaneous.html#cb128-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;YourGitHubUsername.github.io&quot;</span>)</span>
+<span id="cb128-3"><a href="miscellaneous.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-4"><a href="miscellaneous.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
+<span id="cb128-5"><a href="miscellaneous.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
+<span id="cb128-6"><a href="miscellaneous.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
+<span id="cb128-7"><a href="miscellaneous.html#cb128-7" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
+<span id="cb128-8"><a href="miscellaneous.html#cb128-8" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
+<p>Create your website template using <code>postcards</code> by choosing one of the options below. This will create an <code>index.Rmd</code> file.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="miscellaneous.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
+<span id="cb129-2"><a href="miscellaneous.html#cb129-2" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
+<span id="cb129-3"><a href="miscellaneous.html#cb129-3" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
+<span id="cb129-4"><a href="miscellaneous.html#cb129-4" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
+<span id="cb129-5"><a href="miscellaneous.html#cb129-5" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
+<span id="cb129-6"><a href="miscellaneous.html#cb129-6" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Fill out your information using <code>Markdown</code> syntax. For example: <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31</a>.</li>
+<li>Add links to your own profiles like at <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12</a></li>
+<li>Click the <code>knit</code> blue button on RStudio. This is the same as running <code>rmarkdown::render("index.Rmd")</code> on the console. This will create the <code>index.html</code> file.</li>
+<li>Make a <code>git commit</code> to save your new files including <code>index.html</code> and then <code>git push</code> to upload your files to GitHub.</li>
+<li>You will soon have a publicly website available at <a href="https://YourGitHubUsername.github.io/" class="uri">https://YourGitHubUsername.github.io/</a></li>
+<li>Feel free to keep editing your website. Remember to <code>knit</code>, then <code>git add</code> + <code>git commit</code> the new versions of your files, then <code>git push</code> to upload them to GitHub.</li>
+<li>Share your website and source code through the <a href="https://cshldata-2023.slack.com/archives/C058SB8TB1C"><code>random</code></a> Slack channel.</li>
+<li>(optional) Announce your new website using the <code>#rstats</code> hasthag and/or the author of <code>postcards</code> <a href="https://twitter.com/seankross" class="uri">https://twitter.com/seankross</a>.</li>
+</ul>
 
 </div>
 </div>
@@ -396,8 +420,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-<a href="miscellaneous.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="exercise-with-variancepartition-and-complexheatmap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

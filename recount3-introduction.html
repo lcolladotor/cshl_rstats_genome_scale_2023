@@ -274,9 +274,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="15.1" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html#steps"><i class="fa fa-check"></i><b>15.1</b> Steps:</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="tbd.html"><a href="tbd.html"><i class="fa fa-check"></i><b>16</b> TBD</a>
+<li class="chapter" data-level="16" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>16</b> Miscellaneous</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="tbd.html"><a href="tbd.html#options"><i class="fa fa-check"></i><b>16.1</b> Options</a></li>
+<li class="chapter" data-level="16.1" data-path="miscellaneous.html"><a href="miscellaneous.html#postcards"><i class="fa fa-check"></i><b>16.1</b> postcards</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><i class="fa fa-check"></i><b>17</b> Introduction to the world of spatially-resolved transcriptomics with Visium data</a>
 <ul>
@@ -328,7 +328,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>ReCount</code>: data from 20 studies
 <ul>
 <li><a href="http://bowtie-bio.sourceforge.net/recount/index.shtml" class="uri">http://bowtie-bio.sourceforge.net/recount/index.shtml</a></li>
-<li>Artículo del 2011 <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449" class="uri">https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449</a></li>
+<li>Paper from 2011 <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449" class="uri">https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449</a></li>
 </ul></li>
 <li><code>recount</code>: over 70k human bulk RNA-seq samples uniformly processed
 <ul>
@@ -360,11 +360,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Next we need to identify a study of interest as well as choose whether we want the data at the gene, exon, or some other feature level. Once we have identified our study of interest, we can download the files and build a <code>SummarizedExperiment</code> object using <code>recount3::create_rse()</code> as we’ll show next. <code>create_rse()</code> has arguments through which we can control what <em>annotation</em> we want to use (they are organism-dependent).</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="recount3-introduction.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets download all the available projects</span></span>
 <span id="cb64-2"><a href="recount3-introduction.html#cb64-2" aria-hidden="true" tabindex="-1"></a>human_projects <span class="ot">&lt;-</span> <span class="fu">available_projects</span>()</span>
-<span id="cb64-3"><a href="recount3-introduction.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:22.986769 caching file sra.recount_project.MD.gz.</span></span>
+<span id="cb64-3"><a href="recount3-introduction.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:33.449566 caching file sra.recount_project.MD.gz.</span></span>
 <span id="cb64-4"><a href="recount3-introduction.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/sra.recount_project.MD.gz&#39;</span></span>
-<span id="cb64-5"><a href="recount3-introduction.html#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:24.650602 caching file gtex.recount_project.MD.gz.</span></span>
+<span id="cb64-5"><a href="recount3-introduction.html#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:34.080117 caching file gtex.recount_project.MD.gz.</span></span>
 <span id="cb64-6"><a href="recount3-introduction.html#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/gtex/metadata/gtex.recount_project.MD.gz&#39;</span></span>
-<span id="cb64-7"><a href="recount3-introduction.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:25.914532 caching file tcga.recount_project.MD.gz.</span></span>
+<span id="cb64-7"><a href="recount3-introduction.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:34.717474 caching file tcga.recount_project.MD.gz.</span></span>
 <span id="cb64-8"><a href="recount3-introduction.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/tcga/metadata/tcga.recount_project.MD.gz&#39;</span></span>
 <span id="cb64-9"><a href="recount3-introduction.html#cb64-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-10"><a href="recount3-introduction.html#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Find your project of interest. Here we&#39;ll use</span></span>
@@ -376,24 +376,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb64-16"><a href="recount3-introduction.html#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Build a RangedSummarizedExperiment (RSE) object</span></span>
 <span id="cb64-17"><a href="recount3-introduction.html#cb64-17" aria-hidden="true" tabindex="-1"></a><span class="do">## with the information at the gene level</span></span>
 <span id="cb64-18"><a href="recount3-introduction.html#cb64-18" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info)</span>
-<span id="cb64-19"><a href="recount3-introduction.html#cb64-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:30.323428 downloading and reading the metadata.</span></span>
-<span id="cb64-20"><a href="recount3-introduction.html#cb64-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:30.783502 caching file sra.sra.SRP009615.MD.gz.</span></span>
+<span id="cb64-19"><a href="recount3-introduction.html#cb64-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:38.586819 downloading and reading the metadata.</span></span>
+<span id="cb64-20"><a href="recount3-introduction.html#cb64-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:38.759958 caching file sra.sra.SRP009615.MD.gz.</span></span>
 <span id="cb64-21"><a href="recount3-introduction.html#cb64-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.sra.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-22"><a href="recount3-introduction.html#cb64-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:31.967804 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
+<span id="cb64-22"><a href="recount3-introduction.html#cb64-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:39.515915 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
 <span id="cb64-23"><a href="recount3-introduction.html#cb64-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_project.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-24"><a href="recount3-introduction.html#cb64-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:33.170769 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
+<span id="cb64-24"><a href="recount3-introduction.html#cb64-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:40.145361 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
 <span id="cb64-25"><a href="recount3-introduction.html#cb64-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_qc.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-26"><a href="recount3-introduction.html#cb64-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:34.345769 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
+<span id="cb64-26"><a href="recount3-introduction.html#cb64-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:40.760959 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
 <span id="cb64-27"><a href="recount3-introduction.html#cb64-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_seq_qc.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-28"><a href="recount3-introduction.html#cb64-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:35.529361 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
+<span id="cb64-28"><a href="recount3-introduction.html#cb64-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:41.447367 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
 <span id="cb64-29"><a href="recount3-introduction.html#cb64-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_pred.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-30"><a href="recount3-introduction.html#cb64-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:36.396286 downloading and reading the feature information.</span></span>
-<span id="cb64-31"><a href="recount3-introduction.html#cb64-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:36.786906 caching file human.gene_sums.G026.gtf.gz.</span></span>
+<span id="cb64-30"><a href="recount3-introduction.html#cb64-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:42.086053 downloading and reading the feature information.</span></span>
+<span id="cb64-31"><a href="recount3-introduction.html#cb64-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:42.246221 caching file human.gene_sums.G026.gtf.gz.</span></span>
 <span id="cb64-32"><a href="recount3-introduction.html#cb64-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/annotations/gene_sums/human.gene_sums.G026.gtf.gz&#39;</span></span>
-<span id="cb64-33"><a href="recount3-introduction.html#cb64-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:38.329967 downloading and reading the counts: 12 samples across 63856 features.</span></span>
-<span id="cb64-34"><a href="recount3-introduction.html#cb64-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:39.143112 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
+<span id="cb64-33"><a href="recount3-introduction.html#cb64-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:43.377086 downloading and reading the counts: 12 samples across 63856 features.</span></span>
+<span id="cb64-34"><a href="recount3-introduction.html#cb64-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:43.506649 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
 <span id="cb64-35"><a href="recount3-introduction.html#cb64-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/gene_sums/15/SRP009615/sra.gene_sums.SRP009615.G026.gz&#39;</span></span>
-<span id="cb64-36"><a href="recount3-introduction.html#cb64-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:38:40.580381 constructing the RangedSummarizedExperiment (rse) object.</span></span>
+<span id="cb64-36"><a href="recount3-introduction.html#cb64-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-05 14:52:44.258562 constructing the RangedSummarizedExperiment (rse) object.</span></span>
 <span id="cb64-37"><a href="recount3-introduction.html#cb64-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Explore the resulting object</span></span>
 <span id="cb64-38"><a href="recount3-introduction.html#cb64-38" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP009615</span>
 <span id="cb64-39"><a href="recount3-introduction.html#cb64-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>

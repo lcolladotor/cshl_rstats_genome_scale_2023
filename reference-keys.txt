@@ -84,8 +84,8 @@ plot-our-heatmap
 complexheatmap-exercise-solution
 exercise-with-variancepartition-and-complexheatmap
 steps
-tbd
-options
+miscellaneous
+postcards
 introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data
 community-5
 downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd
