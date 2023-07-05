@@ -80,6 +80,7 @@ Hence, to drop such variables we must identify them first. Pearson correlation c
 ```{r message=FALSE, warning=FALSE}
 library("variancePartition")
 library("pheatmap")
+library("rlang")
 
 #######################   Variance Partition Analysis   #######################
 
@@ -144,7 +145,6 @@ Let's explore why these variables are correlated in the following plots.
 
 ```{r message=FALSE, warning=FALSE}
 library("ggplot2")
-library("rlang")
 ## 1.1  Barplots/Boxplots/Scatterplots for each pair of correlated variables
 
 corr_plots <- function(age, sample_var1, sample_var2, sample_color) {
