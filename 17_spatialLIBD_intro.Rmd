@@ -161,3 +161,57 @@ font-family: sans-serif;
 * Use custom colors of your choice. See https://emilhvitfeldt.github.io/r-color-palettes/discrete.html to choose a color palette.
   - For example, use the `Polychrome::palette36()` colors.
 </div>
+
+<style>
+p.solution  {
+background-color: #C093D6;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="solution">
+**Solution 1**:
+The function for plotting discrete variables is `spatialLIBD::vis_clus()` which is documented at http://research.libd.org/spatialLIBD/reference/vis_clus.html. After reading the documentation website for this function, we are ready to write the code to solve our exercise problem.
+</p>
+
+
+```{r}
+## Basic spatial graph visualizing a discrete variable that we provided to
+## the argument "clustervar". Here we chose to visualize
+## "10x_kmeans_10_clusters" which contains the clustering results from the
+## K-means algorithm when k = 10.
+## We are plotting the one sample we have called "lymph". This is the same
+## name we chose earlier when we ran spatialLIBD::read10xVisiumWrapper().
+vis_clus(
+    spe = spe_wrapper,
+    sampleid = "lymph",
+    clustervar = "10x_kmeans_10_clusters"
+)
+
+## Next we ignore the histology image and stop plotting it by setting
+## "spatial = FALSE"
+vis_clus(
+    spe = spe_wrapper,
+    sampleid = "lymph",
+    clustervar = "10x_kmeans_10_clusters",
+    spatial = FALSE
+)
+
+## Finally, we use the "colors" argument to specify our own colors. We use
+## the general setNames() R function to create a named vector that has as
+## values the colors and as names the same names we have for our "clustervar".
+vis_clus(
+    spe = spe_wrapper,
+    sampleid = "lymph",
+    clustervar = "10x_kmeans_10_clusters",
+    spatial = FALSE,
+    colors = setNames(Polychrome::palette36.colors(10), 1:10)
+)
+
+## Here we can see the vector we provided as input to "colors":
+setNames(Polychrome::palette36.colors(10), 1:10)
+```
+

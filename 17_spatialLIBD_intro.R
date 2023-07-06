@@ -1,4 +1,4 @@
-## ----"download_10x_data"-------------------------------------
+## ----"download_10x_data"----------------------------------------------------
 ## Download and save a local cache of the data provided by 10x Genomics
 bfc <- BiocFileCache::BiocFileCache()
 lymph.url <-
@@ -14,7 +14,7 @@ lymph.url <-
 lymph.data <- sapply(lymph.url, BiocFileCache::bfcrpath, x = bfc)
 
 
-## ----"extract_files"-----------------------------------------
+## ----"extract_files"--------------------------------------------------------
 ## Extract the files to a temporary location
 ## (they'll be deleted once you close your R session)
 xx <- sapply(lymph.data, utils::untar, exdir = file.path(tempdir(), "outs"))
@@ -40,7 +40,7 @@ list.files(lymph.dirs)
 ## 1.4G	genes/genes.gtf
 
 
-## ----"use_gencode_gtf"---------------------------------------
+## ----"use_gencode_gtf"------------------------------------------------------
 ## Download the Gencode v32 GTF file and cache it
 gtf_cache <- BiocFileCache::bfcrpath(
     bfc,
@@ -54,7 +54,7 @@ gtf_cache <- BiocFileCache::bfcrpath(
 gtf_cache
 
 
-## ----wrapper_functions---------------------------------------
+## ----wrapper_functions------------------------------------------------------
 ## Import the data as a SpatialExperiment object using wrapper functions
 ## provided by spatialLIBD
 library("spatialLIBD")
@@ -73,7 +73,7 @@ spe_wrapper
 lobstr::obj_size(spe_wrapper)
 
 
-## ----"run_shiny_app_wrapper"---------------------------------
+## ----"run_shiny_app_wrapper"------------------------------------------------
 ## Run our shiny app
 if (interactive()) {
     vars <- colnames(colData(spe_wrapper))
@@ -89,4 +89,41 @@ if (interactive()) {
         default_cluster = "10x_graphclust"
     )
 }
+
+
+## ---------------------------------------------------------------------------
+## Basic spatial graph visualizing a discrete variable that we provided to
+## the argument "clustervar". Here we chose to visualize
+## "10x_kmeans_10_clusters" which contains the clustering results from the
+## K-means algorithm when k = 10.
+## We are plotting the one sample we have called "lymph". This is the same
+## name we chose earlier when we ran spatialLIBD::read10xVisiumWrapper().
+vis_clus(
+    spe = spe_wrapper,
+    sampleid = "lymph",
+    clustervar = "10x_kmeans_10_clusters"
+)
+
+## Next we ignore the histology image and stop plotting it by setting
+## "spatial = FALSE"
+vis_clus(
+    spe = spe_wrapper,
+    sampleid = "lymph",
+    clustervar = "10x_kmeans_10_clusters",
+    spatial = FALSE
+)
+
+## Finally, we use the "colors" argument to specify our own colors. We use
+## the general setNames() R function to create a named vector that has as
+## values the colors and as names the same names we have for our "clustervar".
+vis_clus(
+    spe = spe_wrapper,
+    sampleid = "lymph",
+    clustervar = "10x_kmeans_10_clusters",
+    spatial = FALSE,
+    colors = setNames(Polychrome::palette36.colors(10), 1:10)
+)
+
+## Here we can see the vector we provided as input to "colors":
+setNames(Polychrome::palette36.colors(10), 1:10)
 
