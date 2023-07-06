@@ -424,17 +424,18 @@ Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><
 <span id="cb2-32"><a href="index.html#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
 <span id="cb2-33"><a href="index.html#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
 <span id="cb2-34"><a href="index.html#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cowplot&quot;</span>,</span>
-<span id="cb2-35"><a href="index.html#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span>, <span class="do">## Advanced</span></span>
-<span id="cb2-36"><a href="index.html#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;variancePartition&quot;</span></span>
-<span id="cb2-37"><a href="index.html#cb2-37" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-38"><a href="index.html#cb2-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-39"><a href="index.html#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="index.html#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse, which is currently under review at Bioconductor</span></span>
-<span id="cb2-41"><a href="index.html#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://github.com/Bioconductor/Contributions/issues/3024.</span></span>
-<span id="cb2-42"><a href="index.html#cb2-42" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span>
-<span id="cb2-43"><a href="index.html#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-44"><a href="index.html#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="do">## Required to access some recent bug fixes on biocthis</span></span>
-<span id="cb2-45"><a href="index.html#cb2-45" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;lcolladotor/biocthis&quot;</span>)</span></code></pre></div>
+<span id="cb2-35"><a href="index.html#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Polychrome&quot;</span>,</span>
+<span id="cb2-36"><a href="index.html#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span>, <span class="do">## Advanced</span></span>
+<span id="cb2-37"><a href="index.html#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;variancePartition&quot;</span></span>
+<span id="cb2-38"><a href="index.html#cb2-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-39"><a href="index.html#cb2-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-40"><a href="index.html#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="index.html#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="do">## Install smokingMouse, which is currently under review at Bioconductor</span></span>
+<span id="cb2-42"><a href="index.html#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="do">## at https://github.com/Bioconductor/Contributions/issues/3024.</span></span>
+<span id="cb2-43"><a href="index.html#cb2-43" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span>
+<span id="cb2-44"><a href="index.html#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="index.html#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="do">## Required to access some recent bug fixes on biocthis</span></span>
+<span id="cb2-46"><a href="index.html#cb2-46" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;lcolladotor/biocthis&quot;</span>)</span></code></pre></div>
 <p>You will also need to install <a href="https://rstudio.com/products/rstudio/download/#download">RStudio</a> version 2023.06.0+421 or newer.</p>
 </div>
 <div id="r-session-information" class="section level2 unnumbered hasAnchor">
@@ -483,9 +484,10 @@ Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><
 <span id="cb3-41"><a href="index.html#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;cowplot&quot;</span>)</span>
 <span id="cb3-42"><a href="index.html#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rlang&quot;</span>)</span>
 <span id="cb3-43"><a href="index.html#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)</span>
-<span id="cb3-44"><a href="index.html#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="index.html#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="do">## Spatial transcriptomics</span></span>
-<span id="cb3-46"><a href="index.html#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
+<span id="cb3-44"><a href="index.html#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Polychrome&quot;</span>)</span>
+<span id="cb3-45"><a href="index.html#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="index.html#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Spatial transcriptomics</span></span>
+<span id="cb3-47"><a href="index.html#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reproducibility information</span></span>
 <span id="cb4-2"><a href="index.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb4-3"><a href="index.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">session_info</span>()</span></code></pre></div>
@@ -645,6 +647,7 @@ Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><
 ##  plotly                   4.10.2    2023-06-03 [1] RSPM (R 4.3.0)
 ##  plyr                     1.8.8     2022-11-11 [1] RSPM (R 4.3.0)
 ##  png                      0.1-8     2022-11-29 [1] RSPM (R 4.3.0)
+##  Polychrome             * 1.5.1     2022-05-03 [1] RSPM (R 4.3.0)
 ##  postcards              * 0.2.3     2022-01-07 [1] RSPM (R 4.3.0)
 ##  prettyunits              1.1.1     2020-01-24 [2] RSPM (R 4.3.0)
 ##  progress                 1.2.2     2019-05-16 [1] RSPM (R 4.3.0)
@@ -687,6 +690,7 @@ Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><
 ##  ScaledMatrix             1.8.1     2023-05-03 [1] Bioconductor
 ##  scales                   1.2.1     2022-08-20 [1] RSPM (R 4.3.0)
 ##  scater                 * 1.28.0    2023-04-25 [1] Bioconductor
+##  scatterplot3d            0.3-44    2023-05-05 [1] RSPM (R 4.3.0)
 ##  scuttle                * 1.10.1    2023-05-02 [1] Bioconductor
 ##  sessioninfo            * 1.2.2     2021-12-06 [2] RSPM (R 4.3.0)
 ##  shape                    1.4.6     2021-05-19 [1] RSPM (R 4.3.0)
@@ -731,8 +735,8 @@ Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><
 ## ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  17.514   0.854  18.310</code></pre>
-<p>This interactive book was last updated at 2023-07-06 16:00:39.824641.</p>
+##  18.742   0.823  19.510</code></pre>
+<p>This interactive book was last updated at 2023-07-06 18:49:46.59773.</p>
 </div>
 <div id="license" class="section level2 unnumbered hasAnchor">
 <h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>

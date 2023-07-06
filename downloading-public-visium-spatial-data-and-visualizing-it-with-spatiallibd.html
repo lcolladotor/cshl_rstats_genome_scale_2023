@@ -399,7 +399,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb135-11"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb135-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Show the GTF cache location</span></span>
 <span id="cb135-12"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb135-12" aria-hidden="true" tabindex="-1"></a>gtf_cache</span>
 <span id="cb135-13"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb135-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                            BFC7 </span></span>
-<span id="cb135-14"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb135-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/44253724ab0_gencode.v32.annotation.gtf.gz&quot;</span></span></code></pre></div>
+<span id="cb135-14"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb135-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/463489c3a57_gencode.v32.annotation.gtf.gz&quot;</span></span></code></pre></div>
 </div>
 </div>
 <div id="wrapper-functions-for-reading-the-data" class="section level2 hasAnchor" number="18.3">
@@ -415,17 +415,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb136-8"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">images =</span> <span class="fu">c</span>(<span class="st">&quot;lowres&quot;</span>, <span class="st">&quot;hires&quot;</span>, <span class="st">&quot;detected&quot;</span>, <span class="st">&quot;aligned&quot;</span>), <span class="at">load =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb136-9"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">reference_gtf =</span> gtf_cache</span>
 <span id="cb136-10"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb136-11"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 16:53:47.147955 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
-<span id="cb136-12"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 16:54:08.166168 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
-<span id="cb136-13"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 16:54:08.327846 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
-<span id="cb136-14"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 16:54:08.723205 rtracklayer::import: reading the reference GTF file</span></span>
-<span id="cb136-15"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 16:54:44.871088 adding gene information to the SPE object</span></span>
+<span id="cb136-11"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 19:47:22.738828 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
+<span id="cb136-12"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 19:47:46.59538 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
+<span id="cb136-13"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 19:47:46.779265 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
+<span id="cb136-14"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 19:47:47.228162 rtracklayer::import: reading the reference GTF file</span></span>
+<span id="cb136-15"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 19:48:29.765836 adding gene information to the SPE object</span></span>
 <span id="cb136-16"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was</span></span>
 <span id="cb136-17"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will</span></span>
 <span id="cb136-18"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; try to convert them to ENSEMBL IDs.</span></span>
 <span id="cb136-19"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Dropping 29 out of 36601 genes for which we don&#39;t have information on the reference GTF file. This typically</span></span>
 <span id="cb136-20"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; happens when you are not using the same GTF file as the one that was used by SpaceRanger.</span></span>
-<span id="cb136-21"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 16:54:46.113311 adding information used by spatialLIBD</span></span>
+<span id="cb136-21"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-06 19:48:31.050535 adding information used by spatialLIBD</span></span>
 <span id="cb136-22"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb136-23"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Explore the resulting SpatialExperiment object</span></span>
 <span id="cb136-24"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb136-24" aria-hidden="true" tabindex="-1"></a>spe_wrapper</span>
@@ -508,6 +508,58 @@ font-family: sans-serif;
 </ul></li>
 </ul>
 </div>
+<style>
+p.solution  {
+background-color: #C093D6;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+<p class="solution">
+<strong>Solution 1</strong>:
+The function for plotting discrete variables is <code>spatialLIBD::vis_clus()</code> which is documented at <a href="http://research.libd.org/spatialLIBD/reference/vis_clus.html" class="uri">http://research.libd.org/spatialLIBD/reference/vis_clus.html</a>. After reading the documentation website for this function, we are ready to write the code to solve our exercise problem.
+</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Basic spatial graph visualizing a discrete variable that we provided to</span></span>
+<span id="cb138-2"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="do">## the argument &quot;clustervar&quot;. Here we chose to visualize</span></span>
+<span id="cb138-3"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &quot;10x_kmeans_10_clusters&quot; which contains the clustering results from the</span></span>
+<span id="cb138-4"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="do">## K-means algorithm when k = 10.</span></span>
+<span id="cb138-5"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="do">## We are plotting the one sample we have called &quot;lymph&quot;. This is the same</span></span>
+<span id="cb138-6"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="do">## name we chose earlier when we ran spatialLIBD::read10xVisiumWrapper().</span></span>
+<span id="cb138-7"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_clus</span>(</span>
+<span id="cb138-8"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">spe =</span> spe_wrapper,</span>
+<span id="cb138-9"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">sampleid =</span> <span class="st">&quot;lymph&quot;</span>,</span>
+<span id="cb138-10"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clustervar =</span> <span class="st">&quot;10x_kmeans_10_clusters&quot;</span></span>
+<span id="cb138-11"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb138-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-2"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Next we ignore the histology image and stop plotting it by setting</span></span>
+<span id="cb139-3"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &quot;spatial = FALSE&quot;</span></span>
+<span id="cb139-4"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_clus</span>(</span>
+<span id="cb139-5"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spe =</span> spe_wrapper,</span>
+<span id="cb139-6"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sampleid =</span> <span class="st">&quot;lymph&quot;</span>,</span>
+<span id="cb139-7"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">clustervar =</span> <span class="st">&quot;10x_kmeans_10_clusters&quot;</span>,</span>
+<span id="cb139-8"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">spatial =</span> <span class="cn">FALSE</span></span>
+<span id="cb139-9"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb139-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-2.png" width="672" /></p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-2"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Finally, we use the &quot;colors&quot; argument to specify our own colors. We use</span></span>
+<span id="cb140-3"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="do">## the general setNames() R function to create a named vector that has as</span></span>
+<span id="cb140-4"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="do">## values the colors and as names the same names we have for our &quot;clustervar&quot;.</span></span>
+<span id="cb140-5"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_clus</span>(</span>
+<span id="cb140-6"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">spe =</span> spe_wrapper,</span>
+<span id="cb140-7"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sampleid =</span> <span class="st">&quot;lymph&quot;</span>,</span>
+<span id="cb140-8"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">clustervar =</span> <span class="st">&quot;10x_kmeans_10_clusters&quot;</span>,</span>
+<span id="cb140-9"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">spatial =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb140-10"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">setNames</span>(Polychrome<span class="sc">::</span><span class="fu">palette36.colors</span>(<span class="dv">10</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb140-11"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb140-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-3.png" width="672" /></p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb141-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-2"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Here we can see the vector we provided as input to &quot;colors&quot;:</span></span>
+<span id="cb141-3"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setNames</span>(Polychrome<span class="sc">::</span><span class="fu">palette36.colors</span>(<span class="dv">10</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb141-4"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1         2         3         4         5         6         7         8         9        10 </span></span>
+<span id="cb141-5"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;#5A5156&quot; &quot;#E4E1E3&quot; &quot;#F6222E&quot; &quot;#FE00FA&quot; &quot;#16FF32&quot; &quot;#3283FE&quot; &quot;#FEAF16&quot; &quot;#B00068&quot; &quot;#1CFFCE&quot; &quot;#90AD1C&quot;</span></span></code></pre></div>
 
 </div>
 </div>
