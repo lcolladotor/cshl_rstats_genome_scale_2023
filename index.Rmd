@@ -115,6 +115,7 @@ BiocManager::install(
         "RColorBrewer",
         "ComplexHeatmap",
         "cowplot",
+        "Polychrome",
         "spatialLIBD", ## Advanced
         "variancePartition"
     )
@@ -178,6 +179,7 @@ library("stringr")
 library("cowplot")
 library("rlang")
 library("ggrepel")
+library("Polychrome")
 
 ## Spatial transcriptomics
 library("spatialLIBD")
